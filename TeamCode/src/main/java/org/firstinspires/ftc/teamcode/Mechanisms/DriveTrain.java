@@ -22,10 +22,10 @@ public class DriveTrain { // Prefix for commands
         rightRear = opmode.hardwareMap.get(DcMotor.class, "rightRear");
         rightFront = opmode.hardwareMap.get(DcMotor.class, "rightFront");
 
-        leftRear.setDirection(DcMotorSimple.Direction.REVERSE); // motor directions
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftRear.setDirection(DcMotorSimple.Direction.FORWARD); // motor directions
+        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
         slowMode = false;
 
@@ -38,10 +38,10 @@ public class DriveTrain { // Prefix for commands
         double rightBackPower;
         double rightFrontPower;
 
-        leftBackPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
-        leftFrontPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
-        rightBackPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
-        rightFrontPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
+        leftBackPower = Range.clip(drive - turn - strafe, -1.0, 1.0); //neg
+        leftFrontPower = Range.clip(drive - turn + strafe, -1.0, 1.0); //neg
+        rightBackPower = Range.clip(drive + turn - strafe, -1.0, 1.0);
+        rightFrontPower = Range.clip(drive + turn + strafe, -1.0, 1.0);
 
         updateSpeed(slowModeButton);
 
