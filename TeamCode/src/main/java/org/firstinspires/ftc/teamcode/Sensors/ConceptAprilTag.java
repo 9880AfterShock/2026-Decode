@@ -89,7 +89,7 @@ public class ConceptAprilTag extends LinearOpMode {
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch START to start OpMode");
         telemetry.update();
-        waitForStart();
+        //waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
@@ -110,7 +110,7 @@ public class ConceptAprilTag extends LinearOpMode {
                 sleep(20);
             }
         }
-
+        waitForStart();
         // Save more CPU resources when camera is no longer needed.
         visionPortal.close();
 

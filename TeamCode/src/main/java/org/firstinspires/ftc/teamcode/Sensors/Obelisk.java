@@ -1,23 +1,24 @@
 package org.firstinspires.ftc.teamcode.Sensors;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static android.os.SystemClock.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Obelisk {
     private static OpMode opmode; // opmode var init
     private static AprilTagProcessor aprilTag;
     public static VisionPortal visionPortal;
-    public enum Motifs{PPG, PGP, GPP, unknown};
+    public enum Motifs{GPP, PGP, PPG, unknown}; // 21,22,23
     static Motifs Motif;
 
     public static void initDetection(OpMode opmode){
@@ -37,15 +38,71 @@ public class Obelisk {
                 // ... these parameters are fx, fy, cx, cy.
                 .build();
         VisionPortal.Builder builder = new VisionPortal.Builder();
-        builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam"));
+        builder.setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"));
         builder.addProcessor(aprilTag);
         visionPortal = builder.build();
         Obelisk.opmode = opmode;
+        setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
     }
 
     public static void update(){
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        telemetry.addData("# AprilTags Detected", currentDetections.size());
-        telemetry.addData("AprilTags:", currentDetections);
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.id == 21){
+                Motif = Motifs.GPP;
+                break;
+            }
+            if (detection.id == 22){
+                Motif = Motifs.PGP;
+                break;
+            }
+            if (detection.id == 23){
+                Motif = Motifs.PPG;
+                break;
+            }
+        }
+        opmode.telemetry.addData("# AprilTags Detected", currentDetections.size());
+        opmode.telemetry.addData("AprilTags:", currentDetections);
     }
+
+
+
+
+
+
+    /*
+     From RobotAutoDriveToAprilTagOmni.java
+    */
+    private static void setManualExposure(int exposureMS, int gain) {
+        // Wait for the camera to be open, then use the controls
+
+        if (visionPortal == null) {
+            return;
+        }
+
+        // Make sure camera is streaming before we try to set the exposure controls
+        if (visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING) {
+            opmode.telemetry.addData("Camera", "Waiting");
+            opmode.telemetry.update();
+            while (/*!isStopRequested() && */(visionPortal.getCameraState() != VisionPortal.CameraState.STREAMING)) {
+                sleep(20);
+            }
+            opmode.telemetry.addData("Camera", "Ready");
+            opmode.telemetry.update();
+        }
+
+        // Set camera controls unless we are stopping.
+        /*if (!isStopRequested())
+        { */
+            ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
+            if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
+                exposureControl.setMode(ExposureControl.Mode.Manual);
+                sleep(50);
+            }
+            exposureControl.setExposure((long)exposureMS, TimeUnit.MILLISECONDS);
+            sleep(20);
+            GainControl gainControl = visionPortal.getCameraControl(GainControl.class);
+            gainControl.setGain(gain);
+            sleep(20);
+        }
 }
