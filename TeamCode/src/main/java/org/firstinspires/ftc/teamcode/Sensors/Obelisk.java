@@ -61,8 +61,7 @@ public class Obelisk {
                 break;
             }
         }
-        opmode.telemetry.addData("# AprilTags Detected", currentDetections.size());
-        opmode.telemetry.addData("AprilTags:", currentDetections);
+        opmode.telemetry.addData("Motif Pattern", Motif);
     }
 
 
