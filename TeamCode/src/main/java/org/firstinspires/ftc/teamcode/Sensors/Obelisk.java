@@ -42,7 +42,7 @@ public class Obelisk {
         builder.addProcessor(aprilTag);
         visionPortal = builder.build();
         Obelisk.opmode = opmode;
-        setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
+        //setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
     }
 
     public static void update(){
