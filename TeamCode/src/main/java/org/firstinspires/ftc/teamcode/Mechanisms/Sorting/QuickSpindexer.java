@@ -16,6 +16,8 @@ public class QuickSpindexer { // Prefix for commands
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); // motor config name
         spindexer.setZeroPowerBehavior(BRAKE);
+        spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        spindexer.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         targetPosition = 0;
 
         QuickSpindexer.opmode = opmode;
