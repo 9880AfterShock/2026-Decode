@@ -20,7 +20,6 @@ public class Roller { // Prefix for commands
     }
 
     public static void updateIntake(boolean intaking, boolean ejecting, double speed) {
-
         if (intaking){
             intakePower = speed;
         } else {

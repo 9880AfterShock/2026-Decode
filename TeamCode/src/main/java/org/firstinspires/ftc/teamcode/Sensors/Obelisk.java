@@ -19,7 +19,7 @@ public class Obelisk {
     private static AprilTagProcessor aprilTag;
     public static VisionPortal visionPortal;
     public enum Motifs{GPP, PGP, PPG, unknown}; // 21,22,23
-    static Motifs Motif;
+    public static Motifs Motif;
 
     public static void initDetection(OpMode opmode){
         Motif = Motifs.unknown;
