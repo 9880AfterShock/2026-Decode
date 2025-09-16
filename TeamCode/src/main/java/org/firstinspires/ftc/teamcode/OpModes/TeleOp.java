@@ -26,7 +26,7 @@ public class TeleOp extends LinearOpMode {
         //Init Functions
         DriveTrain.initDrive(this);
         Obelisk.initDetection(this);
-        Alignment.initAlignment(this);
+        //Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
 
@@ -46,18 +46,18 @@ public class TeleOp extends LinearOpMode {
             //Loop Functions
             DriveTrain.updateDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger > 0.1);
             Obelisk.update();
-            Alignment.updateAlignment();
+            //Alignment.updateAlignment();
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
 
-            //QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
-            if (gamepad1.dpadLeftWasPressed()) {
-                spindexer.queueMessage(SpindexerMessage.LEFT);
-            }
-            if (gamepad1.dpadRightWasPressed()) {
-                spindexer.queueMessage(SpindexerMessage.RIGHT);
-            }
-            spindexer.update();
+            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
+//            if (gamepad1.dpadLeftWasPressed()) {
+//                spindexer.queueMessage(SpindexerMessage.LEFT);
+//            }
+//            if (gamepad1.dpadRightWasPressed()) {
+//                spindexer.queueMessage(SpindexerMessage.RIGHT);
+//            }
+//            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
