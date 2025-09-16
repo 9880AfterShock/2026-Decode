@@ -14,7 +14,7 @@ public class QuickSpindexer { // Prefix for commands
     private static boolean wasCounterclockwise;
 
     public static void initSpindexer(OpMode opmode) { // init motor
-        spindexer = opmode.hardwareMap.get(DcMotor.class, "roller"); // motor config name
+        spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); // motor config name
         spindexer.setZeroPowerBehavior(BRAKE);
         targetPosition = 0;
 
