@@ -18,11 +18,12 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
+    public Spindexer spindexer;
+    public String val = "";
 
     @Override
     public void runOpMode() {
-
+        spindexer = new Spindexer("spindexer", this, 537.7);
         //Init Functions
         DriveTrain.initDrive(this);
         Obelisk.initDetection(this);
@@ -52,9 +53,11 @@ public class TeleOp extends LinearOpMode {
 
             //QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
             if (gamepad1.dpadLeftWasPressed()) {
+                val = "Left";
                 spindexer.queueMessage(SpindexerMessage.LEFT);
             }
             if (gamepad1.dpadRightWasPressed()) {
+                val = "Right";
                 spindexer.queueMessage(SpindexerMessage.RIGHT);
             }
             spindexer.update();
