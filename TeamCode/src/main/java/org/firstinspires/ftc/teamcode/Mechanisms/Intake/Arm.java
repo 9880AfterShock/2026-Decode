@@ -10,8 +10,8 @@ public class Arm { // Prefix for commands
 
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double intakePosition = 0.0;
-    public static double transferPosition = 0.5;
+    public static double intakePosition = 0.4;
+    public static double transferPosition = 0.6;
     public static String intakeState = "Intaking";
     private static boolean wasIntaking;
     private static double startedIntaking;
@@ -22,8 +22,8 @@ public class Arm { // Prefix for commands
         wasIntaking = false;
     }
 
-    public static void updateIntake(boolean intakeButtonCurrentlyPressed) {
-        if (intakeButtonCurrentlyPressed){
+    public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed) {
+        if (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed){
             intakeState = "Intaking";
             arm.setPosition(intakePosition);
             if (startedIntaking != -1.0){
@@ -35,7 +35,7 @@ public class Arm { // Prefix for commands
             startedIntaking = -1.0;
         }
 
-        if (intakeState == "Intaking" && intakeButtonCurrentlyPressed && startedIntaking - opmode.getRuntime() >= 0.5) {
+        if (intakeState == "Intaking" && (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed) && startedIntaking - opmode.getRuntime() >= 0.5) {
             arm.getController().pwmDisable();
         } else {
             arm.getController().pwmEnable();

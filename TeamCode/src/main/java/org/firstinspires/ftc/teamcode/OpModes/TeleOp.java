@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
@@ -26,6 +27,8 @@ public class TeleOp extends LinearOpMode {
         Roller.initIntake(this);
         Arm.initIntake(this);
 
+        QuickSpindexer.initSpindexer(this);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -42,7 +45,9 @@ public class TeleOp extends LinearOpMode {
             Obelisk.update();
             Alignment.updateAlignment();
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
-            Arm.updateIntake(gamepad1.left_trigger > 0.1);
+            Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
+
+            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
