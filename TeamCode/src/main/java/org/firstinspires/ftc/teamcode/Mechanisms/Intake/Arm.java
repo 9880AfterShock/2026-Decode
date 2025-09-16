@@ -13,6 +13,7 @@ public class Arm { // Prefix for commands
     public static double intakePosition = 0.4;
     public static double transferPosition = 0.6;
     public static String intakeState = "Intaking";
+    public static Boolean holding;
     private static boolean wasIntaking;
     private static double startedIntaking;
 
@@ -37,12 +38,15 @@ public class Arm { // Prefix for commands
 
         if (intakeState == "Intaking" && (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed) && startedIntaking - opmode.getRuntime() >= 0.5) {
             arm.getController().pwmDisable();
+            holding = false;
         } else {
             arm.getController().pwmEnable();
+            holding = true;
         }
 
         wasIntaking = intakeButtonCurrentlyPressed;
 
         opmode.telemetry.addData("Intake Arm", intakeState);
+        opmode.telemetry.addData("Intake Arm Hold State", holding);
     }
 }
