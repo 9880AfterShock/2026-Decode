@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class QuickSpindexer { // Prefix for commands
     private static DcMotor spindexer; // init motor var
     private static OpMode opmode; // opmode var init
-    private static int targetPosition;
+    private static double targetPosition;
     private static boolean wasClockwise;
     private static boolean wasCounterclockwise;
 
@@ -24,13 +24,13 @@ public class QuickSpindexer { // Prefix for commands
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
 
         if (clockwise && !wasClockwise){
-            targetPosition += 537.7;
+            targetPosition += 537.7/3;
         }
         if (counterclockwise && !wasCounterclockwise) {
-            targetPosition -= 537.7;
+            targetPosition -= 537.7/3;
         }
 
-        spindexer.setTargetPosition(targetPosition);
+        spindexer.setTargetPosition((int) targetPosition);
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
 
