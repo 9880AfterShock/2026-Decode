@@ -18,7 +18,7 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
+    //public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
 
     @Override
     public void runOpMode() {
