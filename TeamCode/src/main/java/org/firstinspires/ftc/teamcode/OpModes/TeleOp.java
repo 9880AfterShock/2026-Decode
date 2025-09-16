@@ -9,13 +9,16 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
+    public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
 
     @Override
     public void runOpMode() {
@@ -47,8 +50,14 @@ public class TeleOp extends LinearOpMode {
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
 
-            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
-
+            //QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
+            if (gamepad1.dpadLeftWasPressed()) {
+                spindexer.queueMessage(SpindexerMessage.LEFT);
+            }
+            if (gamepad1.dpadRightWasPressed()) {
+                spindexer.queueMessage(SpindexerMessage.RIGHT);
+            }
+            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
