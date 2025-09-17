@@ -4,6 +4,7 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Shooter { // Prefix for commands
     private static DcMotor shooter; // init motor var
@@ -13,6 +14,7 @@ public class Shooter { // Prefix for commands
         shooter = opmode.hardwareMap.get(DcMotor.class, "shooter"); // motor config name
         shooter.setZeroPowerBehavior(FLOAT);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Shooter.opmode = opmode;
     }
