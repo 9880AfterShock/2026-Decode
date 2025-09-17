@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -29,6 +30,7 @@ public class TeleOp extends LinearOpMode {
         //Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
+        Shooter.initShooter(this);
 
         QuickSpindexer.initSpindexer(this);
 
@@ -49,6 +51,7 @@ public class TeleOp extends LinearOpMode {
             //Alignment.updateAlignment();
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
+            Shooter.updateShooter(gamepad1.a);
 
             QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
 //            if (gamepad1.dpadLeftWasPressed()) {
