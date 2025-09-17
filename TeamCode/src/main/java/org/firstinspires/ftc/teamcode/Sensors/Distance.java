@@ -8,10 +8,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Distance { // Prefix for commands
     private static OpMode opmode; // opmode var init
-    private static Rev2mDistanceSensor sensorDistance;
+    private static DistanceSensor sensorDistance;
 
     public static void initSensor(OpMode opmode) {
-        sensorDistance = opmode.hardwareMap.get(Rev2mDistanceSensor.class, "distanceSensor");
+        sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor");
+        Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) sensorDistance;
     }
 
     public static void updateSensor() {
