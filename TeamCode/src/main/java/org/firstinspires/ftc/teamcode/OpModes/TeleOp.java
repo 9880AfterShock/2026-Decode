@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -37,6 +38,7 @@ public class TeleOp extends LinearOpMode {
         Arm.initIntake(this);
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
+        Distance.initSensor(this);
 
         QuickSpindexer.initSpindexer(this);
 
@@ -60,6 +62,7 @@ public class TeleOp extends LinearOpMode {
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
             Shooter.updateShooter(gamepad1.a);
             Transfer.updateTransfer(gamepad1.a);
+            Distance.updateSensor();
 
 
             QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
