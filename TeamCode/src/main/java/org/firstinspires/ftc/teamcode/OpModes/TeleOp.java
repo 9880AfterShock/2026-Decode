@@ -32,7 +32,7 @@ public class TeleOp extends LinearOpMode {
         Roller.initIntake(this);
         Arm.initIntake(this);
         Shooter.initShooter(this);
-        Transfer.initTransfer(this);
+        //Transfer.initTransfer(this);
 
         QuickSpindexer.initSpindexer(this);
 
@@ -54,7 +54,7 @@ public class TeleOp extends LinearOpMode {
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
             Shooter.updateShooter(gamepad1.a);
-            Transfer.updateTransfer(gamepad1.a);
+            //Transfer.updateTransfer(gamepad1.a);
 
 
             QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);

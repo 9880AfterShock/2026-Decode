@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Queue;
 
 public class Spindexer {
@@ -61,7 +60,6 @@ public class Spindexer {
                 balls.set(index, BallType.UNKOWN);
                 break;
             case NONE:
-
                 break;
         }
     }
