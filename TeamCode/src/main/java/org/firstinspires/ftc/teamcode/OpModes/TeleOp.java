@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import static org.firstinspires.ftc.teamcode.Sensors.Obelisk.visionPortal;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.FieldCentricDrive;
@@ -24,6 +26,7 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
+    private static DistanceSensor sensorDistance;
     //public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
 
     @Override
@@ -39,6 +42,7 @@ public class TeleOp extends LinearOpMode {
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "distanceSensor");
 
         QuickSpindexer.initSpindexer(this);
 
@@ -75,6 +79,9 @@ public class TeleOp extends LinearOpMode {
 //            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
+
+            telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.MM));
+
         }
         visionPortal.close();
     }
