@@ -6,20 +6,27 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Transfer {
     private static Servo transfer; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double upPosition = 0.0;
-    public static double downPosition = 1.0;
+    public static double upPosition = 0.4;
+    public static double downPosition = 0.8;
+    public static double transferTime = -1.0;
     public static String transferState = "Down";
 
     public static void initTransfer(OpMode opmode) { // init motor
         transfer = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
         transferState = "Down";
+        transferTime = -1.0;
         Transfer.opmode = opmode;
     }
 
     public static void updateTransfer(boolean transferButtonPressed) {
         if (transferButtonPressed){
-            transfer.setPosition(upPosition);
-            transferState = "Up";
+            if (transferTime == -1.0){
+                transferTime = opmode.getRuntime();
+            }
+            if (opmode.getRuntime() - transferTime >= 1.0) {
+                transfer.setPosition(upPosition);
+                transferState = "Up";
+            }
         } else {
             transfer.setPosition(downPosition);
             transferState = "Down";

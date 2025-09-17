@@ -17,6 +17,7 @@ public class Arm { // Prefix for commands
 
     public static void initIntake(OpMode opmode) { // init motor
         arm = opmode.hardwareMap.get(Servo.class, "arm"); // motor config name
+        startedIntaking = -1.0;
         Arm.opmode = opmode;
     }
 
@@ -40,5 +41,7 @@ public class Arm { // Prefix for commands
         }
 
         opmode.telemetry.addData("Intake Arm", intakeState);
+        opmode.telemetry.addData("Intake Timer", startedIntaking);
+        opmode.telemetry.addData("Intake timer bool", opmode.getRuntime() - startedIntaking >= 0.3);
     }
 }
