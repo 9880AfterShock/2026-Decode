@@ -30,8 +30,10 @@ public class Transfer {
         } else {
             transfer.setPosition(downPosition);
             transferState = "Down";
+            transferTime = -1.0;
         }
 
         opmode.telemetry.addData("Transfer State", transferState);
+        opmode.telemetry.addData("Transfer Timer", transferTime);
     }
 }
