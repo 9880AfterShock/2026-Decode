@@ -2,34 +2,45 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import static org.firstinspires.ftc.teamcode.Sensors.Obelisk.visionPortal;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
+import org.firstinspires.ftc.teamcode.Mechanisms.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
+
+import java.lang.reflect.Field;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    public Spindexer spindexer;
-    public String val = "";
+    //public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
 
     @Override
     public void runOpMode() {
-        spindexer = new Spindexer("spindexer", this, 537.7);
+
         //Init Functions
         DriveTrain.initDrive(this);
+        //FieldCentricDrive.initDrive(this);
         Obelisk.initDetection(this);
         Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
+        Shooter.initShooter(this);
+        Transfer.initTransfer(this);
+        Distance.initSensor(this);
 
         QuickSpindexer.initSpindexer(this);
 
@@ -46,21 +57,24 @@ public class TeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             //Loop Functions
             DriveTrain.updateDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger > 0.1);
+            //FieldCentricDrive.updateDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger > 0.1, gamepad1.optionsWasPressed());
             Obelisk.update();
             Alignment.updateAlignment();
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
+            Shooter.updateShooter(gamepad1.a);
+            Transfer.updateTransfer(gamepad1.a);
+            Distance.updateSensor();
 
-            //QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
-            if (gamepad1.dpadLeftWasPressed()) {
-                val = "Left";
-                spindexer.queueMessage(SpindexerMessage.LEFT);
-            }
-            if (gamepad1.dpadRightWasPressed()) {
-                val = "Right";
-                spindexer.queueMessage(SpindexerMessage.RIGHT);
-            }
-            spindexer.update();
+
+            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
+//            if (gamepad1.dpadLeftWasPressed()) {
+//                spindexer.queueMessage(SpindexerMessage.LEFT);
+//            }
+//            if (gamepad1.dpadRightWasPressed()) {
+//                spindexer.queueMessage(SpindexerMessage.RIGHT);
+//            }
+//            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }

@@ -13,6 +13,7 @@ public class Distance { // Prefix for commands
     public static void initSensor(OpMode opmode) {
         sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor");
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) sensorDistance;
+        Distance.opmode = opmode;
     }
 
     public static void updateSensor() {
