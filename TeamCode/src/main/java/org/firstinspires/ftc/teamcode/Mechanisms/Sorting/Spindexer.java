@@ -1,10 +1,9 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Sorting;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import static java.util.List.of;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.sun.tools.javac.util.List;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
@@ -12,18 +11,18 @@ import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Queue;
 
 public class Spindexer {
     private DcMotorEx motor;
     public Queue<SpindexerMessage> messageQueue = new ArrayDeque<>(100);
     private double ticksPerRotation;
-    public List<BallType> balls = List.of(BallType.NONE, BallType.NONE, BallType.NONE);
-    private int index = 0;
-    private int offset = 0;
-    private TeleOp opmode;
+    public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
+    public int index = 0;
+    private double targetPos = 0;
     public Spindexer(String motorName, TeleOp opMode, double ticksPerRotation) {
-        opmode = opMode;
         this.ticksPerRotation = ticksPerRotation;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -48,27 +47,20 @@ public class Spindexer {
         messageQueue.add(message);
     }
 
-    private int getPosForIndex(int index) {
-        if (index >= balls.size()) {
-            offset += 1;
-        } else if (index < 0) {
-            offset -= 1;
-        }
-        return (int) (motor.getTargetPosition()+((index%balls.size())*(ticksPerRotation/3))+(ticksPerRotation*offset));
-    }
-
     public void update() {
         SpindexerMessage msg = messageQueue.poll();
         if (msg == null) {msg = SpindexerMessage.NONE;}
         switch (msg) {
             case LEFT:
                 index +=1;
-                motor.setTargetPosition(getPosForIndex(index));
+                targetPos += ticksPerRotation/3;
+                motor.setTargetPosition((int) targetPos);
                 index %= balls.size();
                 break;
             case RIGHT:
                 index -=1;
-                motor.setTargetPosition(getPosForIndex(index));
+                targetPos -= ticksPerRotation/3;
+                motor.setTargetPosition((int) targetPos);
                 index %= balls.size();
                 break;
             case INGREEN:
