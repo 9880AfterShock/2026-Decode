@@ -26,7 +26,6 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    private static DistanceSensor sensorDistance;
     //public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
 
     @Override
@@ -42,7 +41,6 @@ public class TeleOp extends LinearOpMode {
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "distanceSensor");
 
         QuickSpindexer.initSpindexer(this);
 
@@ -79,9 +77,6 @@ public class TeleOp extends LinearOpMode {
 //            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
-
-            telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.MM));
-
         }
         visionPortal.close();
     }
