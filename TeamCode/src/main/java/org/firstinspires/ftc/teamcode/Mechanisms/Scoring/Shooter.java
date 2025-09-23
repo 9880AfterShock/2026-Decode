@@ -12,7 +12,8 @@ public class Shooter { // Prefix for commands
     public static void initShooter(OpMode opmode) { // init motor
         shooter = opmode.hardwareMap.get(DcMotor.class, "shooter"); // motor config name
         shooter.setZeroPowerBehavior(FLOAT);
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Shooter.opmode = opmode;
