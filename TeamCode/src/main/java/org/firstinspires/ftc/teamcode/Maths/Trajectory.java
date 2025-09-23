@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.Maths;
 
-import com.acmerobotics.roadrunner.Vector2d;
-
 public class Trajectory {
-    public static RadialVector getVelocity(double distance, double height,double gravity) {
-        double theta = Math.atan2(height,distance);
-        double dividen = Math.tan(theta)*distance-gravity*Math.pow(distance,2);
-        double divisor = 2*Math.pow(Math.cos(theta),2);
-        double speed = Math.sqrt(dividen/divisor);
-        return new RadialVector(theta,speed);
+    public static LaunchInformation getVelocity(double distance, double height, double wheel_radius, double angle) {
+        double gravity = 9.81;
+        double dividen = gravity*Math.pow(distance,2);
+        double divisor = (Math.tan(angle)*distance-height)*2*Math.pow(Math.cos(angle),2);
+        double magnitude = Math.sqrt(dividen/divisor);
+        double rpm = (6/(2*Math.PI*wheel_radius))*Math.sqrt(dividen/((Math.tan(angle)-height)* Math.pow(Math.cos(angle),2)));
+        return new LaunchInformation(angle,magnitude,rpm);
     }
 }
