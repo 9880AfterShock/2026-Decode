@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
+import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.lang.reflect.Field;
+import java.sql.Driver;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
@@ -41,6 +43,7 @@ public class TeleOp extends LinearOpMode {
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
+        DriverTest.initControls(this);
 
 //        QuickSpindexer.initSpindexer(this);
 
@@ -65,6 +68,7 @@ public class TeleOp extends LinearOpMode {
             Shooter.updateShooter(gamepad1.a);
             Transfer.updateTransfer(gamepad1.a);
             Distance.updateSensor();
+            DriverTest.update(gamepad2.dpadUpWasPressed(), gamepad2.dpadDownWasPressed(), gamepad2.aWasPressed());
 
 
 //            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
