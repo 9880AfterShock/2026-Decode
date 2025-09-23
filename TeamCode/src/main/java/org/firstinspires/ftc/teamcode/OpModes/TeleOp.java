@@ -26,7 +26,7 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    //public Spindexer spindexer = new Spindexer("spindexer", this, 537.7);
+    public Spindexer spindexer = new Spindexer("spindexer", this, 1425.1);
 
     @Override
     public void runOpMode() {
@@ -42,7 +42,7 @@ public class TeleOp extends LinearOpMode {
         Transfer.initTransfer(this);
         Distance.initSensor(this);
 
-        QuickSpindexer.initSpindexer(this);
+//        QuickSpindexer.initSpindexer(this);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -67,14 +67,14 @@ public class TeleOp extends LinearOpMode {
             Distance.updateSensor();
 
 
-            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
-//            if (gamepad1.dpadLeftWasPressed()) {
-//                spindexer.queueMessage(SpindexerMessage.LEFT);
-//            }
-//            if (gamepad1.dpadRightWasPressed()) {
-//                spindexer.queueMessage(SpindexerMessage.RIGHT);
-//            }
-//            spindexer.update();
+//            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
+            if (gamepad1.dpadLeftWasPressed()) {
+                spindexer.queueMessage(SpindexerMessage.LEFT);
+            }
+            if (gamepad1.dpadRightWasPressed()) {
+                spindexer.queueMessage(SpindexerMessage.RIGHT);
+            }
+            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
