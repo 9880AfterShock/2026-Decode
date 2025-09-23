@@ -28,7 +28,7 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    public Spindexer spindexer = new Spindexer("spindexer", this, 1425.1);
+    public Spindexer spindexer;
 
     @Override
     public void runOpMode() {
@@ -43,7 +43,7 @@ public class TeleOp extends LinearOpMode {
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
-        DriverTest.initControls(this);
+        spindexer = new Spindexer("spindexer", this, 1425.1);
 
 //        QuickSpindexer.initSpindexer(this);
 
