@@ -23,6 +23,7 @@ public class Spindexer {
     public int index = 0;
     private double targetPos = 0;
     public Spindexer(String motorName, TeleOp opMode, double ticksPerRotation) {
+        index = 0;
         this.ticksPerRotation = ticksPerRotation;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -76,7 +77,6 @@ public class Spindexer {
                 balls.set(index, BallType.UNKOWN);
                 break;
             case NONE:
-
                 break;
         }
     }
