@@ -66,9 +66,8 @@ public class TeleOp extends LinearOpMode {
             Alignment.updateAlignment();
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
-            Transfer.updateTransfer(gamepad1.a);
             Distance.updateSensor();
-            DriverTest.update(gamepad2.dpadUpWasPressed(), gamepad2.dpadDownWasPressed(), gamepad2.a);
+            DriverTest.update(gamepad1.dpadUpWasPressed(), gamepad1.dpadDownWasPressed(), gamepad1.a);
 
 
 //            QuickSpindexer.updateSpindexer(gamepad1.dpad_right, gamepad1.dpad_left);
