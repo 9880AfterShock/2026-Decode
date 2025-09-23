@@ -17,7 +17,7 @@ public class DriverTest {
 
     private static double lastPos;
 
-    private static double desSpeed = 0;
+    private static double desSpeed = 2000*(Math.PI*2);
 
     private static double lastTime;
 
@@ -34,11 +34,11 @@ public class DriverTest {
         double speedRadianMinutes = Math.abs((((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60))*(Math.PI*2));
         if (increase) {
             distanceFromGoal += 1;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
         }
         if (decrease){
             distanceFromGoal -= 1;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
         }
         if (fire) {
             Shooter.updateShooter(desSpeed);
@@ -55,7 +55,7 @@ public class DriverTest {
         lastTime = nowTime;
 
         opmode.telemetry.addData("Distance From Goal", distanceFromGoal);
-        opmode.telemetry.addData("Speed RadianMinutes", speedRadianMinutes);
-        opmode.telemetry.addData("Desired Speed RadianMinutes", desSpeed);
+        opmode.telemetry.addData("Speed RPM", speedRadianMinutes/(Math.PI*2));
+        opmode.telemetry.addData("Desired Speed RPM", desSpeed/(Math.PI*2));
     }
 }
