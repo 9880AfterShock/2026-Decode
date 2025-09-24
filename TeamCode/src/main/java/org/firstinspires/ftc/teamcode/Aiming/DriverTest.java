@@ -44,7 +44,7 @@ public class DriverTest {
             Shooter.updateShooter(desSpeed);
             if (speedRadianMinutes <= desSpeed) {
                 Transfer.updateTransfer(true);
-                opmode.spindexer.queueMessage(SpindexerMessage.EJECT);
+                //opmode.spindexer.queueMessage(SpindexerMessage.EJECT);
             }
         } else {
             Shooter.updateShooter(0);
