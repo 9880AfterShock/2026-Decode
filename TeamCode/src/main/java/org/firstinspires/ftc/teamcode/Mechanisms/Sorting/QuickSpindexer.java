@@ -27,10 +27,10 @@ public class QuickSpindexer { // Prefix for commands
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
 
         if (clockwise && !wasClockwise){
-            targetPosition += 537.7/3;
+            targetPosition += 1425.1/3;
         }
         if (counterclockwise && !wasCounterclockwise) {
-            targetPosition -= 537.7/3;
+            targetPosition -= 1425.1/3;
         }
 
         spindexer.setTargetPosition((int) targetPosition);
