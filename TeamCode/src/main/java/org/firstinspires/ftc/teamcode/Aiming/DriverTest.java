@@ -35,7 +35,7 @@ public class DriverTest {
         if (increase) {
             distanceFromGoal += 1;
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
-        }E
+        }
         if (decrease){
             distanceFromGoal -= 1;
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
