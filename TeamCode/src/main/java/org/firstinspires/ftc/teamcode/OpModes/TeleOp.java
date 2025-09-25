@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.OpModes;
+import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
 import static org.firstinspires.ftc.teamcode.Sensors.Obelisk.visionPortal;
 
+import com.acmerobotics.roadrunner.ftc.LazyImu;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -18,6 +22,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.lang.reflect.Field;
@@ -29,6 +34,8 @@ public class TeleOp extends LinearOpMode {
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
     //public Spindexer spindexer;
+
+    //TwoDeadWheelLocalizer myLocalizer = new TwoDeadWheelLocalizer(hardwareMap, MecanumDrive.lazyImu.get(), PARAMS.inPerTick, pose);
 
     @Override
     public void runOpMode() {
