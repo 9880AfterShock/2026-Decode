@@ -17,7 +17,7 @@ public class DriverTest {
 
     private static double lastPos;
 
-    private static double desSpeed = 5000*(Math.PI*2);
+    private static double desSpeed = 6000*(Math.PI*2);
 
     private static double lastTime;
 
