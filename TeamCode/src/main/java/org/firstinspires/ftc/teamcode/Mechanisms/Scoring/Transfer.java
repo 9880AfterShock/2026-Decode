@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Transfer {
     private static Servo transfer; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double upPosition = 0.5;
+    public static double upPosition = 0.67;
     public static double downPosition = 1.0;
     public static double transferTime = -1.0;
     public static String transferState = "Down";
