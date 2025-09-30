@@ -56,25 +56,25 @@ public class Spindexer {
                 index +=1;
                 targetPos += ticksPerRotation/3;
                 motor.setTargetPosition((int) targetPos);
-                index %= balls.size();
+                index = index%balls.size();
                 break;
             case RIGHT:
                 index -=1;
                 targetPos -= ticksPerRotation/3;
                 motor.setTargetPosition((int) targetPos);
-                index %= balls.size();
+                index = index%balls.size();
                 break;
             case INGREEN:
-                balls.set(index, BallType.GREEN);
+                balls.set(index%balls.size(), BallType.GREEN);
                 break;
             case INPURPLE:
-                balls.set(index, BallType.PURPLE);
+                balls.set(index%balls.size(), BallType.PURPLE);
                 break;
             case EJECT:
-                balls.set(index, BallType.NONE);
+                balls.set(index%balls.size(), BallType.NONE);
                 break;
             case INUNKOWN:
-                balls.set(index, BallType.UNKOWN);
+                balls.set(index%balls.size(), BallType.UNKOWN);
                 break;
             case NONE:
                 break;

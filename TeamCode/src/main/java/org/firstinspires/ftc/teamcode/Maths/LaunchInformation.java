@@ -6,7 +6,6 @@ public class LaunchInformation {
     public double magnitude;
     public LaunchInformation(double angle, double magnitude, double rpm) {
         this.angle = angle;
-        this.magnitude = magnitude;
         this.rpm = rpm;
     }
 }
