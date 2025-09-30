@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
@@ -50,6 +51,7 @@ public class TeleOp extends LinearOpMode {
         Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
+        Color.initSensor(this);
         DriverTest.initControls(this);
         //spindexer = new Spindexer("spindexer", this, 1425.1);
 
@@ -74,6 +76,7 @@ public class TeleOp extends LinearOpMode {
             Roller.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper, 1.0);
             Arm.updateIntake(gamepad1.left_trigger > 0.1, gamepad1.left_bumper);
             Distance.updateSensor();
+            Color.updateSensor(2.5F);
             DriverTest.update(gamepad1.dpadUpWasPressed(), gamepad1.dpadDownWasPressed(), gamepad1.a);
 
 
