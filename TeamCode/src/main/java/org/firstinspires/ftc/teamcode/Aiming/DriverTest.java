@@ -49,6 +49,8 @@ public class DriverTest {
             }
         } else {
             Shooter.updateShooter(0);
+        }
+        if (!fire) {
             Transfer.updateTransfer(false);
         }
 
