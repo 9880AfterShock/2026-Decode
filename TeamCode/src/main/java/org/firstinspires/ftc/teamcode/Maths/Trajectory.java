@@ -6,10 +6,10 @@ public class Trajectory {
         double vel = Math.sqrt(
                 gravity*Math.pow(x,2)
                 / //-----------------
-                ((Math.tan(angle)*x)-y)*2*Math.pow(Math.cos(angle),2)
+                (2*Math.pow(Math.cos(angle),2)*(Math.tan(angle)*x-y))
 
         );
-        double rpm = ((60*vel)/(2*Math.PI*wheel_radius));
+        double rpm = ((60)/(2*Math.PI*wheel_radius))*vel;
         return new LaunchInformation(angle,vel,rpm);
     }
 }
