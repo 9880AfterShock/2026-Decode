@@ -23,7 +23,7 @@ public class Color {
     }
 
     public static void updateSensor(float gain) {
-        ///opmode.telemetry.addData("Distance Sensor", sensorColor.getDistance(DistanceUnit.MM));
+        //opmode.telemetry.addData("Distance Sensor", sensorColor.getDistance(DistanceUnit.MM));
         sensorColor.setGain(gain);
 
         NormalizedRGBA colors = sensorColor.getNormalizedColors();
