@@ -18,7 +18,7 @@ public class DriverTest {
 
     private static double lastPos;
 
-    private static double desSpeed = 6000*(Math.PI*2);
+    private static double desSpeed = 4000*(Math.PI*2);
 
     private static double lastTime;
 
@@ -34,16 +34,16 @@ public class DriverTest {
         double nowTime = opmode.getRuntime();
         double speedRadianMinutes = Math.abs((((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60))*(Math.PI*2));
         if (increase) {
-            distanceFromGoal += 1;
+            desSpeed += 100*(Math.PI*2);
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
         }
         if (decrease){
-            distanceFromGoal -= 1;
+            desSpeed -= 100*(Math.PI*2);
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
         }
         if (rev) {
             Shooter.updateShooter(desSpeed);
-            if (speedRadianMinutes <= desSpeed/2 && fire) {
+            if (speedRadianMinutes >= desSpeed/2 && fire) {
                 Transfer.updateTransfer(true);
                 ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
             }

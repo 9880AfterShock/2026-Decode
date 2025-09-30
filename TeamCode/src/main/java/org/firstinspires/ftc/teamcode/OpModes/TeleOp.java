@@ -25,7 +25,6 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    public Spindexer spindexer;
 
     //TwoDeadWheelLocalizer myLocalizer = new TwoDeadWheelLocalizer(hardwareMap, MecanumDrive.lazyImu.get(), PARAMS.inPerTick, pose);
 
@@ -35,6 +34,7 @@ public class TeleOp extends LinearOpMode {
         //Init Functions
         DriveTrain.initDrive(this);
         RunLater.setup(this);
+        ControlManager.setup(this,new Spindexer("spindexer", this, 1425.1));
         //FieldCentricDrive.initDrive(this);
         Obelisk.initDetection(this);
         Alignment.initAlignment(this);
@@ -45,7 +45,6 @@ public class TeleOp extends LinearOpMode {
         Distance.initSensor(this);
         Color.initSensor(this);
         DriverTest.initControls(this);
-        spindexer = new Spindexer("spindexer", this, 1425.1);
 
         QuickSpindexer.initSpindexer(this);
 
@@ -62,7 +61,6 @@ public class TeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             ControlManager.update();
             RunLater.update();
-            spindexer.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }

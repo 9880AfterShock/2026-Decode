@@ -74,6 +74,6 @@ public class ControlManager {
         if (spinRight && Transfer.spindexerSafe) {
             spindexer.queueMessage(SpindexerMessage.RIGHT);
         }
-
+        spindexer.update();
     }
 }
