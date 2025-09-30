@@ -65,16 +65,16 @@ public class Spindexer {
                 index = index%balls.size();
                 break;
             case INGREEN:
-                balls.set(index%balls.size(), BallType.GREEN);
+                balls.set(Math.abs(index%balls.size()), BallType.GREEN);
                 break;
             case INPURPLE:
-                balls.set(index%balls.size(), BallType.PURPLE);
+                balls.set(Math.abs(index%balls.size()), BallType.PURPLE);
                 break;
             case EJECT:
-                balls.set(index%balls.size(), BallType.NONE);
+                balls.set(Math.abs(index%balls.size()), BallType.NONE);
                 break;
             case INUNKOWN:
-                balls.set(index%balls.size(), BallType.UNKOWN);
+                balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
             case NONE:
                 break;

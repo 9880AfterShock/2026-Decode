@@ -9,11 +9,7 @@ public class Trajectory {
                 ((Math.tan(angle)*x)-y)*2*Math.pow(Math.cos(angle),2)
 
         );
-        double rpm = (60/(2*Math.PI*wheel_radius))*Math.sqrt(
-                gravity*Math.pow(x,2)
-                / //-----------------
-                (Math.tan(angle)-y)*Math.pow(Math.cos(angle),2)
-        );
+        double rpm = ((60*vel)/(2*Math.PI*wheel_radius));
         return new LaunchInformation(angle,vel,rpm);
     }
 }
