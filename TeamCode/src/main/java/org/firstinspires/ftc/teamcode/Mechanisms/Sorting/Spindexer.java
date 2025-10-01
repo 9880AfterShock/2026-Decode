@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Queue;
 
 public class Spindexer {
-    private DcMotorEx motor;
+    private final DcMotorEx motor;
     public Queue<SpindexerMessage> messageQueue = new ArrayDeque<>(100);
-    private double ticksPerRotation;
+    private final double ticksPerRotation;
     public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
     public int index = 0;
     private double targetPos = 0;
@@ -53,31 +53,39 @@ public class Spindexer {
         if (msg == null) {msg = SpindexerMessage.NONE;}
         switch (msg) {
             case LEFT:
-                index +=1;
+                index = Math.floorMod(index+1,balls.size());
                 targetPos += ticksPerRotation/3;
                 motor.setTargetPosition((int) targetPos);
-                index = index%balls.size();
                 break;
             case RIGHT:
-                index -=1;
+                index = Math.floorMod(index-1,balls.size());
                 targetPos -= ticksPerRotation/3;
                 motor.setTargetPosition((int) targetPos);
-                index = index%balls.size();
                 break;
             case INGREEN:
-                balls.set(Math.abs(index%balls.size()), BallType.GREEN);
+                balls.set(index, BallType.GREEN);
                 break;
             case INPURPLE:
-                balls.set(Math.abs(index%balls.size()), BallType.PURPLE);
+                balls.set(index, BallType.PURPLE);
                 break;
             case EJECT:
-                balls.set(Math.abs(index%balls.size()), BallType.NONE);
+                balls.set(index, BallType.NONE);
                 break;
             case INUNKOWN:
                 balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
             case NONE:
                 break;
+        }
+    }
+
+    public void gotoBallType(BallType ballType) {
+        if (balls.get(Math.abs(index%balls.size())) != ballType) {
+            if (balls.get(Math.floorMod(index + 1, balls.size())) == ballType) {
+                queueMessage(SpindexerMessage.LEFT);
+            } else if (balls.get(Math.floorMod(index - 1, balls.size())) == ballType) {
+                queueMessage(SpindexerMessage.RIGHT);
+            }
         }
     }
 }

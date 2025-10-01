@@ -105,4 +105,27 @@ public class Spindexer {
         spindexer.update();
         Assert.assertEquals(0, spindexer.index);
     }
+
+    @Test
+    public void goto_ball_type_test() {
+        Assert.assertEquals(List.of(BallType.NONE, BallType.NONE, BallType.NONE), spindexer.balls);
+        Assert.assertEquals(0, spindexer.index);
+        spindexer.queueMessage(SpindexerMessage.INGREEN);
+        spindexer.update();
+        spindexer.gotoBallType(BallType.GREEN);
+        spindexer.update();
+        Assert.assertEquals(0, spindexer.index);
+        spindexer.queueMessage(SpindexerMessage.LEFT);
+        spindexer.update();
+        Assert.assertEquals(1, spindexer.index);
+        spindexer.gotoBallType(BallType.GREEN);
+        spindexer.update();
+        Assert.assertEquals(0, spindexer.index);
+        spindexer.queueMessage(SpindexerMessage.RIGHT);
+        spindexer.update();
+        Assert.assertEquals(2, spindexer.index);
+        spindexer.gotoBallType(BallType.GREEN);
+        spindexer.update();
+        Assert.assertEquals(0, spindexer.index);
+    }
 }
