@@ -47,6 +47,9 @@ public class KStaticTuningTest extends LinearOpMode {
             if (gamepad1.aWasPressed()){
                 power += 0.01;
             }
+            if (gamepad1.bWasPressed()){
+                power -= 0.01;
+            }
 
             leftFront.setPower(power);
             leftRear.setPower(power);
