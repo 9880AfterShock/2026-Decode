@@ -45,7 +45,7 @@ public class KStaticTuningTest extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (gamepad1.aWasPressed()){
-                power += 0.05;
+                power += 0.01;
             }
 
             leftFront.setPower(power);
