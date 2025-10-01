@@ -29,6 +29,11 @@ public class DriveTrain { // Prefix for commands
         rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         leftRear.setZeroPowerBehavior(BRAKE);
         leftFront.setZeroPowerBehavior(BRAKE);
         rightRear.setZeroPowerBehavior(BRAKE);
