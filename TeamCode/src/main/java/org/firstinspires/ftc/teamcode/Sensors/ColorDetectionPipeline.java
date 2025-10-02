@@ -1,54 +1,88 @@
 package org.firstinspires.ftc.teamcode.Sensors;
 
+import android.graphics.Canvas;
+
+import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvPipeline;
+import org.firstinspires.ftc.vision.VisionProcessor;
 
-public class ColorDetectionPipeline extends OpenCvPipeline {
+public class ColorDetectionPipeline implements VisionProcessor {
+    public enum DetectedColor { PURPLE, GREEN, NONE }
 
-    // Define the square ROI (top-left corner and size)
-    private final int REGION_TOPLEFT_X = 100;
-    private final int REGION_TOPLEFT_Y = 100;
-    private final int REGION_WIDTH = 50;
-    private final int REGION_HEIGHT = 50;
+    private volatile DetectedColor[] slotColors = new DetectedColor[]{DetectedColor.NONE, DetectedColor.NONE, DetectedColor.NONE};
 
-    // HSV color bounds for detection (example: red)
-    private final Scalar lowerHSV = new Scalar(0, 100, 100);  // Lower bound of color
-    private final Scalar upperHSV = new Scalar(10, 255, 255); // Upper bound of color
+    // Example ROI settings (tweak for your camera view)
+    private final Rect roiFront = new Rect(100, 100, 100, 100);       // x, y, width, height
+    private final Rect roiBackLeft = new Rect(50, 250, 100, 100);
+    private final Rect roiBackRight = new Rect(150, 250, 100, 100);
 
-    private double colorPercentage = 0;
-
-    public double getColorPercentage() {
-        return colorPercentage;
+    public void init(int width, int height) {
+        // You can adjust ROIs here if needed, based on width/height
     }
 
     @Override
-    public Mat processFrame(Mat input) {
-        // Convert to HSV
+    public void init(int width, int height, CameraCalibration calibration) {
+    }
+
+    @Override
+    public Mat processFrame(Mat input, long captureTimeNanos) {
         Mat hsv = new Mat();
         Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
 
-        // Define region of interest
-        Rect roi = new Rect(REGION_TOPLEFT_X, REGION_TOPLEFT_Y, REGION_WIDTH, REGION_HEIGHT);
-        Mat region = hsv.submat(roi);
+        // HSV Ranges
+        Scalar purpleLower = new Scalar(200, 50, 50);
+        Scalar purpleUpper = new Scalar(320, 255, 255);
 
-        // Apply mask
-        Mat mask = new Mat();
-        Core.inRange(region, lowerHSV, upperHSV, mask);
+        Scalar greenLower = new Scalar(70, 50, 50);
+        Scalar greenUpper = new Scalar(160, 255, 255);
 
-        // Count non-zero pixels (i.e., matching color)
-        int matchingPixels = Core.countNonZero(mask);
-        int totalPixels = REGION_WIDTH * REGION_HEIGHT;
+        // Process each slot
+        slotColors[0] = detectColorInRegion(hsv.submat(roiFront), purpleLower, purpleUpper, greenLower, greenUpper);
+        slotColors[1] = detectColorInRegion(hsv.submat(roiBackLeft), purpleLower, purpleUpper, greenLower, greenUpper);
+        slotColors[2] = detectColorInRegion(hsv.submat(roiBackRight), purpleLower, purpleUpper, greenLower, greenUpper);
 
-        // Calculate percentage of matching color
-        colorPercentage = (double) matchingPixels / totalPixels;
+        // Optional: draw rectangles to show ROI zones
+        Imgproc.rectangle(input, roiFront.tl(), roiFront.br(), new Scalar(255, 0, 0), 2);     // Blue
+        Imgproc.rectangle(input, roiBackLeft.tl(), roiBackLeft.br(), new Scalar(0, 255, 0), 2); // Green
+        Imgproc.rectangle(input, roiBackRight.tl(), roiBackRight.br(), new Scalar(0, 0, 255), 2); // Red
 
-        // Optional: draw rectangle on screen
-        Imgproc.rectangle(input, roi.tl(), roi.br(), new Scalar(0, 255, 0), 2);
+        hsv.release();
+        return input;
+    }
 
-        return input; // return input to display it on screen
+    @Override
+    public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {
+
+    }
+
+    private DetectedColor detectColorInRegion(Mat region, Scalar purpleLow, Scalar purpleHigh, Scalar greenLow, Scalar greenHigh) {
+        Mat purpleMask = new Mat();
+        Mat greenMask = new Mat();
+
+        Core.inRange(region, purpleLow, purpleHigh, purpleMask);
+        Core.inRange(region, greenLow, greenHigh, greenMask);
+
+        double purpleCount = Core.countNonZero(purpleMask);
+        double greenCount = Core.countNonZero(greenMask);
+
+        purpleMask.release();
+        greenMask.release();
+
+        if (purpleCount > greenCount && purpleCount > 200) {
+            return DetectedColor.PURPLE;
+        } else if (greenCount > purpleCount && greenCount > 200) {
+            return DetectedColor.GREEN;
+        } else {
+            return DetectedColor.NONE;
+        }
+    }
+
+    public DetectedColor[] getSlotColors() {
+        return slotColors;
     }
 }
