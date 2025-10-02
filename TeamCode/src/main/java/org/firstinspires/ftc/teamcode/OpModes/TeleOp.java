@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 import static org.firstinspires.ftc.teamcode.Sensors.Obelisk.visionPortal;
+import static org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera.colorVisionPortal;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -36,7 +38,8 @@ public class TeleOp extends LinearOpMode {
         RunLater.setup(this);
         ControlManager.setup(this,new Spindexer("spindexer", this, 1425.1));
         //FieldCentricDrive.initDrive(this);
-        Obelisk.initDetection(this);
+        //Obelisk.initDetection(this);
+        SpindexerCamera.initDetection(this);
         Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
@@ -64,6 +67,6 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
-        visionPortal.close();
+        SpindexerCamera.stopVision();
     }
 }

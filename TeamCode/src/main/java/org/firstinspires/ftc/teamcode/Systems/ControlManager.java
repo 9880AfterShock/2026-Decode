@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 public class ControlManager {
@@ -55,7 +56,8 @@ public class ControlManager {
         //other stuff
         DriveTrain.updateDrive(strafe, drive, turn, slowMode);
 
-        Obelisk.update();
+        //Obelisk.update();
+        SpindexerCamera.update();
         Alignment.updateAlignment();
 
         Roller.updateIntake(intaking, ejecting, 1.0);
