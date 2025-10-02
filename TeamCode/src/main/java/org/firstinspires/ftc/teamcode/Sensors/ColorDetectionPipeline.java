@@ -35,11 +35,11 @@ public class ColorDetectionPipeline implements VisionProcessor {
         Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
 
         // HSV Ranges
-        Scalar purpleLower = new Scalar(200, 50, 50);
-        Scalar purpleUpper = new Scalar(320, 255, 255);
+        Scalar purpleLower = new Scalar((double) 200 /2, 50, 50);
+        Scalar purpleUpper = new Scalar((double) 320 /2, 255, 255);
 
-        Scalar greenLower = new Scalar(70, 50, 50);
-        Scalar greenUpper = new Scalar(160, 255, 255);
+        Scalar greenLower = new Scalar((double) 70 /2, 50, 50);
+        Scalar greenUpper = new Scalar((double) 160 /2, 255, 255);
 
         // Process each slot
         slotColors[0] = detectColorInRegion(hsv.submat(roiFront), purpleLower, purpleUpper, greenLower, greenUpper);
