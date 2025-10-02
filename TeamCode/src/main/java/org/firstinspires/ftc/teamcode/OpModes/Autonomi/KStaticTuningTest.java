@@ -1,19 +1,31 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 import static org.firstinspires.ftc.teamcode.Sensors.Obelisk.visionPortal;
 
+import com.acmerobotics.roadrunner.ftc.Encoder;
+import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
+import com.acmerobotics.roadrunner.ftc.RawEncoder;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="KStatic Tuning Test")
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.VoltageUnit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@TeleOp(name="KStatic Tuning Test")
 public class KStaticTuningTest extends LinearOpMode {
 
     private static DcMotor leftRear; // init motor vars
-    private static DcMotor leftFront;
+    private static DcMotorEx leftFront;
     private static DcMotor rightRear;
     private static DcMotor rightFront;
     private static Double power;
+    List<Double> ratioList = new ArrayList<>();
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
@@ -23,7 +35,7 @@ public class KStaticTuningTest extends LinearOpMode {
         power = 0.0;
 
         leftRear = hardwareMap.get(DcMotor.class, "leftRear"); // motor config names
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         rightRear = hardwareMap.get(DcMotor.class, "rightRear");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
 
@@ -35,6 +47,9 @@ public class KStaticTuningTest extends LinearOpMode {
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE); // motor directions
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        Encoder par = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "rightFront")));
+        Encoder perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "leftRear")));
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -45,10 +60,13 @@ public class KStaticTuningTest extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (gamepad1.aWasPressed()){
-                power += 0.01;
+                power += 0.005;
             }
             if (gamepad1.bWasPressed()){
-                power -= 0.01;
+                power -= 0.005;
+            }
+            if (gamepad1.xWasPressed()){
+
             }
 
             leftFront.setPower(power);
@@ -56,7 +74,9 @@ public class KStaticTuningTest extends LinearOpMode {
             rightFront.setPower(power);
             rightRear.setPower(power);
 
-            telemetry.addData("Power", power);
+            telemetry.addData("Power (to motor)", power);
+            telemetry.addData("Power (amps)", leftFront.getCurrent(CurrentUnit.AMPS));
+            telemetry.addData("Voltage (volts)", hardwareMap.voltageSensor.iterator().next().getVoltage());
             telemetry.addData("Run Time: ", runtime.toString());
             telemetry.update();
         }
