@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class Spindexer {
+public class SpindexerTests {
     public org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer spindexer;
     public FakeDcMotorEx fakemotor;
     public double ticks = 300;
