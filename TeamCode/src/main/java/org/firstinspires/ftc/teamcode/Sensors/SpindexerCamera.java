@@ -28,10 +28,10 @@ public class SpindexerCamera {
         ColorDetectionPipeline.DetectedColor[] detectedColors = colorPipeline.getSlotColors();
 
         for (int i = 0; i < 3; i++) {
-            if (detectedColors[i] == ColorDetectionPipeline.DetectedColor.PURPLE) {
-                Inventory[i] = Slots.PURPLE;
-            } else if (detectedColors[i] == ColorDetectionPipeline.DetectedColor.GREEN) {
+            if (detectedColors[i] == ColorDetectionPipeline.DetectedColor.GREEN) {
                 Inventory[i] = Slots.GREEN;
+            } else if (detectedColors[i] == ColorDetectionPipeline.DetectedColor.PURPLE) {
+                Inventory[i] = Slots.PURPLE;
             } else {
                 Inventory[i] = Slots.NONE;
             }

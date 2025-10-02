@@ -68,5 +68,6 @@ public class TeleOp extends LinearOpMode {
             telemetry.update();
         }
         SpindexerCamera.stopVision();
+        //Obelisk.stopVision();
     }
 }

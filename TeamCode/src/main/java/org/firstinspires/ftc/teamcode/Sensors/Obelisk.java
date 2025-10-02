@@ -64,6 +64,10 @@ public class Obelisk {
         opmode.telemetry.addData("Motif Pattern", Motif);
     }
 
+    public static void stopVision() {
+        visionPortal.close();
+    }
+
 
 
 
