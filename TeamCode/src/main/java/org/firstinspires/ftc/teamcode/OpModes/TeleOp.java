@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.Mechanisms.Wall_E;
 import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -47,6 +48,7 @@ public class TeleOp extends LinearOpMode {
         Transfer.initTransfer(this);
         Distance.initSensor(this);
         Color.initSensor(this);
+        Wall_E.initWebcam(this);
         DriverTest.initControls(this);
 
         QuickSpindexer.initSpindexer(this);

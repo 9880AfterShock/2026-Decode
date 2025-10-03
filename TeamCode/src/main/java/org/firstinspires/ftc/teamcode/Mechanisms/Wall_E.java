@@ -26,7 +26,7 @@ public class Wall_E {
         Wall_E.opmode = opmode;
     }
 
-    public static void updateTransfer(boolean scanButtonPressed, boolean decodeButtonPressed) {
+    public static void updateTarget(boolean scanButtonPressed, boolean decodeButtonPressed) {
         if (scanButtonPressed){
             state = "scanning";
             leftWheel.setPosition(leftScanPos);
