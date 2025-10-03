@@ -20,8 +20,8 @@ public class Wall_E {
     private static double rightDecodePos = 0.0;
 
     public static void initWebcam(OpMode opmode) { // init motor
-        leftWheel = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
-        rightWheel = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
+        leftWheel = opmode.hardwareMap.get(Servo.class, "leftWall-E"); // motor config name
+        rightWheel = opmode.hardwareMap.get(Servo.class, "rightWall-E"); // motor config name
         state = "unknown";
         Wall_E.opmode = opmode;
     }
