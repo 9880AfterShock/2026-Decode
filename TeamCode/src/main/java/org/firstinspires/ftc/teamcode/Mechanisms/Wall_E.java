@@ -14,10 +14,10 @@ public class Wall_E {
     private static Servo rightWheel;
     private static OpMode opmode; // opmode var init
     private static String state = "unknown";
-    private static double leftScanPos = 0.5;
-    private static double rightScanPos = 0.5;
-    private static double leftDecodePos = 0.0;
-    private static double rightDecodePos = 0.0;
+    private final static double leftScanPos = 0.5; //0.45?
+    private final static double rightScanPos = 0.5; //0.475?
+    private final static double leftDecodePos = 0.525;
+    private final static double rightDecodePos = 0.525;
 
     public static void initWebcam(OpMode opmode) { // init motor
         leftWheel = opmode.hardwareMap.get(Servo.class, "leftWall-E"); // motor config name
