@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Sorting;
 
 import static java.util.List.of;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
@@ -22,7 +23,7 @@ public class Spindexer {
     public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
     public int index = 0;
     private double targetPos = 0;
-    public Spindexer(String motorName, TeleOp opMode, double ticksPerRotation) {
+    public Spindexer(String motorName, OpMode opMode, double ticksPerRotation) {
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);

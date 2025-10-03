@@ -36,7 +36,7 @@ public class TeleOp extends LinearOpMode {
         //Init Functions
         DriveTrain.initDrive(this);
         RunLater.setup(this);
-        ControlManager.setup(this,new Spindexer("spindexer", this, 1425.1));
+        ControlManager.setup(this);
         //FieldCentricDrive.initDrive(this);
         //Obelisk.initDetection(this);
         SpindexerCamera.initDetection(this);
