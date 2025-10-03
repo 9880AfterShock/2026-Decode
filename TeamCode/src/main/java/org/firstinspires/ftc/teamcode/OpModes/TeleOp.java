@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
+import org.firstinspires.ftc.teamcode.Mechanisms.Generic.SpeedMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
@@ -20,6 +21,7 @@ import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
+import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -65,7 +67,9 @@ public class TeleOp extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             ControlManager.update();
+            SpeedMotor.update_all();
             RunLater.update();
+            RunCondition.update();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
