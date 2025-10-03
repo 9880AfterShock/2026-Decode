@@ -22,8 +22,8 @@ public class ControlManager {
     public static Spindexer spindexer;
     private static Gamepad driver;
     private static Gamepad operator;
-    public static void setup(OpMode opMode, Spindexer spindexer) {
-        ControlManager.spindexer = spindexer;
+    public static void setup(OpMode opMode) {
+        ControlManager.spindexer = new Spindexer("spindexer", opMode, 1425.1);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
@@ -48,7 +48,7 @@ public class ControlManager {
         boolean increase = driver.dpadUpWasPressed();
         boolean decrease = driver.dpadDownWasPressed();
         boolean rev = operator.a;
-        boolean fire = driver.a;
+        boolean fire = driver.right_bumper;
 
 
 

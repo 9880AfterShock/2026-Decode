@@ -12,13 +12,13 @@ import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 public class DriverTest {
     private static OpMode opmode;
-    public static int distanceFromGoal;
+    public static double distanceFromGoal;
 
-    private static double numTicks = 28;
+    private static final double numTicks = 28;
 
     private static double lastPos;
 
-    private static double desSpeed = 4000*(Math.PI*2);
+    private static double desSpeed = 4000;
 
     private static double lastTime;
 
@@ -32,23 +32,23 @@ public class DriverTest {
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev){
         double currentPos = Shooter.shooter.getCurrentPosition();
         double nowTime = opmode.getRuntime();
-        double speedRadianMinutes = Math.abs((((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60))*(Math.PI*2));
+        double rotationsPerMinute = Math.abs(((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60));
         if (increase) {
-            desSpeed += 100*(Math.PI*2);
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
+            distanceFromGoal += 0.3048;
+            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(60)).rpm;
         }
         if (decrease){
-            desSpeed -= 100*(Math.PI*2);
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,0.5,72/2, 60).rpm;
+            distanceFromGoal -= 0.3048;
+            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(60)).rpm;
         }
         if (rev) {
-            Shooter.updateShooter(desSpeed);
-            if (speedRadianMinutes >= desSpeed/2 && fire) {
+            Shooter.updateShooter(desSpeed,rotationsPerMinute);
+            if (rotationsPerMinute >= desSpeed/2 && fire) {
                 Transfer.updateTransfer(true);
                 ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
             }
         } else {
-            Shooter.updateShooter(0);
+            Shooter.updateShooter(0,rotationsPerMinute);
         }
         if (!fire) {
             Transfer.updateTransfer(false);
@@ -57,8 +57,8 @@ public class DriverTest {
         lastPos = currentPos;
         lastTime = nowTime;
 
-        opmode.telemetry.addData("Distance From Goal", distanceFromGoal);
-        opmode.telemetry.addData("Speed RPM", speedRadianMinutes/(Math.PI*2));
-        opmode.telemetry.addData("Desired Speed RPM", desSpeed/(Math.PI*2));
+        opmode.telemetry.addData("Distance From Goal in feet", distanceFromGoal/0.3048);
+        opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
+        opmode.telemetry.addData("Desired Speed RPM", desSpeed);
     }
 }
