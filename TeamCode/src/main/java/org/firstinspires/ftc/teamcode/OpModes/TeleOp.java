@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Generic.SpeedMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.QuickBallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
@@ -54,6 +55,7 @@ public class TeleOp extends LinearOpMode {
         DriverTest.initControls(this);
 
         QuickSpindexer.initSpindexer(this);
+        QuickBallRamp.initTransfer(this);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();

@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.QuickBallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Wall_E;
@@ -70,6 +71,8 @@ public class ControlManager {
         Color.updateSensor(2.5F);
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
+
+        QuickBallRamp.updateTransfer(driver.b);
 
         DriverTest.update(increase, decrease, fire ,rev);
 
