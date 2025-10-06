@@ -57,8 +57,8 @@ public class ControlManager {
         //other stuff
         DriveTrain.updateDrive(strafe, drive, turn, slowMode);
 
-        //Obelisk.update();
-        SpindexerCamera.update();
+        Obelisk.update();
+        //SpindexerCamera.update();
         Alignment.updateAlignment();
 
         Roller.updateIntake(intaking, ejecting, 1.0);
@@ -69,7 +69,7 @@ public class ControlManager {
 
         Color.updateSensor(2.5F);
 
-        Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
+        //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
 
         DriverTest.update(increase, decrease, fire ,rev);
 

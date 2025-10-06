@@ -41,8 +41,8 @@ public class TeleOp extends LinearOpMode {
         RunLater.setup(this);
         ControlManager.setup(this);
         //FieldCentricDrive.initDrive(this);
-        //Obelisk.initDetection(this);
-        SpindexerCamera.initDetection(this);
+        Obelisk.initDetection(this);
+        //SpindexerCamera.initDetection(this);
         Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
@@ -50,7 +50,7 @@ public class TeleOp extends LinearOpMode {
         Transfer.initTransfer(this);
         Distance.initSensor(this);
         Color.initSensor(this);
-        Wall_E.initWebcam(this);
+        //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
 
         QuickSpindexer.initSpindexer(this);
@@ -73,7 +73,7 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
-        SpindexerCamera.stopVision();
-        //Obelisk.stopVision();
+        //SpindexerCamera.stopVision();
+        Obelisk.stopVision();
     }
 }
