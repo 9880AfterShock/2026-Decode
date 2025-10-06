@@ -3,12 +3,6 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
-import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
-import org.firstinspires.ftc.teamcode.Systems.RunLater;
-
-import java.util.Objects;
-
 public class Wall_E {
     private static Servo leftWheel;
     private static Servo rightWheel;
