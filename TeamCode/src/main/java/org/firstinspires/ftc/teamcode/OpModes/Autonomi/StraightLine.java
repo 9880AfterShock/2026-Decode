@@ -36,7 +36,7 @@ public class StraightLine extends LinearOpMode {
         TrajectoryActionBuilder toForward = drive.actionBuilder(turnPos)
                 .setTangent(Math.toRadians(0.0))
                 //.splineToLinearHeading(forwardPos, Math.toRadians(0.0));
-                .lineToX(90.0)
+                .lineToX(30.0)
                 .waitSeconds(5.0);
 
 
