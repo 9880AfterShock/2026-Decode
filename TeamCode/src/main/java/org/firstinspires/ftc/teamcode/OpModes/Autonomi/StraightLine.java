@@ -26,7 +26,7 @@ public class StraightLine extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d forwardPos = new Pose2d(-30.0, 0.0, 0.0);
+        Pose2d forwardPos = new Pose2d(-30.0, 0.0, Math.toRadians(0.0));
         Pose2d backwardPos = new Pose2d(30.0, 0.0, 0.0);
         Pose2d turnPos = new Pose2d(1.0, 1.0, -180.0);
 
