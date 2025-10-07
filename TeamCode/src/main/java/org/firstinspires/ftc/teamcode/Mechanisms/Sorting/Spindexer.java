@@ -23,8 +23,8 @@ public class Spindexer {
     private final double ticksPerRotation;
     public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
     public int index = 0;
-    private double shootBias;
-    private Supplier<Boolean> isShooting;
+    private final double shootBias;
+    private final Supplier<Boolean> isShooting;
     private double targetPos = 0;
     public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting) {
         index = 0;
@@ -43,6 +43,8 @@ public class Spindexer {
     public Spindexer(DcMotorEx motor,double ticksPerRotation) {
         this.ticksPerRotation = ticksPerRotation;
         this.motor = motor;
+        this.shootBias = 0;
+        this.isShooting = () -> false;
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setTargetPosition(0);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
