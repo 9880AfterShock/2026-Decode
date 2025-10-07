@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.States;
 
-public enum BallRamState {
+public enum BallRampState {
     UP,
     DOWN
 }

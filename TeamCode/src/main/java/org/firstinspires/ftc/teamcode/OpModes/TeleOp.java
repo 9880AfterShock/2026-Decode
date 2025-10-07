@@ -40,7 +40,6 @@ public class TeleOp extends LinearOpMode {
         //Init Functions
         DriveTrain.initDrive(this);
         RunLater.setup(this);
-        ControlManager.setup(this);
         //FieldCentricDrive.initDrive(this);
         Obelisk.initDetection(this);
         //SpindexerCamera.initDetection(this);
@@ -64,6 +63,7 @@ public class TeleOp extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
+        ControlManager.setup(this);
 
 
         // run until the end of the match (driver presses STOP)

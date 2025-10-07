@@ -74,28 +74,26 @@ public class SpeedMotor {
     }
 
     public void update() {
-        double currentPos = Shooter.shooter.getCurrentPosition();
-        double nowTime = opMode.getRuntime();
-        double rotationsPerMinute = Math.abs(((currentPos-lastPos)/maxRPM)/((nowTime-lastTime)/60));
-        double error = desiredSpeed-rotationsPerMinute;
-        if (desiredSpeed == 0) {
-            currentSpeed = 0;
-            motor.setPower(currentSpeed);
-        }else{
-            currentSpeed = Math.max(0,Math.min(1,(((error * p) + ((error - lastError) * d) + (accum * i)) / maxRPM)+currentSpeed));
-            motor.setPower(currentSpeed);
-        }
-        lastPos = currentPos;
-        lastTime = nowTime;
-        accum+=error*i;
-        lastError = error;
+//        double currentPos = Shooter.shooter.getCurrentPosition();
+//        double nowTime = opMode.getRuntime();
+//        double rotationsPerMinute = Math.abs(((currentPos-lastPos)/maxRPM)/((nowTime-lastTime)/60));
+//        double error = desiredSpeed-rotationsPerMinute;
+//        if (desiredSpeed == 0) {
+//            currentSpeed = 0;
+//            motor.setPower(currentSpeed);
+//        }else{
+//            currentSpeed = Math.max(0,Math.min(1,(((error * p) + ((error - lastError) * d) + (accum * i)) / maxRPM)+currentSpeed));
+//            motor.setPower(currentSpeed);
+//        }
+//        lastPos = currentPos;
+//        lastTime = nowTime;
+//        accum+=error*i;
+//        lastError = error;
+        motor.setVelocity(desiredSpeed*ticksPerRotation*60);
     }
 
     public void setSpeed(double rpm) {
-        if (desiredSpeed != rpm) {
-            desiredSpeed = rpm;
-            accum = 0;
-        }
+        desiredSpeed = rpm;
     }
 
     public double getSpeed() {

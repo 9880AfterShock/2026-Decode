@@ -7,14 +7,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
-import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Supplier;
 
 public class Spindexer {
     private final DcMotorEx motor;
@@ -22,15 +23,19 @@ public class Spindexer {
     private final double ticksPerRotation;
     public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
     public int index = 0;
+    private double shootBias;
+    private Supplier<Boolean> isShooting;
     private double targetPos = 0;
-    public Spindexer(String motorName, OpMode opMode, double ticksPerRotation) {
+    public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting) {
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
+        this.shootBias = shootBias;
+        this.isShooting = isShooting;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setTargetPosition(0);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor.setPower(1.0);
+        motor.setPower(0.8);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
@@ -41,7 +46,7 @@ public class Spindexer {
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setTargetPosition(0);
         this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.motor.setPower(1.0);
+        this.motor.setPower(0.8);
         this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
@@ -56,12 +61,20 @@ public class Spindexer {
             case LEFT:
                 index = Math.floorMod(index+1,balls.size());
                 targetPos += ticksPerRotation/3;
-                motor.setTargetPosition((int) targetPos);
+                if (isShooting.get()) {
+                    motor.setTargetPosition((int) (targetPos+shootBias));
+                } else {
+                    motor.setTargetPosition((int) targetPos);
+                }
                 break;
             case RIGHT:
                 index = Math.floorMod(index-1,balls.size());
                 targetPos -= ticksPerRotation/3;
-                motor.setTargetPosition((int) targetPos);
+                if (isShooting.get()) {
+                    motor.setTargetPosition((int) (targetPos+shootBias));
+                } else {
+                    motor.setTargetPosition((int) targetPos);
+                }
                 break;
             case INGREEN:
                 balls.set(index, BallType.GREEN);
@@ -75,7 +88,20 @@ public class Spindexer {
             case INUNKOWN:
                 balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
+            case LINEUP:
+                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
+                RunLater.addAction(new DelayedAction(() -> {if (isShooting.get()) {
+                    motor.setTargetPosition((int) (targetPos+shootBias));
+                } else {
+                    motor.setTargetPosition((int) targetPos);
+                }}, 0.85));
+                break;
             case NONE:
+                if (isShooting.get()) {
+                    motor.setTargetPosition((int) (targetPos+shootBias));
+                } else {
+                    motor.setTargetPosition((int) targetPos);
+                }
                 break;
         }
     }

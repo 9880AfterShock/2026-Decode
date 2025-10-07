@@ -7,5 +7,6 @@ public enum SpindexerMessage {
     INGREEN,
     INPURPLE,
     INUNKOWN,
-    EJECT
+    EJECT,
+    LINEUP,
 }

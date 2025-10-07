@@ -3,26 +3,28 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.States.BallRamState;
+import org.firstinspires.ftc.teamcode.States.BallRampState;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.BallRamMessage;
-import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class BallRam {
+public class BallRamp {
     private OpMode opMode;
     private Servo servo;
     private double downPos;
     private double upPos;
-    private BallRamState state;
+    public BallRampState state;
     public Queue<BallRamMessage> messageQueue = new ArrayDeque<>(100);
-    public BallRam(OpMode opMode, String servoName, double downPos, double upPos) {
+    public BallRamp(OpMode opMode, String servoName, double downPos, double upPos) {
         this.opMode = opMode;
         this.servo = opMode.hardwareMap.get(Servo.class,servoName);
         this.downPos = downPos;
         this.upPos = upPos;
-        this.state = BallRamState.UP;
+        servo.setPosition(upPos);
+        this.state = BallRampState.UP;
     }
 
     public void queueMessage(BallRamMessage message) {
@@ -35,21 +37,21 @@ public class BallRam {
         switch (msg) {
             case UP:
                 servo.setPosition(upPos);
-                this.state = BallRamState.UP;
+                RunLater.addAction(new DelayedAction(() -> {this.state = BallRampState.UP;}, 0.5));
                 break;
             case DOWN:
                 servo.setPosition(downPos);
-                this.state = BallRamState.DOWN;
+                RunLater.addAction(new DelayedAction(() -> {this.state = BallRampState.DOWN;}, 0.5));
                 break;
             case CYCLE:
                 switch (state) {
                     case UP:
                         servo.setPosition(downPos);
-                        this.state = BallRamState.DOWN;
+                        RunLater.addAction(new DelayedAction(() -> {this.state = BallRampState.DOWN;}, 0.5));
                         break;
                     case DOWN:
                         servo.setPosition(upPos);
-                        this.state = BallRamState.UP;
+                        RunLater.addAction(new DelayedAction(() -> {this.state = BallRampState.UP;}, 0.5));
                         break;
                 }
                 break;
