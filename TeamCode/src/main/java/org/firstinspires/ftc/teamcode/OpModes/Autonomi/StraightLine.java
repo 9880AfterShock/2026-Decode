@@ -22,7 +22,7 @@ public class StraightLine extends LinearOpMode {
     public void runOpMode() {
         //Mechs init
 
-        Pose2d startPos = new Pose2d(0.0, 0.0, 0.0); //start position and rotation
+        Pose2d startPos = new Pose2d(0.0, 0.0, Math.toRadians(0.0)); //start position and rotation
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
