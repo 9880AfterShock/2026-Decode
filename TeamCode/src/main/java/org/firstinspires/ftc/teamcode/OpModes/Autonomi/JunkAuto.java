@@ -54,7 +54,7 @@ public class JunkAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        toForward.build()
+                        testPath.build()
                 )
         );
     }
