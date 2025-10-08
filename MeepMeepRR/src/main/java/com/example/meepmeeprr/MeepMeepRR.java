@@ -9,7 +9,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeepRR {
     public static void main(String[] args) {
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
-        Pose2d scanPos = new Pose2d(-23.0, -23.0 Math.toRadians(100));
+        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(100));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
