@@ -47,7 +47,8 @@ public class FirstAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        toScan.build()
+                        toScan.build(),
+                        Obelisk.AutoScan()
                 )
         );
     }

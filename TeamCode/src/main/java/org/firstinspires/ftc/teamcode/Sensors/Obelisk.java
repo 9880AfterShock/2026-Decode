@@ -114,35 +114,34 @@ public class Obelisk {
             sleep(20);
         }
 
-    class AutoScan implements Action {
-        public AutoScan() {
-        }
-        @Override
-        public boolean run(TelemetryPacket p) {
-            while (true) {
-                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-                int validTagsSeen = 0;
-                for (AprilTagDetection detection : currentDetections) {
-                    if (detection.id == 21){
-                        Motif = Motifs.GPP;
-                        validTagsSeen += 1;
-                    }
-                    if (detection.id == 22){
-                        Motif = Motifs.PGP;
-                        validTagsSeen += 1;
-                    }
-                    if (detection.id == 23){
-                        Motif = Motifs.PPG;
-                        validTagsSeen += 1;
-                    }
-                    if (validTagsSeen == 1.0){
-                        return true;
-                    } else {
-                        return false;
+    public static Action AutoScan() {
+        return new Action() {
+            public boolean run(TelemetryPacket p) {
+                while (true) {
+                    List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+                    int validTagsSeen = 0;
+                    for (AprilTagDetection detection : currentDetections) {
+                        if (detection.id == 21) {
+                            Motif = Motifs.GPP;
+                            validTagsSeen += 1;
+                        }
+                        if (detection.id == 22) {
+                            Motif = Motifs.PGP;
+                            validTagsSeen += 1;
+                        }
+                        if (detection.id == 23) {
+                            Motif = Motifs.PPG;
+                            validTagsSeen += 1;
+                        }
+                        if (validTagsSeen == 1.0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
             }
-        }
+        };
     }
 
 }
