@@ -2,7 +2,12 @@ package org.firstinspires.ftc.teamcode.Sensors;
 
 import static android.os.SystemClock.sleep;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
@@ -108,4 +113,37 @@ public class Obelisk {
             gainControl.setGain(gain);
             sleep(20);
         }
+
+    class AutoScan implements Action {
+        public AutoScan() {
+        }
+        @Override
+        public boolean run(TelemetryPacket p) {
+            while (true) {
+                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+                int validTagsSeen = 0;
+                for (AprilTagDetection detection : currentDetections) {
+                    if (detection.id == 21){
+                        Motif = Motifs.GPP;
+                        validTagsSeen += 1;
+                    }
+                    if (detection.id == 22){
+                        Motif = Motifs.PGP;
+                        validTagsSeen += 1;
+                    }
+                    if (detection.id == 23){
+                        Motif = Motifs.PPG;
+                        validTagsSeen += 1;
+                    }
+                    if (validTagsSeen == 1.0){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
 }
+
