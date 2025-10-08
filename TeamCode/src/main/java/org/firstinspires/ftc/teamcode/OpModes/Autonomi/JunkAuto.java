@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-@Config
 @Autonomous(name = "Test Auto Cross Field JUNK")
 public class JunkAuto extends LinearOpMode {
 
