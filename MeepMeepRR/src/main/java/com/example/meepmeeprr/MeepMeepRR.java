@@ -11,6 +11,7 @@ public class MeepMeepRR {
         Pose2d forwardPos = new Pose2d(-30.0, 0.0, 0.0);
         Pose2d backwardPos = new Pose2d(30.0, 0.0, 0.0);
         Pose2d turnPos = new Pose2d(1.0, 1.0, -180.0);
+        Pose2d startPos = new Pose2d(-55.0, -55.0, Math.toRadians(55.0));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -19,9 +20,11 @@ public class MeepMeepRR {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 0, 0))
+        myBot.runAction(myBot.getDrive().actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(forwardPos, Math.toRadians(0.0))
+                .setTangent(0)
+                .splineToSplineHeading(new Pose2d(48, 48, 0), Math.PI / 2)
                 .build()
         );
 
