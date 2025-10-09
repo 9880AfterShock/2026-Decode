@@ -25,7 +25,7 @@ public class FirstAuto extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(155));
+        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-25));
 
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
