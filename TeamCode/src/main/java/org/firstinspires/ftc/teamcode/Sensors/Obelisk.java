@@ -120,21 +120,17 @@ public class Obelisk {
                 List<AprilTagDetection> currentDetections = aprilTag.getDetections();
                 int validTagsSeen = 0;
                 for (AprilTagDetection detection : currentDetections) {
-                    packet.put("Detections", detection.id);
                     if (detection.id == 21) {
                         Motif = Motifs.GPP;
                         validTagsSeen += 1;
-                        packet.put("Motif", "GPP");
                     }
                     if (detection.id == 22) {
                         Motif = Motifs.PGP;
                         validTagsSeen += 1;
-                        packet.put("Motif", "PGP");
                     }
                     if (detection.id == 23) {
                         Motif = Motifs.PPG;
                         validTagsSeen += 1;
-                        packet.put("Motif", "PPG");
                     }
                 }
                 return (validTagsSeen != 1);
