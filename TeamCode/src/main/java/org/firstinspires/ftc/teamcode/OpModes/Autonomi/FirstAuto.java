@@ -52,9 +52,13 @@ public class FirstAuto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         toScan.build(),
-                        Obelisk.AutoScan(),
-                        toShoot.build()
+                        Obelisk.AutoScan()
                 )
+        );
+        Actions.runBlocking(
+            new SequentialAction(
+                toShoot.build()
+            )
         );
     }
 }

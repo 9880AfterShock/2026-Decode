@@ -22,8 +22,8 @@ public class MeepMeepRR {
 
         myBot.runAction(myBot.getDrive().actionBuilder(startPos)
                 .setTangent(Math.toRadians(55.0))
-                .splineToSplineHeading(scanPos, Math.toRadians(45.0))
-                .splineToSplineHeading(shootPos, Math.toRadians(45.0))
+                .splineToLinearHeading(scanPos, Math.toRadians(45.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(45.0))
 //                .setTangent(0)
 //                .splineToSplineHeading(new Pose2d(48, 48, 0), Math.PI / 2)
                 .build()
