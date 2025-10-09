@@ -17,6 +17,8 @@ public class BallRamp {
     private double downPos;
     private double upPos;
     public BallRampState state;
+
+    private BallRamMessage latest;
     public Queue<BallRamMessage> messageQueue = new ArrayDeque<>(100);
     public BallRamp(OpMode opMode, String servoName, double downPos, double upPos) {
         this.opMode = opMode;
@@ -33,6 +35,7 @@ public class BallRamp {
 
     public void update() {
         BallRamMessage msg = messageQueue.poll();
+        opMode.telemetry.addData("latest message",latest);
         if (msg == null) {return;}
         switch (msg) {
             case UP:
@@ -56,5 +59,6 @@ public class BallRamp {
                 }
                 break;
         }
+        latest = msg;
     }
 }
