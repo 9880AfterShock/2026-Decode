@@ -26,10 +26,11 @@ public class Spindexer {
     private final double shootBias;
     private final Supplier<Boolean> isShooting;
     private double targetPos = 0;
+    private boolean isLineup = false;
     public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting) {
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
-        this.shootBias = shootBias;
+        this.shootBias = (shootBias/360)*ticksPerRotation;
         this.isShooting = isShooting;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -92,17 +93,24 @@ public class Spindexer {
                 break;
             case LINEUP:
                 motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
-                RunLater.addAction(new DelayedAction(() -> {if (isShooting.get()) {
-                    motor.setTargetPosition((int) (targetPos+shootBias));
-                } else {
-                    motor.setTargetPosition((int) targetPos);
-                }}, 0.85));
+                isLineup = true;
+                RunLater.addAction(new DelayedAction(() -> {
+                    isLineup = false;
+                    if (isShooting.get()) {
+                        motor.setTargetPosition((int) ((int) targetPos + shootBias));
+                    } else {
+                        motor.setTargetPosition((int) targetPos);
+                    }
+
+                    }, 0.85));
                 break;
             case NONE:
-                if (isShooting.get()) {
-                    motor.setTargetPosition((int) (targetPos+shootBias));
-                } else {
-                    motor.setTargetPosition((int) targetPos);
+                if (!isLineup) {
+                    if (isShooting.get()) {
+                        motor.setTargetPosition((int) (targetPos + shootBias));
+                    } else {
+                        motor.setTargetPosition((int) targetPos);
+                    }
                 }
                 break;
         }

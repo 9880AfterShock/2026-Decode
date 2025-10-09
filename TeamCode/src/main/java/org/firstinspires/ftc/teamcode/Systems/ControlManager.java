@@ -24,13 +24,15 @@ public class ControlManager {
     private static Gamepad driver;
     private static Gamepad operator;
 
+    private static boolean prevInstake;
+
     public static boolean shot = false;
     public static void setup(OpMode opMode) {
         ballRamp = new BallRamp(opMode, "ramp",0.07,0.2);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
-        spindexer = new Spindexer("spindexer", opMode, 1425.1, 0.0, () -> operator.a);
+        spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
     }
 
     public static void update() {
@@ -78,7 +80,7 @@ public class ControlManager {
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
 
         DriverTest.update(increase, decrease, fire ,rev);
-        if (cycleRamp) {
+        if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
             spindexer.queueMessage(SpindexerMessage.LINEUP);
             RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRamMessage.CYCLE), 0.2));
         }
@@ -92,5 +94,7 @@ public class ControlManager {
         }
         spindexer.update();
         ballRamp.update();
+
+        prevInstake = intaking;
     }
 }

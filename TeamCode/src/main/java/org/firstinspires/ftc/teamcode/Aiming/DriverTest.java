@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Maths.Trajectory;
-import org.firstinspires.ftc.teamcode.Mechanisms.Generic.SpeedMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
@@ -44,16 +43,18 @@ public class DriverTest {
         double nowTime = opmode.getRuntime();
         double rotationsPerMinute = Math.abs(((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60));
         if (increase) {
-            distanceFromGoal += 0.3048;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(60)).rpm;
+//            distanceFromGoal += 0.3048;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+            desSpeed += 100;
         }
         if (decrease){
-            distanceFromGoal -= 0.3048;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(60)).rpm;
+//            distanceFromGoal -= 0.3048;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+            desSpeed -= 100;
         }
-        if (rev&&ControlManager.ballRamp.state == BallRampState.DOWN) {
+        if (rev) {
             shooter.setVelocity((desSpeed*numTicks)/60);
-            if (rotationsPerMinute >= desSpeed/2 && fire) {
+            if (rotationsPerMinute >= desSpeed/1.1 && fire) {
                 ControlManager.ballRamp.queueMessage(BallRamMessage.UP);
                 ControlManager.shot = true;
                 RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRamMessage.DOWN);}, 0.2));

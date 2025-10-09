@@ -19,6 +19,7 @@ public class RunLater {
         queue.add(action);
     }
     public static void update() {
+        opMode.telemetry.addData("Time",opMode.getRuntime());
         while (!queue.isEmpty() && queue.peek().runOn <= opMode.getRuntime()) {
             DelayedAction action = queue.remove();
             action.func.run();
