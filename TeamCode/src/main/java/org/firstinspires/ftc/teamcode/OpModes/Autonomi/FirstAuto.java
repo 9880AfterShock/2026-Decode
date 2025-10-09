@@ -6,38 +6,35 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
 @Config
-@Autonomous(name = "Straight Line Auto")
-public class StraightLine extends LinearOpMode {
-
+@Autonomous(name = "Score Preloads (Blue)")
+public class FirstAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Mechs init
+        Obelisk.initDetection(this);
 
-        Pose2d startPos = new Pose2d(0.0, 0.0, Math.toRadians(0.0)); //start position and rotation
+        Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d forwardPos = new Pose2d(-30.0, 0.0, Math.toRadians(0.0));
-        Pose2d backwardPos = new Pose2d(30.0, 0.0, 0.0);
-        Pose2d turnPos = new Pose2d(1.0, 1.0, -180.0);
+        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-25));
 
 
-        TrajectoryActionBuilder waitFive = drive.actionBuilder(startPos)
-                .waitSeconds(5.0);
-        TrajectoryActionBuilder toForward = drive.actionBuilder(turnPos)
+        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
+                .waitSeconds(20.0);
+        TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
-                .splineToLinearHeading(forwardPos, Math.toRadians(0.0));
-                //.lineToX(30.0)
-                //.waitSeconds(5.0);
+                .splineToLinearHeading(scanPos, Math.toRadians(0.0));
+        //.lineToX(30.0)
+        //.waitSeconds(5.0);
 
 
         while (!isStopRequested() && !opModeIsActive()) {
@@ -50,7 +47,8 @@ public class StraightLine extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        toForward.build()
+                        toScan.build(),
+                        Obelisk.AutoScan()
                 )
         );
     }
