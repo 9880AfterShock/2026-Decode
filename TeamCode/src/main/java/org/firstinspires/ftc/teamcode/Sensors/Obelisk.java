@@ -117,25 +117,27 @@ public class Obelisk {
     public static Action AutoScan() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                while (true) {
-                    List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-                    int validTagsSeen = 0;
-                    for (AprilTagDetection detection : currentDetections) {
-                        if (detection.id == 21) {
-                            Motif = Motifs.GPP;
-                            validTagsSeen += 1;
-                        }
-                        if (detection.id == 22) {
-                            Motif = Motifs.PGP;
-                            validTagsSeen += 1;
-                        }
-                        if (detection.id == 23) {
-                            Motif = Motifs.PPG;
-                            validTagsSeen += 1;
-                        }
-                        return (validTagsSeen == 1.0);
+                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+                int validTagsSeen = 0;
+                for (AprilTagDetection detection : currentDetections) {
+                    packet.put("Detections", detection.id);
+                    if (detection.id == 21) {
+                        Motif = Motifs.GPP;
+                        validTagsSeen += 1;
+                        packet.put("Motif", "GPP");
+                    }
+                    if (detection.id == 22) {
+                        Motif = Motifs.PGP;
+                        validTagsSeen += 1;
+                        packet.put("Motif", "PGP");
+                    }
+                    if (detection.id == 23) {
+                        Motif = Motifs.PPG;
+                        validTagsSeen += 1;
+                        packet.put("Motif", "PPG");
                     }
                 }
+                return (validTagsSeen != 1);
             }
         };
     }
