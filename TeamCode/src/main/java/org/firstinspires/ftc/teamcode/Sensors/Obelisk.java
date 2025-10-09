@@ -116,7 +116,7 @@ public class Obelisk {
 
     public static Action AutoScan() {
         return new Action() {
-            public boolean run(TelemetryPacket p) {
+            public boolean run(@NonNull TelemetryPacket packet) {
                 while (true) {
                     List<AprilTagDetection> currentDetections = aprilTag.getDetections();
                     int validTagsSeen = 0;
@@ -133,11 +133,7 @@ public class Obelisk {
                             Motif = Motifs.PPG;
                             validTagsSeen += 1;
                         }
-                        if (validTagsSeen == 1.0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+                        return (validTagsSeen == 1.0);
                     }
                 }
             }

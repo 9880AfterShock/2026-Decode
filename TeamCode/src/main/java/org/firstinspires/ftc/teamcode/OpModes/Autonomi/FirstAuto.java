@@ -25,7 +25,8 @@ public class FirstAuto extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-25));
+        Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-20));
+        Pose2d shootPos = new Pose2d(-15.0, -15.0, Math.toRadians(45));
 
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
@@ -33,6 +34,9 @@ public class FirstAuto extends LinearOpMode {
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
+        TrajectoryActionBuilder toShoot = drive.actionBuilder(startPos)
+                .setTangent(Math.toRadians(45.0))
+                .splineToLinearHeading(scanPos, Math.toRadians(45.0));
         //.lineToX(30.0)
         //.waitSeconds(5.0);
 
@@ -48,7 +52,8 @@ public class FirstAuto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         toScan.build(),
-                        Obelisk.AutoScan()
+                        Obelisk.AutoScan(),
+                        toShoot.build()
                 )
         );
     }
