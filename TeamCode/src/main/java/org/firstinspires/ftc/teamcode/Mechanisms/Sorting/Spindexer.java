@@ -180,10 +180,14 @@ public class Spindexer {
     }
 
     public class RunToTargetPos implements Action {
-
+        private int times = 0;
+        public RunToTargetPos() {
+            times = 0;
+        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
+            if (times < 20) {return false;} else {times += 1;}
             if (isShooting.get()) {
                 return Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5;
             } else {
@@ -212,15 +216,6 @@ public class Spindexer {
     public Action leftQuick() {
         queueMessage(SpindexerMessage.LEFT);
         return new Update();
-    }
-
-    public class RightQuick implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            update();
-            return true;
-        }
     }
     public Action rightQuick() {
         queueMessage(SpindexerMessage.RIGHT);

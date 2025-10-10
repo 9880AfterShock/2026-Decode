@@ -62,11 +62,11 @@ public class FirstAuto extends LinearOpMode {
                 )
         );
 
-//        if (Obelisk.Motif == Obelisk.Motifs.GPP){
+//        if (Obelisk.motif == Obelisk.Motif.GPP){
 //            return;
-//        } else if (Obelisk.Motif == Obelisk.Motifs.PGP){
+//        } else if (Obelisk.motif == Obelisk.Motif.PGP){
 //            return;
-//        } else if (Obelisk.Motif == Obelisk.Motifs.PPG){
+//        } else if (Obelisk.motif == Obelisk.Motif.PPG){
 //            return;
 //        }
 
