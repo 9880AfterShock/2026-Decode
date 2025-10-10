@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Config
@@ -26,7 +27,7 @@ public class FirstAuto extends LinearOpMode {
     public void runOpMode() {
         //Mechs init
         Obelisk.initDetection(this);
-        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false, new ArrayList<>(List.of(BallType.GREEN, BallType.PURPLE, BallType.PURPLE)));
+        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
         BallRamp ballRamp = new BallRamp(this, "ramp", 0.07, 0.2);
 
 
@@ -64,7 +65,9 @@ public class FirstAuto extends LinearOpMode {
                         new ParallelAction(
                                 spindexer.goToMotif(Obelisk.motif),
                                 toShoot.build()
+
                         )
+                        //shoot goes here
                 )
         );
 
