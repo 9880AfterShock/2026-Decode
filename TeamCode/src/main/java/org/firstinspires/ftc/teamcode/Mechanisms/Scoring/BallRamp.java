@@ -29,6 +29,19 @@ public class BallRamp {
         this.state = BallRampState.UP;
     }
 
+    public BallRamp(OpMode opMode, String servoName, double downPos, double upPos, BallRampState state) {
+        this.opMode = opMode;
+        this.servo = opMode.hardwareMap.get(Servo.class,servoName);
+        this.downPos = downPos;
+        this.upPos = upPos;
+        if (state == BallRampState.UP) {
+            servo.setPosition(upPos);
+        } else {
+            servo.setPosition(downPos);
+        }
+        this.state = state;
+    }
+
     public void queueMessage(BallRampMessage message) {
         messageQueue.add(message);
     }
