@@ -76,23 +76,9 @@ public class FirstAuto extends LinearOpMode {
                         actionManager.cycleRamp(),
                         actionManager.rev(3800),
                         actionManager.launch(),
-                        actionManager.derev()
+                        actionManager.derev(),
+                        toPark.build()
                 )
-        );
-
-//        if (Obelisk.motif == Obelisk.Motif.GPP){
-//            return;
-//        } else if (Obelisk.motif == Obelisk.Motif.PGP){
-//            return;
-//        } else if (Obelisk.motif == Obelisk.Motif.PPG){
-//            return;
-//        }
-
-        Actions.runBlocking(
-            new SequentialAction(
-                toShoot.build(),
-                waitTwenty.build()
-            )
         );
     }
 }
