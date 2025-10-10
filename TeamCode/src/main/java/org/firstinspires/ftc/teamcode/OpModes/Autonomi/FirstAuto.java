@@ -10,9 +10,14 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Config
 @Autonomous(name = "Score Preloads (Blue)")
@@ -21,7 +26,8 @@ public class FirstAuto extends LinearOpMode {
     public void runOpMode() {
         //Mechs init
         Obelisk.initDetection(this);
-        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false);
+        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false, new ArrayList<>(List.of(BallType.GREEN, BallType.PURPLE, BallType.PURPLE)));
+        BallRamp ballRamp = new BallRamp(this, "ramp", 0.07, 0.2);
 
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
@@ -60,21 +66,6 @@ public class FirstAuto extends LinearOpMode {
                                 toShoot.build()
                         )
                 )
-        );
-
-//        if (Obelisk.Motif == Obelisk.Motifs.GPP){
-//            return;
-//        } else if (Obelisk.Motif == Obelisk.Motifs.PGP){
-//            return;
-//        } else if (Obelisk.Motif == Obelisk.Motifs.PPG){
-//            return;
-//        }
-
-        Actions.runBlocking(
-            new SequentialAction(
-                toShoot.build(),
-                waitTwenty.build()
-            )
         );
     }
 }
