@@ -10,7 +10,7 @@ public class MeepMeepRR {
     public static void main(String[] args) {
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-25.0));
-        Pose2d shootPos = new Pose2d(-15.0, -15.0, Math.toRadians(45));
+        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(45));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -23,7 +23,8 @@ public class MeepMeepRR {
         myBot.runAction(myBot.getDrive().actionBuilder(startPos)
                 .setTangent(Math.toRadians(55.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(45.0))
-                .splineToLinearHeading(shootPos, Math.toRadians(45.0))
+                .setTangent(Math.toRadians(-125.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(-125.0))
 //                .setTangent(0)
 //                .splineToSplineHeading(new Pose2d(48, 48, 0), Math.PI / 2)
                 .build()

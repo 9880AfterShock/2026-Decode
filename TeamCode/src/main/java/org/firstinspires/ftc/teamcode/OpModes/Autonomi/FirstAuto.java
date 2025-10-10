@@ -26,8 +26,7 @@ public class FirstAuto extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-23.0, -23.0, Math.toRadians(-20));
-        Pose2d shootPos = new Pose2d(-15.0, -15.0, Math.toRadians(45));
-
+        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(45));
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
                 .waitSeconds(20.0);
@@ -35,8 +34,8 @@ public class FirstAuto extends LinearOpMode {
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
         TrajectoryActionBuilder toShoot = drive.actionBuilder(scanPos)
-                .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(shootPos, Math.toRadians(45.0));
+                .setTangent(Math.toRadians(-125.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(-125.0));
         //.lineToX(30.0)
         //.waitSeconds(5.0);
 
@@ -55,6 +54,14 @@ public class FirstAuto extends LinearOpMode {
                         Obelisk.AutoScan()
                 )
         );
+
+//        if (Obelisk.Motif == Obelisk.Motifs.GPP){
+//            return;
+//        } else if (Obelisk.Motif == Obelisk.Motifs.PGP){
+//            return;
+//        } else if (Obelisk.Motif == Obelisk.Motifs.PPG){
+//            return;
+//        }
 
         Actions.runBlocking(
             new SequentialAction(
