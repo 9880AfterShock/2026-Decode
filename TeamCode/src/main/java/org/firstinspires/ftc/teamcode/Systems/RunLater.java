@@ -1,6 +1,13 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.PriorityQueue;
 
@@ -24,5 +31,19 @@ public class RunLater {
             DelayedAction action = queue.remove();
             action.func.run();
         }
+    }
+    public static boolean isEmpty() {
+        return queue.isEmpty();
+    }
+    public static class Finish implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            return queue.isEmpty();
+        }
+    }
+    public static Action finish() {
+        return new Finish();
     }
 }

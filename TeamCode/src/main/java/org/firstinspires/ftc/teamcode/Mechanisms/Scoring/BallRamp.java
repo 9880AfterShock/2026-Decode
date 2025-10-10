@@ -6,20 +6,20 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.messages.BallRamMessage;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class BallRamp {
-    private OpMode opMode;
-    private Servo servo;
-    private double downPos;
-    private double upPos;
+    private final OpMode opMode;
+    private final Servo servo;
+    private final double downPos;
+    private final double upPos;
     public BallRampState state;
 
-    private BallRamMessage latest;
-    public Queue<BallRamMessage> messageQueue = new ArrayDeque<>(100);
+    private BallRampMessage latest;
+    public Queue<BallRampMessage> messageQueue = new ArrayDeque<>(100);
     public BallRamp(OpMode opMode, String servoName, double downPos, double upPos) {
         this.opMode = opMode;
         this.servo = opMode.hardwareMap.get(Servo.class,servoName);
@@ -29,12 +29,12 @@ public class BallRamp {
         this.state = BallRampState.UP;
     }
 
-    public void queueMessage(BallRamMessage message) {
+    public void queueMessage(BallRampMessage message) {
         messageQueue.add(message);
     }
 
     public void update() {
-        BallRamMessage msg = messageQueue.poll();
+        BallRampMessage msg = messageQueue.poll();
         opMode.telemetry.addData("latest message",latest);
         if (msg == null) {return;}
         switch (msg) {

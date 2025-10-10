@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
-import org.firstinspires.ftc.teamcode.messages.BallRamMessage;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 public class ControlManager {
@@ -82,7 +82,7 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire ,rev);
         if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
             spindexer.queueMessage(SpindexerMessage.LINEUP);
-            RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRamMessage.CYCLE), 0.2));
+            RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
         }
 
         if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP)) {

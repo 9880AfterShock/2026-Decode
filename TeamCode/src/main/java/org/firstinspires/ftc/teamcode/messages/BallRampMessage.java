@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.messages;
 
-public enum BallRamMessage {
+public enum BallRampMessage {
     UP,
     DOWN,
     CYCLE

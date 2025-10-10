@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Sorting;
 
 import static java.util.List.of;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -125,4 +129,65 @@ public class Spindexer {
             }
         }
     }
+
+    public class Left implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            if (isShooting.get()) {
+                return Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5;
+            } else {
+                return Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5;
+            }
+        }
+    }
+    public Action left() {
+        queueMessage(SpindexerMessage.LEFT);
+        return new Left();
+    }
+
+    public class Right implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            if (isShooting.get()) {
+                return Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5;
+            } else {
+                return Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5;
+            }
+        }
+    }
+    public Action right() {
+        queueMessage(SpindexerMessage.RIGHT);
+        return new Right();
+    }
+
+    public class LeftQuick implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            return true;
+        }
+    }
+    public Action leftQuick() {
+        queueMessage(SpindexerMessage.LEFT);
+        return new LeftQuick();
+    }
+
+    public class RightQuick implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            return true;
+        }
+    }
+    public Action rightQuick() {
+        queueMessage(SpindexerMessage.RIGHT);
+        return new Right();
+    }
+
 }

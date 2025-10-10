@@ -4,14 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Maths.Trajectory;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
-import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.messages.BallRamMessage;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 public class DriverTest {
@@ -55,9 +53,9 @@ public class DriverTest {
         if (rev) {
             shooter.setVelocity((desSpeed*numTicks)/60);
             if (rotationsPerMinute >= desSpeed/1.1 && fire) {
-                ControlManager.ballRamp.queueMessage(BallRamMessage.UP);
+                ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
                 ControlManager.shot = true;
-                RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRamMessage.DOWN);}, 0.2));
+                RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRampMessage.DOWN);}, 0.2));
                 ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
             }
         } else {
