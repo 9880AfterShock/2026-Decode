@@ -34,9 +34,9 @@ public class FirstAuto extends LinearOpMode {
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
-        TrajectoryActionBuilder toShoot = drive.actionBuilder(startPos)
+        TrajectoryActionBuilder toShoot = drive.actionBuilder(scanPos)
                 .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(scanPos, Math.toRadians(45.0));
+                .splineToLinearHeading(shootPos, Math.toRadians(45.0));
         //.lineToX(30.0)
         //.waitSeconds(5.0);
 
@@ -52,9 +52,15 @@ public class FirstAuto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         toScan.build(),
-                        Obelisk.AutoScan(),
-                        toShoot.build()
+                        Obelisk.AutoScan()
                 )
+        );
+
+        Actions.runBlocking(
+            new SequentialAction(
+                toShoot.build(),
+                waitTwenty.build()
+            )
         );
     }
 }
