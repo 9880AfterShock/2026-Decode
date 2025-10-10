@@ -77,7 +77,6 @@ public class ActionManager {
     }
 
     public Action derev() {
-
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {

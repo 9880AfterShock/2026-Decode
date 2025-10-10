@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public class FirstAuto extends LinearOpMode {
         Obelisk.initDetection(this);
         Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
         BallRamp ballRamp = new BallRamp(this, "ramp", 0.07, 0.2);
-
+        ActionManager actionManager = new ActionManager(spindexer, ballRamp, this, 24);
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
@@ -66,8 +67,11 @@ public class FirstAuto extends LinearOpMode {
                                 spindexer.goToMotif(Obelisk.motif),
                                 toShoot.build()
 
-                        )
-                        //shoot goes here
+                        ),
+                        actionManager.cycleRamp(),
+                        actionManager.rev(3800),
+                        actionManager.launch(),
+                        actionManager.derev()
                 )
         );
 
