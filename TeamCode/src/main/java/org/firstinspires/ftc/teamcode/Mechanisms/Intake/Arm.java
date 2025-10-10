@@ -2,8 +2,19 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 
 import static java.lang.Math.abs;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.TransitionRes;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.Enums.Motif;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
+import java.util.List;
 
 
 public class Arm { // Prefix for commands
@@ -42,5 +53,17 @@ public class Arm { // Prefix for commands
 
         opmode.telemetry.addData("Intake Arm", intakeState);
         opmode.telemetry.addData("Intake Timer", startedIntaking);
+    }
+
+
+
+    public static Action AutoArmUp() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                arm.setPosition(transferPosition);
+                intakeState = "Transferring";
+                return false;
+            }
+        };
     }
 }

@@ -12,25 +12,25 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Config
 @Autonomous(name = "Score Preloads (Blue)")
 public class FirstAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
-        //Mechs init
+        //Mechs init'
+        Arm.initIntake(this);
+        RunLater.setup(this);
         Obelisk.initDetection(this);
-        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
-        BallRamp ballRamp = new BallRamp(this, "ramp", 0.07, 0.2);
-        ActionManager actionManager = new ActionManager(spindexer, ballRamp, this, 24);
+        ActionManager actionManager = new ActionManager( this, 24);
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
@@ -66,15 +66,17 @@ public class FirstAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        Arm.AutoArmUp(),
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
-                                spindexer.goToMotif(Obelisk.motif),
+                                actionManager.spindexer.goToMotif(Obelisk.motif),
                                 toShoot.build()
 
                         ),
                         actionManager.cycleRamp(),
                         actionManager.rev(3800),
+                        actionManager.waitForSpeed(3800),
                         actionManager.launch(),
                         actionManager.derev(),
                         toPark.build()

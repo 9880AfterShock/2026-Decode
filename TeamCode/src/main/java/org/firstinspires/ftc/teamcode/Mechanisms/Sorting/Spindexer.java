@@ -181,48 +181,53 @@ public class Spindexer {
 
     public class RunToTargetPos implements Action {
         private int times = 0;
-        public RunToTargetPos() {
+        private final Runnable run;
+        public RunToTargetPos(Runnable run) {
+            this.run = run;
             times = 0;
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
+            if (times == 0) {run.run();}
             if (times < 20) {return false;} else {times += 1;}
             if (isShooting.get()) {
-                return Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5;
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
             } else {
-                return Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5;
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
             }
         }
     }
     public Action left() {
         queueMessage(SpindexerMessage.LEFT);
-        return new RunToTargetPos();
+        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.LEFT));
     }
 
     public Action right() {
-        queueMessage(SpindexerMessage.RIGHT);
-        return new RunToTargetPos();
+        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.RIGHT));
     }
 
     public class Update implements Action {
-
+        private final Runnable run;
+        public Update(Runnable run) {
+            this.run = run;
+        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            run.run();
             update();
-            return true;
+            return false;
         }
     }
     public Action leftQuick() {
         queueMessage(SpindexerMessage.LEFT);
-        return new Update();
+        return new Update(() -> queueMessage(SpindexerMessage.LEFT));
     }
     public Action rightQuick() {
-        queueMessage(SpindexerMessage.RIGHT);
-        return new Update();
+        return new Update(() -> queueMessage(SpindexerMessage.RIGHT));
     }
+
     public Action goToMotif(Motif motif) {
-        gotoMotif(motif);
-        return new RunToTargetPos();
+        return new RunToTargetPos(() -> gotoMotif(motif));
     }
 }

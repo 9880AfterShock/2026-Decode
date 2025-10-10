@@ -8,70 +8,90 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
+import java.util.Arrays;
+
 public class ActionManager {
 
-    private final Spindexer spindexer;
-    private final BallRamp ballRamp;
+    public final Spindexer spindexer;
+    public final BallRamp ballRamp;
     private final DcMotorEx shooter;
     private final OpMode opmode;
     private final int shooterTicks;
-    private double desSpeed;
+    public boolean spindexerBias = false;
 
-    public ActionManager(Spindexer spindexer, BallRamp ballRamp, OpMode opmode, int shooterTicks) {
+    public ActionManager(OpMode opmode, int shooterTicks) {
         this.shooterTicks = shooterTicks;
+        spindexerBias = false;
         this.opmode = opmode;
-        this.spindexer = spindexer;
-        this.ballRamp = ballRamp;
+        spindexer = new Spindexer("spindexer", opmode, 1425.1, 10, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
+        ballRamp = new BallRamp(opmode, "ramp", 0.07, 0.2);
         this.shooter = opmode.hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter.setVelocity(0);
     }
     public Action cycleRamp() {
-        spindexer.queueMessage(SpindexerMessage.LINEUP);
-        RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
         return new Action() {
-
+            private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
+                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUP); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
                 spindexer.update();
+                ballRamp.update();
                 RunLater.update();
-                return RunLater.isEmpty();
+                return !RunLater.isEmpty();
             }
         };
     }
 
-    public Action rev(double desSpeed) {
-        this.desSpeed = desSpeed;
+    public Action rev(double rpm) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                shooter.setVelocity((desSpeed*shooterTicks)/60);
-                return true;
+                spindexerBias = true;
+                shooter.setVelocity((rpm*shooterTicks)/60);
+                telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
+                return false;
             }
         };
     }
+
+    public Action waitForSpeed(double rpm) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return (shooter.getVelocity()/shooterTicks)*60 < rpm/1.1;
+            }
+        };
+    }
+
     public Action launch() {
 
         return new Action() {
-            private boolean shot = false;
-            private boolean doesreturn = false;
+            private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if (shooter.getVelocity() >= desSpeed/1.1 && !shot) {
+                if (first) {
                     ballRamp.queueMessage(BallRampMessage.UP);
-                    shot = true;
-                    RunLater.addAction(new DelayedAction(() -> {ballRamp.queueMessage(BallRampMessage.DOWN); doesreturn = true;}, 0.2));
+                    ballRamp.update();
+                    RunLater.addAction(new DelayedAction(() -> {
+                        ballRamp.queueMessage(BallRampMessage.DOWN);
+                        ballRamp.update();
+                    }, 1.2));
                     spindexer.queueMessage(SpindexerMessage.EJECT);
+                    spindexer.update();
+                    first = false;
                 }
                 spindexer.update();
+                ballRamp.update();
                 RunLater.update();
-                return doesreturn;
+                return !RunLater.isEmpty();
             }
         };
     }
@@ -80,8 +100,9 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                spindexerBias = false;
                 shooter.setVelocity(0);
-                return true;
+                return false;
             }
         };
     }

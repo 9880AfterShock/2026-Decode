@@ -133,6 +133,7 @@ public class Obelisk {
                         validTagsSeen += 1;
                     }
                 }
+                packet.put("Motif", motif);
                 return (validTagsSeen != 1);
             }
         };
