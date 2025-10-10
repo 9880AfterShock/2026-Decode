@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.States.TransferState;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
@@ -14,12 +15,12 @@ public class Transfer {
     public static double upPosition = 0.71;
     public static double downPosition = 1.0;
     public static double transferTime = -1.0;
-    public static String transferState = "Down";
+    public static TransferState transferState = TransferState.DOWN;
     public static boolean spindexerSafe = true;
 
     public static void initTransfer(OpMode opmode) { // init motor
         transfer = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
-        transferState = "Down";
+        transferState = TransferState.UP;
         transferTime = -1.0;
         Transfer.opmode = opmode;
     }
@@ -31,15 +32,15 @@ public class Transfer {
             }
             if (opmode.getRuntime() - transferTime >= 1.0) {
                 transfer.setPosition(upPosition);
-                transferState = "Up";
+                transferState = TransferState.UP;
             }
             spindexerSafe = false;
         } else {
             transfer.setPosition(downPosition);
-            if (!Objects.equals(transferState, "Down")) {RunLater.addAction(new DelayedAction(() -> {
+            if (!Objects.equals(transferState, TransferState.DOWN)) {RunLater.addAction(new DelayedAction(() -> {
                 spindexerSafe =true;
                 },1));}
-            transferState = "Down";
+            transferState = TransferState.DOWN;
             transferTime = -1.0;
         }
 
