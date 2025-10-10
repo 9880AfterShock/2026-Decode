@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
 @Config
@@ -20,6 +21,8 @@ public class FirstAuto extends LinearOpMode {
     public void runOpMode() {
         //Mechs init
         Obelisk.initDetection(this);
+        Spindexer spindexer = new Spindexer("spindexer", this, 1425.1, 10, () -> false);
+
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
@@ -51,7 +54,11 @@ public class FirstAuto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         toScan.build(),
-                        Obelisk.AutoScan()
+                        Obelisk.AutoScan(),
+                        new ParallelAction(
+                                spindexer.goToMotif(Obelisk.motif),
+                                toShoot.build()
+                        )
                 )
         );
 
