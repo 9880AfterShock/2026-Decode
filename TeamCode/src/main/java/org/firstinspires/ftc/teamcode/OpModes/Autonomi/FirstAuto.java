@@ -67,5 +67,20 @@ public class FirstAuto extends LinearOpMode {
                         )
                 )
         );
+
+//        if (Obelisk.motif == Obelisk.Motif.GPP){
+//            return;
+//        } else if (Obelisk.motif == Obelisk.Motif.PGP){
+//            return;
+//        } else if (Obelisk.motif == Obelisk.Motif.PPG){
+//            return;
+//        }
+
+        Actions.runBlocking(
+            new SequentialAction(
+                toShoot.build(),
+                waitTwenty.build()
+            )
+        );
     }
 }
