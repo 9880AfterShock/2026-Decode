@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -22,12 +23,11 @@ import java.util.concurrent.TimeUnit;
 public class Obelisk {
     private static OpMode opmode; // opmode var init
     private static AprilTagProcessor aprilTag;
-    public static VisionPortal visionPortal;
-    public enum Motifs{GPP, PGP, PPG, unknown}; // 21,22,23
-    public static Motifs Motif;
+    public static VisionPortal visionPortal;// 21,22,23
+    public static Motif motif;
 
     public static void initDetection(OpMode opmode){
-        Motif = Motifs.unknown;
+        motif = Motif.unknown;
         aprilTag = new AprilTagProcessor.Builder()
                 // The following default settings are available to un-comment and edit as needed.
                 //.setDrawAxes(false)
@@ -54,19 +54,19 @@ public class Obelisk {
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.id == 21){
-                Motif = Motifs.GPP;
+                motif = Motif.GPP;
                 break;
             }
             if (detection.id == 22){
-                Motif = Motifs.PGP;
+                motif = Motif.PGP;
                 break;
             }
             if (detection.id == 23){
-                Motif = Motifs.PPG;
+                motif = Motif.PPG;
                 break;
             }
         }
-        opmode.telemetry.addData("Motif Pattern", Motif);
+        opmode.telemetry.addData("Motif Pattern", motif);
     }
 
     public static void stopVision() {
@@ -121,15 +121,15 @@ public class Obelisk {
                 int validTagsSeen = 0;
                 for (AprilTagDetection detection : currentDetections) {
                     if (detection.id == 21) {
-                        Motif = Motifs.GPP;
+                        motif = Motif.GPP;
                         validTagsSeen += 1;
                     }
                     if (detection.id == 22) {
-                        Motif = Motifs.PGP;
+                        motif = Motif.PGP;
                         validTagsSeen += 1;
                     }
                     if (detection.id == 23) {
-                        Motif = Motifs.PPG;
+                        motif = Motif.PPG;
                         validTagsSeen += 1;
                     }
                 }

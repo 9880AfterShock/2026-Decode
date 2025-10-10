@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -130,7 +131,28 @@ public class Spindexer {
         }
     }
 
-    public class Left implements Action {
+    public boolean checkMotif(int index, Motif motif) {
+        if (motif == Motif.GPP) {
+            return balls.get(Math.floorMod(index, balls.size())) == BallType.GREEN && balls.get(Math.floorMod(index + 1, balls.size())) == BallType.PURPLE && balls.get(Math.floorMod(index + 2, balls.size())) == BallType.PURPLE;
+        } else if (motif == Motif.PGP) {
+            return balls.get(Math.floorMod(index, balls.size())) == BallType.PURPLE && balls.get(Math.floorMod(index + 1, balls.size())) == BallType.GREEN && balls.get(Math.floorMod(index + 2, balls.size())) == BallType.PURPLE;
+        } else if (motif == Motif.PPG) {
+            return balls.get(Math.floorMod(index, balls.size())) == BallType.PURPLE && balls.get(Math.floorMod(index + 1, balls.size())) == BallType.PURPLE && balls.get(Math.floorMod(index + 2, balls.size())) == BallType.GREEN;
+        }
+        //How did we get here?
+        return false;
+    }
+    public void gotoMotif(Motif motif) {
+        if (!checkMotif(index, motif)) {
+            if (checkMotif(index + 1, motif)) {
+                queueMessage(SpindexerMessage.LEFT);
+            } else if (checkMotif(index - 1, motif)) {
+                queueMessage(SpindexerMessage.RIGHT);
+            }
+        }
+    }
+
+    public class RunToTargetPos implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -144,27 +166,15 @@ public class Spindexer {
     }
     public Action left() {
         queueMessage(SpindexerMessage.LEFT);
-        return new Left();
+        return new RunToTargetPos();
     }
 
-    public class Right implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            update();
-            if (isShooting.get()) {
-                return Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5;
-            } else {
-                return Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5;
-            }
-        }
-    }
     public Action right() {
         queueMessage(SpindexerMessage.RIGHT);
-        return new Right();
+        return new RunToTargetPos();
     }
 
-    public class LeftQuick implements Action {
+    public class Update implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -174,7 +184,7 @@ public class Spindexer {
     }
     public Action leftQuick() {
         queueMessage(SpindexerMessage.LEFT);
-        return new LeftQuick();
+        return new Update();
     }
 
     public class RightQuick implements Action {
@@ -187,7 +197,10 @@ public class Spindexer {
     }
     public Action rightQuick() {
         queueMessage(SpindexerMessage.RIGHT);
-        return new Right();
+        return new Update();
     }
-
+    public Action goToMotif(Motif motif) {
+        gotoMotif(motif);
+        return new RunToTargetPos();
+    }
 }
