@@ -57,6 +57,18 @@ public class Spindexer {
         this.motor.setPower(0.8);
         this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+    public Spindexer(DcMotorEx motor,double ticksPerRotation, List<BallType> startingBalls) {
+        this.balls = startingBalls;
+        this.ticksPerRotation = ticksPerRotation;
+        this.motor = motor;
+        this.shootBias = 0;
+        this.isShooting = () -> false;
+        this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.motor.setTargetPosition(0);
+        this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.motor.setPower(0.8);
+        this.motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
 
     public void queueMessage(SpindexerMessage message) {
         messageQueue.add(message);
