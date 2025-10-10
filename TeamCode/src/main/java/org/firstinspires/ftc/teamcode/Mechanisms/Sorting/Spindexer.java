@@ -46,6 +46,21 @@ public class Spindexer {
 
     }
 
+    public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting, List<BallType> startingBalls) {
+        this.balls = startingBalls;
+        index = 0;
+        this.ticksPerRotation = ticksPerRotation;
+        this.shootBias = (shootBias/360)*ticksPerRotation;
+        this.isShooting = isShooting;
+        motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setTargetPosition(0);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor.setPower(0.8);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    }
+
     public Spindexer(DcMotorEx motor,double ticksPerRotation) {
         this.ticksPerRotation = ticksPerRotation;
         this.motor = motor;
