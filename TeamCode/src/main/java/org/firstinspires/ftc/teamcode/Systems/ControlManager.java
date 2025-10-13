@@ -87,10 +87,10 @@ public class ControlManager {
 
         if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP)) {
             shot = false;
-            spindexer.queueMessage(SpindexerMessage.LEFT);
+            spindexer.queueMessage(SpindexerMessage.RIGHT);
         }
         if (spinRight && ballRamp.state == BallRampState.UP) {
-            spindexer.queueMessage(SpindexerMessage.RIGHT);
+            spindexer.queueMessage(SpindexerMessage.LEFT);
         }
         spindexer.update();
         ballRamp.update();

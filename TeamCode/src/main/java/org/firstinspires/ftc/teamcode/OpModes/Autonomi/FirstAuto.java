@@ -10,16 +10,11 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
-import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
-import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-
-import java.util.Arrays;
 
 @Config
 @Autonomous(name = "Score Preloads (Blue)")
@@ -78,6 +73,9 @@ public class FirstAuto extends LinearOpMode {
                         ),
                         actionManager.cycleRamp(), //shoot forward  ball)
                         actionManager.rev(3500),
+                        actionManager.waitForSpeed(3500),
+                        actionManager.launch(),
+                        actionManager.spindexer.right(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
 
