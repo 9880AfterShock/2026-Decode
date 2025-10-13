@@ -180,17 +180,16 @@ public class Spindexer {
     }
 
     public class RunToTargetPos implements Action {
-        private int times = 0;
+        private boolean first = true;
         private final Runnable run;
         public RunToTargetPos(Runnable run) {
             this.run = run;
-            times = 0;
+            first = true;
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
-            if (times == 0) {run.run();}
-            if (times < 20) {return false;} else {times += 1;}
+            if (first) {run.run(); first=false;}
             if (isShooting.get()) {
                 return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
             } else {
