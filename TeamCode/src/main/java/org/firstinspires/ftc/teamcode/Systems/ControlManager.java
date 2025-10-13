@@ -28,7 +28,7 @@ public class ControlManager {
 
     public static boolean shot = false;
     public static void setup(OpMode opMode) {
-        ballRamp = new BallRamp(opMode, "ramp",0.07,0.2);
+        ballRamp = new BallRamp(opMode, "ramp",0.04,0.22);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;

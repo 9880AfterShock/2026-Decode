@@ -22,7 +22,7 @@ public class Arm { // Prefix for commands
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.4;
-    public static double transferPosition = 0.65;
+    public static double transferPosition = 0.64;
     public static String intakeState = "Intaking";
     private static double startedIntaking;
 
