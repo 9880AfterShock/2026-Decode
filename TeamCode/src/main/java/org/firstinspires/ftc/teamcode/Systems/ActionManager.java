@@ -108,4 +108,17 @@ public class ActionManager {
             }
         };
     }
+
+
+    public Action rampDown() {
+
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                ballRamp.queueMessage(BallRampMessage.DOWN);
+                ballRamp.update();
+                return false;
+            }
+        };
+    }
 }

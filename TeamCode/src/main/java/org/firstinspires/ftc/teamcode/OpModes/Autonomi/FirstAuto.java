@@ -43,6 +43,8 @@ public class FirstAuto extends LinearOpMode {
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
                 .waitSeconds(20.0);
+        TrajectoryActionBuilder waitThree = drive.actionBuilder(startPos)
+                .waitSeconds(3.0);
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
@@ -75,9 +77,12 @@ public class FirstAuto extends LinearOpMode {
 
                         ),
                         actionManager.cycleRamp(),
-                        actionManager.rev(3800),
-                        actionManager.waitForSpeed(3800),
+                        actionManager.rev(3500),
+                        actionManager.waitForSpeed(3500),
                         actionManager.launch(),
+
+                        //shoot the balls in order here (also why does spindexer.left move it counterclockwise?)
+
                         actionManager.derev(),
                         toPark.build()
                 )
