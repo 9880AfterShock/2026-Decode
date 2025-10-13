@@ -79,7 +79,6 @@ public class FirstAuto extends LinearOpMode {
 
                         actionManager.rampDown(),
                         actionManager.spindexer.right(),
-                        waitTwenty.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.rampUp(),
                         waitQuarter.build(),
