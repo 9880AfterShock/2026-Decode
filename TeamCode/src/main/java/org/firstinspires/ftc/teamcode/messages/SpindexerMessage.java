@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.messages;
 
 public enum SpindexerMessage {
-    LEFT,
     RIGHT,
+    LEFT,
     NONE,
     INGREEN,
     INPURPLE,

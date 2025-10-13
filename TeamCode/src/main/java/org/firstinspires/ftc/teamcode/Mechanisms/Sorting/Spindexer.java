@@ -93,7 +93,7 @@ public class Spindexer {
         SpindexerMessage msg = messageQueue.poll();
         if (msg == null) {msg = SpindexerMessage.NONE;}
         switch (msg) {
-            case LEFT:
+            case RIGHT:
                 index = Math.floorMod(index+1,balls.size());
                 targetPos += ticksPerRotation/3;
                 if (isShooting.get()) {
@@ -102,7 +102,7 @@ public class Spindexer {
                     motor.setTargetPosition((int) targetPos);
                 }
                 break;
-            case RIGHT:
+            case LEFT:
                 index = Math.floorMod(index-1,balls.size());
                 targetPos -= ticksPerRotation/3;
                 if (isShooting.get()) {
@@ -151,9 +151,9 @@ public class Spindexer {
     public void gotoBallType(BallType ballType) {
         if (balls.get(Math.abs(index%balls.size())) != ballType) {
             if (balls.get(Math.floorMod(index + 1, balls.size())) == ballType) {
-                queueMessage(SpindexerMessage.LEFT);
-            } else if (balls.get(Math.floorMod(index - 1, balls.size())) == ballType) {
                 queueMessage(SpindexerMessage.RIGHT);
+            } else if (balls.get(Math.floorMod(index - 1, balls.size())) == ballType) {
+                queueMessage(SpindexerMessage.LEFT);
             }
         }
     }
@@ -172,9 +172,9 @@ public class Spindexer {
     public void gotoMotif(Motif motif) {
         if (!checkMotif(index, motif)) {
             if (checkMotif(index + 1, motif)) {
-                queueMessage(SpindexerMessage.LEFT);
-            } else if (checkMotif(index - 1, motif)) {
                 queueMessage(SpindexerMessage.RIGHT);
+            } else if (checkMotif(index - 1, motif)) {
+                queueMessage(SpindexerMessage.LEFT);
             }
         }
     }
@@ -198,13 +198,12 @@ public class Spindexer {
             }
         }
     }
-    public Action left() {
-        queueMessage(SpindexerMessage.LEFT);
-        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.LEFT));
-    }
-
     public Action right() {
         return new RunToTargetPos(() -> queueMessage(SpindexerMessage.RIGHT));
+    }
+
+    public Action left() {
+        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.LEFT));
     }
 
     public class Update implements Action {
@@ -220,7 +219,6 @@ public class Spindexer {
         }
     }
     public Action leftQuick() {
-        queueMessage(SpindexerMessage.LEFT);
         return new Update(() -> queueMessage(SpindexerMessage.LEFT));
     }
     public Action rightQuick() {
