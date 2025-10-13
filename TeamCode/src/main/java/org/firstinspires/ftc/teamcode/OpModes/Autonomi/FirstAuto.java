@@ -72,16 +72,16 @@ public class FirstAuto extends LinearOpMode {
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
-                                actionManager.spindexer.goToMotif(Obelisk.motif),
+                                actionManager.spindexer.goToMotif(Obelisk.motif), //this doesnt work =[
                                 toShoot.build()
 
                         ),
-                        actionManager.cycleRamp(),
+                        actionManager.cycleRamp(), //shoot forward  ball)
                         actionManager.rev(3500),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
 
-                        //shoot the balls in order here (also why does spindexer.left move it counterclockwise?)
+                        //shoot the balls in order here (the left slot and then the right slot) (also why does spindexer.left move it counterclockwise?)
 
                         actionManager.derev(),
                         toPark.build()
