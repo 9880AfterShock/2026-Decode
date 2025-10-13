@@ -82,6 +82,8 @@ public class FirstAuto extends LinearOpMode {
                         actionManager.launch(),
 
                         //shoot the balls in order here (the left slot and then the right slot) (also why does spindexer.left move it counterclockwise?)
+                        //for shooting make it so the ramp goes down while it turn the spindexer to the next slot, then it shoots
+                        //for maximum effiecnenty
 
                         actionManager.derev(),
                         toPark.build()
