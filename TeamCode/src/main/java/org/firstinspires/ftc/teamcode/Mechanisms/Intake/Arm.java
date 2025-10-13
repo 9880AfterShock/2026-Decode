@@ -22,7 +22,7 @@ public class Arm { // Prefix for commands
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.4;
-    public static double transferPosition = 0.64;
+    public static double transferPosition = 0.66;
     public static String intakeState = "Intaking";
     private static double startedIntaking;
 
@@ -52,6 +52,7 @@ public class Arm { // Prefix for commands
         }
 
         opmode.telemetry.addData("Intake Arm", intakeState);
+        opmode.telemetry.addData("Intake Pos", arm.getPosition());
         opmode.telemetry.addData("Intake Timer", startedIntaking);
     }
 
