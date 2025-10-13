@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
@@ -34,6 +35,7 @@ public class ActionManager {
         this.shooter = opmode.hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter.setVelocity(0);
     }
     public Action cycleRamp() {
