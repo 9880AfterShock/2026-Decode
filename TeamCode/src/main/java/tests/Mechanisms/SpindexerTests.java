@@ -1,12 +1,14 @@
 package Mechanisms;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.fakes.FakeDcMotorEx;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SpindexerTests {
@@ -144,5 +146,40 @@ public class SpindexerTests {
         spindexer.gotoBallType(BallType.GREEN);
         spindexer.update();
         Assert.assertEquals(0, spindexer.index);
+    }
+
+    @Test
+    public void check_motif_test() {
+        fakemotor = new FakeDcMotorEx();
+        spindexer = new org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer(fakemotor, ticks, Arrays.asList(BallType.GREEN,BallType.PURPLE,BallType.PURPLE));
+        Assert.assertTrue(spindexer.checkMotif(0, Motif.GPP));
+        Assert.assertFalse(spindexer.checkMotif(0, Motif.PGP));
+        Assert.assertFalse(spindexer.checkMotif(0, Motif.PPG));
+        Assert.assertTrue(spindexer.checkMotif(1, Motif.PPG));
+        Assert.assertFalse(spindexer.checkMotif(1, Motif.GPP));
+        Assert.assertFalse(spindexer.checkMotif(1, Motif.PGP));
+        Assert.assertTrue(spindexer.checkMotif(2, Motif.PGP));
+        Assert.assertFalse(spindexer.checkMotif(2, Motif.PPG));
+        Assert.assertFalse(spindexer.checkMotif(2, Motif.GPP));
+        Assert.assertTrue(spindexer.checkMotif(-1, Motif.PGP));
+        Assert.assertFalse(spindexer.checkMotif(-1, Motif.PPG));
+        Assert.assertFalse(spindexer.checkMotif(-1, Motif.GPP));
+    }
+
+    @Test
+    public void check_goto_motif_test() {
+        fakemotor = new FakeDcMotorEx();
+        spindexer = new org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer(fakemotor, ticks, Arrays.asList(BallType.GREEN,BallType.PURPLE,BallType.PURPLE));
+        spindexer.gotoMotif(Motif.GPP);
+        spindexer.update();
+        Assert.assertEquals(0, spindexer.index);
+        spindexer.gotoMotif(Motif.PPG);
+        Assert.assertEquals(1,spindexer.messageQueue.size());
+        spindexer.update();
+        Assert.assertEquals(1, spindexer.index);
+        spindexer.gotoMotif(Motif.PGP);
+        Assert.assertEquals(1,spindexer.messageQueue.size());
+        spindexer.update();
+        Assert.assertEquals(2, spindexer.index);
     }
 }

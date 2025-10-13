@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Maths.Trajectory;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
@@ -41,14 +42,14 @@ public class DriverTest {
         double nowTime = opmode.getRuntime();
         double rotationsPerMinute = Math.abs(((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60));
         if (increase) {
-//            distanceFromGoal += 0.3048;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-            desSpeed += 100;
+            distanceFromGoal += 0.3048;
+            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+//            desSpeed += 100;
         }
         if (decrease){
-//            distanceFromGoal -= 0.3048;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-            desSpeed -= 100;
+            distanceFromGoal -= 0.3048;
+            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+//            desSpeed -= 100;
         }
         if (rev) {
             shooter.setVelocity((desSpeed*numTicks)/60);
