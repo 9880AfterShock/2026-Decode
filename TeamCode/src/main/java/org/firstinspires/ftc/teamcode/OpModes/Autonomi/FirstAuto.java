@@ -36,10 +36,10 @@ public class FirstAuto extends LinearOpMode {
         Pose2d parkPos = new Pose2d(-60.0, -20.0, Math.toRadians(0.0));
 
 
-        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
-                .waitSeconds(20.0);
+        TrajectoryActionBuilder waitHalf = drive.actionBuilder(startPos)
+                .waitSeconds(0.5);
         TrajectoryActionBuilder waitQuarter = drive.actionBuilder(startPos)
-                .waitSeconds(3.0);
+                .waitSeconds(0.25);
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
@@ -79,12 +79,14 @@ public class FirstAuto extends LinearOpMode {
 
                         actionManager.rampDown(),
                         actionManager.spindexer.right(),
+                        waitHalf.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.rampUp(),
                         waitQuarter.build(),
 
                         actionManager.rampDown(),
                         actionManager.spindexer.right(),
+                        waitHalf.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.rampUp(),
                         waitQuarter.build(),
