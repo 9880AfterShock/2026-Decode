@@ -121,4 +121,17 @@ public class ActionManager {
             }
         };
     }
+
+    public Action rampUp(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                ballRamp.queueMessage(BallRampMessage.UP);
+                ballRamp.update();
+                spindexer.queueMessage(SpindexerMessage.EJECT);
+                spindexer.update();
+                return false;
+            }
+        };
+    }
 }

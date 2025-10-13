@@ -38,7 +38,7 @@ public class FirstAuto extends LinearOpMode {
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
                 .waitSeconds(20.0);
-        TrajectoryActionBuilder waitThree = drive.actionBuilder(startPos)
+        TrajectoryActionBuilder waitQuarter = drive.actionBuilder(startPos)
                 .waitSeconds(3.0);
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
@@ -75,9 +75,20 @@ public class FirstAuto extends LinearOpMode {
                         actionManager.rev(3500),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
+
+
+                        actionManager.rampDown(),
+                        actionManager.spindexer.right(),
+                        waitTwenty.build(),
+                        actionManager.waitForSpeed(3500),
+                        actionManager.rampUp(),
+                        waitQuarter.build(),
+
+                        actionManager.rampDown(),
                         actionManager.spindexer.right(),
                         actionManager.waitForSpeed(3500),
-                        actionManager.launch(),
+                        actionManager.rampUp(),
+                        waitQuarter.build(),
 
                         //shoot the balls in order here (the left slot and then the right slot) (also why does spindexer.left move it counterclockwise?)
                         //for shooting make it so the ramp goes down while it turn the spindexer to the next slot, then it shoots
