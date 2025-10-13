@@ -58,6 +58,7 @@ public class ActionManager {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 spindexerBias = true;
                 shooter.setVelocity((rpm*shooterTicks)/60);
+                spindexer.update();
                 telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
                 return false;
             }
@@ -104,6 +105,7 @@ public class ActionManager {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 spindexerBias = false;
                 shooter.setVelocity(0);
+                spindexer.update();
                 return false;
             }
         };
