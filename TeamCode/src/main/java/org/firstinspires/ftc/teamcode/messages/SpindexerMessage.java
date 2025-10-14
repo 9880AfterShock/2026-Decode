@@ -9,4 +9,5 @@ public enum SpindexerMessage {
     INUNKOWN,
     EJECT,
     LINEUP,
+    LINEUPFixed
 }

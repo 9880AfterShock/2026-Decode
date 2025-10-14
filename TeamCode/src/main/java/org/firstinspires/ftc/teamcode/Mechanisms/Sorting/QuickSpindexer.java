@@ -2,8 +2,19 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Sorting;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import static java.lang.Math.abs;
+
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Enums.Motif;
+import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
+import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 
 public class QuickSpindexer { // Prefix for commands
@@ -38,5 +49,52 @@ public class QuickSpindexer { // Prefix for commands
         wasCounterclockwise = counterclockwise;
 
         spindexer.setPower(1.0);
+    }
+
+    public static Action goToMotif(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (Obelisk.motif == Motif.GPP) {
+                    spindexer.setTargetPosition((int) (10.0/360*1425.1)); //10.0 is offset degrees
+                }
+                if (Obelisk.motif == Motif.PGP) {
+                    spindexer.setTargetPosition((int) ((10.0/360*1425.1) - (1425.1/3))); //10.0 is offset degrees
+                }
+                if (Obelisk.motif == Motif.PPG) {
+                    spindexer.setTargetPosition((int) ((10.0/360*1425.1) + (1425.1/3))); //10.0 is offset degrees
+                }
+                return abs(spindexer.getCurrentPosition()- spindexer.getTargetPosition()) > 40; //40 is tick margin of error
+            }
+        };
+    }
+
+    public static Action turnRight(){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3))); //10.0 is offset degrees
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 40; //40 is tick margin of error
+            }
+        };
+    }
+
+    public static Action cycleRampStart(){
+        return new Action() {
+            @Override
+            public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
+                spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-(1425.1/3)/2.5));
+                return false;
+            }
+        };
+    }
+    public static Action cycleRampEnd(){
+        return new Action() {
+            @Override
+            public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
+                spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+(1425.1/3)/2.5));
+                return false;
+            }
+        };
     }
 }

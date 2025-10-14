@@ -136,6 +136,20 @@ public class Spindexer {
 
                     }, 0.85));
                 break;
+            case LINEUPFixed:
+                int fixedTargetPos = motor.getTargetPosition();
+                motor.setTargetPosition((int) (fixedTargetPos-(ticksPerRotation/3)/2.5));
+                isLineup = true;
+                RunLater.addAction(new DelayedAction(() -> {
+                    isLineup = false;
+                    if (isShooting.get()) {
+                        motor.setTargetPosition((int) (fixedTargetPos + shootBias));
+                    } else {
+                        motor.setTargetPosition(fixedTargetPos);
+                    }
+
+                }, 0.85));
+                break;
             case NONE:
                 if (!isLineup) {
                     if (isShooting.get()) {

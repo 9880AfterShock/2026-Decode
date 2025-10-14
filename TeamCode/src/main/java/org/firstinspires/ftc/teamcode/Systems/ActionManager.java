@@ -43,7 +43,7 @@ public class ActionManager {
             private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUP); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
+                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
                 spindexer.update();
                 ballRamp.update();
                 RunLater.update();
@@ -133,6 +133,26 @@ public class ActionManager {
                 spindexer.queueMessage(SpindexerMessage.EJECT);
                 spindexer.update();
                 return false;
+            }
+        };
+    }
+
+    public Action waitForRPMQuick(double TargetRPM) {
+
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return (shooter.getVelocity() / shooterTicks) * 60 < TargetRPM / 1.1;
+            }
+        };
+    }
+
+    public Action spindexerLeft(double TargetRPM) {
+
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return (shooter.getVelocity() / shooterTicks) * 60 < TargetRPM * 1.1;
             }
         };
     }

@@ -13,9 +13,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 @Config
 @Autonomous(name = "Score Preloads (Blue)")
@@ -27,6 +29,8 @@ public class FirstAuto extends LinearOpMode {
         RunLater.setup(this);
         Obelisk.initDetection(this);
         ActionManager actionManager = new ActionManager( this, 24);
+
+        QuickSpindexer.initSpindexer(this); //ugly but works
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
@@ -68,33 +72,49 @@ public class FirstAuto extends LinearOpMode {
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
-                                actionManager.spindexer.goToMotif(Motif.PGP), //this doesnt work =[
+                                //actionManager.spindexer.goToMotif(Motif.PGP), //this doesnt work =[
+                                QuickSpindexer.goToMotif(),
                                 toShoot.build()
 
                         ),
-                        actionManager.cycleRamp(), //shoot forward  ball)
+                        //actionManager.cycleRamp(), //shoot forward  ball)
+                        QuickSpindexer.cycleRampStart(),
+                        waitQuarter.build(),
+                        actionManager.rampDown(),
+                        waitQuarter.build(),
+                        QuickSpindexer.cycleRampEnd(),
+                        waitQuarter.build(),
+
                         actionManager.rev(3500),
                         actionManager.waitForSpeed(3500),
-                        actionManager.launch(),
-
-
-                        actionManager.rampDown(),
-                        actionManager.spindexer.right(),
-                        waitHalf.build(),
-                        actionManager.waitForSpeed(3500),
                         actionManager.rampUp(),
                         waitQuarter.build(),
 
-                        actionManager.rampDown(),
-                        actionManager.spindexer.right(),
-                        waitHalf.build(),
-                        actionManager.waitForSpeed(3500),
+
+
+                        new ParallelAction(
+                                new SequentialAction(
+                                    actionManager.rampDown(),
+                                    waitHalf.build()
+                                ),
+                                QuickSpindexer.turnRight()
+                        ),
+                        actionManager.waitForRPMQuick(3500),
                         actionManager.rampUp(),
                         waitQuarter.build(),
 
-                        //shoot the balls in order here (the left slot and then the right slot) (also why does spindexer.left move it counterclockwise?)
-                        //for shooting make it so the ramp goes down while it turn the spindexer to the next slot, then it shoots
-                        //for maximum effiecnenty
+
+
+                        new ParallelAction(
+                                new SequentialAction(
+                                        actionManager.rampDown(),
+                                        waitHalf.build()
+                                ),
+                                QuickSpindexer.turnRight()
+                        ),
+                        actionManager.waitForRPMQuick(3500),
+                        actionManager.rampUp(),
+                        waitQuarter.build(),
 
                         actionManager.derev(),
                         toPark.build()
