@@ -177,6 +177,7 @@ public class Spindexer {
                 queueMessage(SpindexerMessage.LEFT);
             }
         }
+        update();
     }
 
     public class RunToTargetPos implements Action {
