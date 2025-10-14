@@ -69,7 +69,7 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return (shooter.getVelocity()/shooterTicks)*60 < rpm/1.1;
+                return (shooter.getVelocity()/shooterTicks)*60 < rpm;
             }
         };
     }
