@@ -6,7 +6,7 @@ public class Trajectory {
         double vel = Math.sqrt(
                 gravity*Math.pow(x,2)
                 / //-----------------
-                (2*Math.pow(Math.cos(angle),2)*(Math.tan(angle)*x-y))
+                (Math.pow(Math.cos(angle),2)*(Math.tan(angle)-y))
 
         );
         double rpm = ((60)/(2*Math.PI*wheel_radius))*vel;
