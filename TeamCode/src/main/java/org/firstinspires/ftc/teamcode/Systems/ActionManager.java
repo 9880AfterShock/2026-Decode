@@ -89,6 +89,7 @@ public class ActionManager {
                 }
                 spindexer.update();
                 ballRamp.update();
+                telemetryPacket.put("runLater actions queued: ",RunLater.getCount());
                 RunLater.update();
                 return !RunLater.isEmpty();
             }

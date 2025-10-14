@@ -35,6 +35,7 @@ public class RunLater {
     public static boolean isEmpty() {
         return queue.isEmpty();
     }
+    public static int getCount() {return queue.size();}
     public static class Finish implements Action {
 
         @Override
