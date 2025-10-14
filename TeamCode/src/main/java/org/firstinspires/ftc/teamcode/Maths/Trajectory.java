@@ -5,6 +5,9 @@ public class Trajectory {
     public static LaunchInformation getOptimalVelocity(double x, double y, double wheel_radius, double anglemin, double anglemax, double maxIter) {
         LaunchInformation velmax = getVelocity(x,y,wheel_radius,anglemax);
         LaunchInformation velmin = getVelocity(x,y,wheel_radius,anglemin);
+        if (maxIter==0) {
+            return getVelocity(x,y,wheel_radius,((anglemin-anglemax)/2)+anglemin);
+        }
         if (velmin.rpm < velmax.rpm) {
             return getOptimalVelocity(x,y,wheel_radius,anglemin,((anglemin-anglemax)/2)+anglemin,maxIter-1);
         } else {
