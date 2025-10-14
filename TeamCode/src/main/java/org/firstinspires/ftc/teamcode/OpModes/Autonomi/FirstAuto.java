@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -67,7 +68,7 @@ public class FirstAuto extends LinearOpMode {
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
-                                actionManager.spindexer.goToMotif(Obelisk.motif), //this doesnt work =[
+                                actionManager.spindexer.goToMotif(Motif.PGP), //this doesnt work =[
                                 toShoot.build()
 
                         ),
