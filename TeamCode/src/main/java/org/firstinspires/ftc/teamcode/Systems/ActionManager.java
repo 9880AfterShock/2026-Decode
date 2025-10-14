@@ -53,24 +53,19 @@ public class ActionManager {
     }
 
     public Action rev(double rpm) {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                spindexerBias = true;
-                shooter.setVelocity((rpm*shooterTicks)/60);
-                spindexer.update();
-                telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
-                return false;
-            }
+        return telemetryPacket -> {
+            spindexerBias = true;
+            shooter.setVelocity((rpm*shooterTicks)/60);
+            spindexer.update();
+            telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
+            return false;
         };
     }
 
     public Action waitForSpeed(double rpm) {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return (shooter.getVelocity()/shooterTicks)*60 < rpm/1.1;
-            }
+        return telemetryPacket -> {
+            telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
+            return !((shooter.getVelocity()/shooterTicks)*60 >= rpm);
         };
     }
 
@@ -100,40 +95,31 @@ public class ActionManager {
     }
 
     public Action derev() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                spindexerBias = false;
-                shooter.setVelocity(0);
-                spindexer.update();
-                return false;
-            }
+        return telemetryPacket -> {
+            spindexerBias = false;
+            shooter.setVelocity(0);
+            spindexer.update();
+            return false;
         };
     }
 
 
     public Action rampDown() {
 
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                ballRamp.queueMessage(BallRampMessage.DOWN);
-                ballRamp.update();
-                return false;
-            }
+        return telemetryPacket -> {
+            ballRamp.queueMessage(BallRampMessage.DOWN);
+            ballRamp.update();
+            return false;
         };
     }
 
     public Action rampUp(){
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                ballRamp.queueMessage(BallRampMessage.UP);
-                ballRamp.update();
-                spindexer.queueMessage(SpindexerMessage.EJECT);
-                spindexer.update();
-                return false;
-            }
+        return telemetryPacket -> {
+            ballRamp.queueMessage(BallRampMessage.UP);
+            ballRamp.update();
+            spindexer.queueMessage(SpindexerMessage.EJECT);
+            spindexer.update();
+            return false;
         };
     }
 
