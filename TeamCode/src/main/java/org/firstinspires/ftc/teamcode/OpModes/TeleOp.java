@@ -46,8 +46,8 @@ public class TeleOp extends LinearOpMode {
         //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
 
-        QuickSpindexer.initSpindexer(this);
-        QuickBallRamp.initTransfer(this);
+//        QuickSpindexer.initSpindexer(this);
+//        QuickBallRamp.initTransfer(this);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
