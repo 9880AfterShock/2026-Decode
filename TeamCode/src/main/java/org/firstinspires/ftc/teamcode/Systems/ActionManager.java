@@ -65,7 +65,7 @@ public class ActionManager {
     public Action waitForSpeed(double rpm) {
         return telemetryPacket -> {
             telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
-            return !((shooter.getVelocity()/shooterTicks)*60 >= rpm);
+            return !( (shooter.getVelocity() / shooterTicks) * 60 >= rpm);
         };
     }
 
@@ -82,6 +82,7 @@ public class ActionManager {
                         ballRamp.queueMessage(BallRampMessage.DOWN);
                         ballRamp.update();
                     }, 1.2));
+                    RunLater.addAction(new DelayedAction(() -> {},1.4));
                     spindexer.queueMessage(SpindexerMessage.EJECT);
                     spindexer.update();
                     first = false;

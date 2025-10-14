@@ -1,6 +1,16 @@
 package org.firstinspires.ftc.teamcode.Maths;
 
 public class Trajectory {
+
+    public static LaunchInformation getOptimalVelocity(double x, double y, double wheel_radius, double anglemin, double anglemax, double maxIter) {
+        LaunchInformation velmax = getVelocity(x,y,wheel_radius,anglemax);
+        LaunchInformation velmin = getVelocity(x,y,wheel_radius,anglemin);
+        if (velmin.rpm < velmax.rpm) {
+            return getOptimalVelocity(x,y,wheel_radius,anglemin,anglemax,maxIter-1);
+        } else {
+
+        }
+    }
     public static LaunchInformation getVelocity(double x, double y, double wheel_radius, double angle) {
         double gravity = -9.81;
         double vel = Math.sqrt(

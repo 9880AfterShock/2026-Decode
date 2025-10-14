@@ -72,49 +72,25 @@ public class FirstAuto extends LinearOpMode {
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
-                                //actionManager.spindexer.goToMotif(Motif.PGP), //this doesnt work =[
-                                QuickSpindexer.goToMotif(),
+                                new SequentialAction(
+                                        actionManager.spindexer.goToMotif(),
+                                        actionManager.cycleRamp()
+                                ),
                                 toShoot.build()
-
                         ),
-                        //actionManager.cycleRamp(), //shoot forward  ball)
-                        QuickSpindexer.cycleRampStart(),
-                        waitQuarter.build(),
-                        actionManager.rampDown(),
-                        waitQuarter.build(),
-                        QuickSpindexer.cycleRampEnd(),
-                        waitQuarter.build(),
-
                         actionManager.rev(3500),
+
+
                         actionManager.waitForSpeed(3500),
-                        actionManager.rampUp(),
-                        waitQuarter.build(),
+                        actionManager.launch(),
+                        actionManager.spindexer.right(),
 
+                        actionManager.waitForSpeed(3500),
+                        actionManager.launch(),
+                        actionManager.spindexer.right(),
 
-
-                        new ParallelAction(
-                                new SequentialAction(
-                                    actionManager.rampDown(),
-                                    waitHalf.build()
-                                ),
-                                QuickSpindexer.turnRight()
-                        ),
-                        actionManager.waitForRPMQuick(3500),
-                        actionManager.rampUp(),
-                        waitQuarter.build(),
-
-
-
-                        new ParallelAction(
-                                new SequentialAction(
-                                        actionManager.rampDown(),
-                                        waitHalf.build()
-                                ),
-                                QuickSpindexer.turnRight()
-                        ),
-                        actionManager.waitForRPMQuick(3500),
-                        actionManager.rampUp(),
-                        waitQuarter.build(),
+                        actionManager.waitForSpeed(3500),
+                        actionManager.launch(),
 
                         actionManager.derev(),
                         toPark.build()

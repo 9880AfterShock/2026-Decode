@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
+import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -195,7 +196,7 @@ public class Spindexer {
     }
 
     public class RunToTargetPos implements Action {
-        private boolean first = true;
+        private boolean first;
         private final Runnable run;
         public RunToTargetPos(Runnable run) {
             this.run = run;
@@ -239,7 +240,7 @@ public class Spindexer {
         return new Update(() -> queueMessage(SpindexerMessage.RIGHT));
     }
 
-    public Action goToMotif(Motif motif) {
-        return new RunToTargetPos(() -> gotoMotif(motif));
+    public Action goToMotif() {
+        return new Update(() -> gotoMotif(Obelisk.motif));
     }
 }
