@@ -42,9 +42,11 @@ public class FirstAuto extends LinearOpMode {
 
 
         TrajectoryActionBuilder waitHalf = drive.actionBuilder(startPos)
-                .waitSeconds(0.5);
+                .waitSeconds(1.0);
         TrajectoryActionBuilder waitQuarter = drive.actionBuilder(startPos)
                 .waitSeconds(0.25);
+        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPos)
+                .waitSeconds(20.0);
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(Math.toRadians(0.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(0.0));
@@ -80,15 +82,18 @@ public class FirstAuto extends LinearOpMode {
                         ),
                         actionManager.rev(3500),
 
-
+                        //waitQuarter.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
                         actionManager.spindexer.right(),
 
+
+                        waitHalf.build(), //waits before going right?
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
                         actionManager.spindexer.right(),
 
+                        waitHalf.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
 
