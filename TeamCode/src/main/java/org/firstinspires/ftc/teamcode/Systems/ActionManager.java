@@ -106,42 +106,10 @@ public class ActionManager {
     }
 
 
-    public Action rampDown() {
-
+    public Action shotCue(int number) {
         return telemetryPacket -> {
-            ballRamp.queueMessage(BallRampMessage.DOWN);
-            ballRamp.update();
+            telemetryPacket.put("Shot #", number);
             return false;
-        };
-    }
-
-    public Action rampUp(){
-        return telemetryPacket -> {
-            ballRamp.queueMessage(BallRampMessage.UP);
-            ballRamp.update();
-            spindexer.queueMessage(SpindexerMessage.EJECT);
-            spindexer.update();
-            return false;
-        };
-    }
-
-    public Action waitForRPMQuick(double TargetRPM) {
-
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return (shooter.getVelocity() / shooterTicks) * 60 < TargetRPM / 1.1;
-            }
-        };
-    }
-
-    public Action spindexerLeft(double TargetRPM) {
-
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return (shooter.getVelocity() / shooterTicks) * 60 < TargetRPM * 1.1;
-            }
         };
     }
 }

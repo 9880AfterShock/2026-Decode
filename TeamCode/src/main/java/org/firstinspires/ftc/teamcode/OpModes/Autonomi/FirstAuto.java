@@ -72,11 +72,13 @@ public class FirstAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        actionManager.shotCue(0),
                         Arm.AutoArmUp(),
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
                                 new SequentialAction(
+                                        actionManager.shotCue(1),
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),
@@ -85,12 +87,13 @@ public class FirstAuto extends LinearOpMode {
                         actionManager.rev(3500),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
+                        actionManager.shotCue(2),
                         actionManager.spindexer.right(),
-
 
                         waitHalf.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
+                        actionManager.shotCue(3),
                         actionManager.spindexer.right(),
 
                         waitHalf.build(),
