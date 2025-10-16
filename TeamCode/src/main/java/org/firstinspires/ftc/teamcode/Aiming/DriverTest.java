@@ -21,7 +21,7 @@ public class DriverTest {
 
     private static double lastPos;
 
-    private static double desSpeed = 4000;
+    private static double desSpeed = 3500;
 
     private static double lastTime;
     private static DcMotorEx shooter;
@@ -41,16 +41,16 @@ public class DriverTest {
         double currentPos = Shooter.shooter.getCurrentPosition();
         double nowTime = opmode.getRuntime();
         double rotationsPerMinute = Math.abs(((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60));
-        if (increase) {
-            distanceFromGoal += 0.3048;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed += 100;
-        }
-        if (decrease){
-            distanceFromGoal -= 0.3048;
-            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed -= 100;
-        }
+//        if (increase) {
+//            distanceFromGoal += 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+////            desSpeed += 100;
+//        }
+//        if (decrease){
+//            distanceFromGoal -= 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+////            desSpeed -= 100;
+//        }
         if (rev) {
             shooter.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(rotationsPerMinute-desSpeed) < 150 && fire) {
