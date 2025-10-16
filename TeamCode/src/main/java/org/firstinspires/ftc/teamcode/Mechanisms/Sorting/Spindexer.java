@@ -195,6 +195,23 @@ public class Spindexer {
         update();
     }
 
+    public class Right implements Action {
+        private boolean first;
+        public Right() {
+            first = true;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            if (first) {queueMessage(SpindexerMessage.RIGHT); first=false;}
+            if (isShooting.get()) {
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
+            } else {
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
+            }
+        }
+    }
+
     public class RunToTargetPos implements Action {
         private boolean first;
         private final Runnable run;
@@ -213,12 +230,28 @@ public class Spindexer {
             }
         }
     }
-    public Action right() {
-        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.RIGHT));
-    }
 
+    public class Left implements Action {
+        private boolean first;
+        public Left() {
+            first = true;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            update();
+            if (first) {queueMessage(SpindexerMessage.LEFT); first=false;}
+            if (isShooting.get()) {
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
+            } else {
+                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
+            }
+        }
+    }
+    public Action right() {
+        return new Right();
+    }
     public Action left() {
-        return new RunToTargetPos(() -> queueMessage(SpindexerMessage.LEFT));
+        return new Left();
     }
 
     public class Update implements Action {
@@ -239,7 +272,6 @@ public class Spindexer {
     public Action rightQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.RIGHT));
     }
-
     public Action goToMotif() {
         return new Update(() -> gotoMotif(Obelisk.motif));
     }
