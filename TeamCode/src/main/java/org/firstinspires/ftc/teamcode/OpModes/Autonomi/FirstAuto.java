@@ -83,15 +83,12 @@ public class FirstAuto extends LinearOpMode {
                                 toShoot.build()
                         ),
                         actionManager.rev(3500),
-
-                        //waitQuarter.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
                         actionManager.spindexer.right(),
 
 
-                        //waitHalf.build(), //waits before going right?
-                        waitFive.build(),
+                        waitHalf.build(),
                         actionManager.waitForSpeed(3500),
                         actionManager.launch(),
                         actionManager.spindexer.right(),
