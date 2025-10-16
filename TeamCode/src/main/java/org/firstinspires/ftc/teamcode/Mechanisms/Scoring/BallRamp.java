@@ -25,7 +25,7 @@ public class BallRamp {
         this.servo = opMode.hardwareMap.get(Servo.class,servoName);
         this.downPos = downPos;
         this.upPos = upPos;
-        servo.setPosition(upPos);
+        //servo.setPosition(upPos);
         this.state = BallRampState.UP;
     }
 
