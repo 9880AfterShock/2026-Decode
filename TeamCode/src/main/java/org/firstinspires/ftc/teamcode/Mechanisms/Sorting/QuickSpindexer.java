@@ -71,9 +71,15 @@ public class QuickSpindexer { // Prefix for commands
 
     public static Action turnRight(){
         return new Action() {
+            private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3))); //10.0 is offset degrees
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3)));
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 40; //40 is tick margin of error
             }
         };

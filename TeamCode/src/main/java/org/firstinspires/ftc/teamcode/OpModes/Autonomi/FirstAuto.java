@@ -84,20 +84,24 @@ public class FirstAuto extends LinearOpMode {
                                 ),
                                 toShoot.build()
                         ),
-                        actionManager.rev(4500),
-                        actionManager.waitForSpeed(4500),
-                        actionManager.launch(),
+                        actionManager.rev(4200),
+                        actionManager.waitForSpeed(4300),
+                        actionManager.launch(), //up to here works fine, shot not always in but it does work
                         actionManager.shotCue(2),
-                        actionManager.spindexer.right(),
+                        QuickSpindexer.turnRight(),
+                        //actionManager.spindexer.right(),
 
-                        waitHalf.build(),
-                        actionManager.waitForSpeed(4500),
+                        //waitHalf.build(),
+                        waitHalf.build(), //bc waitfor speed is weird
+                        actionManager.waitForSpeed(4300),
                         actionManager.launch(),
                         actionManager.shotCue(3),
-                        actionManager.spindexer.right(),
+                        QuickSpindexer.turnRight(),
+                        //actionManager.spindexer.right(),
 
-                        waitHalf.build(),
-                        actionManager.waitForSpeed(4500),
+                        //waitHalf.build(),
+                        waitHalf.build(), //bc waitfor speed is weird
+                        actionManager.waitForSpeed(4300),
                         actionManager.launch(),
 
                         actionManager.derev(),

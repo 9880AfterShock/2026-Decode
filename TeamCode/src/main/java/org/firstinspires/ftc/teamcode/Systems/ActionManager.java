@@ -57,14 +57,14 @@ public class ActionManager {
             spindexerBias = true;
             shooter.setVelocity((rpm*shooterTicks)/60);
             spindexer.update();
-            telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
+            telemetryPacket.put("Shooter Speed (reving)",(shooter.getVelocity()/shooterTicks)*60);
             return false;
         };
     }
 
     public Action waitForSpeed(double rpm) {
         return telemetryPacket -> {
-            telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
+            telemetryPacket.put("Shooter Speed (waitfor)",(shooter.getVelocity()/shooterTicks)*60);
             return !( (shooter.getVelocity() / shooterTicks) * 60 >= rpm && (shooter.getVelocity() / shooterTicks) * 60 <= rpm + 100); //100 is margin of error on upper bound
         };
     }
@@ -83,11 +83,11 @@ public class ActionManager {
                         ballRamp.update();
                     }, 1.2));
                     RunLater.addAction(new DelayedAction(() -> {},1.4));
-                    spindexer.queueMessage(SpindexerMessage.EJECT);
-                    spindexer.update();
+//                    spindexer.queueMessage(SpindexerMessage.EJECT);
+//                    spindexer.update();
                     first = false;
                 }
-                spindexer.update();
+                //spindexer.update();
                 ballRamp.update();
                 telemetryPacket.put("runLater actions queued: ",RunLater.getCount());
                 RunLater.update();
@@ -110,6 +110,28 @@ public class ActionManager {
         return telemetryPacket -> {
             telemetryPacket.put("Shot #", number);
             return false;
+        };
+    }
+
+    public Action rampUp() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                ballRamp.queueMessage(BallRampMessage.UP);
+                ballRamp.update();
+                return false;
+            }
+        };
+    }
+
+    public Action rampDown() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                ballRamp.queueMessage(BallRampMessage.DOWN);
+                ballRamp.update();
+                return false;
+            }
         };
     }
 }
