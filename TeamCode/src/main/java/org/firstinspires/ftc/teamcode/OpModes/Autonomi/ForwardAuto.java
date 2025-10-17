@@ -45,7 +45,7 @@ public class ForwardAuto extends LinearOpMode {
         frontRightDrive.setPower(FORWARD_SPEED);
         backLeftDrive.setPower(FORWARD_SPEED);
         backRightDrive.setPower(FORWARD_SPEED);
-        while (opModeIsActive() && (runtime.seconds() < 25.5)) {
+        while (opModeIsActive() && (runtime.seconds() < 26)) {
             sleep(10);
         }
 
