@@ -14,9 +14,9 @@ public class ForwardAuto extends LinearOpMode {
     private DcMotor frontRightDrive  = null;
     private DcMotor backLeftDrive   = null;
     private DcMotor backRightDrive  = null;
-    static final double FORWARD_SPEED = 0.6;
+    static final double FORWARD_SPEED = 1.0;
     static final double STOP_SPEED = 0.0;
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() {
         QuickSpindexer.initSpindexer(this); //us only
@@ -40,7 +40,7 @@ public class ForwardAuto extends LinearOpMode {
         frontRightDrive.setPower(FORWARD_SPEED);
         backLeftDrive.setPower(FORWARD_SPEED);
         backRightDrive.setPower(FORWARD_SPEED);
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 26)) {
             sleep(10);
         }
 
