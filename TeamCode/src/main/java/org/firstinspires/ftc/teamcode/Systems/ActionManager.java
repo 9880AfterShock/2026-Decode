@@ -30,7 +30,7 @@ public class ActionManager {
         this.shooterTicks = shooterTicks;
         spindexerBias = false;
         this.opmode = opmode;
-        spindexer = new Spindexer("spindexer", opmode, 1425.1, 10, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
+        spindexer = new Spindexer("spindexer", opmode, 1425.1, 11, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
         ballRamp = new BallRamp(opmode, "ramp", 0.04, 0.22);
         this.shooter = opmode.hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

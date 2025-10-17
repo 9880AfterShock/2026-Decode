@@ -37,7 +37,7 @@ public class FirstAuto extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-20));
-        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(45));
+        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(50));
         Pose2d parkPos = new Pose2d(-60.0, -20.0, Math.toRadians(0.0));
 
 
@@ -84,16 +84,17 @@ public class FirstAuto extends LinearOpMode {
                                 ),
                                 toShoot.build()
                         ),
-                        actionManager.rev(4200),
+                        actionManager.rev(4300),
                         actionManager.waitForSpeed(4300),
                         actionManager.launch(), //up to here works fine, shot not always in but it does work
                         actionManager.shotCue(2),
+                        actionManager.rev(4400),
                         QuickSpindexer.turnRight(),
                         //actionManager.spindexer.right(),
 
                         //waitHalf.build(),
                         waitHalf.build(), //bc waitfor speed is weird
-                        actionManager.waitForSpeed(4300),
+                        actionManager.waitForSpeed(4400),
                         actionManager.launch(),
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
@@ -101,7 +102,7 @@ public class FirstAuto extends LinearOpMode {
 
                         //waitHalf.build(),
                         waitHalf.build(), //bc waitfor speed is weird
-                        actionManager.waitForSpeed(4300),
+                        actionManager.waitForSpeed(4400),
                         actionManager.launch(),
 
                         actionManager.derev(),
