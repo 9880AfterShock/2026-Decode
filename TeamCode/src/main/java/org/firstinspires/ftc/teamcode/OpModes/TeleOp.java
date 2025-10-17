@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.QuickBallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
@@ -45,6 +46,7 @@ public class TeleOp extends LinearOpMode {
         Color.initSensor(this);
         //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
+        Hood.initAim(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
@@ -57,6 +59,7 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
         runtime.reset();
         ControlManager.setup(this);
+        Hood.goUp();
 
 
         // run until the end of the match (driver presses STOP)
