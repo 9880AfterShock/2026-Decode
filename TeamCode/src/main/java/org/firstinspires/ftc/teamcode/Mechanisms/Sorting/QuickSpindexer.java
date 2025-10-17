@@ -103,4 +103,13 @@ public class QuickSpindexer { // Prefix for commands
             }
         };
     }
+    public static Action resetForTele(){
+        return new Action() {
+            @Override
+            public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
+                spindexer.setTargetPosition(0);
+                return false;
+            }
+        };
+    }
 }
