@@ -8,13 +8,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 
 //@Disabled
-@Autonomous(name="Go forward 1 second after 25 seconds")
+@Autonomous(name="Go forward after 25 seconds")
 public class ForwardAuto extends LinearOpMode {
     private DcMotor frontLeftDrive   = null;
     private DcMotor frontRightDrive  = null;
     private DcMotor backLeftDrive   = null;
     private DcMotor backRightDrive  = null;
-    static final double FORWARD_SPEED = 1.0;
+    static final double FORWARD_SPEED = 0.4;
     static final double STOP_SPEED = 0.0;
     private final ElapsedTime runtime = new ElapsedTime();
     @Override
@@ -24,6 +24,11 @@ public class ForwardAuto extends LinearOpMode {
         frontRightDrive = hardwareMap.get(DcMotor.class, "rightFront");
         backLeftDrive  = hardwareMap.get(DcMotor.class, "leftRear");
         backRightDrive = hardwareMap.get(DcMotor.class, "rightRear");
+
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -40,7 +45,7 @@ public class ForwardAuto extends LinearOpMode {
         frontRightDrive.setPower(FORWARD_SPEED);
         backLeftDrive.setPower(FORWARD_SPEED);
         backRightDrive.setPower(FORWARD_SPEED);
-        while (opModeIsActive() && (runtime.seconds() < 26)) {
+        while (opModeIsActive() && (runtime.seconds() < 25.5)) {
             sleep(10);
         }
 
