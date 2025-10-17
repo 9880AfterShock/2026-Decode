@@ -65,7 +65,7 @@ public class ActionManager {
     public Action waitForSpeed(double rpm) {
         return telemetryPacket -> {
             telemetryPacket.put("Speed",(shooter.getVelocity()/shooterTicks)*60);
-            return !( (shooter.getVelocity() / shooterTicks) * 60 >= rpm);
+            return !( (shooter.getVelocity() / shooterTicks) * 60 >= rpm && (shooter.getVelocity() / shooterTicks) * 60 <= rpm + 100); //100 is margin of error on upper bound
         };
     }
 
