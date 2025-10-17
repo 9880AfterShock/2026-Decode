@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 
 public class QuickSpindexer { // Prefix for commands
-    private static DcMotor spindexer; // init motor var
+    public static DcMotor spindexer; // init motor var
     private static OpMode opmode; // opmode var init
     private static double targetPosition;
     private static boolean wasClockwise;
