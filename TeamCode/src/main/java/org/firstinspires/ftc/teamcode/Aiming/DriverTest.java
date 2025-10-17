@@ -21,7 +21,7 @@ public class DriverTest {
 
     private static double lastPos;
 
-    private static double desSpeed = 3500;
+    private static double desSpeed = 4500;
 
     private static double lastTime;
     private static DcMotorEx shooter;
