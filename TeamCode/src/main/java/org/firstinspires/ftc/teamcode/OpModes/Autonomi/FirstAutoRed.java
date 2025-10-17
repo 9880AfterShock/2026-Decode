@@ -32,13 +32,13 @@ public class FirstAutoRed extends LinearOpMode {
 
         QuickSpindexer.initSpindexer(this); //ugly but works
 
-        Pose2d startPos = new Pose2d(55.5, -47.0, -Math.toRadians(55.0));
+        Pose2d startPos = new Pose2d(-55.5, 47.0, -Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d scanPos = new Pose2d(27.0, -27.0, -Math.toRadians(-15.0));
-        Pose2d shootPos = new Pose2d(33.0, -33.0, -Math.toRadians(55.0));
-        Pose2d parkPos = new Pose2d(60.0, -35.0, -Math.toRadians(0.0));
+        Pose2d scanPos = new Pose2d(-27.0, 27.0, -Math.toRadians(-25.0));
+        Pose2d shootPos = new Pose2d(-33.0, 33.0, -Math.toRadians(40.0));
+        Pose2d parkPos = new Pose2d(-60.0, 35.0, -Math.toRadians(0.0));
 
 
         TrajectoryActionBuilder waitFive = drive.actionBuilder(startPos)
@@ -53,13 +53,13 @@ public class FirstAutoRed extends LinearOpMode {
                 .waitSeconds(20.0);
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPos)
                 .setTangent(-Math.toRadians(0.0))
-                .splineToLinearHeading(scanPos, Math.toRadians(0.0));
+                .splineToLinearHeading(scanPos, -Math.toRadians(0.0));
         TrajectoryActionBuilder toShoot = drive.actionBuilder(scanPos)
                 .setTangent(-Math.toRadians(-125.0))
-                .splineToLinearHeading(shootPos, Math.toRadians(-125.0));
+                .splineToLinearHeading(shootPos, -Math.toRadians(-125.0));
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPos)
                 .setTangent(-Math.toRadians(180.0))
-                .splineToLinearHeading(parkPos, Math.toRadians(-180.0));
+                .splineToLinearHeading(parkPos, -Math.toRadians(-180.0));
         //.lineToX(30.0)
         //.waitSeconds(5.0);
 
