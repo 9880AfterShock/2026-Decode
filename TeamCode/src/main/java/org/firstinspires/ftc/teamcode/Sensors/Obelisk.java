@@ -116,7 +116,13 @@ public class Obelisk {
 
     public static Action AutoScan() {
         return new Action() {
+            private boolean first = true;
+            double scanTime;
             public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
                 List<AprilTagDetection> currentDetections = aprilTag.getDetections();
                 int validTagsSeen = 0;
                 for (AprilTagDetection detection : currentDetections) {
@@ -134,6 +140,10 @@ public class Obelisk {
                     }
                 }
                 packet.put("Motif", motif);
+                if (opmode.getRuntime() - scanTime >= 2.0) {
+                    motif = Motif.PGP;
+                    return false;
+                }
                 return (validTagsSeen != 1);
             }
         };
