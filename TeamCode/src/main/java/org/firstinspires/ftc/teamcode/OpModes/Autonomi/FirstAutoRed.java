@@ -37,11 +37,13 @@ public class FirstAutoRed extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, 27.0, -Math.toRadians(-25.0));
-        Pose2d shootPos = new Pose2d(-33.0, 33.0, -Math.toRadians(40.0));
+        Pose2d shootPos = new Pose2d(-33.0, 33.0, -Math.toRadians(45.0));
         Pose2d parkPos = new Pose2d(-60.0, 35.0, -Math.toRadians(0.0));
 
 
         TrajectoryActionBuilder waitFive = drive.actionBuilder(startPos)
+                .waitSeconds(5.0);
+        TrajectoryActionBuilder extraWaitOne = drive.actionBuilder(startPos)
                 .waitSeconds(5.0);
         TrajectoryActionBuilder waitOne = drive.actionBuilder(startPos)
                 .waitSeconds(1.0);
@@ -96,6 +98,7 @@ public class FirstAutoRed extends LinearOpMode {
 
                         //waitHalf.build(),
                         waitOne.build(), //bc waitfor speed is weird
+                        extraWaitOne.build(),
                         actionManager.waitForSpeed(4400),
                         actionManager.launch(),
                         actionManager.shotCue(3),
