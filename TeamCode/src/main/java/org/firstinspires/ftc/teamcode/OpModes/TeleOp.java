@@ -59,7 +59,7 @@ public class TeleOp extends LinearOpMode {
         waitForStart();
         runtime.reset();
         ControlManager.setup(this);
-        Hood.goUp();
+        //Hood.goUp();
 
 
         // run until the end of the match (driver presses STOP)

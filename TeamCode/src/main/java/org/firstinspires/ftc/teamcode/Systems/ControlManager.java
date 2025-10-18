@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Color;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
@@ -77,6 +78,8 @@ public class ControlManager {
         Distance.updateSensor();
 
         Color.updateSensor(2.5F);
+
+        Hood.updateAim(operator.yWasPressed());
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
 
