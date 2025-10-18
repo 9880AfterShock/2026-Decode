@@ -79,7 +79,7 @@ public class ControlManager {
 
         Color.updateSensor(2.5F);
 
-        Hood.updateAim(operator.yWasPressed());
+        //Hood.updateAim(operator.yWasPressed()); //servo broke
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
 
