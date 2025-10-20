@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import static android.os.SystemClock.sleep;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -9,10 +12,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-public class QuickAlignment extends LinearOpMode
-{
-    // Adjust these numbers to suit your robot.
+public class QuickAlignment {
     final double DESIRED_DISTANCE = 12.0; //  this is how close the camera should get to the target (inches)
 
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
@@ -26,110 +26,21 @@ public class QuickAlignment extends LinearOpMode
     final double MAX_AUTO_STRAFE= 0.5;   //  Clip the strafing speed to this max value (adjust for your robot)
     final double MAX_AUTO_TURN  = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
 
-    private DcMotor frontLeftDrive = null;  //  Used to control the left front drive wheel
-    private DcMotor frontRightDrive = null;  //  Used to control the right front drive wheel
-    private DcMotor rearLeftDrive = null;  //  Used to control the left back drive wheel
-    private DcMotor rearRightDrive = null;  //  Used to control the right back drive wheel
+    private static DcMotor leftFront;
+    private static DcMotor rightFront;
+    private static DcMotor leftRear;
+    private static DcMotor rightRear;
 
     private static final int DESIRED_TAG_ID = -1;     // Choose the tag you want to approach or set to -1 for ANY tag.
-    private AprilTagProcessor aprilTag;
-    private AprilTagDetection desiredTag = null;
+    private static AprilTagProcessor aprilTag;
+    private AprilTagDetection targetTag;
 
-    @Override public void runOpMode()
-    {
-        boolean targetFound = false;
-        double  drive = 0;
-        double  strafe = 0;
-        double  turn = 0;
+    boolean targetFound = false;
+    double  drive = 0;
+    double  strafe = 0;
+    double  turn = 0;
 
-        initAprilTag();
-
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must match the names assigned during the robot configuration.
-        // step (using the FTC Robot Controller app on the phone).
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-        rearLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-        rearRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
-
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rearLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        rearRightDrive.setDirection(DcMotor.Direction.FORWARD);
-
-        //do any exposure tuning here
-
-        // Wait for driver to press start
-        telemetry.addData("Camera preview on/off", "3 dots, Camera Stream");
-        telemetry.addData(">", "Touch START to start OpMode");
-        telemetry.update();
-        waitForStart();
-
-        while (opModeIsActive())
-        {
-            targetFound = false;
-            desiredTag  = null;
-
-            // Step through the list of detected tags and look for a matching tag
-            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-            for (AprilTagDetection detection : currentDetections) {
-                // Look to see if we have size info on this tag.
-                if (detection.metadata != null) {
-                    //  Check to see if we want to track towards this tag.
-                    if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
-                        // Yes, we want to use this tag.
-                        targetFound = true;
-                        desiredTag = detection;
-                        break;  // don't look any further.
-                    } else {
-                        // This tag is in the library, but we do not want to track it right now.
-                        telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
-                    }
-                } else {
-                    // This tag is NOT in the library, so we don't have enough information to track to it.
-                    telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
-                }
-            }
-
-            // Tell the driver what we see, and what to do.
-            if (targetFound) {
-                telemetry.addData("\n>","HOLD Left-Bumper to Drive to Target\n");
-                telemetry.addData("Found", "ID %d (%s)", desiredTag.id, desiredTag.metadata.name);
-                telemetry.addData("Range",  "%5.1f inches", desiredTag.ftcPose.range);
-                telemetry.addData("Bearing","%3.0f degrees", desiredTag.ftcPose.bearing);
-                telemetry.addData("Yaw","%3.0f degrees", desiredTag.ftcPose.yaw);
-            } else {
-                telemetry.addData("\n>","Drive using joysticks to find valid target\n");
-            }
-
-            // If Left Bumper is being pressed, AND we have found the desired target, Drive to target Automatically .
-            if (gamepad1.left_bumper && targetFound) {
-
-                // Determine heading, range and Yaw (tag image rotation) error so we can use them to control the robot automatically.
-                double  rangeError      = (desiredTag.ftcPose.range - DESIRED_DISTANCE);
-                double  headingError    = desiredTag.ftcPose.bearing;
-                double  yawError        = desiredTag.ftcPose.yaw;
-
-                drive  = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
-                turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
-                strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
-
-                telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
-            } else {
-
-                // drive using manual POV Joystick mode.  Slow things down to make the robot more controlable.
-                drive  = -gamepad1.left_stick_y  / 2.0;  // Reduce drive rate to 50%.
-                strafe = -gamepad1.left_stick_x  / 2.0;  // Reduce strafe rate to 50%.
-                turn   = -gamepad1.right_stick_x / 3.0;  // Reduce turn rate to 33%.
-                telemetry.addData("Manual","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
-            }
-            telemetry.update();
-
-            // Apply desired axes motions to the drivetrain.
-            moveRobot(drive, strafe, turn);
-            sleep(10);
-        }
-    }
+    private static OpMode opmode;
 
     /**
      * Move robot according to desired axes motions
@@ -140,6 +51,7 @@ public class QuickAlignment extends LinearOpMode
      * <p>
      * Positive Yaw is counter-clockwise
      */
+
     public void moveRobot(double x, double y, double yaw) {
         // Calculate wheel powers.
         double frontLeftPower    =  x - y - yaw;
@@ -160,17 +72,13 @@ public class QuickAlignment extends LinearOpMode
         }
 
         // Send powers to the wheels.
-        frontLeftDrive.setPower(frontLeftPower);
-        frontRightDrive.setPower(frontRightPower);
-        rearLeftDrive.setPower(backLeftPower);
-        rearRightDrive.setPower(backRightPower);
+        leftFront.setPower(frontLeftPower);
+        rightFront.setPower(frontRightPower);
+        leftRear.setPower(backLeftPower);
+        rightRear.setPower(backRightPower);
     }
 
-    /**
-     * Initialize the AprilTag processor.
-     */
-    private void initAprilTag() {
-        // Create the AprilTag processor by using a builder.
+    public static void initAprilTag(OpMode opmode) {
         aprilTag = new AprilTagProcessor.Builder().build();
 
         // Adjust Image Decimation to trade-off detection-range for detection-rate.
@@ -182,11 +90,78 @@ public class QuickAlignment extends LinearOpMode
         // Note: Decimation can be changed on-the-fly to adapt during a match.
         aprilTag.setDecimation(2);
 
-        // Create the vision portal by using a builder.
-        // Used to manage the video source.
         VisionPortal visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
                 .addProcessor(aprilTag)
                 .build();
+
+        leftFront = opmode.hardwareMap.get(DcMotor.class, "front_left_drive");
+        rightFront = opmode.hardwareMap.get(DcMotor.class, "front_right_drive");
+        leftRear = opmode.hardwareMap.get(DcMotor.class, "back_left_drive");
+        rightRear = opmode.hardwareMap.get(DcMotor.class, "back_right_drive");
+
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    public void updateApriltags(){
+        targetFound = false;
+        targetTag = null;
+
+        // Step through the list of detected tags and look for a matching tag
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        for (AprilTagDetection detection : currentDetections) {
+            // Look to see if we have size info on this tag.
+            if (detection.metadata != null) {
+                //  Check to see if we want to track towards this tag.
+                if ((DESIRED_TAG_ID < 0) || (detection.id == DESIRED_TAG_ID)) {
+                    // Yes, we want to use this tag.
+                    targetFound = true;
+                    targetTag = detection;
+                    break;
+                } else {
+                    opmode.telemetry.addData("Skipping", "Tag ID %d is not desired", detection.id);
+                }
+            } else {
+                opmode.telemetry.addData("Unknown", "Tag ID %d is not in TagLibrary", detection.id);
+            }
+        }
+
+        if (targetFound) {
+            opmode.telemetry.addData("\n>","HOLD Left-Bumper to Drive to Target\n");
+            opmode.telemetry.addData("Found", "ID %d (%s)", targetTag.id, targetTag.metadata.name);
+            opmode.telemetry.addData("Range",  "%5.1f inches", targetTag.ftcPose.range);
+            opmode.telemetry.addData("Bearing","%3.0f degrees", targetTag.ftcPose.bearing);
+            opmode.telemetry.addData("Yaw","%3.0f degrees", targetTag.ftcPose.yaw);
+        } else {
+            opmode.telemetry.addData("\n>","Drive using joysticks to find valid target\n");
+        }
+
+        // If Left Bumper is being pressed, AND we have found the desired target, Drive to target Automatically .
+        if (opmode.gamepad1.left_bumper && targetFound) {
+
+            // Determine heading, range and Yaw (tag image rotation) error so we can use them to control the robot automatically.
+            double  rangeError      = (targetTag.ftcPose.range - DESIRED_DISTANCE);
+            double  headingError    = targetTag.ftcPose.bearing;
+            double  yawError        = targetTag.ftcPose.yaw;
+
+            drive  = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
+            turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
+            strafe = Range.clip(-yawError * STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
+
+            opmode.telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+        } else {
+
+            // drive using manual POV Joystick mode.  Slow things down to make the robot more controlable.
+            drive  = -opmode.gamepad1.left_stick_y  / 2.0;  // Reduce drive rate to 50%.
+            strafe = -opmode.gamepad1.left_stick_x  / 2.0;  // Reduce strafe rate to 50%.
+            turn   = -opmode.gamepad1.right_stick_x / 3.0;  // Reduce turn rate to 33%.
+            opmode.telemetry.addData("Manual","Drive %5.2f, Strafe %5.2f, Turn %5.2f ", drive, strafe, turn);
+        }
+        opmode.telemetry.update();
+
+        // Apply desired axes motions to the drivetrain.
+        moveRobot(drive, strafe, turn);
+        sleep(10);
     }
 }
