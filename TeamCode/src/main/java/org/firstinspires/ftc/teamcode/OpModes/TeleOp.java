@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.Aiming.QuickAlignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
@@ -35,7 +36,7 @@ public class TeleOp extends LinearOpMode {
         DriveTrain.initDrive(this);
         RunLater.setup(this);
         //FieldCentricDrive.initDrive(this);
-        Obelisk.initDetection(this);
+        //Obelisk.initDetection(this);
         //SpindexerCamera.initDetection(this);
         Alignment.initAlignment(this);
         Roller.initIntake(this);
@@ -47,6 +48,7 @@ public class TeleOp extends LinearOpMode {
         //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
         Hood.initAim(this);
+        QuickAlignment.initAprilTag(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
@@ -71,6 +73,6 @@ public class TeleOp extends LinearOpMode {
             telemetry.update();
         }
         //SpindexerCamera.stopVision();
-        Obelisk.stopVision();
+        //Obelisk.stopVision();
     }
 }
