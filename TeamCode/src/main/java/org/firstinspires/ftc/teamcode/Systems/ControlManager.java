@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Aiming.QuickAlignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
@@ -70,7 +71,8 @@ public class ControlManager {
 
         //other stuff
         if (driver.x) {
-            QuickAlignment.updateApriltags();
+            //QuickAlignment.updateApriltags();
+            GoalVision.updateApriltags();
         } else {
             DriveTrain.updateDrive(strafe, drive, turn, slowMode);
         }

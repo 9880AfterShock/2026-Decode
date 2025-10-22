@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Aiming.QuickAlignment;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
@@ -48,7 +49,8 @@ public class TeleOp extends LinearOpMode {
         //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
         Hood.initAim(this);
-        QuickAlignment.initAprilTag(this);
+        //QuickAlignment.initAprilTag(this);
+        GoalVision.initAprilTag(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
