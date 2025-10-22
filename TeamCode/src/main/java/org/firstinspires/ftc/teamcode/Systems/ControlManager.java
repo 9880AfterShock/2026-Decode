@@ -28,6 +28,7 @@ public class ControlManager {
     private static boolean prevInstake;
 
     public static boolean shot = false;
+    public static boolean canSpin = true;
     public static void setup(OpMode opMode) {
         ballRamp = new BallRamp(opMode, "ramp",0.04,0.22);
         ballRamp.queueMessage(BallRampMessage.UP);
@@ -85,15 +86,17 @@ public class ControlManager {
 
         DriverTest.update(increase, decrease, fire ,rev);
         if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
+            canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);
             RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
+            RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.5));
         }
 
-        if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP)) {
+        if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP) && canSpin) {
             shot = false;
             spindexer.queueMessage(SpindexerMessage.RIGHT);
         }
-        if (spinRight && ballRamp.state == BallRampState.UP) {
+        if (spinRight && ballRamp.state == BallRampState.UP && canSpin) {
             spindexer.queueMessage(SpindexerMessage.LEFT);
         }
         spindexer.update();
