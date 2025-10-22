@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
+import android.sax.StartElementListener;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
@@ -108,5 +110,6 @@ public class ControlManager {
         ballRamp.update();
 
         prevInstake = intaking;
+        opMode.telemetry.addData("SPINDEXER SAFEGUARD BROKEN", canSpin);
     }
 }
