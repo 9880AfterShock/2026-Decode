@@ -9,21 +9,25 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.opencv.core.Mat;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.List;
+
 public class QuickAlignment {
     static final double DESIRED_DISTANCE = 12.0; //  this is how close the camera should get to the target (inches)
 
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
     //  applied to the drive motors to correct the error.
     //  Drive = Error * Gain    Make these values smaller for smoother control, or larger for a more aggressive response.
-    static final double SPEED_GAIN  =  0.02  ;   //  Forward Speed Control "Gain". e.g. Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
-    static final double STRAFE_GAIN =  0.015 ;   //  Strafe Speed Control "Gain".  e.g. Ramp up to 37% power at a 25 degree Yaw error.   (0.375 / 25.0)
-    static final double TURN_GAIN   =  0.01  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
+    public static final double SPEED_GAIN  =  0.02  ;   //  Forward Speed Control "Gain". e.g. Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
+    public static final double STRAFE_GAIN =  0.015 ;   //  Strafe Speed Control "Gain".  e.g. Ramp up to 37% power at a 25 degree Yaw error.   (0.375 / 25.0)
+    public static final double TURN_GAIN   =  0.01  ;   //  Turn Control "Gain".  e.g. Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
 
-    static final double MAX_AUTO_SPEED = 0.5;   //  Clip the approach speed to this max value (adjust for your robot)
-    static final double MAX_AUTO_STRAFE= 0.5;   //  Clip the strafing speed to this max value (adjust for your robot)
-    static final double MAX_AUTO_TURN  = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
+    public static final double MAX_AUTO_SPEED = 0.5;   //  Clip the approach speed to this max value (adjust for your robot)
+    public static final double MAX_AUTO_STRAFE= 0.5;   //  Clip the strafing speed to this max value (adjust for your robot)
+    public static final double MAX_AUTO_TURN  = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
 
     private static DcMotor leftFront;
     private static DcMotor rightFront;
@@ -82,6 +86,7 @@ public class QuickAlignment {
         // Decimation = 3 ..  Detect 5" Tag from 10 feet away at 30 Frames Per Second
         // Note: Decimation can be changed on-the-fly to adapt during a match.
         aprilTag.setDecimation(2);
+        //aprilTag.setCameraRotation(OpenCvCameraRotation.SIDEWAYS_RIGHT); //does not work, would have to use a full custom vision pipeline, not dealing with that so i am just rotating the output lol
 
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
@@ -133,10 +138,12 @@ public class QuickAlignment {
         // If Left Bumper is being pressed, AND we have found the desired target, Drive to target Automatically .
         if (/*)opmode.gamepad1.left_bumper && */targetFound) {
 
-            // Determine heading, range and Yaw (tag image rotation) error so we can use them to control the robot automatically.
-            double  rangeError      = (targetTag.ftcPose.range - DESIRED_DISTANCE);
-            double  headingError    = targetTag.ftcPose.bearing;
-            double  yawError        = targetTag.ftcPose.yaw;
+            //Rotate pose data bc stupid mount
+            double x = targetTag.ftcPose.y;
+            double y = -targetTag.ftcPose.x;
+            double yawError = targetTag.ftcPose.yaw - 90;
+            double headingError = targetTag.ftcPose.bearing - 90;
+            double rangeError   = (Math.hypot(x, y) - DESIRED_DISTANCE);
 
             drive  = Range.clip(rangeError * SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
             turn   = Range.clip(headingError * TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
@@ -153,7 +160,7 @@ public class QuickAlignment {
         }
         opmode.telemetry.update();
 
-        moveRobot(-drive, strafe, turn);
+        moveRobot(-drive, -strafe, turn); //changed bc of webcam mounting
         //sleep(10); idk if this breaks it but we will see
     }
 }
