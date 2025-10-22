@@ -72,7 +72,7 @@ public class ControlManager {
             DriveTrain.updateDrive(strafe, drive, turn, slowMode);
         }
 
-        Obelisk.update();
+        //Obelisk.update();
         //SpindexerCamera.update();
         Alignment.updateAlignment();
 
