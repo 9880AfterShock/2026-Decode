@@ -10,7 +10,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
 public class GoalVision {
-    VectorF cameraOffset = new VectorF(0.10f, 0.05f, 0.0f);  // forward, right, up
     private static AprilTagProcessor aprilTag;
     private static AprilTagDetection targetTag;
 
