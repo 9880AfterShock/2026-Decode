@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Aiming;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 
 public class GoalVision {
+    VectorF cameraOffset = new VectorF(0.10f, 0.05f, 0.0f);  // forward, right, up
     private static AprilTagProcessor aprilTag;
     private static AprilTagDetection targetTag;
 

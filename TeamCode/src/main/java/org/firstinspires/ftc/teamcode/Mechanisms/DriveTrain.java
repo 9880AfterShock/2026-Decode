@@ -48,8 +48,14 @@ public class DriveTrain { // Prefix for commands
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align) {
         if (align) {
-            if (GoalVision.getRotation() != -9880.0) {
-                //strafe = (float) GoalVision.getRotation();
+            double rotation = GoalVision.getRotation();
+            if (rotation != -9880.0) {
+                strafe = (float) GoalVision.getRotation();
+                double kP = 0.02;  // Between 0.02–0.05
+                turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+                if (Math.abs(rotation) < 1.0) {
+                    turn = 0;
+                }
             }
         }
         double leftBackPower;
