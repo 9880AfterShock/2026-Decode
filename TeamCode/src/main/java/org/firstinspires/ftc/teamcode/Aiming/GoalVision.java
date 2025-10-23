@@ -37,14 +37,14 @@ public class GoalVision {
         GoalVision.opmode = opmode;
     }
 
-    public static void updateApriltags(){
+    public static double getRotation(){
         targetFound = false;
         targetTag = null;
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         for (AprilTagDetection detection : currentDetections) {
             if (detection.metadata != null) {
-                if ((detection.id == 20) || (detection.id == 25)) { //20 is blue, 25 is red
+                if ((detection.id == 20) || (detection.id == 24)) { //20 is blue, 24 is red
                     targetFound = true;
                     targetTag = detection;
                     break;
@@ -53,11 +53,13 @@ public class GoalVision {
         }
 
         if (targetFound) {
-            //Rotate pose data bc stupid mount
-            double headingError = targetTag.ftcPose.bearing - 90;
+            //Rotate pose data bc stupid mount from bearing to elevation
+            double headingError = targetTag.ftcPose.elevation;
             opmode.telemetry.addData("Heading Error APRILTAG", headingError);
+            return headingError;
         } else {
             opmode.telemetry.addData("Heading Error APRILTAG", "NO TAG FOUND");
+            return -9880.0;
         }
     }
 }
