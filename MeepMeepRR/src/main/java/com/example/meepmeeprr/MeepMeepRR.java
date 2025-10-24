@@ -8,14 +8,13 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepRR {
     public static void main(String[] args) {
-//        Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
-//        Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-15.0));
-//        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(55));
-//        Pose2d parkPos = new Pose2d(-60.0, -35.0, Math.toRadians(0.0));
-        Pose2d startPos = new Pose2d(-55.5, 47.0, -Math.toRadians(55.0));
-        Pose2d scanPos = new Pose2d(-27.0, 27.0, -Math.toRadians(-25.0));
-        Pose2d shootPos = new Pose2d(-33.0, 33.0, -Math.toRadians(45.0));
-        Pose2d parkPos = new Pose2d(-60.0, 35.0, -Math.toRadians(0.0));
+        Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
+        Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-15.0));
+        Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(55));
+        Pose2d parkPos = new Pose2d(-60.0, -35.0, Math.toRadians(0.0));
+        Pose2d startPickup1 = new Pose2d(-12.0, -30.0, -Math.toRadians(90.0));
+        Pose2d endPickup1 = new Pose2d(-12.0, -55.0, -Math.toRadians(90.0));
+        Double endPickupY = -55.0;
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -26,19 +25,26 @@ public class MeepMeepRR {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(startPos)
-//                .setTangent(Math.toRadians(55.0))
-//                .splineToLinearHeading(scanPos, Math.toRadians(45.0))
-//                .setTangent(Math.toRadians(-125.0))
-//                .splineToLinearHeading(shootPos, Math.toRadians(-125.0))
-//                .setTangent(Math.toRadians(180.0))
-//                .splineToLinearHeading(parkPos, Math.toRadians(-180.0))
-//                .build()
-                .setTangent(-Math.toRadians(0.0))
-                .splineToLinearHeading(scanPos, -Math.toRadians(0.0))
-                .setTangent(-Math.toRadians(-125.0))
-                .splineToLinearHeading(shootPos, -Math.toRadians(-125.0))
-                .setTangent(-Math.toRadians(180.0))
-                .splineToLinearHeading(parkPos, -Math.toRadians(-180.0))
+                //to scan
+                .setTangent(Math.toRadians(55.0))
+                .splineToLinearHeading(scanPos, Math.toRadians(45.0))
+                //to shoot
+                .setTangent(Math.toRadians(-125.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(-125.0))
+                //topickup1
+                .setTangent(45.0)
+                .splineToLinearHeading(startPickup1, -45.0)
+
+                //pickup1
+                .setTangent(-90.0)
+                .splineToLinearHeading(endPickup1, -90.0)
+
+
+                //back to shoot
+                .setTangent(Math.toRadians(125.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(125.0))                //to park
+                .setTangent(Math.toRadians(180.0))
+                .splineToLinearHeading(parkPos, Math.toRadians(-180.0))
                 .build()
         );
 
