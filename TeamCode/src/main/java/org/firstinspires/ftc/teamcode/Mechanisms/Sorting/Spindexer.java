@@ -195,6 +195,10 @@ public class Spindexer {
         update();
     }
 
+    public BallType getCurrentBall() {
+        return balls.get(index);
+    }
+
     public class Right implements Action {
         private boolean first;
         public Right() {

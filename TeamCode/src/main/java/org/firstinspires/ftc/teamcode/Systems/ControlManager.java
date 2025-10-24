@@ -99,18 +99,23 @@ public class ControlManager {
         Hood.updateAim(operator.yWasPressed());
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
-        if (last_intake != intaking) {
-            if (intaking) {
-                sensor = () -> {
-                    NormalizedRGBA color = color_sensor.getNormalizedColors();
-                    return new Color(color.red, color.green, color.blue, ColorType.RGB);
-                };
+        if (last_intake != intaking && intaking) {
+            sensor = () -> {
+                NormalizedRGBA color = color_sensor.getNormalizedColors();
+                return new Color(color.red, color.green, color.blue, ColorType.RGB);
+            };
 
-                BallColorDetectinator.addSensor(sensor);
-            } else {
+            BallColorDetectinator.addSensor(sensor);
+
+            RunLater.addAction(new DelayedAction(() -> {
                 Color data = BallColorDetectinator.pullData(sensor);
                 BallType classification = classifier.classify(data);
-            }
+                if (classification == BallType.GREEN) {
+                    spindexer.queueMessage(SpindexerMessage.INGREEN);
+                } else if (classification == BallType.PURPLE) {
+                    spindexer.queueMessage(SpindexerMessage.INPURPLE);
+                }
+            }, 0.5));
         }
 
         DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
@@ -132,6 +137,7 @@ public class ControlManager {
         ballRamp.update();
 
         prevInstake = intaking;
+        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
         opMode.telemetry.addData("SPINDEXER SAFEGUARD BROKEN", canSpin);
         last_intake = intaking;
     }
