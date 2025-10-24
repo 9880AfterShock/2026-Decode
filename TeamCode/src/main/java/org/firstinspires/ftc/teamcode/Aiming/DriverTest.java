@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Aiming;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Maths.Trajectory;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
@@ -24,14 +25,20 @@ public class DriverTest {
     public static double desSpeed = 4000;
 
     private static double lastTime;
-    private static DcMotorEx shooter;
+    private static DcMotorEx shooterup;
+    private static DcMotorEx shooterdown;
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
-        shooter = opmode.hardwareMap.get(DcMotorEx.class, "shooter");
-        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooter.setVelocity(0);
+        shooterup = opmode.hardwareMap.get(DcMotorEx.class, "shooterup");
+        shooterup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterup.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterup.setVelocity(0);
+        shooterdown = opmode.hardwareMap.get(DcMotorEx.class, "shooterdown");
+        shooterdown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterdown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterdown.setVelocity(0);
         distanceFromGoal = 0;
         lastPos = Shooter.shooter.getCurrentPosition();
         lastTime = opmode.getRuntime();
@@ -52,7 +59,8 @@ public class DriverTest {
 ////            desSpeed -= 100;
 //        }
         if (rev) {
-            shooter.setVelocity((desSpeed*numTicks)/60);
+            shooterup.setVelocity((desSpeed*numTicks)/60);
+            shooterdown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(rotationsPerMinute-desSpeed) < 150 && fire) {
                 ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
                 ControlManager.shot = true;
@@ -60,7 +68,8 @@ public class DriverTest {
                 ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
             }
         } else {
-            shooter.setVelocity(0);
+            shooterup.setVelocity(0);
+            shooterdown.setVelocity(0);
         }
         if (!fire) {
             Transfer.updateTransfer(false);

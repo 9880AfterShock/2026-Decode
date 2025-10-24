@@ -42,7 +42,6 @@ public class TeleOp extends LinearOpMode {
         Alignment.initAlignment(this);
         Roller.initIntake(this);
         Arm.initIntake(this);
-        Shooter.initShooter(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
         Color.initSensor(this);
