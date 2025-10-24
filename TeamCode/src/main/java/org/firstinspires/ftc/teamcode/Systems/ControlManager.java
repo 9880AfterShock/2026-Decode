@@ -36,7 +36,6 @@ public class ControlManager {
 
     public static boolean shot = false;
     public static boolean canSpin = true;
-    public static boolean last_intake = false;
     public static Supplier<Color> sensor;
     public static com.qualcomm.robotcore.hardware.NormalizedColorSensor color_sensor;
     public static ColorClassifier<BallType> classifier;
@@ -99,7 +98,7 @@ public class ControlManager {
         Hood.updateAim(operator.yWasPressed());
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
-        if (last_intake != intaking && intaking) {
+        if (prevInstake != intaking && intaking) {
             sensor = () -> {
                 NormalizedRGBA color = color_sensor.getNormalizedColors();
                 return new Color(color.red, color.green, color.blue, ColorType.RGB);
@@ -119,7 +118,7 @@ public class ControlManager {
         }
 
         DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
-        if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
+        if (cycleRamp) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);
             RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
@@ -137,8 +136,8 @@ public class ControlManager {
         ballRamp.update();
 
         prevInstake = intaking;
+        opMode.telemetry.addData("BallRamp mesages",ballRamp.messageQueue.size());
         opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
         opMode.telemetry.addData("SPINDEXER SAFEGUARD BROKEN", canSpin);
-        last_intake = intaking;
     }
 }
