@@ -102,7 +102,7 @@ public class DriveTrain { // Prefix for commands
         slowModeButtonPreviouslyPressed = slowModeButtonCurrentlyPressed;
     }
 
-    public Action aim() {
+    public static Action aim() {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
