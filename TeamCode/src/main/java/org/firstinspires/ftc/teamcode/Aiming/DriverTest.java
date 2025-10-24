@@ -44,7 +44,7 @@ public class DriverTest {
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev){
-        double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)/60);
+        double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)*60);
 //        if (increase) {
 //            distanceFromGoal += 0.3048*0.5;
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
