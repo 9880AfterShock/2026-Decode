@@ -72,7 +72,7 @@ public class DriverTest {
             Transfer.updateTransfer(false);
         }
 
-        opmode.telemetry.addData("Can fire? ", rotationsPerMinute >= desSpeed/2);
+        opmode.telemetry.addData("Can fire? ", Math.abs(rotationsPerMinute-desSpeed) < 150);
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in feet", distanceFromGoal/0.3048);
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
