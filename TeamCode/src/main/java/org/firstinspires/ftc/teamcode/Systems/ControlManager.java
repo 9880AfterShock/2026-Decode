@@ -49,8 +49,8 @@ public class ControlManager {
         operator = opMode.gamepad2;
         spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
         classifier = new ColorClassifier<>(BallType.NONE,0.2);
-        classifier.addColor((new Color((double) 44 /255, (double) 178 /255, (double) 51 /255,ColorType.RGB)).asHSV(), BallType.GREEN);
-        classifier.addColor((new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB)).asHSV(), BallType.PURPLE);
+        classifier.addColor(new Color((double) 44 /255, (double) 178 /255, (double) 51 /255,ColorType.RGB), BallType.GREEN);
+        classifier.addColor(new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB), BallType.PURPLE);
     }
 
     public static void update() {
@@ -74,6 +74,7 @@ public class ControlManager {
         boolean decrease = driver.dpadDownWasPressed();
         boolean rev = operator.a;
         boolean fire = driver.right_bumper;
+        boolean intake_shooter = driver.x;
 
         //BallRamp
         boolean cycleRamp = driver.bWasPressed();
@@ -112,7 +113,7 @@ public class ControlManager {
             }
         }
 
-        DriverTest.update(increase, decrease, fire ,rev);
+        DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
         if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);

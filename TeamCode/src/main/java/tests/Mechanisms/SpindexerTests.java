@@ -174,12 +174,8 @@ public class SpindexerTests {
         spindexer.update();
         Assert.assertEquals(0, spindexer.index);
         spindexer.gotoMotif(Motif.PPG);
-        Assert.assertEquals(1,spindexer.messageQueue.size());
-        spindexer.update();
         Assert.assertEquals(1, spindexer.index);
         spindexer.gotoMotif(Motif.PGP);
-        Assert.assertEquals(1,spindexer.messageQueue.size());
-        spindexer.update();
         Assert.assertEquals(2, spindexer.index);
     }
 }

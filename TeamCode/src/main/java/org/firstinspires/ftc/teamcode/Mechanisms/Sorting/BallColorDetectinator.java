@@ -24,7 +24,7 @@ public class BallColorDetectinator {
         for (Supplier<Color> sensor : sensors) {
             Color color = sensor.get();
             if (color == null) {continue;}
-            if (colormap.containsKey(sensor) && (color.getRed()+ color.getGreen()+ color.getBlue())/3 > 0.3) {
+            if (colormap.containsKey(sensor) && (color.getRed()+ color.getGreen()+ color.getBlue())/3 > 0.15) {
                 colormap.get(sensor).add(color);
             } else {
                 colormap.put(sensor, new ArrayList<>(List.of(color)));
