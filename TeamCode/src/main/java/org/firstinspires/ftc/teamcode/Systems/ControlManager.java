@@ -41,7 +41,7 @@ public class ControlManager {
     public static com.qualcomm.robotcore.hardware.NormalizedColorSensor color_sensor;
     public static ColorClassifier<BallType> classifier;
     public static void setup(OpMode opMode) {
-        ballRamp = new BallRamp(opMode, "ramp",0.04,0.22);
+        ballRamp = new BallRamp(opMode, "ramp",0.08,0.25);
         color_sensor = opMode.hardwareMap.get(com.qualcomm.robotcore.hardware.NormalizedColorSensor.class,"sensorColor");
         ballRamp.queueMessage(BallRampMessage.UP);
         ControlManager.opMode=opMode;
