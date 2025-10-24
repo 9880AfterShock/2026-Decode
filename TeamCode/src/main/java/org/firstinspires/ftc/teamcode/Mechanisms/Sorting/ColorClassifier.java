@@ -17,13 +17,15 @@ public class ColorClassifier<T> {
     }
 
     public void addColor(Color color, T value) {
+        color = color.asHSV();
         colormap.put(color, value);
     }
     public T classify(Color color) {
+        color = color.asHSV();
         Color candidate = null;
         for (Map.Entry<Color, T> entry: colormap.entrySet()) {
             if (candidate == null) {
-                if (Math.abs(color.getHue()-entry.getKey().getHue()) < tolerance && Math.abs(entry.getKey().getSaturation()-0.5) < tolerance ) {
+                if (Math.abs(color.getHue()-entry.getKey().getHue()) < tolerance && Math.abs(entry.getKey().getSaturation()-color.getSaturation()) < tolerance ) {
                     candidate = entry.getKey();
                 }
             } else if (Math.abs(color.getHue()-entry.getKey().getHue()) < Math.abs(color.getHue()-candidate.getHue()) && Math.abs(color.getHue()-entry.getKey().getHue()) < tolerance && Math.abs(entry.getKey().getSaturation()-0.5) < tolerance){

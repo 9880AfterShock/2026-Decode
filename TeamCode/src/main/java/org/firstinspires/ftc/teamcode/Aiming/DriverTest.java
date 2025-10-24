@@ -43,7 +43,7 @@ public class DriverTest {
         lastTime = opmode.getRuntime();
     }
 
-    public static void update(boolean increase, boolean decrease, boolean fire, boolean rev){
+    public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake){
         double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)*60);
 //        if (increase) {
 //            distanceFromGoal += 0.3048*0.5;
@@ -68,8 +68,9 @@ public class DriverTest {
             shooterup.setVelocity(0);
             shooterdown.setVelocity(0);
         }
-        if (!fire) {
-            Transfer.updateTransfer(false);
+        if (!fire && !rev && intake) {
+            shooterup.setVelocity(-25*30);
+            shooterdown.setVelocity(-25*30);
         }
 
         opmode.telemetry.addData("Can fire? ", Math.abs(rotationsPerMinute-desSpeed) < 150);
