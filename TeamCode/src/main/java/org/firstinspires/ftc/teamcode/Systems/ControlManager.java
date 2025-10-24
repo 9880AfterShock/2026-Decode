@@ -112,7 +112,7 @@ public class ControlManager {
             }
         }
 
-        //DriverTest.update(increase, decrease, fire ,rev);
+        DriverTest.update(increase, decrease, fire ,rev);
         if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);

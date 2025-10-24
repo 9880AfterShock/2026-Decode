@@ -43,7 +43,7 @@ public class TeleOp extends LinearOpMode {
         Distance.initSensor(this);
         ColorSensor.initSensor(this);
         //Wall_E.initWebcam(this);
-        //DriverTest.initControls(this);
+        DriverTest.initControls(this);
         Hood.initAim(this);
         //QuickAlignment.initAprilTag(this);
         GoalVision.initAprilTag(this);
