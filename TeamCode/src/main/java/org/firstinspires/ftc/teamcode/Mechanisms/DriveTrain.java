@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+
 public class DriveTrain { // Prefix for commands
     private static DcMotor leftRear; // init motor vars
     private static DcMotor leftFront;
@@ -44,7 +46,17 @@ public class DriveTrain { // Prefix for commands
         DriveTrain.opmode = opmode;
     }
 
-    public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton) {
+    public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align) {
+        if (align) {
+            double rotation = GoalVision.getRotation();
+            if (rotation != -9880.0) {
+                double kP = -0.05;  // Between 0.02–0.05
+                turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+                if (Math.abs(rotation) < 1.0) {
+                    turn = 0;
+                }
+            }
+        }
         double leftBackPower;
         double leftFrontPower;
         double rightBackPower;

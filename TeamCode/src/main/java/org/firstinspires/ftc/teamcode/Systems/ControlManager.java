@@ -52,6 +52,7 @@ public class ControlManager {
         float drive = -driver.left_stick_y;
         float turn = driver.right_stick_x;
         boolean slowMode = driver.right_trigger > 0.1;
+        boolean align = driver.x;
 
         //Intaking
         boolean intaking = driver.left_trigger > 0.1;
@@ -69,13 +70,7 @@ public class ControlManager {
 
 
 
-        //other stuff
-        if (driver.x) {
-            //QuickAlignment.updateApriltags();
-            GoalVision.updateApriltags();
-        } else {
-            DriveTrain.updateDrive(strafe, drive, turn, slowMode);
-        }
+        DriveTrain.updateDrive(strafe, drive, turn, slowMode, align);
 
         //Obelisk.update();
         //SpindexerCamera.update();
