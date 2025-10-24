@@ -30,12 +30,11 @@ public class DriverTest {
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
-        shooterup = opmode.hardwareMap.get(DcMotorEx.class, "shooterup");
+        shooterup = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
         shooterup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterup.setDirection(DcMotorSimple.Direction.REVERSE);
         shooterup.setVelocity(0);
-        shooterdown = opmode.hardwareMap.get(DcMotorEx.class, "shooterdown");
+        shooterdown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown");
         shooterdown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterdown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterdown.setVelocity(0);
@@ -45,9 +44,7 @@ public class DriverTest {
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev){
-        double currentPos = Shooter.shooter.getCurrentPosition();
-        double nowTime = opmode.getRuntime();
-        double rotationsPerMinute = Math.abs(((currentPos-lastPos)/numTicks)/((nowTime-lastTime)/60));
+        double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)/60);
 //        if (increase) {
 //            distanceFromGoal += 0.3048*0.5;
 //            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
@@ -74,9 +71,6 @@ public class DriverTest {
         if (!fire) {
             Transfer.updateTransfer(false);
         }
-
-        lastPos = currentPos;
-        lastTime = nowTime;
 
         opmode.telemetry.addData("Can fire? ", rotationsPerMinute >= desSpeed/2);
         opmode.telemetry.addData("Fire?", fire);
