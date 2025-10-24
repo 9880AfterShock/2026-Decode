@@ -50,7 +50,7 @@ public class DriveTrain { // Prefix for commands
         if (align) {
             double rotation = GoalVision.getRotation();
             if (rotation != -9880.0) {
-                double kP = -0.05;  // Between 0.02–0.05
+                double kP = 0.02;  //0.02 to 0.05
                 turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
                 if (Math.abs(rotation) < 1.0) {
                     turn = 0;
