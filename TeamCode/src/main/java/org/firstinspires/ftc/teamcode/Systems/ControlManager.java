@@ -94,7 +94,7 @@ public class ControlManager {
 
         Distance.updateSensor();
 
-        ColorSensor.updateSensor(2.5F);
+        //ColorSensor.updateSensor(2.5F);
 
         Hood.updateAim(operator.yWasPressed());
 

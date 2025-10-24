@@ -41,7 +41,7 @@ public class TeleOp extends LinearOpMode {
         Arm.initIntake(this);
         Transfer.initTransfer(this);
         Distance.initSensor(this);
-        ColorSensor.initSensor(this);
+        //ColorSensor.initSensor(this);
         //Wall_E.initWebcam(this);
         DriverTest.initControls(this);
         Hood.initAim(this);
