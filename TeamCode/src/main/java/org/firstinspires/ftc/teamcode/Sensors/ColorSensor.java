@@ -8,14 +8,14 @@ import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-public class Color {
+public class ColorSensor {
     private static OpMode opmode; // opmode var init
     private static NormalizedColorSensor sensorColor;
     static final float[] hsvValues = new float[3];
 
     public static void initSensor(OpMode opmode) {
         sensorColor = opmode.hardwareMap.get(NormalizedColorSensor.class, "colorSensor");
-        Color.opmode = opmode;
+        ColorSensor.opmode = opmode;
 
         if (sensorColor instanceof SwitchableLight) {
             ((SwitchableLight)sensorColor).enableLight(true);

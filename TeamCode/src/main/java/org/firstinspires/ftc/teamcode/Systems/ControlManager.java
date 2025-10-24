@@ -1,26 +1,29 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
-import android.sax.StartElementListener;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
-import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
-import org.firstinspires.ftc.teamcode.Aiming.QuickAlignment;
+import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.Enums.BallType;
+import org.firstinspires.ftc.teamcode.Enums.ColorType;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
-import org.firstinspires.ftc.teamcode.Sensors.Color;
+import org.firstinspires.ftc.teamcode.Sensors.ColorSensor;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
-import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
+
+import java.util.function.Supplier;
 
 public class ControlManager {
     private static OpMode opMode;
@@ -33,13 +36,21 @@ public class ControlManager {
 
     public static boolean shot = false;
     public static boolean canSpin = true;
+    public static boolean last_intake = false;
+    public static Supplier<Color> sensor;
+    public static com.qualcomm.robotcore.hardware.NormalizedColorSensor color_sensor;
+    public static ColorClassifier<BallType> classifier;
     public static void setup(OpMode opMode) {
         ballRamp = new BallRamp(opMode, "ramp",0.04,0.22);
+        color_sensor = opMode.hardwareMap.get(com.qualcomm.robotcore.hardware.NormalizedColorSensor.class,"sensorColor");
         ballRamp.queueMessage(BallRampMessage.UP);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
         spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
+        classifier = new ColorClassifier<>(BallType.NONE,0.2);
+        classifier.addColor((new Color(0,0,0,ColorType.RGB)).asHSV(), BallType.PURPLE);
+        classifier.addColor((new Color(0,0,0,ColorType.RGB)).asHSV(), BallType.PURPLE);
     }
 
     public static void update() {
@@ -82,11 +93,24 @@ public class ControlManager {
 
         Distance.updateSensor();
 
-        Color.updateSensor(2.5F);
+        ColorSensor.updateSensor(2.5F);
 
         Hood.updateAim(operator.yWasPressed());
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
+        if (last_intake != intaking) {
+            if (intaking) {
+                sensor = () -> {
+                    NormalizedRGBA color = color_sensor.getNormalizedColors();
+                    return new Color(color.red, color.green, color.blue, ColorType.RGB);
+                };
+
+                BallColorDetectinator.addSensor(sensor);
+            } else {
+                Color data = BallColorDetectinator.pullData(sensor);
+                BallType classification = classifier.classify(data);
+            }
+        }
 
         DriverTest.update(increase, decrease, fire ,rev);
         if (cycleRamp || (prevInstake != intaking && ballRamp.state == BallRampState.DOWN && intaking)) {
@@ -108,5 +132,6 @@ public class ControlManager {
 
         prevInstake = intaking;
         opMode.telemetry.addData("SPINDEXER SAFEGUARD BROKEN", canSpin);
+        last_intake = intaking;
     }
 }

@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.teamcode.Enums.ColorType;
 
 public class Color {
-    public double one;
-    public double two;
-    public double three;
-    public ColorType type;
+    private double one;
+    private double two;
+    private double three;
+    private ColorType type;
 
     public static Color rgb2hsv(Color rgb) {
-        Color hsv = new Color(0,0,0,ColorType.HSV);
+        Color hsv = new Color(0,0,0,ColorType.HSL);
 
         double max = Math.max(Math.max(rgb.one, rgb.two), rgb.three);
         double min = Math.min(Math.min(rgb.one, rgb.two), rgb.three);
@@ -67,5 +67,29 @@ public class Color {
             return rgb2hsv(this);
         }
         return this;
+    }
+
+    public double getRed() {
+        return one;
+    }
+
+    public double getHue() {
+        return one;
+    }
+
+    public double getGreen() {
+        return two;
+    }
+
+    public double getSaturation() {
+        return two;
+    }
+
+    public double getBlue() {
+        return three;
+    }
+
+    public double getLightness(){
+        return three;
     }
 }
