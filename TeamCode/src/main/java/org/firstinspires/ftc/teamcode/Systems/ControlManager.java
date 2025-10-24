@@ -49,8 +49,8 @@ public class ControlManager {
         operator = opMode.gamepad2;
         spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
         classifier = new ColorClassifier<>(BallType.NONE,0.2);
-        classifier.addColor((new Color(0,0,0,ColorType.RGB)).asHSV(), BallType.PURPLE);
-        classifier.addColor((new Color(0,0,0,ColorType.RGB)).asHSV(), BallType.PURPLE);
+        classifier.addColor((new Color((double) 44 /255, (double) 178 /255, (double) 51 /255,ColorType.RGB)).asHSV(), BallType.GREEN);
+        classifier.addColor((new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB)).asHSV(), BallType.PURPLE);
     }
 
     public static void update() {
