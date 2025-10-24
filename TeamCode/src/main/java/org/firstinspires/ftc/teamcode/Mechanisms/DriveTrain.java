@@ -2,12 +2,17 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 public class DriveTrain { // Prefix for commands
     private static DcMotor leftRear; // init motor vars
@@ -19,6 +24,8 @@ public class DriveTrain { // Prefix for commands
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;
+    private static final double kP = 0.02;  //0.02 to 0.05
+    private static double rotation;
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotor.class, "leftRear"); // motor config names
@@ -44,13 +51,14 @@ public class DriveTrain { // Prefix for commands
         slowMode = false;
 
         DriveTrain.opmode = opmode;
+
+        rotation = 0;
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align) {
         if (align) {
-            double rotation = GoalVision.getRotation();
+            rotation = GoalVision.getRotation();
             if (rotation != -9880.0) {
-                double kP = 0.02;  //0.02 to 0.05
                 turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
                 if (Math.abs(rotation) < 1.0) {
                     turn = 0;
@@ -92,5 +100,15 @@ public class DriveTrain { // Prefix for commands
             slowMode = !slowMode;
         }
         slowModeButtonPreviouslyPressed = slowModeButtonCurrentlyPressed;
+    }
+
+    public Action aim() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                updateDrive(0,0,0, false, true);
+                return Math.abs(rotation) < 1.0;
+            }
+        };
     }
 }
