@@ -31,49 +31,55 @@ public class MeepMeepRR {
                 //to scan
                 .setTangent(Math.toRadians(55.0))
                 .splineToLinearHeading(scanPos, Math.toRadians(45.0))
-
+                //scan
                 .waitSeconds(1)
 
                 //to shoot
                 .setTangent(Math.toRadians(-125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(-125.0))
-
+                //shoot
                 .waitSeconds(3)
 
                 //topickup1
                 .setTangent(Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, Math.toRadians(-45.0))
+                //intake on
                 //pickup1
                 .setTangent(Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, Math.toRadians(-90.0))
+                //intake off?
                 //back to shoot
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(125.0))
-
+                //shoot
                 .waitSeconds(3)
 
                 //topickup2
                 .setTangent(Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup2, Math.toRadians(-45.0))
+                //intake on
                 //pickup2
                 .setTangent(Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, Math.toRadians(-90.0))
+                //intake off?
                 //back to shoot
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(125.0))
-
+                //shoot
                 .waitSeconds(3)
 
                 //topickup3
                 .setTangent(Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup3, Math.toRadians(-45.0))
+                //intake on
                 //pickup3
                 .setTangent(Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
+                //intake off?
                 //back to shoot
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(125.0))
-
+                //shoot
                 .waitSeconds(3)
 
                 //to park
