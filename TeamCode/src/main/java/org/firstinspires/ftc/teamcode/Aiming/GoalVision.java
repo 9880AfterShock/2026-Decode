@@ -54,8 +54,8 @@ public class GoalVision {
         }
 
         if (targetFound) {
-            //Rotate pose data bc stupid mount from bearing to elevation
-            double headingError = targetTag.ftcPose.elevation;
+            //Webcam is upside down lol
+            double headingError = targetTag.ftcPose.bearing;
             opmode.telemetry.addData("Heading Error APRILTAG", headingError);
             return headingError;
         } else {
