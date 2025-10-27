@@ -28,11 +28,11 @@ public class Hood {
             if (hoodState == "Near") {
                 hoodState = "Far";
                 hood.setPosition(farPosition);
-                DriverTest.desSpeed = 4700;
+                DriverTest.desSpeed = 4100;
             } else {
                 hoodState = "Near";
                 hood.setPosition(nearPosition);
-                DriverTest.desSpeed = 4000;
+                DriverTest.desSpeed = 3100;
             }
         }
         opmode.telemetry.addData("Hood State", hoodState);
