@@ -64,24 +64,26 @@ public class MeepMeepRR {
                 .splineToLinearHeading(endPickup2, Math.toRadians(-90.0))
                 //intake off?
 
-                /*
+                ///*
                 //back to shoot no gate
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(125.0))
                 //shoot
                 .waitSeconds(3)
-                */
+                //*/
 
-                ///*
+                /*
                 //to gate
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(gatePose, Math.toRadians(-90.0))
+                //wait for balls to roooooolllll
+                .waitSeconds(8.0)
                 //back to shoot
                 .setTangent(Math.toRadians(130.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(130.0))
                 //shoot
                 .waitSeconds(3)
-                //*/
+                */
 
                 //topickup3
                 .setTangent(Math.toRadians(20.0))
