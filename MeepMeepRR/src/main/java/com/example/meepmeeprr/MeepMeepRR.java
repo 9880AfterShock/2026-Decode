@@ -56,8 +56,8 @@ public class MeepMeepRR {
                 .waitSeconds(3)
 
                 //topickup2
-                .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(startPickup2, Math.toRadians(-45.0))
+                .setTangent(Math.toRadians(30.0))
+                .splineToLinearHeading(startPickup2, Math.toRadians(-30.0))
                 //intake on
                 //pickup2
                 .setTangent(Math.toRadians(-90.0))
@@ -66,8 +66,8 @@ public class MeepMeepRR {
 
                 ///*
                 //back to shoot no gate
-                .setTangent(Math.toRadians(125.0))
-                .splineToLinearHeading(shootPos, Math.toRadians(125.0))
+                .setTangent(Math.toRadians(145.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(145.0))
                 //shoot
                 .waitSeconds(3)
                 //*/
@@ -94,8 +94,8 @@ public class MeepMeepRR {
                 .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
                 //intake off?
                 //back to shoot
-                .setTangent(Math.toRadians(125.0))
-                .splineToLinearHeading(shootPos, Math.toRadians(125.0))
+                .setTangent(Math.toRadians(150.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(150.0))
                 //shoot
                 .waitSeconds(3)
 
