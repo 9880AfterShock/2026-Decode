@@ -60,7 +60,7 @@ public class DriveTrain { // Prefix for commands
             rotation = GoalVision.getRotation();
             if (rotation != -9880.0) {
                 turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
-                if (Math.abs(rotation) < 1.0) {
+                if (Math.abs(rotation) < 0.5) {
                     turn = 0;
                 }
             }

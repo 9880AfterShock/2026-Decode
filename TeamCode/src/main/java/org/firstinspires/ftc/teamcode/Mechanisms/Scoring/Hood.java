@@ -32,7 +32,7 @@ public class Hood {
             } else {
                 hoodState = "Near";
                 hood.setPosition(nearPosition);
-                DriverTest.desSpeed = 3100;
+                DriverTest.desSpeed = 3300;
             }
         }
         opmode.telemetry.addData("Hood State", hoodState);
