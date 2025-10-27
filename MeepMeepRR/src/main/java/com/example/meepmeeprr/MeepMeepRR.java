@@ -12,12 +12,13 @@ public class MeepMeepRR {
         Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-15.0));
         Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(55));
         Pose2d parkPos = new Pose2d(-60.0, -35.0, Math.toRadians(0.0));
-        Pose2d startPickup1 = new Pose2d(-12.0, -30.0, -Math.toRadians(90.0));
+        Pose2d startPickup1 = new Pose2d(-12.0, -30.0, Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, -55.0, -Math.toRadians(90.0));
         Pose2d startPickup2 = new Pose2d(12.0, -30.0, -Math.toRadians(90.0));
         Pose2d endPickup2 = new Pose2d(12.0, -55.0, -Math.toRadians(90.0));
-        Pose2d startPickup3 = new Pose2d(35.0, -30.0, -Math.toRadians(90.0));
-        Pose2d endPickup3 = new Pose2d(35.0, -55.0, -Math.toRadians(90.0));
+        Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
+        Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
+        Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -62,15 +63,29 @@ public class MeepMeepRR {
                 .setTangent(Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, Math.toRadians(-90.0))
                 //intake off?
-                //back to shoot
+
+                /*
+                //back to shoot no gate
                 .setTangent(Math.toRadians(125.0))
                 .splineToLinearHeading(shootPos, Math.toRadians(125.0))
                 //shoot
                 .waitSeconds(3)
+                */
+
+                ///*
+                //to gate
+                .setTangent(Math.toRadians(125.0))
+                .splineToLinearHeading(gatePose, Math.toRadians(-90.0))
+                //back to shoot
+                .setTangent(Math.toRadians(130.0))
+                .splineToLinearHeading(shootPos, Math.toRadians(130.0))
+                //shoot
+                .waitSeconds(3)
+                //*/
 
                 //topickup3
-                .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(startPickup3, Math.toRadians(-45.0))
+                .setTangent(Math.toRadians(20.0))
+                .splineToLinearHeading(startPickup3, Math.toRadians(-20.0))
                 //intake on
                 //pickup3
                 .setTangent(Math.toRadians(-90.0))
