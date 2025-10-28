@@ -74,7 +74,7 @@ public class ControlManager {
         boolean decrease = driver.dpadDownWasPressed();
         boolean rev = operator.a;
         boolean fire = driver.right_bumper;
-        boolean intake_shooter = driver.x;
+        boolean intake_shooter = operator.x;
 
         //BallRamp
         boolean cycleRamp = driver.bWasPressed();

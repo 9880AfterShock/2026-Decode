@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 public class Hood {
     private static Servo hood; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double farPosition = 0.97;
+    public static double farPosition = 0.98; //could be as "high" (low) as 0.97
     public static double nearPosition = 1.0;
     public static String hoodState = "Near";
 
@@ -28,11 +28,11 @@ public class Hood {
             if (hoodState == "Near") {
                 hoodState = "Far";
                 hood.setPosition(farPosition);
-                DriverTest.desSpeed = 4700;
+                DriverTest.desSpeed = 4100;
             } else {
                 hoodState = "Near";
                 hood.setPosition(nearPosition);
-                DriverTest.desSpeed = 4000;
+                DriverTest.desSpeed = 3300;
             }
         }
         opmode.telemetry.addData("Hood State", hoodState);
