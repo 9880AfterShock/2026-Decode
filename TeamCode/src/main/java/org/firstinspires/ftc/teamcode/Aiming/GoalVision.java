@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.toRadians;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.teamcode.Maths.Trajectory;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -16,6 +22,8 @@ public class GoalVision {
     static boolean targetFound = false;
 
     private static OpMode opmode;
+    private final static double webcamAngle = 12.0; //degrees
+    private final static double aprilTagHeight = 29.5; //inches
 
     public static void initAprilTag(OpMode opmode) {
         aprilTag = new AprilTagProcessor.Builder().build();
@@ -57,6 +65,10 @@ public class GoalVision {
             //Webcam is upside down lol
             double headingError = targetTag.ftcPose.bearing;
             opmode.telemetry.addData("Heading Error APRILTAG", headingError);
+            double distanceDirect = sqrt((targetTag.ftcPose.x*targetTag.ftcPose.x) + (targetTag.ftcPose.y*targetTag.ftcPose.y));
+            double distanceGround = (-targetTag.ftcPose.z * cos(toRadians(webcamAngle))) - (-targetTag.ftcPose.y * sin(toRadians(webcamAngle)));
+            opmode.telemetry.addData("Distance Apriltag UNCORRECTED?", distanceDirect);
+            opmode.telemetry.addData("Distance Apriltag CORRECTED", distanceGround);
             return headingError;
         } else {
             opmode.telemetry.addData("Heading Error APRILTAG", "NO TAG FOUND");
