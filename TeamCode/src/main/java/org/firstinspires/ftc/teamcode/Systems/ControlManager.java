@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
-import org.firstinspires.ftc.teamcode.Sensors.ColorSensor;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
@@ -39,6 +38,8 @@ public class ControlManager {
     public static Supplier<Color> sensor;
     public static com.qualcomm.robotcore.hardware.NormalizedColorSensor color_sensor;
     public static ColorClassifier<BallType> classifier;
+    public static double intake_speed_revving = 0.5;
+    public static double intake_speed_default = 1.0;
     public static void setup(OpMode opMode) {
         ballRamp = new BallRamp(opMode, "ramp",0.08,0.25);
         color_sensor = opMode.hardwareMap.get(com.qualcomm.robotcore.hardware.NormalizedColorSensor.class,"sensorColor");
@@ -80,6 +81,11 @@ public class ControlManager {
 
 
 
+        double speed = intake_speed_default;
+        if (rev) {
+            speed = intake_speed_revving;
+        }
+
 
         DriveTrain.updateDrive(strafe, drive, turn, slowMode, align);
 
@@ -87,7 +93,7 @@ public class ControlManager {
         //SpindexerCamera.update();
         Alignment.updateAlignment();
 
-        Roller.updateIntake(intaking, ejecting, 1.0);
+        Roller.updateIntake(intaking, ejecting, speed);
 
         Arm.updateIntake(intaking, ejecting);
 

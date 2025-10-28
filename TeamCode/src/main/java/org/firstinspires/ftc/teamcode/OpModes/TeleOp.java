@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
-import org.firstinspires.ftc.teamcode.Sensors.ColorSensor;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
