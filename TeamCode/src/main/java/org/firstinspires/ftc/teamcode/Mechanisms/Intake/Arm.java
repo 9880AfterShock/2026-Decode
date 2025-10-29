@@ -21,14 +21,14 @@ public class Arm { // Prefix for commands
 
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double intakePosition = 0.4;
-    public static double transferPosition = 0.66;
+    public static double intakePosition = 0.66; //was 0.4 for old intake
+    public static double transferPosition = 0.4; //was 0.66 for old intake
     public static String intakeState = "Intaking";
-    private static double startedIntaking;
+//    private static double startedIntaking;
 
     public static void initIntake(OpMode opmode) { // init motor
         arm = opmode.hardwareMap.get(Servo.class, "arm"); // motor config name
-        startedIntaking = -1.0;
+//        startedIntaking = -1.0;
         Arm.opmode = opmode;
     }
 
@@ -36,24 +36,24 @@ public class Arm { // Prefix for commands
         if (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed){
             intakeState = "Intaking";
             arm.setPosition(intakePosition);
-            if (startedIntaking == -1.0){
-                startedIntaking = opmode.getRuntime();
-            }
+//            if (startedIntaking == -1.0){
+//                startedIntaking = opmode.getRuntime();
+//            }
         } else {
             intakeState = "Transferring";
             arm.setPosition(transferPosition);
-            startedIntaking = -1.0;
+//            startedIntaking = -1.0;
         }
 
-        if (intakeState == "Intaking" && (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed) && opmode.getRuntime() - startedIntaking >= 0.3) {
-            arm.getController().pwmDisable();
-        } else {
-            arm.getController().pwmEnable();
-        }
+//        if (intakeState == "Intaking" && (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed) && opmode.getRuntime() - startedIntaking >= 0.3) {
+//            arm.getController().pwmDisable();
+//        } else {
+//            arm.getController().pwmEnable();
+//        }
 
         opmode.telemetry.addData("Intake Arm", intakeState);
         opmode.telemetry.addData("Intake Pos", arm.getPosition());
-        opmode.telemetry.addData("Intake Timer", startedIntaking);
+//        opmode.telemetry.addData("Intake Timer", startedIntaking);
     }
 
 
