@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
+
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
@@ -16,12 +20,15 @@ import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
+    private static IMU imu;
+    private static Pose2d pos;
 
     //TwoDeadWheelLocalizer myLocalizer = new TwoDeadWheelLocalizer(hardwareMap, MecanumDrive.lazyImu.get(), PARAMS.inPerTick, pose);
 
@@ -51,7 +58,11 @@ public class TeleOp extends LinearOpMode {
 //        QuickBallRamp.initTransfer(this);
 
 //        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
-//        TwoDeadWheelLocalizer localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS);
+
+
+        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
+        imu = hardwareMap.get(IMU.class, "imu");
+        TwoDeadWheelLocalizer localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS.inPerTick, pos);
 
 
         telemetry.addData("Status", "Initialized");
@@ -67,8 +78,7 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-//            RRdrive.update();
-//            telemetry.addData("RR Pos", RRdrive.getPoseEstimate());
+            telemetry.addData("Estimated Pose", localizer.getPose());
             ControlManager.update();
             RunLater.update();
             RunCondition.update();
