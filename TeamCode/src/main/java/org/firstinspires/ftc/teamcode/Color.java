@@ -36,19 +36,23 @@ public class Color {
         } else {
             hsv.two = delta / max;
         }
-
+        hsv.one /= 255;
+        hsv.two /= 255;
         hsv.three = max;
+        hsv.three /= 255;
 
         return hsv;
     }
 
     public Color(double one,double two,double three,ColorType type) {
+        this.type = type;
         this.one = one;
         this.two = two;
         this.three = three;
 
     }
     public Color add(Color color) {
+        this.type = ColorType.RGB;
         this.one += color.one;
         this.two += color.two;
         this.three += color.three;

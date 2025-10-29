@@ -14,7 +14,9 @@ public class RunCondition {
         for (ConditionAction action : (ArrayList<ConditionAction>) list.clone()) {
             if (action.condition.get()) {
                 action.func.run();
-                list.remove(action);
+                if (!action.repeat) {
+                    list.remove(action);
+                }
             }
         }
     }
