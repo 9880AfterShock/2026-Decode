@@ -80,7 +80,7 @@ public class AimAuto extends LinearOpMode {
                                 toShoot.build()
                         ),
                         actionManager.rev(4300),
-                        DriveTrain.aim(),
+                        DriveTrain.aim(false),
                         waitTwenty.build(),
                         actionManager.waitForSpeed(4300),
                         actionManager.launch()
