@@ -2,16 +2,21 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 public class DriveTrain { // Prefix for commands
@@ -26,6 +31,10 @@ public class DriveTrain { // Prefix for commands
     private static boolean slowModeButtonPreviouslyPressed = false;
     private static final double kP = 0.02;  //0.02 to 0.05
     private static double rotation;
+    private static IMU imu;
+    private static Pose2d pos;
+    private static TwoDeadWheelLocalizer localizer;
+    private static final Pose2d goalTarget = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotor.class, "leftRear"); // motor config names
@@ -53,16 +62,31 @@ public class DriveTrain { // Prefix for commands
         DriveTrain.opmode = opmode;
 
         rotation = 0;
+
+        imu = opmode.hardwareMap.get(IMU.class, "imu");
+        localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
+        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
     }
 
-    public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align) {
+    public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         if (align) {
             rotation = GoalVision.getRotation();
-            if (rotation != -9880.0) {
-                turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
-                if (Math.abs(rotation) < 0.5) {
-                    turn = 0;
+            if (rotation == -9880.0) {
+                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
+                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+                opmode.telemetry.addData("Estimated Pos Heading", localizer.getPose().heading.toDouble());
+                if (flipSide){
+                    Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
+                    rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
+                } else {
+                    rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
                 }
+            }
+            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+            if (Math.abs(rotation) < 0.5) {
+                turn = 0;
             }
         }
         double leftBackPower;
@@ -102,11 +126,11 @@ public class DriveTrain { // Prefix for commands
         slowModeButtonPreviouslyPressed = slowModeButtonCurrentlyPressed;
     }
 
-    public static Action aim() {
+    public static Action aim(boolean flipSide) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                updateDrive(0,0,0, false, true);
+                updateDrive(0,0,0, false, true, flipSide);
                 return Math.abs(rotation) < 1.0;
             }
         };

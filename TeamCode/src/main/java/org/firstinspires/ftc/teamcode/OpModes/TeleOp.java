@@ -27,8 +27,6 @@ public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
-    private static IMU imu;
-    private static Pose2d pos;
 
     @Override
     public void runOpMode() {
@@ -58,11 +56,6 @@ public class TeleOp extends LinearOpMode {
 //        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
 
 
-        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
-        imu = hardwareMap.get(IMU.class, "imu");
-        TwoDeadWheelLocalizer localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS.inPerTick, pos);
-
-
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -76,8 +69,6 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            localizer.update();
-            telemetry.addData("Estimated Pose", localizer.getPose());
             ControlManager.update();
             RunLater.update();
             RunCondition.update();
