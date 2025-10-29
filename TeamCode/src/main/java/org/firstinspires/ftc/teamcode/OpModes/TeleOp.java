@@ -30,8 +30,6 @@ public class TeleOp extends LinearOpMode {
     private static IMU imu;
     private static Pose2d pos;
 
-    //TwoDeadWheelLocalizer myLocalizer = new TwoDeadWheelLocalizer(hardwareMap, MecanumDrive.lazyImu.get(), PARAMS.inPerTick, pose);
-
     @Override
     public void runOpMode() {
 
