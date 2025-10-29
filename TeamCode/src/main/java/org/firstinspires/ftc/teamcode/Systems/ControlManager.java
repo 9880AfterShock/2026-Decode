@@ -53,7 +53,7 @@ public class ControlManager {
         classifier.addColor(new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB), BallType.PURPLE);
     }
 
-    public static void update() {
+    public static void update(boolean flipField) { //false is blue, true is red
         //Spindexer
         boolean spinLeft = operator.dpadLeftWasPressed();
         boolean spinRight = operator.dpadRightWasPressed();
@@ -87,7 +87,7 @@ public class ControlManager {
         }
 
 
-        DriveTrain.updateDrive(strafe, drive, turn, slowMode, align);
+        DriveTrain.updateDrive(strafe, drive, turn, slowMode, align, flipField);
 
         //Obelisk.update();
         //SpindexerCamera.update();
