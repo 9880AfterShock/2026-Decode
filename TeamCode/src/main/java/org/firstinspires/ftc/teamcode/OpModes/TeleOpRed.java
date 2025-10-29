@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp BLUE")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp RED")
 public class TeleOpRed extends LinearOpMode {
 
     // Declare OpMode members.
