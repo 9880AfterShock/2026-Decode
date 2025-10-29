@@ -72,9 +72,9 @@ public class DriveTrain { // Prefix for commands
         if (align) {
             rotation = GoalVision.getRotation();
             if (rotation == -9880.0) {
-                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
-                opmode.telemetry.addData("Estimated Pos Heading", localizer.getPose().heading.toDouble());
+//                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
+//                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+//                opmode.telemetry.addData("Estimated Pos Heading", localizer.getPose().heading.toDouble());
                 if (flipSide){
                     Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
                     rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
