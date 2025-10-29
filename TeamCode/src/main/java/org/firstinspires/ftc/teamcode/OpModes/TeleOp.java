@@ -76,6 +76,7 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            localizer.update();
             telemetry.addData("Estimated Pose", localizer.getPose());
             ControlManager.update();
             RunLater.update();
