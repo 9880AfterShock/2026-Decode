@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
-import org.firstinspires.ftc.teamcode.Sensors.ColorSensor;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
@@ -51,6 +50,10 @@ public class TeleOp extends LinearOpMode {
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
 
+//        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
+//        TwoDeadWheelLocalizer localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS);
+
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -64,6 +67,8 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+//            RRdrive.update();
+//            telemetry.addData("RR Pos", RRdrive.getPoseEstimate());
             ControlManager.update();
             RunLater.update();
             RunCondition.update();
