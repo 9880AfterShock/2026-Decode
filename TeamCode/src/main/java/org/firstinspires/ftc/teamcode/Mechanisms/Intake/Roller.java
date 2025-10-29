@@ -4,6 +4,7 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class Roller { // Prefix for commands
@@ -14,6 +15,7 @@ public class Roller { // Prefix for commands
     public static void initIntake(OpMode opmode) { // init motor
         roller = opmode.hardwareMap.get(DcMotor.class, "roller"); // motor config name
         roller.setZeroPowerBehavior(FLOAT);
+        roller.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Roller.opmode = opmode;
     }
