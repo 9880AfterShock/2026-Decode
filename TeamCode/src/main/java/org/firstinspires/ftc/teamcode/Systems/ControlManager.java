@@ -144,6 +144,5 @@ public class ControlManager {
         prevInstake = intaking;
         opMode.telemetry.addData("BallRamp mesages",ballRamp.messageQueue.size());
         opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
-        opMode.telemetry.addData("SPINDEXER SAFEGUARD BROKEN", canSpin);
     }
 }
