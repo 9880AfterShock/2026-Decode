@@ -11,19 +11,21 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 public class DriveTrain { // Prefix for commands
-    private static DcMotor leftRear; // init motor vars
-    private static DcMotor leftFront;
-    private static DcMotor rightRear;
-    private static DcMotor rightFront;
+    private static DcMotorEx leftRear; // init motor vars
+    private static DcMotorEx leftFront;
+    private static DcMotorEx rightRear;
+    private static DcMotorEx rightFront;
     private static OpMode opmode; // opmode var init
     private static final double speedDivider = 3.0; // divider for slow mode
     public static boolean slowMode = false;
@@ -37,10 +39,10 @@ public class DriveTrain { // Prefix for commands
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
-        leftRear = opmode.hardwareMap.get(DcMotor.class, "leftRear"); // motor config names
-        leftFront = opmode.hardwareMap.get(DcMotor.class, "leftFront");
-        rightRear = opmode.hardwareMap.get(DcMotor.class, "rightRear");
-        rightFront = opmode.hardwareMap.get(DcMotor.class, "rightFront");
+        leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names
+        leftFront = opmode.hardwareMap.get(DcMotorEx.class, "leftFront");
+        rightRear = opmode.hardwareMap.get(DcMotorEx.class, "rightRear");
+        rightFront = opmode.hardwareMap.get(DcMotorEx.class, "rightFront");
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE); // motor directions
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -116,6 +118,11 @@ public class DriveTrain { // Prefix for commands
         opmode.telemetry.addData("Front Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
         opmode.telemetry.addData("Back Motors", "left (%.2f), right (%.2f)", leftBackPower, rightBackPower);
         opmode.telemetry.addData("Slow mode?", slowMode);
+        opmode.telemetry.addData("HEY TIMO", "HERE IS THE MOTOR AMPS STUFFFF FOR DRIVE MOTORS");
+//        opmode.telemetry.addData("Front left", leftFront.getCurrent(CurrentUnit.AMPS));
+//        opmode.telemetry.addData("Front right", rightFront.getCurrent(CurrentUnit.AMPS));
+//        opmode.telemetry.addData("Rear left", leftRear.getCurrent(CurrentUnit.AMPS));
+//        opmode.telemetry.addData("Rear right", rightRear.getCurrent(CurrentUnit.AMPS));
     }
 
     private static void updateSpeed(boolean slowModeButton) {

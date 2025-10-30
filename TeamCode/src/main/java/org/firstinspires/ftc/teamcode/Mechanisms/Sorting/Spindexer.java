@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -33,6 +34,7 @@ public class Spindexer {
     private final Supplier<Boolean> isShooting;
     private double targetPos = 0;
     private boolean isLineup = false;
+    private static OpMode opmode;
     public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting) {
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
@@ -44,7 +46,7 @@ public class Spindexer {
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motor.setPower(0.8);
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        opmode = opMode;
     }
 
     public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting, List<BallType> startingBalls) {
@@ -91,6 +93,7 @@ public class Spindexer {
     }
 
     public void update() {
+        //opmode.telemetry.addData("SPINDEXER CURRENT",motor.getCurrent(CurrentUnit.AMPS));
         SpindexerMessage msg = messageQueue.poll();
         if (msg == null) {msg = SpindexerMessage.NONE;}
         switch (msg) {
