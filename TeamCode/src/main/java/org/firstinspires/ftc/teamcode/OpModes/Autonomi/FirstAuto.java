@@ -75,7 +75,7 @@ public class FirstAuto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
-                        Arm.AutoArmUp(),
+                        Arm.AutoArmIn(),
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
