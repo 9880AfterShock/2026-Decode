@@ -21,8 +21,8 @@ public class Arm { // Prefix for commands
 
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double intakePosition = 0.55; //was 0.4 for old intake
-    public static double transferPosition = 0.4; //was 0.66 for old intake
+    public static double intakePosition = 0.36; //was 0.4 for old intake
+    public static double transferPosition = 0.55; //was 0.66 for old intake
     public static String intakeState = "Intaking";
 //    private static double startedIntaking;
 
