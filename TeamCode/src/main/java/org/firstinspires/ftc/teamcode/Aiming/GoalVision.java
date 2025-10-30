@@ -65,7 +65,7 @@ public class GoalVision {
             //Webcam is upside down lol
             double headingError = targetTag.ftcPose.bearing;
             opmode.telemetry.addData("Heading Error APRILTAG", headingError);
-            double distanceDirect = sqrt((targetTag.ftcPose.x*targetTag.ftcPose.x) + (targetTag.ftcPose.y*targetTag.ftcPose.y));
+            double distanceDirect = sqrt((targetTag.ftcPose.x*targetTag.ftcPose.x) + (targetTag.ftcPose.x*targetTag.ftcPose.x));
             double distanceGround = (-targetTag.ftcPose.z * cos(toRadians(webcamAngle))) - (-targetTag.ftcPose.y * sin(toRadians(webcamAngle)));
             opmode.telemetry.addData("Distance Apriltag UNCORRECTED?", distanceDirect);
             opmode.telemetry.addData("Distance Apriltag CORRECTED", distanceGround);
