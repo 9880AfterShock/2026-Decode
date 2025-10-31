@@ -58,7 +58,7 @@ public class DriverTest {
         if (rev) {
             shooterup.setVelocity((desSpeed*numTicks)/60);
             shooterdown.setVelocity((desSpeed*numTicks)/60);
-            if (Math.abs(rotationsPerMinute-desSpeed) < 150 && fire) {
+            if (Math.abs(rotationsPerMinute-desSpeed) < 200 && fire) {
                 ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
                 ControlManager.shot = true;
                 RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRampMessage.DOWN);}, 0.2));
