@@ -42,7 +42,6 @@ public class GoalVision {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
                 .addProcessor(aprilTag)
-                .setLiveViewContainerId(1)
                 .build();
 
         GoalVision.opmode = opmode;

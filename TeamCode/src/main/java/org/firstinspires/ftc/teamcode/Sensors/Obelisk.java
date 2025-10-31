@@ -45,7 +45,6 @@ public class Obelisk {
         VisionPortal.Builder builder = new VisionPortal.Builder();
         builder.setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"));
         builder.addProcessor(aprilTag);
-        builder.setLiveViewContainerId(0);
         visionPortal = builder.build();
         Obelisk.opmode = opmode;
         //setManualExposure(6, 250);  // Use low exposure time to reduce motion blur
