@@ -25,20 +25,20 @@ import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 public class AimAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
-        //Mechs init'
-        Arm.initIntake(this);
-        RunLater.setup(this);
+//        //Mechs init'
+//        Arm.initIntake(this);
+//        RunLater.setup(this);
         Obelisk.initDetection(this);
-        ActionManager actionManager = new ActionManager( this, 24);
+//        ActionManager actionManager = new ActionManager( this, 24);
         DriveTrain.initDrive(this);
 
-        QuickSpindexer.initSpindexer(this);
+//        QuickSpindexer.initSpindexer(this);
 
         Pose2d startPos = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         //Poses
-        Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-5.0));
+        Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-25.0));
         Pose2d shootPos = new Pose2d(-33.0, -33.0, Math.toRadians(55.0));
         Pose2d parkPos = new Pose2d(-60.0, -35.0, Math.toRadians(0.0));
 
@@ -67,25 +67,25 @@ public class AimAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        actionManager.shotCue(0),
-                        Arm.AutoArmIn(),
+                        //actionManager.shotCue(0),
+//                        Arm.AutoArmIn(),
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
                                 new SequentialAction(
-                                        actionManager.shotCue(1),
-                                        actionManager.spindexer.goToMotif(),
-                                        actionManager.cycleRamp()
+//                                        actionManager.shotCue(1),
+//                                        actionManager.spindexer.goToMotif(),
+//                                        actionManager.cycleRamp()
                                 ),
                                 toShoot.build()
                         ),
-                        actionManager.rev(4300),
+//                        actionManager.rev(4300),
                         new ParallelAction(
                                 DriveTrain.aim(false),
                                 waitTwenty.build()
-                        ),
-                        actionManager.waitForSpeed(4300),
-                        actionManager.launch()
+                        )
+//                        actionManager.waitForSpeed(4300),
+//                        actionManager.launch()
                 )
         );
     }
