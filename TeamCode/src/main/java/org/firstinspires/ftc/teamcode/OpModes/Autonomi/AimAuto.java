@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
@@ -29,6 +30,7 @@ public class AimAuto extends LinearOpMode {
 //        Arm.initIntake(this);
 //        RunLater.setup(this);
         Obelisk.initDetection(this);
+        GoalVision.initAprilTag(this);
 //        ActionManager actionManager = new ActionManager( this, 24);
         DriveTrain.initDrive(this);
 
@@ -88,5 +90,7 @@ public class AimAuto extends LinearOpMode {
 //                        actionManager.launch()
                 )
         );
+        Obelisk.stopVision();
+        GoalVision.stopVision();
     }
 }

@@ -24,6 +24,7 @@ public class GoalVision {
     private static OpMode opmode;
     private final static double webcamAngle = 12.0; //degrees
     private final static double aprilTagHeight = 29.5; //inches
+    private static VisionPortal visionPortal;
 
     public static void initAprilTag(OpMode opmode) {
         aprilTag = new AprilTagProcessor.Builder().build();
@@ -38,12 +39,16 @@ public class GoalVision {
 
         aprilTag.setDecimation(2);
 
-        VisionPortal visionPortal = new VisionPortal.Builder()
+        visionPortal = new VisionPortal.Builder()
                 .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
                 .addProcessor(aprilTag)
                 .build();
 
         GoalVision.opmode = opmode;
+    }
+
+    public static void stopVision() {
+        visionPortal.close();
     }
 
     public static double getRotation(){
