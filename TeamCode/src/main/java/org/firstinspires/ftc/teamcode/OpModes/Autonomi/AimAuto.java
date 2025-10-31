@@ -30,7 +30,7 @@ public class AimAuto extends LinearOpMode {
 //        Arm.initIntake(this);
 //        RunLater.setup(this);
         Obelisk.initDetection(this);
-        GoalVision.initAprilTag(this);
+//        GoalVision.initAprilTag(this);
 //        ActionManager actionManager = new ActionManager( this, 24);
         DriveTrain.initDrive(this);
 
@@ -80,7 +80,12 @@ public class AimAuto extends LinearOpMode {
 //                                        actionManager.cycleRamp()
                                 ),
                                 toShoot.build()
-                        ),
+                        )
+                )
+        );
+        Obelisk.stopVision();
+        GoalVision.initAprilTag(this);
+        Actions.runBlocking(
 //                        actionManager.rev(4300),
                         new ParallelAction(
                                 DriveTrain.aim(false),
@@ -88,7 +93,6 @@ public class AimAuto extends LinearOpMode {
                         )
 //                        actionManager.waitForSpeed(4300),
 //                        actionManager.launch()
-                )
         );
         Obelisk.stopVision();
         GoalVision.stopVision();
