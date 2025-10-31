@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.FLOAT;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -38,5 +42,23 @@ public class Roller { // Prefix for commands
 
         opmode.telemetry.addData("Intake Roller", intakePower);
         //opmode.telemetry.addData("POWER FROM INTAKE THING", roller.getCurrent(CurrentUnit.AMPS));
+    }
+
+    public static Action IntakeOn() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                roller.setPower(0.75);
+                return false;
+            }
+        };
+    }
+
+    public static Action IntakeOff() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                roller.setPower(0.0);
+                return false;
+            }
+        };
     }
 }
