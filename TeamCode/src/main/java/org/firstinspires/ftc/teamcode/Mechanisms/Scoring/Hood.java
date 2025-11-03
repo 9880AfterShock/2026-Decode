@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -37,5 +41,21 @@ public class Hood {
         }
         opmode.telemetry.addData("Hood State", hoodState);
         opmode.telemetry.addData("Hood Target", hood.getPosition());
+    }
+    public static Action AutoHoodNear() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                hood.setPosition(nearPosition);
+                return false;
+            }
+        };
+    }
+    public static Action AutoHoodFar() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                hood.setPosition(farPosition);
+                return false;
+            }
+        };
     }
 }

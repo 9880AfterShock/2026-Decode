@@ -12,14 +12,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 6")
-public class LM1AutoRedFar extends LinearOpMode {
+@Autonomous(name = "Blue far zone 6")
+public class LM1AutoBlueFar extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Mechs init'
@@ -78,6 +79,7 @@ public class LM1AutoRedFar extends LinearOpMode {
                 new SequentialAction(
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
+                        Hood.AutoHoodFar(),
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
@@ -101,6 +103,7 @@ public class LM1AutoRedFar extends LinearOpMode {
                         actionManager.waitForSpeed(4100),
                         actionManager.launch(),
 
+                        //2nd volley
 
                         actionManager.derev(),
                         QuickSpindexer.resetForTele(), //should change later

@@ -21,7 +21,8 @@ public class ActionManager {
 
     public final Spindexer spindexer;
     public final BallRamp ballRamp;
-    private final DcMotorEx shooter;
+    private final DcMotorEx shooterUp;
+    private final DcMotorEx shooterDown;
     private final OpMode opmode;
     private final int shooterTicks;
     public boolean spindexerBias = false;
@@ -32,11 +33,14 @@ public class ActionManager {
         this.opmode = opmode;
         spindexer = new Spindexer("spindexer", opmode, 1425.1, 11, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
         ballRamp = new BallRamp(opmode, "ramp", 0.04, 0.22);
-        this.shooter = opmode.hardwareMap.get(DcMotorEx.class, "shooter");
-        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-        shooter.setVelocity(0);
+        this.shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
+        this.shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
+        shooterUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterUp.setVelocity(0);
+        shooterDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterDown.setVelocity(0);
     }
     public Action cycleRamp() {
         return new Action() {
@@ -55,9 +59,10 @@ public class ActionManager {
     public Action rev(double rpm) {
         return telemetryPacket -> {
             spindexerBias = true;
-            shooter.setVelocity((rpm*shooterTicks)/60);
+            shooterUp.setVelocity((rpm*shooterTicks)/60);
+            shooterDown.setPower(shooterUp.getPower());
             spindexer.update();
-            telemetryPacket.put("Shooter Speed (reving)",(shooter.getVelocity()/shooterTicks)*60);
+            telemetryPacket.put("Shooter Speed (reving)",(shooterUp.getVelocity()/shooterTicks)*60);
             return false;
         };
     }
@@ -69,8 +74,8 @@ public class ActionManager {
 
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                double speed = (shooter.getVelocity() / shooterTicks) * 60;
-                telemetryPacket.put("Shooter Speed (waitfor)",(shooter.getVelocity()/shooterTicks)*60);
+                double speed = (shooterUp.getVelocity() / shooterTicks) * 60;
+                telemetryPacket.put("Shooter Speed (waitfor)",(shooterUp.getVelocity()/shooterTicks)*60);
                 boolean returnv = !( speed >= rpm && speed <= rpm + 100 && Math.abs(speed-lastSpeed) <= 50); //100 is margin of error on upper bound
                 lastSpeed = speed;
                 return returnv;
@@ -108,7 +113,8 @@ public class ActionManager {
     public Action derev() {
         return telemetryPacket -> {
             spindexerBias = false;
-            shooter.setVelocity(0);
+            shooterUp.setVelocity(0);
+            shooterDown.setVelocity(0);
             spindexer.update();
             return false;
         };
