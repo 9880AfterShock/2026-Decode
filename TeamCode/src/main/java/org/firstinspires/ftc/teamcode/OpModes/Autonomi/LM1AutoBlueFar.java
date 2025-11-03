@@ -27,6 +27,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
         Arm.initIntake(this);
         RunLater.setup(this);
         Obelisk.initDetection(this);
+        Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 24);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
