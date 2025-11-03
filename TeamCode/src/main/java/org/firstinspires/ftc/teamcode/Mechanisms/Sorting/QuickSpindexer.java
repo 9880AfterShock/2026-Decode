@@ -80,7 +80,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 40; //40 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //40 is tick margin of error
             }
         };
     }

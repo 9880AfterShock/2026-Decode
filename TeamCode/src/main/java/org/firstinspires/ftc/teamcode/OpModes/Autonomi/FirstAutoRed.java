@@ -10,14 +10,12 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 @Config
 @Autonomous(name = "Score Preloads (Red)")
@@ -79,7 +77,7 @@ public class FirstAutoRed extends LinearOpMode {
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
                         toScan.build(),
-                        Obelisk.AutoScan(),
+                        Obelisk.AutoScanNear(),
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),

@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
@@ -114,11 +113,49 @@ public class Obelisk {
             sleep(20);
         }
 
-    public static Action AutoScan() {
+    public static Action AutoScanNear() {
         return new Action() {
             private boolean first = true;
             double scanTime;
             public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+                List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+                int validTagsSeen = 0;
+                for (AprilTagDetection detection : currentDetections) {
+                    if (detection.id == 21) {
+                        motif = Motif.GPP;
+                        validTagsSeen += 1;
+                    }
+                    if (detection.id == 22) {
+                        motif = Motif.PGP;
+                        validTagsSeen += 1;
+                    }
+                    if (detection.id == 23) {
+                        motif = Motif.PPG;
+                        validTagsSeen += 1;
+                    }
+                }
+                packet.put("Motif", motif);
+                if (opmode.getRuntime() - scanTime >= 2.0) {
+                    motif = Motif.PGP;
+                    return false;
+                }
+                return (validTagsSeen != 1);
+            }
+        };
+    }
+
+    public static Action AutoScanFar() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (Obelisk.motif != Motif.unknown){ //check if got during init
+                    return false;
+                }
                 if (first){
                     scanTime = opmode.getRuntime();
                     first = false;
