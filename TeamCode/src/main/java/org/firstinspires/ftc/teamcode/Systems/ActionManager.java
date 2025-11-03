@@ -149,14 +149,4 @@ public class ActionManager {
             }
         };
     }
-
-    public Action getRPM() {
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket packet) {
-                packet.put("=====RPM RAW=====", Math.abs((shooterUp.getVelocity()/28)*60));
-                return false;
-            }
-        };
-    }
 }

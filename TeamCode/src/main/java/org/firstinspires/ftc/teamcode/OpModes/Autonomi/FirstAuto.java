@@ -75,7 +75,7 @@ public class FirstAuto extends LinearOpMode {
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
                         toScan.build(),
-                        Obelisk.AutoScanNear(),
+                        Obelisk.AutoScan(),
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),

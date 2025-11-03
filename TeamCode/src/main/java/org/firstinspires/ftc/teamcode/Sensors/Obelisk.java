@@ -113,7 +113,7 @@ public class Obelisk {
             sleep(20);
         }
 
-    public static Action AutoScanNear() {
+    public static Action AutoScan() {
         return new Action() {
             private boolean first = true;
             double scanTime;
@@ -148,7 +148,7 @@ public class Obelisk {
         };
     }
 
-    public static Action AutoScanFar() {
+    public static Action AutoScanWithInit() { //not working reliably
         return new Action() {
             private boolean first = true;
             double scanTime;

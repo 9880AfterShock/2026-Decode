@@ -69,7 +69,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
 
 
         while (!isStopRequested() && !opModeIsActive()) {
-            Obelisk.update();
+            //Obelisk.update();
         }
 
         waitForStart();
@@ -84,7 +84,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
-                                        Obelisk.AutoScanFar(),
+                                        Obelisk.AutoScan(),
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),
