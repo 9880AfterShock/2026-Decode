@@ -16,6 +16,9 @@ import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 import java.util.Arrays;
+import java.util.Random;
+
+import kotlin.random.RandomKt;
 
 public class ActionManager {
 
@@ -146,6 +149,19 @@ public class ActionManager {
                 ballRamp.queueMessage(BallRampMessage.DOWN);
                 ballRamp.update();
                 return false;
+            }
+        };
+    }
+
+    public Action waitForSpeedSafe(double rpm) {
+        return new Action() {
+            double rotationsPerMinute = 0.0;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                rotationsPerMinute = Math.abs((shooterUp.getVelocity()/28)*60);
+                telemetryPacket.put("===SAFE RPM===", Math.abs((shooterUp.getVelocity()/28)*60));
+                telemetryPacket.put("===TEST TIME===", opmode.getRuntime());
+                return Math.abs(rotationsPerMinute-rpm) > 150;
             }
         };
     }
