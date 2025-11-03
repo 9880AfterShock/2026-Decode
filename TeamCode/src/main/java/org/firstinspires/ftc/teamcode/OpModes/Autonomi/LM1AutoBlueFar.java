@@ -90,7 +90,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
                                 ),
                                 toShoot1.build()
                         ),
-                        actionManager.rev(4100),
+                        actionManager.rev(5000),
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
