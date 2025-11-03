@@ -63,7 +63,7 @@ public class ActionManager {
         return telemetryPacket -> {
             spindexerBias = true;
             shooterUp.setVelocity((rpm*shooterTicks)/60);
-            shooterDown.setPower((rpm*shooterTicks)/60);
+            shooterDown.setVelocity((rpm*shooterTicks)/60);
             spindexer.update();
             telemetryPacket.put("Shooter Speed (reving)",(shooterUp.getVelocity()/shooterTicks)*60);
             return false;
@@ -155,13 +155,11 @@ public class ActionManager {
 
     public Action waitForSpeedSafe(double rpm) {
         return new Action() {
-            double rotationsPerMinute = 0.0;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                rotationsPerMinute = Math.abs((shooterUp.getVelocity()/28)*60);
-                telemetryPacket.put("===SAFE RPM===", Math.abs((shooterUp.getVelocity()/28)*60));
-                telemetryPacket.put("===TEST TIME===", opmode.getRuntime());
-                return Math.abs(rotationsPerMinute-rpm) > 150;
+                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
+                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
+                return Math.abs(rotationsPerMinute-rpm) > 200;
             }
         };
     }

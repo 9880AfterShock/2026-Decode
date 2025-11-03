@@ -28,7 +28,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
         RunLater.setup(this);
         Obelisk.initDetection(this);
         Hood.initAim(this);
-        ActionManager actionManager = new ActionManager( this, 24);
+        ActionManager actionManager = new ActionManager( this, 28);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
 
@@ -90,22 +90,18 @@ public class LM1AutoBlueFar extends LinearOpMode {
                                 ),
                                 toShoot1.build()
                         ),
-                        actionManager.rev(4100),
-                        actionManager.shotCue(11),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.shotCue(15),
+                        actionManager.rev(3000),
+                        actionManager.waitForSpeedSafe(3000),
                         actionManager.launch(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.shotCue(25),
+                        actionManager.waitForSpeedSafe(3000),
                         actionManager.launch(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.shotCue(35),
+                        actionManager.waitForSpeedSafe(3000),
                         actionManager.launch(),
 
                         //2nd volley
