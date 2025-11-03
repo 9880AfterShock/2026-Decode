@@ -63,7 +63,7 @@ public class ActionManager {
         return telemetryPacket -> {
             spindexerBias = true;
             shooterUp.setVelocity((rpm*shooterTicks)/60);
-            shooterDown.setPower(shooterUp.getPower());
+            shooterDown.setPower((rpm*shooterTicks)/60);
             spindexer.update();
             telemetryPacket.put("Shooter Speed (reving)",(shooterUp.getVelocity()/shooterTicks)*60);
             return false;
