@@ -178,7 +178,7 @@ public class Obelisk {
                 }
                 packet.put("Motif", motif);
                 if (opmode.getRuntime() - scanTime >= 2.0) {
-                    motif = Motif.PGP;
+                    motif = Motif.GPP;
                     return false;
                 }
                 return (validTagsSeen != 1);
