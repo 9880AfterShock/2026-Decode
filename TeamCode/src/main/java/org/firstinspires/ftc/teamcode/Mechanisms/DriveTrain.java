@@ -31,7 +31,7 @@ public class DriveTrain { // Prefix for commands
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;
-    private static final double kP = 0.02;  //0.02 to 0.05
+    private static final double kP = 0.025;  //0.02 to 0.05
     private static double rotation;
     private static IMU imu;
     private static Pose2d pos;
