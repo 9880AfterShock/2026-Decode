@@ -198,6 +198,10 @@ public class Spindexer {
         update();
     }
 
+    public void setBalls(List<BallType> balls) {
+        this.balls = balls;
+    }
+
     public BallType getCurrentBall() {
         return balls.get(index);
     }
