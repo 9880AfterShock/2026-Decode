@@ -112,44 +112,44 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         actionManager.launch(),
 
                         actionManager.derev(),
-                        actionManager.rampUp(),
-
-                        Arm.AutoArmOut(),
-                        toPickup1.build(),
-
-                        Roller.AutoIntakeOn(),
-                        pickup1.build(),
-                        Roller.AutoIntakeOff(),
-
-                        //filter things into spindexer neatly
-
-                        Arm.AutoArmIn(),
-
-                        new ParallelAction(
-                                new SequentialAction(
-                                        actionManager.spindexer.goToMotif(), //intakes GPP
-                                        actionManager.cycleRamp()
-                                ),
-                                toShoot2.build()
-                        ),
-
-                        actionManager.rev(4100),
-
-                        actionManager.shotCue(4),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.launch(),
-
-                        actionManager.shotCue(5),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.launch(),
-
-                        actionManager.shotCue(6),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
-                        actionManager.launch(),
-
-                        actionManager.derev(),
+//                        actionManager.rampUp(),
+//
+//                        Arm.AutoArmOut(),
+//                        toPickup1.build(),
+//
+//                        Roller.AutoIntakeOn(),
+//                        pickup1.build(),
+//                        Roller.AutoIntakeOff(),
+//
+//                        //filter things into spindexer neatly
+//
+//                        Arm.AutoArmIn(),
+//
+//                        new ParallelAction(
+//                                new SequentialAction(
+//                                        actionManager.spindexer.goToMotif(), //intakes GPP
+//                                        actionManager.cycleRamp()
+//                                ),
+//                                toShoot2.build()
+//                        ),
+//
+//                        actionManager.rev(4100),
+//
+//                        actionManager.shotCue(4),
+//                        actionManager.waitForSpeedSafe(4100),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(5),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(4100),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(6),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(4100),
+//                        actionManager.launch(),
+//
+//                        actionManager.derev(),
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
                 )
