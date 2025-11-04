@@ -21,8 +21,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Blue far zone 3 not 6")
-public class LM1AutoBlueFar extends LinearOpMode {
+@Autonomous(name = "Red far zone 3 not 6")
+public class LM1AutoRedFar extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Mechs init'
@@ -36,19 +36,19 @@ public class LM1AutoBlueFar extends LinearOpMode {
 
         QuickSpindexer.initSpindexer(this); //ugly but works
 
-        Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
+        Pose2d startPosFar = new Pose2d(62.6, 16.0, -Math.toRadians(0.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d startPickup1 = new Pose2d(-12.0, -30.0, Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, -55.0, -Math.toRadians(90.0));
-        Pose2d startPickup2 = new Pose2d(12.0, -30.0, -Math.toRadians(90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, -55.0, -Math.toRadians(90.0));
-        Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
-        Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
-        Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
-        Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(21.5));
-        Pose2d parkPosFar = new Pose2d(37.75, -32.75, Math.toRadians(90.0));
+        Pose2d startPickup1 = new Pose2d(-12.0, 30.0, -Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(-12.0, 55.0, Math.toRadians(90.0));
+        Pose2d startPickup2 = new Pose2d(12.0, 30.0, Math.toRadians(90.0));
+        Pose2d endPickup2 = new Pose2d(12.0, 55.0, Math.toRadians(90.0));
+        Pose2d startPickup3 = new Pose2d(35.5, 30.0, Math.toRadians(90.0));
+        Pose2d endPickup3 = new Pose2d(35.5, 55.0, Math.toRadians(90.0));
+        Pose2d gatePose = new Pose2d(0.0, 55.0, -Math.toRadians(0.0));
+        Pose2d shootPosFar = new Pose2d(57.5, 12.0, -Math.toRadians(21.5));
+        Pose2d parkPosFar = new Pose2d(37.75, 32.75, -Math.toRadians(90.0));
 
 
         TrajectoryActionBuilder waitTwo = drive.actionBuilder(startPosFar)
@@ -56,20 +56,20 @@ public class LM1AutoBlueFar extends LinearOpMode {
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosFar)
                 .waitSeconds(20.0);
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
-                .setTangent(Math.toRadians(110.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(110.0));
+                .setTangent(-Math.toRadians(110.0))
+                .splineToLinearHeading(shootPosFar, -Math.toRadians(110.0));
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar)
-                .setTangent(Math.toRadians(-135.0))
-                .splineToLinearHeading(startPickup3, Math.toRadians(-135));
+                .setTangent(-Math.toRadians(-135.0))
+                .splineToLinearHeading(startPickup3, -Math.toRadians(-135));
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup3)
-                .setTangent(Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup3, Math.toRadians(-90.0));
+                .setTangent(-Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup3, -Math.toRadians(-90.0));
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup3)
-                .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(45.0));
+                .setTangent(-Math.toRadians(45.0))
+                .splineToLinearHeading(shootPosFar, -Math.toRadians(45.0));
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar)
-                .setTangent(Math.toRadians(-135.0))
-                .splineToLinearHeading(parkPosFar, Math.toRadians(-135.0));
+                .setTangent(-Math.toRadians(-135.0))
+                .splineToLinearHeading(parkPosFar, -Math.toRadians(-135.0));
 
 
         while (!isStopRequested() && !opModeIsActive()) {
