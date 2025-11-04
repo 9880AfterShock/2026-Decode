@@ -10,8 +10,10 @@ import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -25,8 +27,10 @@ public class LM1AutoBlueFar extends LinearOpMode {
     public void runOpMode() {
         //Mechs init'
         Arm.initIntake(this);
+        Roller.initIntake(this);
         RunLater.setup(this);
         Obelisk.initDetection(this);
+        DriverTest.initControls(this); //new
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
 
@@ -43,12 +47,12 @@ public class LM1AutoBlueFar extends LinearOpMode {
         Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
-        Pose2d shootPosFar = new Pose2d(60.0, -12.0, Math.toRadians(22.5));
+        Pose2d shootPosFar = new Pose2d(55.0, -12.0, Math.toRadians(25));
         Pose2d parkPosFar = new Pose2d(37.75, -32.75, Math.toRadians(90.0));
 
 
-        TrajectoryActionBuilder waitQuarter = drive.actionBuilder(startPosFar)
-                .waitSeconds(0.25);
+        TrajectoryActionBuilder waitTwo = drive.actionBuilder(startPosFar)
+                .waitSeconds(2.0);
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosFar)
                 .waitSeconds(20.0);
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
@@ -57,7 +61,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar)
                 .setTangent(Math.toRadians(-135.0))
                 .splineToLinearHeading(startPickup3, Math.toRadians(-135));
-        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickup3)
+        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup3)
                 .setTangent(Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup3, Math.toRadians(-90.0));
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup3)
@@ -89,8 +93,16 @@ public class LM1AutoBlueFar extends LinearOpMode {
                                         actionManager.cycleRamp()
                                 ),
                                 toShoot1.build()
-                        ),
-                        actionManager.rev(5000),
+                        )
+                )
+        );
+
+        DriverTest.desSpeed = 4100;
+        DriverTest.update(false, false, false, true, false);
+
+        Actions.runBlocking(
+                new SequentialAction(
+                        //new block
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
@@ -103,8 +115,45 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
+                        actionManager.derev(),
 
-                        //2nd volley
+                        Arm.AutoArmOut(),
+                        toPickup1.build(),
+
+                        Roller.AutoIntakeOn(),
+                        pickup1.build(),
+                        Roller.AutoIntakeOff(),
+
+                        Arm.AutoArmIn(),
+
+                        new ParallelAction(
+                                new SequentialAction(
+                                        actionManager.spindexer.goToMotif(), //intakes GPP
+                                        actionManager.cycleRamp()
+                                ),
+                                toShoot2.build(),
+                                waitTwo.build()
+                        )
+                )
+        );
+
+        DriverTest.update(false, false, false, true, false);
+
+        Actions.runBlocking(
+                new SequentialAction(
+                        actionManager.shotCue(4),
+                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.launch(),
+
+                        actionManager.shotCue(5),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.launch(),
+
+                        actionManager.shotCue(6),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.launch(),
 
                         actionManager.derev(),
                         QuickSpindexer.resetForTele(), //should change later

@@ -62,10 +62,10 @@ public class ActionManager {
     public Action rev(double rpm) {
         return telemetryPacket -> {
             spindexerBias = true;
-//            shooterUp.setVelocity((rpm*shooterTicks)/60);
-//            shooterDown.setVelocity((rpm*shooterTicks)/60);
-            shooterUp.setPower(0.82);
-            shooterDown.setPower(0.82);
+            shooterUp.setVelocity((rpm*shooterTicks)/60);
+            shooterDown.setVelocity((rpm*shooterTicks)/60);
+//            shooterUp.setPower(0.82);
+//            shooterDown.setPower(0.82);
             //0.8079 was from OBJ
             spindexer.update();
             telemetryPacket.put("Shooter Speed (reving)",(shooterUp.getVelocity()/shooterTicks)*60);
@@ -119,8 +119,8 @@ public class ActionManager {
     public Action derev() {
         return telemetryPacket -> {
             spindexerBias = false;
-            shooterUp.setVelocity(0);
-            shooterDown.setVelocity(0);
+            shooterUp.setPower(0);
+            shooterDown.setPower(0);
             spindexer.update();
             return false;
         };

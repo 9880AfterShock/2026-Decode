@@ -44,7 +44,7 @@ public class Roller { // Prefix for commands
         //opmode.telemetry.addData("POWER FROM INTAKE THING", roller.getCurrent(CurrentUnit.AMPS));
     }
 
-    public static Action IntakeOn() {
+    public static Action AutoIntakeOn() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 roller.setPower(0.75);
@@ -53,7 +53,7 @@ public class Roller { // Prefix for commands
         };
     }
 
-    public static Action IntakeOff() {
+    public static Action AutoIntakeOff() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 roller.setPower(0.0);
