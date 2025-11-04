@@ -50,7 +50,8 @@ public class LM1AutoRedFar extends LinearOpMode {
         Pose2d shootPosFar = new Pose2d(57.5, 12.0, -Math.toRadians(21.5));
         Pose2d parkPosFar = new Pose2d(37.75, 32.75, -Math.toRadians(90.0));
 
-
+        TrajectoryActionBuilder waitOne = drive.actionBuilder(startPosFar)
+                .waitSeconds(1.0);
         TrajectoryActionBuilder waitTwo = drive.actionBuilder(startPosFar)
                 .waitSeconds(2.0);
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosFar)
@@ -92,23 +93,23 @@ public class LM1AutoRedFar extends LinearOpMode {
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),
-                                toShoot1.build(),
-                                actionManager.rev(4700)
+                                toShoot1.build()
                         ),
 
                         //new block
-                        actionManager.rev(4100),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.rev(4500),
+//                        waitOne.build(),
+                        actionManager.waitForSpeedSafe(4500),
                         actionManager.launch(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.waitForSpeedSafe(4500),
                         actionManager.launch(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.waitForSpeedSafe(4500),
                         actionManager.launch(),
 
                         actionManager.derev(),
