@@ -108,7 +108,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 spindexer.setTargetPosition(0);
-                return false;
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
