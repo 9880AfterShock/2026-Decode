@@ -47,7 +47,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
         Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
-        Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(21.5));
+        Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
         Pose2d parkPosFar = new Pose2d(37.75, -32.75, Math.toRadians(90.0));
 
         TrajectoryActionBuilder waitOne = drive.actionBuilder(startPosFar)
@@ -97,19 +97,19 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         ),
 
                         //new block
-                        actionManager.rev(4500),
+                        actionManager.rev(4100),
 //                        waitOne.build(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.derev(),

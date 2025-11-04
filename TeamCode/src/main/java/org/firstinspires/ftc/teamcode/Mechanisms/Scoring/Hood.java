@@ -14,7 +14,6 @@ public class Hood {
     private static OpMode opmode; // opmode var init
     public static double farPosition = 0.98; //could be as "high" (low) as 0.97
     public static double nearPosition = 1.0;
-    public static double autoFarPosition = 0.96;
     public static String hoodState = "Near";
 
     public static void initAim(OpMode opmode) { // init motor
@@ -54,7 +53,7 @@ public class Hood {
     public static Action AutoHoodFar() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                hood.setPosition(autoFarPosition);
+                hood.setPosition(farPosition);
                 return false;
             }
         };

@@ -97,19 +97,19 @@ public class LM1AutoRedFar extends LinearOpMode {
                         ),
 
                         //new block
-                        actionManager.rev(4500),
+                        actionManager.rev(4100),
 //                        waitOne.build(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4500),
+                        actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
                         actionManager.derev(),
