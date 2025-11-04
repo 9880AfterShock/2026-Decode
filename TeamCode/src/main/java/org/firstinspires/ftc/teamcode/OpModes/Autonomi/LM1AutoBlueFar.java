@@ -92,17 +92,12 @@ public class LM1AutoBlueFar extends LinearOpMode {
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),
-                                toShoot1.build()
-                        )
-                )
-        );
+                                toShoot1.build(),
+                                actionManager.rev(4700)
+                        ),
 
-        DriverTest.desSpeed = 4100;
-        DriverTest.update(false, false, false, true, false);
-
-        Actions.runBlocking(
-                new SequentialAction(
                         //new block
+                        actionManager.rev(4100),
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
 
@@ -115,7 +110,9 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),
+
                         actionManager.derev(),
+                        actionManager.rampUp(),
 
                         Arm.AutoArmOut(),
                         toPickup1.build(),
@@ -124,6 +121,8 @@ public class LM1AutoBlueFar extends LinearOpMode {
                         pickup1.build(),
                         Roller.AutoIntakeOff(),
 
+                        //filter things into spindexer neatly
+
                         Arm.AutoArmIn(),
 
                         new ParallelAction(
@@ -131,16 +130,11 @@ public class LM1AutoBlueFar extends LinearOpMode {
                                         actionManager.spindexer.goToMotif(), //intakes GPP
                                         actionManager.cycleRamp()
                                 ),
-                                toShoot2.build(),
-                                waitTwo.build()
-                        )
-                )
-        );
+                                toShoot2.build()
+                        ),
 
-        DriverTest.update(false, false, false, true, false);
+                        actionManager.rev(4100),
 
-        Actions.runBlocking(
-                new SequentialAction(
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(4100),
                         actionManager.launch(),

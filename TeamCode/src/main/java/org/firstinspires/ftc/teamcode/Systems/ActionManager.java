@@ -9,12 +9,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
+import java.sql.Driver;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -61,9 +63,13 @@ public class ActionManager {
 
     public Action rev(double rpm) {
         return telemetryPacket -> {
+
+            DriverTest.desSpeed = rpm;
+            DriverTest.update(false, false, false, true, false);
+
             spindexerBias = true;
-            shooterUp.setVelocity((rpm*shooterTicks)/60);
-            shooterDown.setVelocity((rpm*shooterTicks)/60);
+//            shooterUp.setVelocity((rpm*shooterTicks)/60);
+//            shooterDown.setVelocity((rpm*shooterTicks)/60);
 //            shooterUp.setPower(0.82);
 //            shooterDown.setPower(0.82);
             //0.8079 was from OBJ
@@ -119,8 +125,7 @@ public class ActionManager {
     public Action derev() {
         return telemetryPacket -> {
             spindexerBias = false;
-            shooterUp.setPower(0);
-            shooterDown.setPower(0);
+            DriverTest.update(false, false, false, false, false);
             spindexer.update();
             return false;
         };
