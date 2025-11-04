@@ -47,7 +47,7 @@ public class LM1AutoBlueFar extends LinearOpMode {
         Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
-        Pose2d shootPosFar = new Pose2d(55.0, -12.0, Math.toRadians(25));
+        Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(21.5));
         Pose2d parkPosFar = new Pose2d(37.75, -32.75, Math.toRadians(90.0));
 
 
