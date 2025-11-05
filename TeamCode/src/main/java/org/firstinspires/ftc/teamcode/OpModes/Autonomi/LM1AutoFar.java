@@ -141,7 +141,6 @@ public class LM1AutoFar extends LinearOpMode {
 
                         waitVariable.build(), //actionmanager one doesnt work
 
-                        //new block
                         actionManager.rev(shooterPower),
 //                        waitOne.build(),
                         actionManager.waitForSpeedSafe(shooterPower),
