@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp BLUE")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
@@ -69,7 +69,7 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            ControlManager.update(false);
+            ControlManager.update(false); //will need to add inpute using speical buttons for this later, not using atm
             RunLater.update();
             RunCondition.update();
             BallColorDetectinator.update();
