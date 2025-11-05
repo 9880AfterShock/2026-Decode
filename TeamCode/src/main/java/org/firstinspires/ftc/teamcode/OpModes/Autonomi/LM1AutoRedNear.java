@@ -72,7 +72,6 @@ public class LM1AutoRedNear extends LinearOpMode {
 
 
         while (!isStopRequested() && !opModeIsActive()) {
-            //Obelisk.update();
         }
 
         waitForStart();

@@ -171,4 +171,12 @@ public class ActionManager {
             }
         };
     }
+    public Action waitForTime(double time) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return Math.abs(opmode.getRuntime()) < time;
+            }
+        };
+    }
 }

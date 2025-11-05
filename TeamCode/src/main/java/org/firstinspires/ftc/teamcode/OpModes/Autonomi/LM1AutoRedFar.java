@@ -74,7 +74,7 @@ public class LM1AutoRedFar extends LinearOpMode {
 
 
         while (!isStopRequested() && !opModeIsActive()) {
-            //Obelisk.update();
+//            Obelisk.update();
         }
 
         waitForStart();
