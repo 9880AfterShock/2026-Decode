@@ -1,7 +1,11 @@
 
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -9,6 +13,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
@@ -23,6 +28,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 @Config
 @Autonomous(name = "Far zone 3 not 6")
 public class LM1AutoFar extends LinearOpMode {
+    ElapsedTime runtime = new ElapsedTime();
     @Override
     public void runOpMode() {
         //Mechs init'
@@ -104,8 +110,11 @@ public class LM1AutoFar extends LinearOpMode {
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-135.0))
                 .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-135.0));
+        TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosFar)
+                .waitSeconds(waitTime);
 
         waitForStart();
+        runtime.reset();
 
         if (isStopRequested()) return;
 
@@ -124,7 +133,7 @@ public class LM1AutoFar extends LinearOpMode {
                                 toShoot1.build()
                         ),
 
-                        actionManager.waitForTime(waitTime),
+                        waitVariable.build(), //actionmanager one doesnt work
 
                         //new block
                         actionManager.rev(4100),

@@ -171,11 +171,12 @@ public class ActionManager {
             }
         };
     }
-    public Action waitForTime(double time) {
+
+    public Action waitForTime(double waitTime) { //rn going immediatly idk why
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return Math.abs(opmode.getRuntime()) < time;
+                return opmode.getRuntime() < waitTime;
             }
         };
     }
