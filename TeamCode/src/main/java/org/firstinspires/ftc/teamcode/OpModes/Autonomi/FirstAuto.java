@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
 @Autonomous(name = "Score Preloads (Blue)")
+@Disabled
 public class FirstAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
