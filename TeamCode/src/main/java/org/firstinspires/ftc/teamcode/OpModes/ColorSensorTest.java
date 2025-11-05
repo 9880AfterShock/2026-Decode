@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
@@ -12,7 +13,8 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Color sensor test")
+@Disabled
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Color sensor test") //not working, disabled
 public class ColorSensorTest extends LinearOpMode {
 
     // Declare OpMode members.
