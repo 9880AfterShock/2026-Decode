@@ -27,7 +27,7 @@ public class DriveTrain { // Prefix for commands
     private static DcMotorEx rightRear;
     private static DcMotorEx rightFront;
     private static OpMode opmode; // opmode var init
-    private static final double speedDivider = 3.0; // divider for slow mode
+    private static final double speedDivider = 2.0; // divider for slow mode
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;

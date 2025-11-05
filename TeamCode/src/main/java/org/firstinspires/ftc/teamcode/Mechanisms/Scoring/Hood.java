@@ -21,12 +21,15 @@ public class Hood {
         Hood.opmode = opmode;
         hoodState = "Near";
     }
-/*
-    public static void goUp() {
-        hood.setPosition(upPosition);
-        opmode.telemetry.addData("Hood", "Up"); //not rly used lol
+
+    public static void goNear() {
+        hood.setPosition(nearPosition);
+        hoodState = "Near";
+        hood.setPosition(nearPosition);
+        DriverTest.desSpeed = 3300;
+        opmode.telemetry.addData("Hood State", hoodState);
     }
-*/
+
     public static void updateAim(boolean toggleRange) {
         if (toggleRange){
             if (hoodState == "Near") {
