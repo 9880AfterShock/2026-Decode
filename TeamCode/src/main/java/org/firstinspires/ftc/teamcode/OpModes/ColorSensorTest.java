@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="color sensor test")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Color sensor test")
 public class ColorSensorTest extends LinearOpMode {
 
     // Declare OpMode members.
