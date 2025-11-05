@@ -85,10 +85,13 @@ public class LM1AutoFar extends LinearOpMode {
         Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosFar; //dif aiming angles
+        double shooterPower;
         if (posMultiplier == 1){ //blue
-            shootPosFar = new Pose2d(57.5, posMultiplier*-12.0, posMultiplier*Math.toRadians(22.5));
+            shootPosFar = new Pose2d(57.5, posMultiplier*-12.0, posMultiplier*Math.toRadians(21.5));
+            shooterPower = 4150;
         } else { //red
             shootPosFar = new Pose2d(57.5, posMultiplier * -12.0, posMultiplier * Math.toRadians(21.5));
+            shooterPower = 4100;
         }
         Pose2d parkPosFar = new Pose2d(37.75, posMultiplier*-32.75, posMultiplier*Math.toRadians(90.0));
 
@@ -139,19 +142,19 @@ public class LM1AutoFar extends LinearOpMode {
                         waitVariable.build(), //actionmanager one doesnt work
 
                         //new block
-                        actionManager.rev(4100),
+                        actionManager.rev(shooterPower),
 //                        waitOne.build(),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.waitForSpeedSafe(shooterPower),
                         actionManager.launch(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.waitForSpeedSafe(shooterPower),
                         actionManager.launch(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(4100),
+                        actionManager.waitForSpeedSafe(shooterPower),
                         actionManager.launch(),
 
                         actionManager.derev(),
