@@ -127,8 +127,7 @@ public class ControlManager {
         if (cycleRamp) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);
-            RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
-            RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.9));
+            RunCondition.addAction(new ConditionAction(() -> {ballRamp.queueMessage(BallRampMessage.CYCLE); RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.7));}, spindexer::linedUp));
         }
 
         if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP) && canSpin) {
