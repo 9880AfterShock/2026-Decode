@@ -69,6 +69,8 @@ public class LM1AutoFar extends LinearOpMode {
             if (posMultiplier == -1.0) {
                 telemetry.addData("Alliance", "Red");
             }
+            Obelisk.update();
+            telemetry.addData("Current Motif", Obelisk.motif);
             telemetry.update();
 //            Obelisk.update();
         }
@@ -132,7 +134,7 @@ public class LM1AutoFar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
-                                        Obelisk.AutoScan(),
+                                        Obelisk.AutoScanWithInit(),
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),
