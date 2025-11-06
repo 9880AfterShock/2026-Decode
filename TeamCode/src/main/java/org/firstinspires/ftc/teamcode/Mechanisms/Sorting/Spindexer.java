@@ -281,7 +281,7 @@ public class Spindexer {
     }
 
     public boolean linedUp() {
-        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 50;
+        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 10;
     }
     public Action leftQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.LEFT));
