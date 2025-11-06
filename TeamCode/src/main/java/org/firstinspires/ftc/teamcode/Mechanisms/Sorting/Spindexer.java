@@ -130,7 +130,7 @@ public class Spindexer {
                 balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
             case LINEUP:
-                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
+                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.8));
                 isLineup = true;
                 RunCondition.addAction(new ConditionAction(() -> {
                         RunLater.addAction(new DelayedAction(() -> {
