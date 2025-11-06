@@ -123,7 +123,7 @@ public class ControlManager {
             }, 0.5));
         }
 
-        DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
+        DriverTest.update(increase, decrease, fire && (ballRamp.state == BallRampState.DOWN) ,rev, intake_shooter);
         if (cycleRamp) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);
