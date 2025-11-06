@@ -14,7 +14,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Systems.ConditionAction;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -130,7 +132,7 @@ public class Spindexer {
             case LINEUP:
                 motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
                 isLineup = true;
-                RunLater.addAction(new DelayedAction(() -> {
+                RunCondition.addAction(new ConditionAction(() -> {
                     isLineup = false;
                     if (isShooting.get()) {
                         motor.setTargetPosition((int) ((int) targetPos + shootBias));
@@ -138,7 +140,7 @@ public class Spindexer {
                         motor.setTargetPosition((int) targetPos);
                     }
 
-                    }, 0.85));
+                    }, this::linedUp));
                 break;
             case LINEUPFixed:
                 int fixedTargetPos = motor.getTargetPosition();
@@ -276,6 +278,10 @@ public class Spindexer {
             update();
             return false;
         }
+    }
+
+    public boolean linedUp() {
+        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 10;
     }
     public Action leftQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.LEFT));
