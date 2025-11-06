@@ -136,6 +136,7 @@ public class LM1AutoNear extends LinearOpMode {
                         actionManager.launch(),
 
                         actionManager.derev(),
+//starting pickup auto
 //                        actionManager.rampUp(),
 //
 //                        Arm.AutoArmOut(),
@@ -151,7 +152,7 @@ public class LM1AutoNear extends LinearOpMode {
 //
 //                        new ParallelAction(
 //                                new SequentialAction(
-//                                        actionManager.spindexer.goToMotif(), //intakes GPP
+//                                          QuickSpindexer.goToMotif(), //should put in GPP actually
 //                                        actionManager.cycleRamp()
 //                                ),
 //                                toShoot2.build()
@@ -174,6 +175,7 @@ public class LM1AutoNear extends LinearOpMode {
 //                        actionManager.launch(),
 //
 //                        actionManager.derev(),
+//End pickup auto
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
                 )
