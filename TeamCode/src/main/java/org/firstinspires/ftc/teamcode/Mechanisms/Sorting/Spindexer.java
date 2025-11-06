@@ -133,13 +133,14 @@ public class Spindexer {
                 motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
                 isLineup = true;
                 RunCondition.addAction(new ConditionAction(() -> {
-                    isLineup = false;
-                    if (isShooting.get()) {
-                        motor.setTargetPosition((int) ((int) targetPos + shootBias));
-                    } else {
-                        motor.setTargetPosition((int) targetPos);
-                    }
-
+                        RunLater.addAction(new DelayedAction(() -> {
+                            isLineup = false;
+                            if (isShooting.get()) {
+                                motor.setTargetPosition((int) ((int) targetPos + shootBias));
+                            } else {
+                                motor.setTargetPosition((int) targetPos);
+                            }
+                        },0.5));
                     }, this::linedUp));
                 break;
             case LINEUPFixed:
@@ -281,7 +282,7 @@ public class Spindexer {
     }
 
     public boolean linedUp() {
-        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 10;
+        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 2;
     }
     public Action leftQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.LEFT));
