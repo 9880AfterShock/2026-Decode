@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 public class LM1AutoNear extends LinearOpMode {
     @Override
     public void runOpMode() {
-        //Mechs init'
+        //Mechs init
         Arm.initIntake(this);
         Roller.initIntake(this);
         RunLater.setup(this);
@@ -72,7 +72,9 @@ public class LM1AutoNear extends LinearOpMode {
         Pose2d shootPosClose = new Pose2d(-30.0, posMultiplier*-33.0, posMultiplier*Math.toRadians(45));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
@@ -87,10 +89,16 @@ public class LM1AutoNear extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
-        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
+        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
+        TrajectoryActionBuilder pickupSecond1 = drive.actionBuilder(startPickup1)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(secondPickup1, posMultiplier*Math.toRadians(-90.0));
+        TrajectoryActionBuilder pickupThird1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(startPickup1)
+        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
                 .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(125.0));
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose)
@@ -108,6 +116,7 @@ public class LM1AutoNear extends LinearOpMode {
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
                         Hood.AutoHoodNear(),
+                        actionManager.rev(3000), //moved here bc PID
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
@@ -117,10 +126,10 @@ public class LM1AutoNear extends LinearOpMode {
                                         actionManager.cycleRamp()
                                 ),
                                 toShoot1.build()
-                        ),
+                                ),
 
                         waitVariable.build(),
-                        actionManager.rev(3000),
+//                        actionManager.rev(3000), //moved higher bc PID
 //                        waitOne.build(),
                         actionManager.waitForSpeedSafe(3000),
                         actionManager.launch(),
@@ -137,44 +146,49 @@ public class LM1AutoNear extends LinearOpMode {
 
                         actionManager.derev(),
 //starting pickup auto
-//                        actionManager.rampUp(),
-//
-//                        Arm.AutoArmOut(),
-//                        toPickup1.build(),
-//
-//                        Roller.AutoIntakeOn(),
-//                        pickup1.build(),
-//                        Roller.AutoIntakeOff(),
-//
-//                        //filter things into spindexer neatly
-//
-//                        Arm.AutoArmIn(),
-//
-//                        new ParallelAction(
-//                                new SequentialAction(
-//                                          QuickSpindexer.goToMotif(), //should put in GPP actually
-//                                        actionManager.cycleRamp()
-//                                ),
-//                                toShoot2.build()
-//                        ),
-//
-//                        actionManager.rev(4100),
-//
-//                        actionManager.shotCue(4),
-//                        actionManager.waitForSpeedSafe(4100),
-//                        actionManager.launch(),
-//
-//                        actionManager.shotCue(5),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(4100),
-//                        actionManager.launch(),
-//
-//                        actionManager.shotCue(6),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(4100),
-//                        actionManager.launch(),
-//
-//                        actionManager.derev(),
+                        actionManager.rampUp(),
+
+                        Arm.AutoArmOut(),
+                        toPickup1.build(),
+
+                        Roller.AutoIntakeOn(),
+                        pickupFirst1.build(),
+                        QuickSpindexer.turnLeft(),
+                        pickupSecond1.build(),
+                        QuickSpindexer.turnLeft(),
+                        pickupThird1.build(),
+                        Roller.AutoIntakeOff(),
+
+
+                        //filter things into spindexer neatly
+
+                        Arm.AutoArmIn(),
+
+                        new ParallelAction(
+                                new SequentialAction(
+                                          QuickSpindexer.goToMotif(), //should put in GPP actually
+                                        actionManager.cycleRamp()
+                                ),
+                                toShoot2.build()
+                        ),
+
+                        actionManager.rev(4100),
+
+                        actionManager.shotCue(4),
+                        actionManager.waitForSpeedSafe(3000),
+                        actionManager.launch(),
+
+                        actionManager.shotCue(5),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(3000),
+                        actionManager.launch(),
+
+                        actionManager.shotCue(6),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(3000),
+                        actionManager.launch(),
+
+                        actionManager.derev(),
 //End pickup auto
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
