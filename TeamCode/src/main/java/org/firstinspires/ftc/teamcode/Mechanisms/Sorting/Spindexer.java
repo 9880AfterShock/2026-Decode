@@ -140,7 +140,7 @@ public class Spindexer {
                             } else {
                                 motor.setTargetPosition((int) targetPos);
                             }
-                        },0.2));
+                        },0.4));
                     }, this::linedUp));
                 break;
             case LINEUPFixed:
