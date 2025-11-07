@@ -101,6 +101,38 @@ public class QuickSpindexer { // Prefix for commands
         };
     }
 
+    public static Action removeBias(){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/360*6)));
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //20 is tick margin of error
+            }
+        };
+    }
+
+    public static Action addBias(){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/360*6)));
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //20 is tick margin of error
+            }
+        };
+    }
+
     public static Action cycleRampStart(){
         return new Action() {
             @Override
@@ -110,6 +142,7 @@ public class QuickSpindexer { // Prefix for commands
             }
         };
     }
+
     public static Action cycleRampEnd(){
         return new Action() {
             @Override
@@ -119,6 +152,7 @@ public class QuickSpindexer { // Prefix for commands
             }
         };
     }
+
     public static Action resetForTele(){
         return new Action() {
             @Override
