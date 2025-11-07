@@ -23,7 +23,6 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 @Config
 @Autonomous(name = "Near zone 3 not 6")
 public class LM1AutoNear extends LinearOpMode {
-    private static final double armServoDelay = 0.2;
     @Override
     public void runOpMode() {
         //Mechs init
@@ -107,6 +106,18 @@ public class LM1AutoNear extends LinearOpMode {
                 .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
         TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosClose)
                 .waitSeconds(waitTime);
+        TrajectoryActionBuilder waitServoIn1 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoIn2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoIn3 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoOut1 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoOut2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoOut3 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
 
         waitForStart();
 
@@ -115,7 +126,7 @@ public class LM1AutoNear extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
-                        Arm.AutoArmIn(0),
+                        Arm.AutoArmIn(),
                         Hood.AutoHoodNear(),
                         actionManager.rev(3000), //moved here bc PID
                         toScan.build(),
@@ -148,31 +159,33 @@ public class LM1AutoNear extends LinearOpMode {
 //starting pickup auto
                         actionManager.rampUp(),
 
-                        Arm.AutoArmOut(0),
+                        Arm.AutoArmOut(),
 
                         new ParallelAction(
                                toPickup1.build(),
                                QuickSpindexer.removeBias()
                         ),
 
-                        Arm.AutoArmOut(armServoDelay),
+                        Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupFirst1.build(),
-                        Arm.AutoArmIn(armServoDelay),
+                        Arm.AutoArmIn(),
+                        waitServoIn1.build(),
                         QuickSpindexer.turnLeft(),
                         Roller.AutoIntakeOff(),
 
-                        Arm.AutoArmOut(armServoDelay),
+                        Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupSecond1.build(),
-                        Arm.AutoArmIn(armServoDelay),
+                        Arm.AutoArmIn(),
+                        waitServoIn2.build(),
                         QuickSpindexer.turnLeft(),
                         Roller.AutoIntakeOff(),
 
-                        Arm.AutoArmOut(armServoDelay),
+                        Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupThird1.build(),
-                        Arm.AutoArmIn(0),
+                        Arm.AutoArmIn(),
                         Roller.AutoIntakeOff(),
 
                         //filter things into spindexer neatly

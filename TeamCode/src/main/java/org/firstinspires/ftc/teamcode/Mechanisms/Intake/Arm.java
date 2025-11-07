@@ -59,22 +59,20 @@ public class Arm { // Prefix for commands
 
 
 
-    public static Action AutoArmIn(double waitTime) {
+    public static Action AutoArmIn() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 arm.setPosition(transferPosition);
                 intakeState = "Transferring";
-                sleep((long) waitTime);
                 return false;
             }
         };
     }
-    public static Action AutoArmOut(double waitTime) {
+    public static Action AutoArmOut() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 arm.setPosition(intakePosition);
                 intakeState = "Intaking";
-                sleep((long) waitTime);
                 return false;
             }
         };
