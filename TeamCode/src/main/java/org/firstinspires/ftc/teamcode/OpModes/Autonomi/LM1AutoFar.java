@@ -131,10 +131,10 @@ public class LM1AutoFar extends LinearOpMode {
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
                         Hood.AutoHoodFar(),
+                        Obelisk.AutoScanWithInit(),
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
-                                        Obelisk.AutoScanWithInit(),
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
                                 ),

@@ -104,9 +104,9 @@ public class DriveTrain { // Prefix for commands
         rightBackPower = Range.clip(drive - turn + strafe, -1.0, 1.0);
         rightFrontPower = Range.clip(drive - turn - strafe, -1.0, 1.0);
 
-        updateSpeed(slowModeButton);
+        //updateSpeed(slowModeButton);
 
-        if (slowMode) {
+        if (slowModeButton) {
             leftRear.setPower(leftBackPower / speedDivider);
             leftFront.setPower(leftFrontPower / speedDivider);
             rightRear.setPower(rightBackPower / speedDivider);
