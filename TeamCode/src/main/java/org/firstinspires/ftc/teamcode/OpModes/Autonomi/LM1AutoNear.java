@@ -51,8 +51,8 @@ public class LM1AutoNear extends LinearOpMode {
             if (gamepad1.dpadDownWasPressed()){
                 waitTime -= 1.0;
             }
-            if (waitTime < 1){
-                waitTime = 1.0;
+            if (waitTime < 0.0){
+                waitTime = 0.0;
             }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
