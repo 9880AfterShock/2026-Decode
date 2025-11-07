@@ -121,17 +121,13 @@ public class LM1AutoNear extends LinearOpMode {
                         Obelisk.AutoScan(),
                         new ParallelAction(
                                 new SequentialAction(
-                                        actionManager.shotCue(101),
+                                        actionManager.shotCue(1),
                                         actionManager.spindexer.goToMotif(),
-                                        actionManager.shotCue(102),
-                                        actionManager.cycleRamp(),
-                                        actionManager.shotCue(103)
+                                        actionManager.cycleRamp()
                                         ),
                                 toShoot1.build()
                                 ),
-                        actionManager.shotCue(200),
                         waitVariable.build(),
-                        actionManager.shotCue(201),
 //                        actionManager.rev(3000), //moved higher bc PID
 //                        waitOne.build(),
                         actionManager.waitForSpeedSafe(3000),
