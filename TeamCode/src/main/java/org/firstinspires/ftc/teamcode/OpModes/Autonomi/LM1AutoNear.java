@@ -116,7 +116,7 @@ public class LM1AutoNear extends LinearOpMode {
                         actionManager.shotCue(0),
                         Arm.AutoArmIn(),
                         Hood.AutoHoodNear(),
-                        actionManager.rev(3000), //moved here bc PID
+                        actionManager.rev(3000), //moved here bc PID //wokr
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
