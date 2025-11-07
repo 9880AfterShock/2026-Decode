@@ -13,9 +13,10 @@ import java.util.PriorityQueue;
 
 public class RunLater {
     private static OpMode opMode;
-    private static final PriorityQueue<DelayedAction> queue = new PriorityQueue<>();
+    private static PriorityQueue<DelayedAction> queue = new PriorityQueue<>();
     public static void setup(OpMode opMode) {
         RunLater.opMode =opMode;
+        queue = new PriorityQueue<>();
     }
 
     public static double getRuntime() {
