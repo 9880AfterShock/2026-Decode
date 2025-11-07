@@ -14,9 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
-import org.firstinspires.ftc.teamcode.Systems.ConditionAction;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
-import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -130,18 +128,17 @@ public class Spindexer {
                 balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
             case LINEUP:
-                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.8));
+                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
                 isLineup = true;
-                RunCondition.addAction(new ConditionAction(() -> {
-                        RunLater.addAction(new DelayedAction(() -> {
-                            isLineup = false;
-                            if (isShooting.get()) {
-                                motor.setTargetPosition((int) ((int) targetPos + shootBias));
-                            } else {
-                                motor.setTargetPosition((int) targetPos);
-                            }
-                        },0.6));
-                    }, this::linedUp));
+                RunLater.addAction(new DelayedAction(() -> {
+                    isLineup = false;
+                    if (isShooting.get()) {
+                        motor.setTargetPosition((int) ((int) targetPos + shootBias));
+                    } else {
+                        motor.setTargetPosition((int) targetPos);
+                    }
+
+                }, 0.85));
                 break;
             case LINEUPFixed:
                 int fixedTargetPos = motor.getTargetPosition();
@@ -279,10 +276,6 @@ public class Spindexer {
             update();
             return false;
         }
-    }
-
-    public boolean linedUp() {
-        return Math.abs(motor.getTargetPosition()-motor.getCurrentPosition()) < 10;
     }
     public Action leftQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.LEFT));

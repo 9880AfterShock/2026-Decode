@@ -52,7 +52,7 @@ public class ActionManager {
             private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.7)); first = false;}
+                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
                 spindexer.update();
                 ballRamp.update();
                 RunLater.update();
