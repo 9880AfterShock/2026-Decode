@@ -14,7 +14,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Systems.ConditionAction;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -130,15 +132,17 @@ public class Spindexer {
             case LINEUP:
                 motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
                 isLineup = true;
-                RunLater.addAction(new DelayedAction(() -> {
-                    isLineup = false;
-                    if (isShooting.get()) {
-                        motor.setTargetPosition((int) ((int) targetPos + shootBias));
-                    } else {
-                        motor.setTargetPosition((int) targetPos);
-                    }
+                RunCondition.addAction(new ConditionAction( () -> {
+                    RunLater.addAction(new DelayedAction(() -> {
+                        isLineup = false;
+                        if (isShooting.get()) {
+                            motor.setTargetPosition((int) ((int) targetPos + shootBias));
+                        } else {
+                            motor.setTargetPosition((int) targetPos);
+                        }
 
-                }, 0.85));
+                    }, 0.85));
+                }, this::isLinedUp));
                 break;
             case LINEUPFixed:
                 int fixedTargetPos = motor.getTargetPosition();
@@ -283,7 +287,12 @@ public class Spindexer {
     public Action rightQuick() {
         return new Update(() -> queueMessage(SpindexerMessage.RIGHT));
     }
+
     public Action goToMotif() {
         return new Update(() -> gotoMotif(Obelisk.motif));
+    }
+
+    public boolean isLinedUp() {
+        return Math.abs(motor.getCurrentPosition()- motor.getTargetPosition()) < 20;
     }
 }

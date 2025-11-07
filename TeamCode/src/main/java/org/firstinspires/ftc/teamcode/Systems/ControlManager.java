@@ -123,12 +123,11 @@ public class ControlManager {
             }, 0.5));
         }
 
-        DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
+        DriverTest.update(increase, decrease, fire && (ballRamp.state == BallRampState.DOWN) ,rev, intake_shooter);
         if (cycleRamp) {
             canSpin = false;
             spindexer.queueMessage(SpindexerMessage.LINEUP);
-            RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2));
-            RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.9));
+            RunCondition.addAction(new ConditionAction(() -> {ballRamp.queueMessage(BallRampMessage.CYCLE); RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.9));}, spindexer::isLinedUp));
         }
 
         if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP) && canSpin) {
