@@ -77,7 +77,7 @@ public class FirstAutoRed extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmIn(0),
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(

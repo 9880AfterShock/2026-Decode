@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 
+import static android.os.SystemClock.sleep;
 import static java.lang.Math.abs;
 
 import androidx.annotation.NonNull;
@@ -58,20 +59,22 @@ public class Arm { // Prefix for commands
 
 
 
-    public static Action AutoArmIn() {
+    public static Action AutoArmIn(double waitTime) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 arm.setPosition(transferPosition);
                 intakeState = "Transferring";
+                sleep((long) waitTime);
                 return false;
             }
         };
     }
-    public static Action AutoArmOut() {
+    public static Action AutoArmOut(double waitTime) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 arm.setPosition(intakePosition);
                 intakeState = "Intaking";
+                sleep((long) waitTime);
                 return false;
             }
         };

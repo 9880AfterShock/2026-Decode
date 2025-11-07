@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 @Config
 @Autonomous(name = "Near zone 3 not 6")
 public class LM1AutoNear extends LinearOpMode {
+    private static final double armServoDelay = 0.2;
     @Override
     public void runOpMode() {
         //Mechs init
@@ -114,7 +115,7 @@ public class LM1AutoNear extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmIn(0),
                         Hood.AutoHoodNear(),
                         actionManager.rev(3000), //moved here bc PID
                         toScan.build(),
@@ -147,31 +148,45 @@ public class LM1AutoNear extends LinearOpMode {
 //starting pickup auto
                         actionManager.rampUp(),
 
-                        Arm.AutoArmOut(),
-                        toPickup1.build(),
+                        Arm.AutoArmOut(0),
 
+                        new ParallelAction(
+                               toPickup1.build(),
+                               QuickSpindexer.removeBias()
+                        ),
+
+                        Arm.AutoArmOut(armServoDelay),
                         Roller.AutoIntakeOn(),
                         pickupFirst1.build(),
+                        Arm.AutoArmIn(armServoDelay),
                         QuickSpindexer.turnLeft(),
-                        pickupSecond1.build(),
-                        QuickSpindexer.turnLeft(),
-                        pickupThird1.build(),
                         Roller.AutoIntakeOff(),
 
+                        Arm.AutoArmOut(armServoDelay),
+                        Roller.AutoIntakeOn(),
+                        pickupSecond1.build(),
+                        Arm.AutoArmIn(armServoDelay),
+                        QuickSpindexer.turnLeft(),
+                        Roller.AutoIntakeOff(),
+
+                        Arm.AutoArmOut(armServoDelay),
+                        Roller.AutoIntakeOn(),
+                        pickupThird1.build(),
+                        Arm.AutoArmIn(0),
+                        Roller.AutoIntakeOff(),
 
                         //filter things into spindexer neatly
 
-                        Arm.AutoArmIn(),
-
                         new ParallelAction(
                                 new SequentialAction(
-                                          QuickSpindexer.goToMotif(), //should put in GPP actually
+                                        QuickSpindexer.addBias(), //should add into go to motif but too much work
+                                        QuickSpindexer.goToMotif(), //should put in GPP actually
                                         actionManager.cycleRamp()
                                 ),
                                 toShoot2.build()
                         ),
 
-                        actionManager.rev(4100),
+                        actionManager.rev(3000),
 
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(3000),

@@ -129,7 +129,7 @@ public class LM1AutoFar extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmIn(0),
                         Hood.AutoHoodFar(),
                         Obelisk.AutoScanWithInit(),
                         new ParallelAction(
