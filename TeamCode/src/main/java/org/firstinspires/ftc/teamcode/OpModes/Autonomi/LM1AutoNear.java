@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
@@ -74,7 +75,7 @@ public class LM1AutoNear extends LinearOpMode {
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
@@ -110,6 +111,9 @@ public class LM1AutoNear extends LinearOpMode {
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoIn2 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
+        TrajectoryActionBuilder waitServoUp = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+
         TrajectoryActionBuilder waitServoIn3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoOut1 = drive.actionBuilder(startPosClose)
@@ -157,6 +161,7 @@ public class LM1AutoNear extends LinearOpMode {
 
                         actionManager.derev(),
 //starting pickup auto
+                        /*
                         actionManager.rampUp(),
 
                         Arm.AutoArmOut(),
@@ -186,6 +191,7 @@ public class LM1AutoNear extends LinearOpMode {
                         Roller.AutoIntakeOn(),
                         pickupThird1.build(),
                         Arm.AutoArmIn(),
+                        waitServoIn3.build(),
                         Roller.AutoIntakeOff(),
 
                         //filter things into spindexer neatly
@@ -193,8 +199,12 @@ public class LM1AutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         QuickSpindexer.addBias(), //should add into go to motif but too much work
-                                        QuickSpindexer.goToMotif(), //should put in GPP actually
-                                        actionManager.cycleRamp()
+                                        QuickSpindexer.toMotifFrom(Motif.GPP),
+                                        QuickSpindexer.cycleRampStart(),
+                                        actionManager.rampDown(),
+                                        waitServoUp.build(),
+                                        QuickSpindexer.cycleRampEnd()
+//                                        actionManager.cycleRamp()
                                 ),
                                 toShoot2.build()
                         ),
@@ -216,6 +226,7 @@ public class LM1AutoNear extends LinearOpMode {
                         actionManager.launch(),
 
                         actionManager.derev(),
+*/
 //End pickup auto
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()

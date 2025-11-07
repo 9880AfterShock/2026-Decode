@@ -138,7 +138,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-(1425.1/3)/2.5));
-                return false;
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
@@ -148,7 +148,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+(1425.1/3)/2.5));
-                return false;
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
@@ -171,10 +171,10 @@ public class QuickSpindexer { // Prefix for commands
                 if (first) {
                     if (Obelisk.motif != currentInventory) {
                         if ((Obelisk.motif == Motif.GPP && (currentInventory == Motif.PPG)) || (Obelisk.motif == Motif.PGP)&& (currentInventory == Motif.GPP) || (Obelisk.motif == Motif.PPG)&& (currentInventory == Motif.PGP)){
-                            spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3)));
+                            spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
                         }
                         if ((Obelisk.motif == Motif.GPP && (currentInventory == Motif.PGP)) || (Obelisk.motif == Motif.PGP)&& (currentInventory == Motif.PPG) || (Obelisk.motif == Motif.PPG)&& (currentInventory == Motif.GPP)){
-                            spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
+                            spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3)));
                         }
                     }
                     first = false;
