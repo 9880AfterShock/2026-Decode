@@ -127,7 +127,7 @@ public class LM1AutoNear extends LinearOpMode {
                                         ),
                                 toShoot1.build()
                                 ),
-                        waitVariable.build(),
+                        waitVariable.build(), ysy
 //                        actionManager.rev(3000), //moved higher bc PID
 //                        waitOne.build(),
                         actionManager.waitForSpeedSafe(3000),
