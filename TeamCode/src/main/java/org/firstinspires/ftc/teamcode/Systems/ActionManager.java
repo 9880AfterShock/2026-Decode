@@ -36,7 +36,7 @@ public class ActionManager {
         this.shooterTicks = shooterTicks;
         spindexerBias = false;
         this.opmode = opmode;
-        spindexer = new Spindexer("spindexer", opmode, 1425.1, 11, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
+        spindexer = new Spindexer("spindexer", opmode, 1425.1, 6, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
         ballRamp = new BallRamp(opmode, "ramp", 0.04, 0.22);
         this.shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
         this.shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");

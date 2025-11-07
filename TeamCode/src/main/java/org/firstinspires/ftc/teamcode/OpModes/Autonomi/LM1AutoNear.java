@@ -36,7 +36,7 @@ public class LM1AutoNear extends LinearOpMode {
 
         QuickSpindexer.initSpindexer(this); //ugly but works
         double posMultiplier = 1.0;
-        double waitTime = 0.0;
+        double waitTime = 1.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use dpad to change delay, and x and b to select alliance");
             if (gamepad1.xWasPressed()){
@@ -51,8 +51,8 @@ public class LM1AutoNear extends LinearOpMode {
             if (gamepad1.dpadDownWasPressed()){
                 waitTime -= 1.0;
             }
-            if (waitTime < 0){
-                waitTime = 0.0;
+            if (waitTime < 1){
+                waitTime = 1.0;
             }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
