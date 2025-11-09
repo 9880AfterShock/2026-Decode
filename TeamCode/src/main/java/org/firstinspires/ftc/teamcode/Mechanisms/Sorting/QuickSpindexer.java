@@ -136,7 +136,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 if (first){
-                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-(1425.1/3)/2.5));
+                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-((1425.1/3)/2.5)));
                     first = false;
                 }
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
@@ -150,7 +150,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 if (first) {
-                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+(1425.1/3)/2.5));
+                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+((1425.1/3)/2.5)));
                     first = false;
                 }
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error

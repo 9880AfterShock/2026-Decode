@@ -74,7 +74,7 @@ public class LM1AutoNear extends LinearOpMode {
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*-Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
@@ -111,15 +111,17 @@ public class LM1AutoNear extends LinearOpMode {
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoIn2 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
-        TrajectoryActionBuilder waitServoUp = drive.actionBuilder(startPosClose)
+        TrajectoryActionBuilder waitServoDown = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoIn3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.2);
+                .waitSeconds(0.1);
         TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.2);
+                .waitSeconds(0.5);
         TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitBallsAlign = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
 
         TrajectoryActionBuilder waitServoOut1 = drive.actionBuilder(startPosClose)
@@ -210,8 +212,9 @@ public class LM1AutoNear extends LinearOpMode {
                                         QuickSpindexer.addBias(), //should add into go to motif function but too much work
                                         QuickSpindexer.toMotifFrom(Motif.GPP),
                                         QuickSpindexer.cycleRampStart(),
+                                        waitBallsAlign.build(),
                                         actionManager.rampDown(),
-                                        waitServoUp.build(),
+                                        waitServoDown.build(),
                                         QuickSpindexer.cycleRampEnd()
 //                                        actionManager.cycleRamp()
                                 ),
