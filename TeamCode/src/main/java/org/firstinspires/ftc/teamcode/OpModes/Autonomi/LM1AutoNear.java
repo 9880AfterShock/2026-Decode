@@ -198,7 +198,7 @@ public class LM1AutoNear extends LinearOpMode {
 
                         new ParallelAction(
                                 new SequentialAction(
-                                        QuickSpindexer.addBias(), //should add into go to motif but too much work
+                                        QuickSpindexer.addBias(), //should add into go to motif function but too much work
                                         QuickSpindexer.toMotifFrom(Motif.GPP),
                                         QuickSpindexer.cycleRampStart(),
                                         actionManager.rampDown(),
