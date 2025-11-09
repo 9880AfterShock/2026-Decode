@@ -132,9 +132,12 @@ public class QuickSpindexer { // Prefix for commands
 
     public static Action cycleRampStart(){
         return new Action() {
+            private boolean first = true;
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
-                spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-(1425.1/3)/2.5));
+                if (first){
+                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-(1425.1/3)/2.5));
+                }
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
@@ -142,9 +145,12 @@ public class QuickSpindexer { // Prefix for commands
 
     public static Action cycleRampEnd(){
         return new Action() {
+            private boolean first = true;
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
-                spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+(1425.1/3)/2.5));
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+(1425.1/3)/2.5));
+                }
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
