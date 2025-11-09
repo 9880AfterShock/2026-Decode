@@ -113,9 +113,15 @@ public class LM1AutoNear extends LinearOpMode {
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoUp = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
-
         TrajectoryActionBuilder waitServoIn3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
+        TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+        TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.2);
+
         TrajectoryActionBuilder waitServoOut1 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitServoOut2 = drive.actionBuilder(startPosClose)
@@ -174,6 +180,7 @@ public class LM1AutoNear extends LinearOpMode {
                         Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupFirst1.build(),
+                        waitBallIn1.build(),
                         Arm.AutoArmIn(),
                         waitServoIn1.build(),
                         QuickSpindexer.turnLeft(),
@@ -182,6 +189,7 @@ public class LM1AutoNear extends LinearOpMode {
                         Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupSecond1.build(),
+                        waitBallIn2.build(),
                         Arm.AutoArmIn(),
                         waitServoIn2.build(),
                         QuickSpindexer.turnLeft(),
@@ -190,6 +198,7 @@ public class LM1AutoNear extends LinearOpMode {
                         Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
                         pickupThird1.build(),
+                        waitBallIn3.build(),
                         Arm.AutoArmIn(),
                         waitServoIn3.build(),
                         Roller.AutoIntakeOff(),
