@@ -13,9 +13,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
-import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
-import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
-
 
 public class QuickSpindexer { // Prefix for commands
     public static DcMotor spindexer; // init motor var
