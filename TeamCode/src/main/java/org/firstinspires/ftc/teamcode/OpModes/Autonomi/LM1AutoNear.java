@@ -208,11 +208,12 @@ public class LM1AutoNear extends LinearOpMode {
                         //filter things into spindexer neatly
 
                         new ParallelAction(
+                                actionManager.clearRunlater(),
                                 new SequentialAction(
                                         QuickSpindexer.addBias(), //should add into go to motif function but too much work
                                         QuickSpindexer.toMotifFrom(Motif.GPP),
                                         QuickSpindexer.cycleRampStart(),
-                                        waitBallsAlign.build(),
+//                                        waitBallsAlign.build(),
                                         actionManager.rampDown(),
                                         waitServoDown.build(),
                                         QuickSpindexer.cycleRampEnd()

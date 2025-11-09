@@ -19,6 +19,10 @@ public class RunLater {
         queue = new PriorityQueue<>();
     }
 
+    public static void clearQueue() {
+        queue = new PriorityQueue<>();
+    }
+
     public static double getRuntime() {
         return RunLater.opMode.getRuntime();
     }

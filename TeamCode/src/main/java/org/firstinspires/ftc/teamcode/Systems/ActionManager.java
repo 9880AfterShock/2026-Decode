@@ -73,7 +73,7 @@ public class ActionManager {
 //            shooterUp.setPower(0.82);
 //            shooterDown.setPower(0.82);
             //0.8079 was from OBJ
-            spindexer.update();
+//            spindexer.update();
             telemetryPacket.put("Shooter Speed (reving)",(shooterUp.getVelocity()/shooterTicks)*60);
             return false;
         };
@@ -177,6 +177,16 @@ public class ActionManager {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 return opmode.getRuntime() < waitTime;
+            }
+        };
+    }
+
+    public Action clearRunlater() { //rn going immediatly idk why
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                RunLater.clearQueue();
+                return false;
             }
         };
     }
