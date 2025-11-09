@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
-import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
@@ -22,8 +21,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 6")
-public class LM1AutoNear extends LinearOpMode {
+@Autonomous(name = "Near zone 3")
+public class LM1AutoNearSmall extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Mechs init
@@ -54,9 +53,6 @@ public class LM1AutoNear extends LinearOpMode {
             }
             if (waitTime < 0.0){
                 waitTime = 0.0;
-            }
-            if (waitTime > 1.0){
-                waitTime = 1.0;
             }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
@@ -151,9 +147,9 @@ public class LM1AutoNear extends LinearOpMode {
                                         actionManager.shotCue(1),
                                         actionManager.spindexer.goToMotif(),
                                         actionManager.cycleRamp()
-                                        ),
-                                toShoot1.build()
                                 ),
+                                toShoot1.build()
+                        ),
                         waitVariable.build(),
 //                        actionManager.rev(3000), //moved higher bc PID
 //                        waitOne.build(),
@@ -172,14 +168,14 @@ public class LM1AutoNear extends LinearOpMode {
 
                         actionManager.derev(),
 //starting pickup auto
-//                        /*
+                        /*
                         actionManager.rampUp(),
 
                         Arm.AutoArmOut(),
 
                         new ParallelAction(
-                               toPickup1.build(),
-                               QuickSpindexer.removeBias()
+                                toPickup1.build(),
+                                QuickSpindexer.removeBias()
                         ),
 
                         Arm.AutoArmOut(),
@@ -242,7 +238,7 @@ public class LM1AutoNear extends LinearOpMode {
                         actionManager.launch(),
 
                         actionManager.derev(),
-//                        */
+                        */
 //End pickup auto
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
