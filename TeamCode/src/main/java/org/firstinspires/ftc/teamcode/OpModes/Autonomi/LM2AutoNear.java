@@ -251,7 +251,7 @@ public class LM2AutoNear extends LinearOpMode {
                         ),
 
                         //Second volley start
-                        actionManager.rev(3000),
+                        actionManager.rev(rpm),
 
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(rpm),
