@@ -27,14 +27,18 @@ public class Roller { // Prefix for commands
         Roller.opmode = opmode;
     }
 
-    public static void updateIntake(boolean intaking, boolean ejecting, boolean transfering, double speed) {
-        if (intaking || transfering){
+    public static void updateIntake(boolean intaking, boolean ejecting, boolean transferring, double speed) {
+        if (intaking){
             intakePower = speed;
         } else {
             if (ejecting){
                 intakePower = -speed;
             } else {
-                intakePower = 0.0;
+                if (transferring){
+                    intakePower = speed/2;
+                } else {
+                    intakePower = 0.0;
+                }
             }
         }
 
