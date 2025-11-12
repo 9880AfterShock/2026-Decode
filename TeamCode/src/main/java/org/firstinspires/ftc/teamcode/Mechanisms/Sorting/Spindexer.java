@@ -32,7 +32,6 @@ public class Spindexer {
     private final double ticksPerRotation;
     public List<BallType> balls = Arrays.asList(BallType.NONE, BallType.NONE, BallType.NONE);
     public int index = 0;
-    private final double shootBias;
     private final Supplier<Boolean> isShooting;
     private double targetPos = 0;
     private boolean isLineup = false;
@@ -40,7 +39,6 @@ public class Spindexer {
     public Spindexer(String motorName, OpMode opMode, double ticksPerRotation, double shootBias, Supplier<Boolean> isShooting) {
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
-        this.shootBias = (shootBias/360)*ticksPerRotation;
         this.isShooting = isShooting;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -55,7 +53,6 @@ public class Spindexer {
         this.balls = startingBalls;
         index = 0;
         this.ticksPerRotation = ticksPerRotation;
-        this.shootBias = (shootBias/360)*ticksPerRotation;
         this.isShooting = isShooting;
         motor = opMode.hardwareMap.get(DcMotorEx.class, motorName);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -69,7 +66,6 @@ public class Spindexer {
     public Spindexer(DcMotorEx motor,double ticksPerRotation) {
         this.ticksPerRotation = ticksPerRotation;
         this.motor = motor;
-        this.shootBias = 0;
         this.isShooting = () -> false;
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setTargetPosition(0);
@@ -81,7 +77,7 @@ public class Spindexer {
         this.balls = startingBalls;
         this.ticksPerRotation = ticksPerRotation;
         this.motor = motor;
-        this.shootBias = 0;
+
         this.isShooting = () -> false;
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setTargetPosition(0);
@@ -102,20 +98,12 @@ public class Spindexer {
             case RIGHT:
                 index = Math.floorMod(index+1,balls.size());
                 targetPos += ticksPerRotation/3;
-                if (isShooting.get()) {
-                    motor.setTargetPosition((int) (targetPos+shootBias));
-                } else {
-                    motor.setTargetPosition((int) targetPos);
-                }
+                motor.setTargetPosition((int) targetPos);
                 break;
             case LEFT:
                 index = Math.floorMod(index-1,balls.size());
                 targetPos -= ticksPerRotation/3;
-                if (isShooting.get()) {
-                    motor.setTargetPosition((int) (targetPos+shootBias));
-                } else {
-                    motor.setTargetPosition((int) targetPos);
-                }
+                motor.setTargetPosition((int) targetPos);
                 break;
             case INGREEN:
                 balls.set(index, BallType.GREEN);
@@ -135,11 +123,7 @@ public class Spindexer {
                 RunCondition.addAction(new ConditionAction( () -> {
                     RunLater.addAction(new DelayedAction(() -> {
                         isLineup = false;
-                        if (isShooting.get()) {
-                            motor.setTargetPosition((int) ((int) targetPos + shootBias));
-                        } else {
-                            motor.setTargetPosition((int) targetPos);
-                        }
+                        motor.setTargetPosition((int) targetPos);
 
                     }, 0.85));
                 }, this::isLinedUp));
@@ -150,21 +134,13 @@ public class Spindexer {
                 isLineup = true;
                 RunLater.addAction(new DelayedAction(() -> {
                     isLineup = false;
-                    if (isShooting.get()) {
-                        motor.setTargetPosition((int) (fixedTargetPos + shootBias));
-                    } else {
-                        motor.setTargetPosition(fixedTargetPos);
-                    }
+                    motor.setTargetPosition((int) (fixedTargetPos));
 
                 }, 0.85));
                 break;
             case NONE:
                 if (!isLineup) {
-                    if (isShooting.get()) {
-                        motor.setTargetPosition((int) (targetPos + shootBias));
-                    } else {
-                        motor.setTargetPosition((int) targetPos);
-                    }
+                    motor.setTargetPosition((int) targetPos);
                 }
                 break;
         }
@@ -219,11 +195,7 @@ public class Spindexer {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
             if (first) {queueMessage(SpindexerMessage.RIGHT); first=false;}
-            if (isShooting.get()) {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
-            } else {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
-            }
+            return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
         }
     }
 
@@ -238,11 +210,7 @@ public class Spindexer {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
             if (first) {run.run(); first=false;}
-            if (isShooting.get()) {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
-            } else {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
-            }
+            return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
         }
     }
 
@@ -255,11 +223,7 @@ public class Spindexer {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             update();
             if (first) {queueMessage(SpindexerMessage.LEFT); first=false;}
-            if (isShooting.get()) {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos + shootBias)) < 0.5);
-            } else {
-                return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
-            }
+            return !(Math.abs((double) motor.getCurrentPosition() - (targetPos)) < 0.5);
         }
     }
     public Action right() {
