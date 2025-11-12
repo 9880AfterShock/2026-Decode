@@ -35,7 +35,7 @@ public class Roller { // Prefix for commands
                 intakePower = -speed;
             } else {
                 if (transferring){
-                    intakePower = speed/2;
+                    intakePower = speed*0.7;
                 } else {
                     intakePower = 0.0;
                 }
