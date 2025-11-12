@@ -29,7 +29,7 @@ public class Arm { // Prefix for commands
             intakeState = "Intaking";
             arm.setPosition(intakePosition);
         } else {
-            if (!transfering) {
+            if (transfering) {
                 intakeState = "Transferring";
                 arm.setPosition(transferPosition);
             } else {
