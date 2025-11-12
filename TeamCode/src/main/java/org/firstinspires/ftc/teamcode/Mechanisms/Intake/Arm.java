@@ -9,6 +9,13 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.Enums.BallType;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
+
 
 public class Arm { // Prefix for commands
 
@@ -16,7 +23,7 @@ public class Arm { // Prefix for commands
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
     public static double neutralPosition = 0.57;
-    public static double transferPosition = 0.75;
+    public static double transferPosition = 0.73;
     public static String intakeState = "Intaking";
 
     public static void initIntake(OpMode opmode) { // init motor
@@ -30,8 +37,10 @@ public class Arm { // Prefix for commands
             arm.setPosition(intakePosition);
         } else {
             if (transfering) {
-                intakeState = "Transferring";
-                arm.setPosition(transferPosition);
+                if (intakeState != "Transferring") {
+                    intakeState = "Transferring";
+                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(transferPosition);}, 0.2));
+                }
             } else {
                 intakeState = "Neutral";
                 arm.setPosition(neutralPosition);
