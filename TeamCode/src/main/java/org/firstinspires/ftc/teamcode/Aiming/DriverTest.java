@@ -27,6 +27,7 @@ public class DriverTest {
     private static double lastTime;
     private static DcMotorEx shooterup;
     private static DcMotorEx shooterdown;
+    public static boolean canFire;
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -41,6 +42,7 @@ public class DriverTest {
         distanceFromGoal = 0;
         lastPos = shooterup.getCurrentPosition();
         lastTime = opmode.getRuntime();
+        canFire = false;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake){
@@ -59,12 +61,16 @@ public class DriverTest {
             shooterup.setVelocity((desSpeed*numTicks)/60);
             shooterdown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(rotationsPerMinute-desSpeed) < 200 && fire) {
-                ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
+                canFire = true;
+//                ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
                 ControlManager.shot = true;
-                RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRampMessage.DOWN);}, 0.2));
+//                RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRampMessage.DOWN);}, 0.2));
                 ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
+            } else {
+                canFire = false;
             }
         } else {
+            canFire = false;
             shooterup.setVelocity(0);
             shooterdown.setVelocity(0);
         }
@@ -73,7 +79,7 @@ public class DriverTest {
             shooterdown.setVelocity(-25*30);
         }
 
-        opmode.telemetry.addData("Can fire? ", Math.abs(rotationsPerMinute-desSpeed) < 150);
+        opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in feet", distanceFromGoal/0.3048);
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
