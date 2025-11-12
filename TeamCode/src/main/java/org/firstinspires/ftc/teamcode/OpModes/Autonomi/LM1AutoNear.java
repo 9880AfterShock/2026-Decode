@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
@@ -134,118 +135,129 @@ public class LM1AutoNear extends LinearOpMode {
                 .waitSeconds(0.2);
 
         waitForStart();
+        resetRuntime();
 
         if (isStopRequested()) return;
 
         Actions.runBlocking(
                 new SequentialAction(
-                        actionManager.shotCue(0),
-                        Arm.AutoArmIn(),
-                        Hood.AutoHoodNear(),
-                        actionManager.rev(3000), //moved here bc PID
-                        toScan.build(),
-                        Obelisk.AutoScan(),
-                        new ParallelAction(
-                                new SequentialAction(
-                                        actionManager.shotCue(1),
-                                        actionManager.spindexer.goToMotif(),
-                                        actionManager.cycleRamp()
-                                        ),
-                                toShoot1.build()
-                                ),
-                        waitVariable.build(),
-//                        actionManager.rev(3000), //moved higher bc PID
-//                        waitOne.build(),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
+                        actionManager.shotCue(1),
+                        actionManager.waitUntilRunTime(5),
                         actionManager.shotCue(2),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
-                        actionManager.shotCue(3),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
-                        actionManager.derev(),
-//starting pickup auto
-//                        /*
-                        actionManager.rampUp(),
-
-                        Arm.AutoArmOut(),
-
-                        new ParallelAction(
-                                Roller.AutoIntakeOn(),
-                                toPickup1.build(),
-                               QuickSpindexer.removeBias()
-                        ),
-
-                        Arm.AutoArmOut(),
-                        pickupFirst1.build(),
-                        waitBallIn1.build(),
-                        Arm.AutoArmIn(),
-                        waitServoIn1.build(),
-                        QuickSpindexer.turnLeft(),
-                        Roller.AutoIntakeOff(),
-
-                        Arm.AutoArmOut(),
                         Roller.AutoIntakeOn(),
-                        pickupSecond1.build(),
-                        waitBallIn2.build(),
-                        Arm.AutoArmIn(),
-                        waitServoIn2.build(),
-                        QuickSpindexer.turnLeft(),
-                        Roller.AutoIntakeOff(),
-
-                        Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
-                        pickupThird1.build(),
-                        waitBallIn3.build(),
-                        Arm.AutoArmIn(),
-                        waitServoIn3.build(),
-                        Roller.AutoIntakeOff(),
-
-                        //filter things into spindexer neatly
-
-                        new ParallelAction(
-                                actionManager.clearRunlater(),
-                                new SequentialAction(
-                                        QuickSpindexer.addBias(), //should add into go to motif function but too much work
-                                        QuickSpindexer.toMotifFrom(Motif.GPP),
-                                        QuickSpindexer.cycleRampStart(),
-//                                        waitBallsAlign.build(),
-                                        actionManager.rampDown(),
-                                        waitServoDown.build(),
-                                        QuickSpindexer.cycleRampEnd()
-//                                        actionManager.cycleRamp()
-                                ),
-                                toShoot2.build()
-                        ),
-
-                        actionManager.rev(3000),
-
-                        actionManager.shotCue(4),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
-                        actionManager.shotCue(5),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
-                        actionManager.shotCue(6),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(3000),
-                        actionManager.launch(),
-
-                        actionManager.derev(),
-//                        */
-//End pickup auto
-                        QuickSpindexer.resetForTele(), //should change later
-                        toPark.build()
+                        actionManager.waitUntilRunTime(10),
+                        Roller.AutoIntakeOff()
                 )
         );
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        actionManager.shotCue(0),
+//                        Arm.AutoArmIn(),
+//                        Hood.AutoHoodNear(),
+//                        actionManager.rev(3000), //moved here bc PID
+//                        toScan.build(),
+//                        Obelisk.AutoScan(),
+//                        new ParallelAction(
+//                                new SequentialAction(
+//                                        actionManager.shotCue(1),
+//                                        actionManager.spindexer.goToMotif(),
+//                                        actionManager.cycleRamp()
+//                                        ),
+//                                toShoot1.build()
+//                                ),
+//                        waitVariable.build(),
+////                        actionManager.rev(3000), //moved higher bc PID
+////                        waitOne.build(),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(2),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(3),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.derev(),
+////starting pickup auto
+////                        /*
+//                        actionManager.rampUp(),
+//
+//                        Arm.AutoArmOut(),
+//
+//                        new ParallelAction(
+//                                Roller.AutoIntakeOn(),
+//                                toPickup1.build(),
+//                               QuickSpindexer.removeBias()
+//                        ),
+//
+//                        Arm.AutoArmOut(),
+//                        pickupFirst1.build(),
+//                        waitBallIn1.build(),
+//                        Arm.AutoArmIn(),
+//                        waitServoIn1.build(),
+//                        QuickSpindexer.turnLeft(),
+//                        Roller.AutoIntakeOff(),
+//
+//                        Arm.AutoArmOut(),
+//                        Roller.AutoIntakeOn(),
+//                        pickupSecond1.build(),
+//                        waitBallIn2.build(),
+//                        Arm.AutoArmIn(),
+//                        waitServoIn2.build(),
+//                        QuickSpindexer.turnLeft(),
+//                        Roller.AutoIntakeOff(),
+//
+//                        Arm.AutoArmOut(),
+//                        Roller.AutoIntakeOn(),
+//                        pickupThird1.build(),
+//                        waitBallIn3.build(),
+//                        Arm.AutoArmIn(),
+//                        waitServoIn3.build(),
+//                        Roller.AutoIntakeOff(),
+//
+//                        //filter things into spindexer neatly
+//
+//                        new ParallelAction(
+//                                actionManager.clearRunlater(),
+//                                new SequentialAction(
+//                                        QuickSpindexer.addBias(), //should add into go to motif function but too much work
+//                                        QuickSpindexer.toMotifFrom(Motif.GPP),
+//                                        QuickSpindexer.cycleRampStart(),
+////                                        waitBallsAlign.build(),
+//                                        actionManager.rampDown(),
+//                                        waitServoDown.build(),
+//                                        QuickSpindexer.cycleRampEnd()
+////                                        actionManager.cycleRamp()
+//                                ),
+//                                toShoot2.build()
+//                        ),
+//
+//                        actionManager.rev(3000),
+//
+//                        actionManager.shotCue(4),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(5),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.shotCue(6),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(3000),
+//                        actionManager.launch(),
+//
+//                        actionManager.derev(),
+////                        */
+////End pickup auto
+//                        QuickSpindexer.resetForTele(), //should change later
+//                        toPark.build()
+//                )
+//        );
     }
 }

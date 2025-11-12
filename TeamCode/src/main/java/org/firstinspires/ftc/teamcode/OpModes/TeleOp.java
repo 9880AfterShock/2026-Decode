@@ -63,6 +63,7 @@ public class TeleOp extends LinearOpMode {
         // Wait for the game to start (driver presses START)
         waitForStart();
         runtime.reset();
+        resetRuntime();
         ControlManager.setup(this);
         Hood.goNear();
 

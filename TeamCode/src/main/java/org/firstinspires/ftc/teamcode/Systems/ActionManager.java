@@ -172,21 +172,22 @@ public class ActionManager {
         };
     }
 
-    public Action waitForTime(double waitTime) { //rn going immediatly idk why
-        return new Action() {
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                return opmode.getRuntime() < waitTime;
-            }
-        };
-    }
-
-    public Action clearRunlater() { //rn going immediatly idk why
+    public Action clearRunlater() {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 RunLater.clearQueue();
                 return false;
+            }
+        };
+    }
+
+    public Action waitUntilRunTime(double targetTime) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                telemetryPacket.put("Runtime", opmode.getRuntime());
+                return opmode.getRuntime() < targetTime;
             }
         };
     }
