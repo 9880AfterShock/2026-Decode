@@ -96,7 +96,6 @@ public class ActionManager {
     }
 
     public Action launch() {
-
         return new Action() {
             private boolean first = true;
             @Override
@@ -115,7 +114,6 @@ public class ActionManager {
                 }
                 //spindexer.update();
                 ballRamp.update();
-                telemetryPacket.put("runLater actions queued: ",RunLater.getCount());
                 RunLater.update();
                 return !RunLater.isEmpty();
             }
@@ -168,6 +166,17 @@ public class ActionManager {
                 double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
                 telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
                 return Math.abs(rotationsPerMinute-rpm) > 200;
+            }
+        };
+    }
+
+    public Action waitForSpeedDrop(double rpm) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
+                telemetryPacket.put("===SAFE RPM DROPPING===", rotationsPerMinute);
+                return Math.abs(rotationsPerMinute-rpm) < 200;
             }
         };
     }

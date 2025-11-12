@@ -63,6 +63,31 @@ public class Arm { // Prefix for commands
         };
     }
 
+    public static Action AutoLaunchStart() {
+        return new Action() {
+            private boolean first = true;
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first) {
+                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(transferPosition);}, 0.2));
+                    Roller.updateIntake(false, false, true, 1.0);
+                    first = false;
+                }
+                RunLater.update();
+                return !RunLater.isEmpty();
+            }
+        };
+    }
+
+    public static Action AutoLaunchEnd() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                Roller.updateIntake(false, false, false, 1.0);
+                arm.setPosition(neutralPosition);
+                return false;
+            }
+        };
+    }
+
     public static Action AutoArmTransfer() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
