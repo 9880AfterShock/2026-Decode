@@ -177,12 +177,12 @@ public class LM1AutoNear extends LinearOpMode {
                         Arm.AutoArmOut(),
 
                         new ParallelAction(
-                               toPickup1.build(),
+                                Roller.AutoIntakeOn(),
+                                toPickup1.build(),
                                QuickSpindexer.removeBias()
                         ),
 
                         Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
                         pickupFirst1.build(),
                         waitBallIn1.build(),
                         Arm.AutoArmIn(),
