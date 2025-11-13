@@ -1,0 +1,29 @@
+package org.firstinspires.ftc.teamcode.Mechanisms.Intake;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+
+public class Shield {
+    private static Servo shield; // init sevo var
+    private static OpMode opmode; // opmode var init
+    public static double lockingPosition = 0.0;
+    public static double shootingPosition = 1.0;
+    public static String shieldState = "blocking";
+
+    public static void initAim(OpMode opmode) { // init motor
+        shield = opmode.hardwareMap.get(Servo.class, "shield"); // motor config name
+        Shield.opmode = opmode;
+        shieldState = "locking";
+    }
+
+    public static void updateAim(boolean shooting) {
+        if (shooting){
+            shield.setPosition(shootingPosition);
+            shieldState = "shooting";
+        } else {
+            shield.setPosition(lockingPosition);
+            shieldState = "locking";
+        }
+        opmode.telemetry.addData("Shield State", shieldState);
+    }
+}
