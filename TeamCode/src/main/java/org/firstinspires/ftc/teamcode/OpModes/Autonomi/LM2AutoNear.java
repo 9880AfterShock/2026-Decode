@@ -229,7 +229,7 @@ public class LM2AutoNear extends LinearOpMode {
                         //intake is turned on earlier to be safe
                         pickupFirst1.build(),
                         waitBallIn1.build(),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
                         QuickSpindexer.turnLeft(),
 
@@ -237,7 +237,7 @@ public class LM2AutoNear extends LinearOpMode {
                         Roller.AutoIntakeOn(),
                         pickupSecond1.build(),
                         waitBallIn2.build(),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
                         QuickSpindexer.turnLeft(),
 
@@ -245,7 +245,7 @@ public class LM2AutoNear extends LinearOpMode {
                         Roller.AutoIntakeOn(),
                         pickupThird1.build(),
                         waitBallIn3.build(),
-                        Arm.AutoArmIn(),
+                        Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
                         //First Pickup End
 
