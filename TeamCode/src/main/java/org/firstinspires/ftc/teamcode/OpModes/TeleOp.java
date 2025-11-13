@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
@@ -49,6 +50,7 @@ public class TeleOp extends LinearOpMode {
         Hood.initAim(this);
         //QuickAlignment.initAprilTag(this);
         GoalVision.initAprilTag(this);
+        Shield.initLocking(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);

@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Enums.ColorType;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
@@ -123,6 +124,7 @@ public class ControlManager {
         }
 
         DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
+        Shield.updateLocking(rev);
 
         if (spinLeft){
             spindexer.queueMessage(SpindexerMessage.RIGHT);

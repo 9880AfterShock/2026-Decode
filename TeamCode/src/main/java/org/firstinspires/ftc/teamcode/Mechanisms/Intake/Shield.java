@@ -10,13 +10,13 @@ public class Shield {
     public static double shootingPosition = 1.0;
     public static String shieldState = "blocking";
 
-    public static void initAim(OpMode opmode) { // init motor
+    public static void initLocking(OpMode opmode) { // init motor
         shield = opmode.hardwareMap.get(Servo.class, "shield"); // motor config name
         Shield.opmode = opmode;
         shieldState = "locking";
     }
 
-    public static void updateAim(boolean shooting) {
+    public static void updateLocking(boolean shooting) {
         if (shooting){
             shield.setPosition(shootingPosition);
             shieldState = "shooting";
