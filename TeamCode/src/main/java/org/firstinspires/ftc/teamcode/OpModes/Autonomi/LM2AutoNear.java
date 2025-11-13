@@ -168,9 +168,9 @@ public class LM2AutoNear extends LinearOpMode {
         TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
         TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.2);
+                .waitSeconds(0.5);
         TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.2);
+                .waitSeconds(0.3);
 
         TrajectoryActionBuilder waitServoDown = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
