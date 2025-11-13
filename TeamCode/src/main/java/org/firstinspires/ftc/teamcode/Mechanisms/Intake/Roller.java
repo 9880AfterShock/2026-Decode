@@ -8,7 +8,6 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class Roller { // Prefix for commands
@@ -19,7 +18,7 @@ public class Roller { // Prefix for commands
     public static void initIntake(OpMode opmode) { // init motor
         roller = opmode.hardwareMap.get(DcMotorEx.class, "roller"); // motor config name
         roller.setZeroPowerBehavior(FLOAT);
-        roller.setDirection(DcMotorSimple.Direction.REVERSE);
+        roller.setDirection(DcMotorEx.Direction.REVERSE);
 
         Roller.opmode = opmode;
     }
