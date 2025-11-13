@@ -203,9 +203,14 @@ public class ActionManager {
 
     public Action waitFor(double time) {
         return new Action() {
-            private double startTime = opmode.getRuntime();
+            private boolean first = true;
+            private double startTime;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    startTime = opmode.getRuntime();
+                    first = false;
+                }
                 return opmode.getRuntime() < startTime + time;
             }
         };
