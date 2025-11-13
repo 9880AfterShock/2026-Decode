@@ -125,10 +125,10 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
 
         if (spinLeft){
-            spindexer.queueMessage(SpindexerMessage.LEFT);
+            spindexer.queueMessage(SpindexerMessage.RIGHT);
         }
         if (spinRight){
-            spindexer.queueMessage(SpindexerMessage.RIGHT);
+            spindexer.queueMessage(SpindexerMessage.LEFT);
         }
 //        if (cycleRamp) {
 //            canSpin = false;
