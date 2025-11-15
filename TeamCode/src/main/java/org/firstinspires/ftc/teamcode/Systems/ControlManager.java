@@ -67,6 +67,9 @@ public class ControlManager {
         boolean slowMode = driver.right_trigger > 0.1;
         boolean align = driver.x;
 
+        //Hood
+        boolean hood_aim = operator.yWasPressed();
+
         //Intaking
         boolean intaking = driver.left_trigger > 0.1;
         boolean ejecting = driver.left_bumper;
@@ -99,8 +102,6 @@ public class ControlManager {
         Distance.updateSensor();
 
         //ColorSensor.updateSensor(2.5F);
-
-        Hood.updateAim(operator.yWasPressed());
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
         if (prevInstake != intaking && intaking) {

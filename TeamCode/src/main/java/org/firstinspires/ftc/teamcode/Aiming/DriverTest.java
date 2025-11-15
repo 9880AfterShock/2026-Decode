@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.teamcode.Maths.LaunchInformation;
 import org.firstinspires.ftc.teamcode.Maths.Trajectory;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
@@ -24,7 +26,10 @@ public class DriverTest {
 
     public static double desSpeed = 3300;
 
+    public static double desRot = 30;
+
     private static double lastTime;
+    private static double adjustment = 0.0;
     private static DcMotorEx shooterup;
     private static DcMotorEx shooterdown;
     public static boolean canFire;
@@ -47,16 +52,20 @@ public class DriverTest {
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake){
         double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)*60);
-//        if (increase) {
-//            distanceFromGoal += 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-////            desSpeed += 100;
-//        }
-//        if (decrease){
-//            distanceFromGoal -= 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-////            desSpeed -= 100;
-//        }
+        if (increase) {
+            distanceFromGoal += 0.3048*0.5;
+            LaunchInformation li = Trajectory.getOptimalVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30), Math.toRadians(50));
+            desSpeed = li.rpm;
+            desRot = Math.toDegrees(li.angle);
+            adjustment = li.adjustment;
+        }
+        if (decrease){
+            distanceFromGoal -= 0.3048*0.5;
+            LaunchInformation li = Trajectory.getOptimalVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30), Math.toRadians(50));
+            desSpeed = li.rpm;
+            desRot = Math.toDegrees(li.angle);
+            adjustment = li.adjustment;
+        }
         if (rev) {
             shooterup.setVelocity((desSpeed*numTicks)/60);
             shooterdown.setVelocity((desSpeed*numTicks)/60);
@@ -78,11 +87,13 @@ public class DriverTest {
             shooterup.setVelocity(-25*30);
             shooterdown.setVelocity(-25*30);
         }
+        Hood.updateAim(desRot);
 
         opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in feet", distanceFromGoal/0.3048);
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
+        opmode.telemetry.addData("Adjustment", adjustment);
     }
 }

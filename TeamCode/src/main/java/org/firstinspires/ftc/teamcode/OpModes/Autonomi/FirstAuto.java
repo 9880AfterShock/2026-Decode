@@ -81,8 +81,7 @@ public class FirstAuto extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
-                                        actionManager.spindexer.goToMotif(),
-                                        actionManager.cycleRamp()
+                                        actionManager.spindexer.goToMotif()
                                 ),
                                 toShoot.build()
                         ),

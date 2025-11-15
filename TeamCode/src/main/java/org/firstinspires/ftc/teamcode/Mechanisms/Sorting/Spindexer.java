@@ -117,27 +117,6 @@ public class Spindexer {
             case INUNKOWN:
                 balls.set(Math.abs(index%balls.size()), BallType.UNKOWN);
                 break;
-            case LINEUP:
-                motor.setTargetPosition((int) (targetPos-(ticksPerRotation/3)/2.5));
-                isLineup = true;
-                RunCondition.addAction(new ConditionAction( () -> {
-                    RunLater.addAction(new DelayedAction(() -> {
-                        isLineup = false;
-                        motor.setTargetPosition((int) targetPos);
-
-                    }, 0.85));
-                }, this::isLinedUp));
-                break;
-            case LINEUPFixed:
-                int fixedTargetPos = motor.getTargetPosition();
-                motor.setTargetPosition((int) (fixedTargetPos-(ticksPerRotation/3)/2.5));
-                isLineup = true;
-                RunLater.addAction(new DelayedAction(() -> {
-                    isLineup = false;
-                    motor.setTargetPosition((int) (fixedTargetPos));
-
-                }, 0.85));
-                break;
             case NONE:
                 if (!isLineup) {
                     motor.setTargetPosition((int) targetPos);

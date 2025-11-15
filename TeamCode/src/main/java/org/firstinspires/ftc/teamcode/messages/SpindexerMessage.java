@@ -8,6 +8,4 @@ public enum SpindexerMessage {
     INPURPLE,
     INUNKOWN,
     EJECT,
-    LINEUP,
-    LINEUPFixed
 }

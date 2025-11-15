@@ -47,19 +47,6 @@ public class ActionManager {
         shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterDown.setVelocity(0);
     }
-    public Action cycleRamp() {
-        return new Action() {
-            private boolean first = true;
-            @Override
-            public boolean run(@NonNull TelemetryPacket packet) {
-                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
-                spindexer.update();
-                ballRamp.update();
-                RunLater.update();
-                return !RunLater.isEmpty();
-            }
-        };
-    }
 
     public Action rev(double rpm) {
         return telemetryPacket -> {

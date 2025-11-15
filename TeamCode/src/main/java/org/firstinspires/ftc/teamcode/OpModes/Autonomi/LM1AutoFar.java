@@ -134,8 +134,7 @@ public class LM1AutoFar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         actionManager.shotCue(1),
-                                        actionManager.spindexer.goToMotif(),
-                                        actionManager.cycleRamp()
+                                        actionManager.spindexer.goToMotif()
                                 ),
                                 toShoot1.build()
                         ),
