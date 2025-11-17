@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone with new transfer yay! :D")
+@Autonomous(name = "Near zone 6")
 public class LM2AutoNear extends LinearOpMode {
     @Override
     public void runOpMode() {
