@@ -63,12 +63,12 @@ public class Limelight {
             double y = botpose_mt2.getPosition().y;
             opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
         }
-
-        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
-        for (LLResultTypes.FiducialResult fiducial : fiducials) {
-            int id = fiducial.getFiducialId(); // The ID number of the fiducial
-            opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
-        }
+//
+//        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+//        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+//            int id = fiducial.getFiducialId(); // The ID number of the fiducial
+//            opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+//        }
     }
 
     public static Pose3D getPosition() { //MetaTag2
