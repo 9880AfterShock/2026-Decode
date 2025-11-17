@@ -37,55 +37,21 @@ public class Limelight {
     }
 
     public static void update() {
-        //this section is for metatag2
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
-        LLResult result = limelight.getLatestResult();
-        if (result != null && result.isValid()) {
-            result.getFiducialResults();
-            Pose3D botpose_mt2 = result.getBotpose_MT2();
-            if (botpose_mt2 != null) {
-                double x = botpose_mt2.getPosition().x;
-                double y = botpose_mt2.getPosition().y;
-                opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
-            }
-        }
-        //end section
-
-		///* apriltag/marker results
-        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
-        for (LLResultTypes.FiducialResult fiducial : fiducials) {
-            int id = fiducial.getFiducialId(); // The ID number of the fiducial
-            double x = detection.getTargetXDegrees(); // Where it is (left-right)
-            double y = detection.getTargetYDegrees(); // Where it is (up-down)
-            double StrafeDistance_3D = fiducial.getRobotPoseTargetSpace().getY();
-            opmode.telemetry.addData("Fiducial " + id, "is " + distance + " meters away");
-        }
-        //*/
-
-		///* 3d space data we can get
-        fiducial.getRobotPoseTargetSpace(); // Robot pose relative it the AprilTag Coordinate System (Most Useful)
-        fiducial.getCameraPoseTargetSpace(); // Camera pose relative to the AprilTag (useful)
-        fiducial.getRobotPoseFieldSpace(); // Robot pose in the field coordinate system based on this tag alone (useful)
-        fiducial.getTargetPoseCameraSpace(); // AprilTag pose in the camera's coordinate system (not very useful)
-        fiducial.getTargetPoseRobotSpace(); // AprilTag pose in the robot's coordinate system (not very useful)
-		//*/
-
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.id == 21) {
-                motif = Motif.GPP;
-                break;
-            }
-            if (detection.id == 22) {
-                motif = Motif.PGP;
-                break;
-            }
-            if (detection.id == 23) {
-                motif = Motif.PPG;
-                break;
-            }
-        }
+//        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+//        for (AprilTagDetection detection : currentDetections) {
+//            if (detection.id == 21) {
+//                motif = Motif.GPP;
+//                break;
+//            }
+//            if (detection.id == 22) {
+//                motif = Motif.PGP;
+//                break;
+//            }
+//            if (detection.id == 23) {
+//                motif = Motif.PPG;
+//                break;
+//            }
+//        }
         opmode.telemetry.addData("Motif Pattern", motif);
     }
 
@@ -99,6 +65,12 @@ public class Limelight {
                 double x = botpose_mt2.getPosition().x;
                 double y = botpose_mt2.getPosition().y;
                 opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
+            }
+
+            List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+            for (LLResultTypes.FiducialResult fiducial : fiducials) {
+                int id = fiducial.getFiducialId(); // The ID number of the fiducial
+                opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
             }
         }
     }

@@ -40,6 +40,7 @@ public class LM2AutoNear extends LinearOpMode {
         Shield.initLocking(this);
 
         double rpm = 3000;
+        double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
         double waitTime = 1.0;
@@ -168,11 +169,17 @@ public class LM2AutoNear extends LinearOpMode {
                 .waitSeconds(waitTime);
 
         TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.2);
+                .waitSeconds(0.3);
         TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.3);
         TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.3);
+        TrajectoryActionBuilder waitBallInSpindexer1 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.3);
+        TrajectoryActionBuilder waitBallInSpindexer2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.3);
+        TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.3); //not used
 
         TrajectoryActionBuilder waitServoDown = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.2);
@@ -198,26 +205,26 @@ public class LM2AutoNear extends LinearOpMode {
                         waitVariable.build(),
 
                         //First volley start
-                        actionManager.rev(3000),
+                        actionManager.rev(rpm),
 
                         actionManager.shotCue(1),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.shotCue(2),
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.shotCue(3),
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.derev(),
@@ -235,6 +242,7 @@ public class LM2AutoNear extends LinearOpMode {
                         waitBallIn1.build(),
                         Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
+                        waitBallInSpindexer1.build(),
                         QuickSpindexer.turnLeft(),
 
                         Arm.AutoArmOut(),
@@ -243,6 +251,7 @@ public class LM2AutoNear extends LinearOpMode {
                         waitBallIn2.build(),
                         Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
+                        waitBallInSpindexer2.build(),
                         QuickSpindexer.turnLeft(),
 
                         Arm.AutoArmOut(),
@@ -266,21 +275,21 @@ public class LM2AutoNear extends LinearOpMode {
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.shotCue(5),
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.shotCue(6),
                         QuickSpindexer.turnRight(),
                         actionManager.waitForSpeedSafe(rpm),
                         Arm.AutoLaunchStart(),
-                        actionManager.waitFor(0.4),
+                        actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
                         actionManager.derev(),
