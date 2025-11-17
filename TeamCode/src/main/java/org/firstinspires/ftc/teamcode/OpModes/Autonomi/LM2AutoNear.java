@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -36,6 +37,7 @@ public class LM2AutoNear extends LinearOpMode {
         ActionManager actionManager = new ActionManager( this, 28);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
+        Shield.initLocking(this);
 
         double rpm = 3000;
 
@@ -182,6 +184,7 @@ public class LM2AutoNear extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         actionManager.shotCue(0),
+                        Shield.AutoShieldShoot(),
                         Arm.AutoArmIn(),
                         Hood.AutoHoodNear(),
                         actionManager.rev(rpm), //moved here bc PID
@@ -223,6 +226,7 @@ public class LM2AutoNear extends LinearOpMode {
 
                         //First pickup start
                         Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
                         Roller.AutoIntakeOn(),
 
                         toPickup1.build(),
@@ -251,6 +255,7 @@ public class LM2AutoNear extends LinearOpMode {
 
                         //Sort
                         new ParallelAction(
+                                Shield.AutoShieldShoot(),
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot2.build()
                         ),

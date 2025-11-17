@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Intake;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -25,5 +29,23 @@ public class Shield {
             shieldState = "locking";
         }
         opmode.telemetry.addData("Shield State", shieldState);
+    }
+
+    public static Action AutoShieldLock() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                shield.setPosition(lockingPosition);
+                return false;
+            }
+        };
+    }
+
+    public static Action AutoShieldShoot() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                shield.setPosition(shootingPosition);
+                return false;
+            }
+        };
     }
 }
