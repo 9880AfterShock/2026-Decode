@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Shield {
     private static Servo shield; // init sevo var
     private static OpMode opmode; // opmode var init
-    public static double lockingPosition = 0.0;
-    public static double shootingPosition = 1.0;
+    public static double lockingPosition = 0.97;
+    public static double shootingPosition = 0.902;
     public static String shieldState = "blocking";
 
     public static void initLocking(OpMode opmode) { // init motor

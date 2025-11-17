@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 public class Hood {
     private static Servo hood; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double farPosition = 0.98; //could be as "high" (low) as 0.97
-    public static double nearPosition = 1.0;
+    public static double farPosition = 0.96; //could be as "high" (low) as 0.97
+    public static double nearPosition = 0.98;
     public static String hoodState = "Near";
 
     public static void initAim(OpMode opmode) { // init motor
