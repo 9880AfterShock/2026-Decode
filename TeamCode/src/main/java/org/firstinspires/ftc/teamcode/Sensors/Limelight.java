@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Sensors;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -56,22 +57,46 @@ public class Limelight {
     }
 
     public static void updatePosition() {
+        Pose3D botpose_mt2 = getPosition();
+        if (botpose_mt2 != null) {
+            double x = botpose_mt2.getPosition().x;
+            double y = botpose_mt2.getPosition().y;
+            opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
+        }
+
+        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            int id = fiducial.getFiducialId(); // The ID number of the fiducial
+            opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+        }
+    }
+
+    public static Pose3D getPosition() { //MetaTag2
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
         LLResult result = limelight.getLatestResult();
         if (result != null && result.isValid()) {
-            Pose3D botpose_mt2 = result.getBotpose_MT2();
-            if (botpose_mt2 != null) {
-                double x = botpose_mt2.getPosition().x;
-                double y = botpose_mt2.getPosition().y;
-                opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
-            }
-
-            List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
-            for (LLResultTypes.FiducialResult fiducial : fiducials) {
-                int id = fiducial.getFiducialId(); // The ID number of the fiducial
-                opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
-            }
+            return result.getBotpose_MT2();
         }
+        return null;
+    }
+
+    public static List<LLResultTypes.FiducialResult> getFiducial() { //MetaTag2
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
+        LLResult result = limelight.getLatestResult();
+        if (result != null && result.isValid()) {
+            return result.getFiducialResults();
+        }
+        return null;
+    }
+
+    public static Pose2d getFieldPosition() { //MetaTag2
+        List<LLResultTypes.FiducialResult> fiducials = getFiducial();
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            int id = fiducial.getFiducialId(); // The ID number of the fiducial
+            opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+        }
+        return null;
     }
 }
