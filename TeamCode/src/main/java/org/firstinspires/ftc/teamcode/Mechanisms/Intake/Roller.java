@@ -47,7 +47,7 @@ public class Roller { // Prefix for commands
     public static Action AutoIntakeOn() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                roller.setPower(0.75);
+                updateIntake(true, false, false, 1.0);
                 return false;
             }
         };
@@ -56,7 +56,7 @@ public class Roller { // Prefix for commands
     public static Action AutoIntakeOff() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                roller.setPower(0.0);
+                updateIntake(false, false, false, 1.0);
                 return false;
             }
         };
