@@ -55,8 +55,12 @@ public class Arm { // Prefix for commands
 
     public static Action AutoArmInWait() {
         return new Action() {
+            private boolean first = true;
             public boolean run(@NonNull TelemetryPacket packet) {
-                RunLater.addAction(new DelayedAction(() -> {},0.2));
+                if (first) {
+                    RunLater.addAction(new DelayedAction(() -> {},0.2));
+                    first = false;
+                }
                 arm.setPosition(neutralPosition);
                 intakeState = "Neutral";
                 RunLater.update();
