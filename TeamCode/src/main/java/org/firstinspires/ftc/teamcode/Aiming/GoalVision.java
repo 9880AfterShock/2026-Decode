@@ -22,8 +22,8 @@ public class GoalVision {
     static boolean targetFound = false;
 
     private static OpMode opmode;
-    private final static double webcamAngle = 12.0; //degrees
-    private final static double aprilTagHeight = 29.5; //inches
+    public final static double webcamAngle = 12.0; //degrees
+//    private final static double aprilTagHeight = 29.5; //inches
     private static VisionPortal visionPortal;
 
     public static void initAprilTag(OpMode opmode) {
@@ -72,12 +72,18 @@ public class GoalVision {
             opmode.telemetry.addData("Heading Error APRILTAG", headingError);
             double distanceDirect = sqrt((targetTag.ftcPose.x*targetTag.ftcPose.x) + (targetTag.ftcPose.x*targetTag.ftcPose.x));
             double distanceGround = (-targetTag.ftcPose.z * cos(toRadians(webcamAngle))) - (-targetTag.ftcPose.y * sin(toRadians(webcamAngle)));
-            opmode.telemetry.addData("Distance Apriltag UNCORRECTED?", distanceDirect);
-            opmode.telemetry.addData("Distance Apriltag CORRECTED", distanceGround);
+//            opmode.telemetry.addData("Distance Apriltag UNCORRECTED?", distanceDirect);
+//            opmode.telemetry.addData("Distance Apriltag CORRECTED", distanceGround);
+
+            opmode.telemetry.addData("Distance Apriltag RANGE CORRECTED", getTrueDistance(targetTag.ftcPose.range));
+
             return headingError;
         } else {
             opmode.telemetry.addData("Heading Error APRILTAG", "NO TAG FOUND");
             return -9880.0;
         }
+    }
+    public static double getTrueDistance(double range){
+        return range * Math.cos(Math.toRadians(webcamAngle));
     }
 }
