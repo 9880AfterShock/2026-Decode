@@ -216,7 +216,7 @@ public class LM2AutoFar extends LinearOpMode {
                         //Sort
                         new ParallelAction(
                                 Shield.AutoShieldShoot(),
-                                QuickSpindexer.toMotifFrom(Motif.GPP),
+                                QuickSpindexer.toMotifFrom(Motif.PPG),
                                 toShoot2.build()
                         ),
 
