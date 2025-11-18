@@ -43,8 +43,8 @@ public class MeepMeepRR {
                 .waitSeconds(3.0)
 
                 //topickup3
-                .setTangent(Math.toRadians(-135.0))
-                .splineToLinearHeading(startPickup3, Math.toRadians(-135))
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(startPickup3, Math.toRadians(-90))
                 //intake on
                 //pickup3
                 .setTangent(Math.toRadians(-90.0))

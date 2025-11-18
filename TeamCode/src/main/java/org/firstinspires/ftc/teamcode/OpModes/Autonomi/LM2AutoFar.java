@@ -77,7 +77,7 @@ public class LM2AutoFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(24.5));
+        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.0));
 
         Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(37.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
@@ -102,8 +102,8 @@ public class LM2AutoFar extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(110.0));
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar)
-                .setTangent(posMultiplier*Math.toRadians(-135.0))
-                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-135.0));
+                .setTangent(posMultiplier*Math.toRadians(180))
+                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90));
         TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
