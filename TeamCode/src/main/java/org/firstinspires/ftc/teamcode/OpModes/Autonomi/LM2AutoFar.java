@@ -119,8 +119,8 @@ public class LM2AutoFar extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(125.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar)
-                .setTangent(posMultiplier*Math.toRadians(45.0))
-                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(45.0));
+                .setTangent(posMultiplier*Math.toRadians(90))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-90));
 
         TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosFar)
                 .waitSeconds(waitTime);
