@@ -39,7 +39,7 @@ public class LM2AutoFar extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 4150;
+        double rpm = 4200;
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
@@ -77,12 +77,12 @@ public class LM2AutoFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar = new Pose2d(57.5, posMultiplier*-12.0, posMultiplier*Math.toRadians(21.5));
+        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(24.5));
 
-        Pose2d startPickup1 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d firstPickup1 = new Pose2d(35.5, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d secondPickup1 = new Pose2d(35.5, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(35.5, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d firstPickup1 = new Pose2d(37.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d secondPickup1 = new Pose2d(37.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(37.0, posMultiplier*-48.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
