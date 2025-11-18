@@ -23,6 +23,7 @@ public class GoalVision {
 
     private static OpMode opmode;
     public final static double webcamAngle = 12.0; //degrees
+    public static double goalDistance;
 //    private final static double aprilTagHeight = 29.5; //inches
     private static VisionPortal visionPortal;
 
@@ -45,6 +46,7 @@ public class GoalVision {
                 .build();
 
         GoalVision.opmode = opmode;
+        goalDistance = 0.0;
     }
 
     public static void stopVision() {
@@ -69,13 +71,9 @@ public class GoalVision {
         if (targetFound) {
             //Webcam is upside down lol
             double headingError = targetTag.ftcPose.bearing;
-            opmode.telemetry.addData("Heading Error APRILTAG", headingError);
-            double distanceDirect = sqrt((targetTag.ftcPose.x*targetTag.ftcPose.x) + (targetTag.ftcPose.x*targetTag.ftcPose.x));
-            double distanceGround = (-targetTag.ftcPose.z * cos(toRadians(webcamAngle))) - (-targetTag.ftcPose.y * sin(toRadians(webcamAngle)));
-//            opmode.telemetry.addData("Distance Apriltag UNCORRECTED?", distanceDirect);
-//            opmode.telemetry.addData("Distance Apriltag CORRECTED", distanceGround);
-
-            opmode.telemetry.addData("Distance Apriltag RANGE CORRECTED", getTrueDistance(targetTag.ftcPose.range));
+            opmode.telemetry.addData("Heading Apriltag ERROR", headingError);
+            goalDistance = getTrueDistance(targetTag.ftcPose.range);
+            opmode.telemetry.addData("Distance Apriltag RANGE CORRECTED", goalDistance);
 
             return headingError;
         } else {
