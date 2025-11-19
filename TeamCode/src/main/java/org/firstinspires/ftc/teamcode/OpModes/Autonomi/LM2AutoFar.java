@@ -77,7 +77,7 @@ public class LM2AutoFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(24.0));
+        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.5));
 
         Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(37.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
