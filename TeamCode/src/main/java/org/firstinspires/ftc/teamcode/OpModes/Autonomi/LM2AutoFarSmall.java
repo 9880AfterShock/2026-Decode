@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 3")
+@Autonomous(name = "Far zone 3 and pickup")
 public class LM2AutoFarSmall extends LinearOpMode {
     @Override
     public void runOpMode() {
