@@ -21,7 +21,7 @@ public class MeepMeepRR {
         Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
         Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0)); //need to figure out
         Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
-        Pose2d parkPosFar = new Pose2d(60.0, -35.0, Math.toRadians(90.0));
+        Pose2d parkPosFar = new Pose2d(60.0, -38.0, Math.toRadians(90.0));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
