@@ -61,6 +61,9 @@ public class LM2AutoNear extends LinearOpMode {
             if (waitTime < 0.0){
                 waitTime = 0.0;
             }
+            if (waitTime > 2.0){
+                waitTime = 2.0;
+            }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");

@@ -43,7 +43,7 @@ public class LM2AutoFar extends LinearOpMode {
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
-        double waitTime = 1.0;
+        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use dpad to change delay, and x and b to select alliance");
             if (gamepad1.xWasPressed()){
