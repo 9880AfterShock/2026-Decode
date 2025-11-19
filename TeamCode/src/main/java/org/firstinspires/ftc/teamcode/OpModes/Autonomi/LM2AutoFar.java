@@ -61,6 +61,9 @@ public class LM2AutoFar extends LinearOpMode {
             if (waitTime < 0.0){
                 waitTime = 0.0;
             }
+            if (waitTime > 4.0){
+                waitTime = 4.0;
+            }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
