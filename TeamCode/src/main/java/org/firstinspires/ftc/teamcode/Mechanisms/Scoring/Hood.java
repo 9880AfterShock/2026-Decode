@@ -25,7 +25,6 @@ public class Hood {
     public static void goNear() {
         hood.setPosition(nearPosition);
         hoodState = "Near";
-        hood.setPosition(nearPosition);
         DriverTest.desSpeed = 3300;
         opmode.telemetry.addData("Hood State", hoodState);
     }
