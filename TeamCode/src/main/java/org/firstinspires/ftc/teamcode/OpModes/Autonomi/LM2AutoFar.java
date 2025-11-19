@@ -95,7 +95,7 @@ public class LM2AutoFar extends LinearOpMode {
         Pose2d endPickup3 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(90.0));
+        Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(90.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
