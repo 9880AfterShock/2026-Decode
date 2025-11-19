@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Maths.Trajectory;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Shooter;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
@@ -47,15 +48,24 @@ public class DriverTest {
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake){
         double rotationsPerMinute = Math.abs((shooterup.getVelocity()/numTicks)*60);
+        if (GoalVision.goalDistance <+ 70) {
+            desSpeed = (-0.409716*GoalVision.goalDistance*GoalVision.goalDistance)+(65.95987*GoalVision.goalDistance)+1018.73728;
+            Hood.hoodState = "Near";
+            Hood.updateAim(false);
+        } else {
+            desSpeed = (-0.00387755*GoalVision.goalDistance*GoalVision.goalDistance)+(14.45065*GoalVision.goalDistance)+2570.72937;
+            Hood.hoodState = "Far";
+            Hood.updateAim(false);
+        }
 //        if (increase) {
-//            distanceFromGoal += 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-////            desSpeed += 100;
+////            distanceFromGoal += 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+//            desSpeed += 100;
 //        }
 //        if (decrease){
-//            distanceFromGoal -= 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-////            desSpeed -= 100;
+////            distanceFromGoal -= 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+//            desSpeed -= 100;
 //        }
         if (rev) {
             shooterup.setVelocity((desSpeed*numTicks)/60);
