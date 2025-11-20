@@ -25,7 +25,6 @@ public class Hood {
     public static void goNear() {
         hood.setPosition(nearPosition);
         hoodState = "Near";
-        hood.setPosition(nearPosition);
         DriverTest.desSpeed = 3300;
         opmode.telemetry.addData("Hood State", hoodState);
     }
@@ -34,14 +33,17 @@ public class Hood {
         if (toggleRange){
             if (hoodState == "Near") {
                 hoodState = "Far";
-                hood.setPosition(farPosition);
-                DriverTest.desSpeed = 4100;
             } else {
                 hoodState = "Near";
-                hood.setPosition(nearPosition);
-                DriverTest.desSpeed = 3300;
             }
         }
+
+        if (hoodState == "Far") {
+            hood.setPosition(farPosition);
+        } else {
+            hood.setPosition(nearPosition);
+        }
+
         opmode.telemetry.addData("Hood State", hoodState);
         opmode.telemetry.addData("Hood Target", hood.getPosition());
     }

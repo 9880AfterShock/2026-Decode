@@ -16,12 +16,12 @@ public class MeepMeepRR {
         Pose2d endPickup1 = new Pose2d(-12.0, -55.0, -Math.toRadians(90.0));
         Pose2d startPickup2 = new Pose2d(12.0, -30.0, -Math.toRadians(90.0));
         Pose2d endPickup2 = new Pose2d(12.0, -55.0, -Math.toRadians(90.0));
-        Pose2d startPickup3 = new Pose2d(35.5, -30.0, -Math.toRadians(90.0));
+        Pose2d startPickup3 = new Pose2d(35.5, -25.0, -Math.toRadians(90.0));
         Pose2d endPickup3 = new Pose2d(35.5, -55.0, -Math.toRadians(90.0));
         Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
         Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0)); //need to figure out
         Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
-        Pose2d parkPosFar = new Pose2d(37.75, -32.75, Math.toRadians(90.0));
+        Pose2d parkPosFar = new Pose2d(60.0, -38.0, Math.toRadians(90.0));
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -43,8 +43,8 @@ public class MeepMeepRR {
                 .waitSeconds(3.0)
 
                 //topickup3
-                .setTangent(Math.toRadians(-135.0))
-                .splineToLinearHeading(startPickup3, Math.toRadians(-135))
+                .setTangent(Math.toRadians(180))
+                .splineToLinearHeading(startPickup3, Math.toRadians(-90))
                 //intake on
                 //pickup3
                 .setTangent(Math.toRadians(-90.0))
@@ -101,8 +101,8 @@ public class MeepMeepRR {
                 .waitSeconds(3)
 
                 //to park
-                .setTangent(Math.toRadians(-135.0))
-                .splineToLinearHeading(parkPosFar, Math.toRadians(-135.0))
+                .setTangent(Math.toRadians(-90))
+                .splineToLinearHeading(parkPosFar, Math.toRadians(-90))
 
                 .build()
         );

@@ -5,7 +5,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,8 +22,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 6")
-public class LM2AutoFar extends LinearOpMode {
+@Autonomous(name = "Far zone 3 and pickup")
+public class LM2AutoFarSmall extends LinearOpMode {
     @Override
     public void runOpMode() {
         //Mechs init
@@ -61,8 +60,8 @@ public class LM2AutoFar extends LinearOpMode {
             if (waitTime < 0.0){
                 waitTime = 0.0;
             }
-            if (waitTime > 4.0){
-                waitTime = 4.0;
+            if (waitTime > 11.0){
+                waitTime = 11.0;
             }
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
@@ -216,41 +215,7 @@ public class LM2AutoFar extends LinearOpMode {
                         Roller.AutoIntakeOff(),
                         //First Pickup End
 
-                        //Sort
-                        new ParallelAction(
-                                Shield.AutoShieldShoot(),
-                                QuickSpindexer.toMotifFrom(Motif.PPG),
-                                toShoot2.build()
-                        ),
-
-                        //Second volley start
-                        actionManager.rev(rpm),
-
-                        actionManager.shotCue(4),
-                        actionManager.waitForSpeedSafe(rpm),
-                        Arm.AutoLaunchStart(),
-                        actionManager.waitFor(shotCooldown),
-                        Arm.AutoLaunchEnd(),
-
-                        actionManager.shotCue(5),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(rpm),
-                        Arm.AutoLaunchStart(),
-                        actionManager.waitFor(shotCooldown),
-                        Arm.AutoLaunchEnd(),
-
-                        actionManager.shotCue(6),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(rpm),
-                        Arm.AutoLaunchStart(),
-                        actionManager.waitFor(shotCooldown),
-                        Arm.AutoLaunchEnd(),
-
-                        actionManager.derev(),
-                        //Second volley end
-
-                        QuickSpindexer.resetForTele(), //should change later
-                        toPark.build()
+                        QuickSpindexer.resetForTele() //should change later
                 )
         );
     }
