@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
@@ -54,6 +55,7 @@ public class ControlManager {
         classifier = new ColorClassifier<>(BallType.NONE,0.2);
         classifier.addColor(new Color((double) 44 /255, (double) 178 /255, (double) 51 /255,ColorType.RGB), BallType.GREEN);
         classifier.addColor(new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB), BallType.PURPLE);
+        Spindexer.reset = false;
     }
 
     public static void update(boolean flipField) { //false is blue, true is red
@@ -64,7 +66,7 @@ public class ControlManager {
         //Drive Train
         float strafe = driver.left_stick_x;
         float drive = -driver.left_stick_y;
-        float turn = driver.right_stick_x*0.5f;
+        float turn = driver.right_stick_x * 0.5f;
         boolean slowMode = driver.right_trigger > 0.1;
         boolean align = driver.x;
 
@@ -123,13 +125,13 @@ public class ControlManager {
             }, 0.5));
         }
 
-        DriverTest.update(increase, decrease, fire ,rev, intake_shooter, false);
+        DriverTest.update(increase, decrease, fire, rev, intake_shooter, false);
         Shield.updateLocking(rev);
 
-        if (spinLeft){
+        if (spinLeft) {
             spindexer.queueMessage(SpindexerMessage.RIGHT);
         }
-        if (spinRight){
+        if (spinRight) {
             spindexer.queueMessage(SpindexerMessage.LEFT);
         }
 //        if (cycleRamp) {
@@ -145,6 +147,14 @@ public class ControlManager {
 //        if (spinRight && ballRamp.state == BallRampState.UP && canSpin) {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
+        if (operator.start && operator.back) {
+            Spindexer.reset = true;
+        }
+        if (Spindexer.reset && operator.backWasReleased()) {
+            Spindexer.reset = false;
+            spindexer.resetEncoder();
+        }
+
         spindexer.update();
 //        ballRamp.update();
 
