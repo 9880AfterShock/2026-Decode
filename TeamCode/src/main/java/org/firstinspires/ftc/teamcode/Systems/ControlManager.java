@@ -49,6 +49,7 @@ public class ControlManager {
 //        ballRamp = new BallRamp(opMode, "ramp",0.08,0.25);
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize();
+        color_sensor.setGain(40);
 //        ballRamp.queueMessage(BallRampMessage.UP);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
