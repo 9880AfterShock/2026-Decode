@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
-//import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 public class DriveTrain { // Prefix for commands
@@ -35,10 +35,10 @@ public class DriveTrain { // Prefix for commands
     private static boolean slowModeButtonPreviouslyPressed = false;
     private static final double kP = 0.025;  //0.02 to 0.05
     private static double rotation;
-//    private static IMU imu;
-//    private static Pose2d pos;
-//    private static TwoDeadWheelLocalizer localizer;
-//    private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
+    private static IMU imu;
+    private static Pose2d pos;
+    private static TwoDeadWheelLocalizer localizer;
+    private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names
@@ -67,17 +67,17 @@ public class DriveTrain { // Prefix for commands
 
         rotation = 0;
 
-//        imu = opmode.hardwareMap.get(IMU.class, "imu");
-//        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-//                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-//                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
-//        imu.initialize(parameters);
-//        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
-//        localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
+        imu = opmode.hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+        imu.initialize(parameters);
+        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
+        localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
-//        localizer.update();
+        localizer.update();
         if (align) {
             rotation = GoalVision.getRotation();
 //            if (rotation == -9880.0) {
@@ -94,29 +94,29 @@ public class DriveTrain { // Prefix for commands
 //                }
 //            }
             if (rotation != -9880.0) {
-//                localizer.setPose(new Pose2d(GoalVision.lastSeen.position.x, GoalVision.lastSeen.position.y, imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)));
-                turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
-                if (Math.abs(rotation) < 0.5) {
-                    turn = 0;
+                localizer.setPose(new Pose2d(GoalVision.lastSeen.position.x, GoalVision.lastSeen.position.y, imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)));
+            } else {
+                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
+                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+                if (flipSide){
+                    Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
+                    rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
+                } else {
+                    rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
                 }
-            }// else {
-//                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-//                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
-//                if (flipSide){
-//                    Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
-//                    rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
-//                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-//                } else {
-//                    rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
-//                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-//                }
-//                rotation = Math.toDegrees(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + rotation);
-//            }
+                rotation = Math.toDegrees(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - rotation);
+            }
+            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+            if (Math.abs(rotation) < 0.5) {
+                turn = 0;
+            }
         }
 
-//        opmode.telemetry.addData("ROTATION OFFSET", rotation);
-//        opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-//        opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+        opmode.telemetry.addData("ROTATION OFFSET", rotation);
+        opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
+        opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
 
         double leftBackPower;
         double leftFrontPower;
