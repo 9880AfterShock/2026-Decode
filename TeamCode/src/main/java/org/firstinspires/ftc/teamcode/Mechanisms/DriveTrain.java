@@ -65,13 +65,13 @@ public class DriveTrain { // Prefix for commands
 
         rotation = 0;
 
-//        imu = opmode.hardwareMap.get(IMU.class, "imu");
-//        localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
-//        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
+        imu = opmode.hardwareMap.get(IMU.class, "imu");
+        pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
+        localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
-//        localizer.update();
+        localizer.update();
         if (align) {
             rotation = GoalVision.getRotation();
 //            if (rotation == -9880.0) {
@@ -88,9 +88,21 @@ public class DriveTrain { // Prefix for commands
 //                }
 //            }
             if (rotation != -9880.0) {
+                localizer.setPose(GoalVision.lastSeen);
                 turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
                 if (Math.abs(rotation) < 0.5) {
                     turn = 0;
+                }
+            } else {
+                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
+                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+                if (flipSide){
+                    Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
+                    rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
+                } else {
+                    rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
                 }
             }
         }
