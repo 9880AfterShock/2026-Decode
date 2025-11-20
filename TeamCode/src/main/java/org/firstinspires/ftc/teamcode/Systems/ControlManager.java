@@ -123,7 +123,7 @@ public class ControlManager {
             }, 0.5));
         }
 
-        DriverTest.update(increase, decrease, fire ,rev, intake_shooter);
+        DriverTest.update(increase, decrease, fire ,rev, intake_shooter, false);
         Shield.updateLocking(rev);
 
         if (spinLeft){

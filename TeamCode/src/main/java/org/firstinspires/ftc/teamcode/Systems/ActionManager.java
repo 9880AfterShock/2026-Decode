@@ -65,7 +65,7 @@ public class ActionManager {
         return telemetryPacket -> {
 
             DriverTest.desSpeed = rpm;
-            DriverTest.update(false, false, false, true, false);
+            DriverTest.update(false, false, false, true, false, true);
 
             spindexerBias = true;
 //            shooterUp.setVelocity((rpm*shooterTicks)/60);
@@ -123,7 +123,7 @@ public class ActionManager {
     public Action derev() {
         return telemetryPacket -> {
             spindexerBias = false;
-            DriverTest.update(false, false, false, false, false);
+            DriverTest.update(false, false, false, false, false, true);
             spindexer.update();
             return false;
         };
