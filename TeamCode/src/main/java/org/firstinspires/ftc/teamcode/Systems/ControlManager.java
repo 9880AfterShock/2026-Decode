@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Systems;
 
 import static org.firstinspires.ftc.teamcode.Aiming.DriverTest.canFire;
 
+import com.qualcomm.hardware.adafruit.AdafruitI2cColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
+import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -40,22 +42,23 @@ public class ControlManager {
     public static boolean shot = false;
 //    public static boolean canSpin = true;
     public static Supplier<Color> sensor;
-    public static com.qualcomm.robotcore.hardware.NormalizedColorSensor color_sensor;
+    public static AdafruitI2cColorSensor color_sensor;
     public static ColorClassifier<BallType> classifier;
     public static double intake_speed_revving = 0.5;
     public static double intake_speed_default = 1.0;
     public static void setup(OpMode opMode) {
 //        ballRamp = new BallRamp(opMode, "ramp",0.08,0.25);
-        color_sensor = opMode.hardwareMap.get(com.qualcomm.robotcore.hardware.NormalizedColorSensor.class,"sensorColor");
+        color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
+        color_sensor.initialize();
+        color_sensor.setGain(40);
 //        ballRamp.queueMessage(BallRampMessage.UP);
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
         spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
-        classifier = new ColorClassifier<>(BallType.NONE,0.2);
-        classifier.addColor(new Color((double) 44 /255, (double) 178 /255, (double) 51 /255,ColorType.RGB), BallType.GREEN);
-        classifier.addColor(new Color((double) 138 /255, (double) 44 /255, (double) 178 /255,ColorType.RGB), BallType.PURPLE);
-        Spindexer.reset = false;
+        classifier = new ColorClassifier<>(BallType.NONE,3);
+        classifier.addColor((new Color((double) 0.37, (double) 0.57, (double) 0.42, ColorType.RGB)).asHSV(), BallType.GREEN);
+        classifier.addColor((new Color((double) 0.375, (double) 0.29, (double) 0.29,ColorType.RGB)).asHSV(), BallType.PURPLE);
     }
 
     public static void update(boolean flipField) { //false is blue, true is red
@@ -81,6 +84,13 @@ public class ControlManager {
         boolean fire = driver.right_bumper;
         boolean intake_shooter = operator.x;
 
+        //Hood
+        boolean change_mode = operator.yWasPressed();
+
+        //Color Detection
+        boolean see_color = operator.bWasPressed();
+        boolean goto_motif = operator.leftBumperWasPressed();
+
         //BallRamp
 //        boolean cycleRamp = driver.bWasPressed();
 
@@ -103,10 +113,10 @@ public class ControlManager {
 
         //ColorSensor.updateSensor(2.5F);
 
-        Hood.updateAim(operator.yWasPressed());
+        Hood.updateAim(change_mode);
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
-        if (prevInstake != intaking && intaking) {
+        if (see_color) {
             sensor = () -> {
                 NormalizedRGBA color = color_sensor.getNormalizedColors();
                 return new Color(color.red, color.green, color.blue, ColorType.RGB);
@@ -122,7 +132,11 @@ public class ControlManager {
                 } else if (classification == BallType.PURPLE) {
                     spindexer.queueMessage(SpindexerMessage.INPURPLE);
                 }
-            }, 0.5));
+            }, 0.1));
+        }
+
+        if (goto_motif) {
+            spindexer.gotoMotif(Obelisk.motif);
         }
 
         DriverTest.update(increase, decrease, fire, rev, intake_shooter, false);
