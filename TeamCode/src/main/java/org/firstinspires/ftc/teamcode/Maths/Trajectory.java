@@ -6,7 +6,7 @@ public class Trajectory {
             double x, double y, double wheel_radius,
             double anglemin, double anglemax) {
 
-        LaunchInformation best = new LaunchInformation(30,0,Double.POSITIVE_INFINITY, 0.0);
+        LaunchInformation best = new LaunchInformation(30,0,Double.POSITIVE_INFINITY);
 
         for (double i = anglemin; i < anglemax; i += 1) {
             LaunchInformation candidate = getVelocity(x,y, wheel_radius, i);
