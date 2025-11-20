@@ -137,6 +137,8 @@ public class LM2AutoFarSmall extends LinearOpMode {
                 .waitSeconds(0.3);
         TrajectoryActionBuilder waitBallInSpindexer2 = drive.actionBuilder(startPosFar)
                 .waitSeconds(0.3);
+        TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosFar)
+                .waitSeconds(0.3);
 
         waitForStart();
 
@@ -213,6 +215,7 @@ public class LM2AutoFarSmall extends LinearOpMode {
                         waitBallIn3.build(),
                         Arm.AutoArmInWait(),
                         Roller.AutoIntakeOff(),
+                        waitBallInSpindexer3.build(),
                         //First Pickup End
 
                         QuickSpindexer.resetForTele() //should change later
