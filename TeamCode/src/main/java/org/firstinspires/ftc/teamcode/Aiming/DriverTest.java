@@ -33,7 +33,7 @@ public class DriverTest {
         shooterDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterDown.setVelocity(0);
-        distanceFromGoal = 0;
+        distanceFromGoal = 60;
         lastPos = shooterUp.getCurrentPosition();
         lastTime = opmode.getRuntime();
         canFire = false;

@@ -29,7 +29,7 @@ public class GoalVision {
     private static OpMode opmode;
     public final static double webcamAngle = 12.0; //degrees
     public static double goalDistance;
-    public static Pose2d lastSeen;
+//    public static Pose2d lastSeen;
 //    private final static double aprilTagHeight = 29.5; //inches
     private static VisionPortal visionPortal;
 
@@ -63,7 +63,7 @@ public class GoalVision {
         GoalVision.opmode = opmode;
         goalDistance = 0.0;
 
-        lastSeen = null;
+//        lastSeen = null;
     }
 
     public static void stopVision() {
@@ -95,7 +95,7 @@ public class GoalVision {
             opmode.telemetry.addData("Distance Apriltag RANGE CORRECTED", goalDistance);
 
             //Can re-orient from either tag.
-            lastSeen = new Pose2d(targetTag.robotPose.getPosition().x, targetTag.robotPose.getPosition().y, targetTag.robotPose.getOrientation().getYaw());
+//            lastSeen = new Pose2d(targetTag.robotPose.getPosition().x, targetTag.robotPose.getPosition().y, targetTag.robotPose.getOrientation().getYaw());
 
             return headingError;
         } else {
