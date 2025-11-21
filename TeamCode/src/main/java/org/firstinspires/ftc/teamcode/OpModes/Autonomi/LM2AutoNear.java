@@ -39,7 +39,7 @@ public class LM2AutoNear extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3050;
+        double rpm = 3200;
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
@@ -79,7 +79,7 @@ public class LM2AutoNear extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
-        Pose2d shootPosClose = new Pose2d(-30.0, posMultiplier*-33.0, posMultiplier*Math.toRadians(45));
+        Pose2d shootPosClose = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(45));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
