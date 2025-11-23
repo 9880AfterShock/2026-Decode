@@ -39,7 +39,7 @@ public class LM2AutoNear extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3250;
+        double rpm = 3200;
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
