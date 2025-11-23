@@ -10,7 +10,7 @@ public class MeepMeepRR {
     public static void main(String[] args) {
         Pose2d startPosClose = new Pose2d(-55.5, -47.0, Math.toRadians(55.0));
         Pose2d scanPos = new Pose2d(-27.0, -27.0, Math.toRadians(-25.0));
-        Pose2d shootPosClose = new Pose2d(-33.0, -33.0, Math.toRadians(55));
+        Pose2d shootPosClose = new Pose2d(-25.0, -25.0, Math.toRadians(55.0));
         Pose2d parkPosClose = new Pose2d(-60.0, -35.0, Math.toRadians(0.0));
         Pose2d startPickup1 = new Pose2d(-12.0, -30.0, Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, -55.0, -Math.toRadians(90.0));
@@ -32,111 +32,33 @@ public class MeepMeepRR {
                 .build();
 
         //Far auto
-        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
-                //scan
-                .waitSeconds(1.0)
-
-                //to shoot
-                .setTangent(Math.toRadians(110.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(110.0))
-                //shoot
-                .waitSeconds(3.0)
-
-                //topickup3
-                .setTangent(Math.toRadians(180))
-                .splineToLinearHeading(startPickup3, Math.toRadians(-90))
-                //intake on
-                //pickup3
-                .setTangent(Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
-                //intake off?
-                //back to shoot
-                .setTangent(Math.toRadians(45.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(45.0))
-                //shoot
-                .waitSeconds(3)
-
-                //topickup2
-                .setTangent(Math.toRadians(-150.0))
-                .splineToLinearHeading(startPickup2, Math.toRadians(-150.0))
-                //intake on
-                //pickup2
-                .setTangent(Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, Math.toRadians(-90.0))
-                //intake off?
-
-                ///*
-                //back to shoot no gate
-                .setTangent(Math.toRadians(35.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(35.0))
-                //shoot
-                .waitSeconds(3)
-                //*/
-
-                /*
-                //to gate
-                .setTangent(Math.toRadians(125.0))
-                .splineToLinearHeading(gatePose, Math.toRadians(-90.0))
-                //wait for balls to roooooolllll
-                .waitSeconds(8.0)
-                //back to shoot
-                .setTangent(Math.toRadians(40.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(40.0))
-                //shoot
-                .waitSeconds(3)
-                */
-
-                //topickup1
-                .setTangent(Math.toRadians(200.0))
-                .splineToLinearHeading(startPickup1, Math.toRadians(200.0))
-                //intake on
-                //pickup1
-                .setTangent(Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, Math.toRadians(-90.0))
-                //intake off?
-                //back to shoot
-                .setTangent(Math.toRadians(30.0))
-                .splineToLinearHeading(shootPosFar, Math.toRadians(30.0))
-                //shoot
-                .waitSeconds(3)
-
-                //to park
-                .setTangent(Math.toRadians(-90))
-                .splineToLinearHeading(parkPosFar, Math.toRadians(-90))
-
-                .build()
-        );
-//        //Near Auto
-//        myBot.runAction(myBot.getDrive().actionBuilder(startPosClose)
-//                //to scan
-//                .setTangent(Math.toRadians(55.0))
-//                .splineToLinearHeading(scanPos, Math.toRadians(45.0))
+//        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
 //                //scan
-//                .waitSeconds(1)
+//                .waitSeconds(1.0)
 //
 //                //to shoot
-//                .setTangent(Math.toRadians(-125.0))
-//                .splineToLinearHeading(shootPosClose, Math.toRadians(-125.0))
+//                .setTangent(Math.toRadians(110.0))
+//                .splineToLinearHeading(shootPosFar, Math.toRadians(110.0))
 //                //shoot
-//                .waitSeconds(3)
+//                .waitSeconds(3.0)
 //
-//                //topickup1
-//                .setTangent(Math.toRadians(45.0))
-//                .splineToLinearHeading(startPickup1, Math.toRadians(-45.0))
+//                //topickup3
+//                .setTangent(Math.toRadians(180))
+//                .splineToLinearHeading(startPickup3, Math.toRadians(-90))
 //                //intake on
-//                //pickup1
+//                //pickup3
 //                .setTangent(Math.toRadians(-90.0))
-//                .splineToLinearHeading(endPickup1, Math.toRadians(-90.0))
+//                .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
 //                //intake off?
 //                //back to shoot
-//                .setTangent(Math.toRadians(125.0))
-//                .splineToLinearHeading(shootPosClose, Math.toRadians(125.0))
+//                .setTangent(Math.toRadians(45.0))
+//                .splineToLinearHeading(shootPosFar, Math.toRadians(45.0))
 //                //shoot
 //                .waitSeconds(3)
 //
 //                //topickup2
-//                .setTangent(Math.toRadians(30.0))
-//                .splineToLinearHeading(startPickup2, Math.toRadians(-30.0))
+//                .setTangent(Math.toRadians(-150.0))
+//                .splineToLinearHeading(startPickup2, Math.toRadians(-150.0))
 //                //intake on
 //                //pickup2
 //                .setTangent(Math.toRadians(-90.0))
@@ -145,8 +67,8 @@ public class MeepMeepRR {
 //
 //                ///*
 //                //back to shoot no gate
-//                .setTangent(Math.toRadians(145.0))
-//                .splineToLinearHeading(shootPosClose, Math.toRadians(145.0))
+//                .setTangent(Math.toRadians(35.0))
+//                .splineToLinearHeading(shootPosFar, Math.toRadians(35.0))
 //                //shoot
 //                .waitSeconds(3)
 //                //*/
@@ -158,32 +80,110 @@ public class MeepMeepRR {
 //                //wait for balls to roooooolllll
 //                .waitSeconds(8.0)
 //                //back to shoot
-//                .setTangent(Math.toRadians(130.0))
-//                .splineToLinearHeading(shootPosClose, Math.toRadians(130.0))
+//                .setTangent(Math.toRadians(40.0))
+//                .splineToLinearHeading(shootPosFar, Math.toRadians(40.0))
 //                //shoot
 //                .waitSeconds(3)
 //                */
 //
-//                //topickup3
-//                .setTangent(Math.toRadians(20.0))
-//                .splineToLinearHeading(startPickup3, Math.toRadians(-20.0))
+//                //topickup1
+//                .setTangent(Math.toRadians(200.0))
+//                .splineToLinearHeading(startPickup1, Math.toRadians(200.0))
 //                //intake on
-//                //pickup3
+//                //pickup1
 //                .setTangent(Math.toRadians(-90.0))
-//                .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
+//                .splineToLinearHeading(endPickup1, Math.toRadians(-90.0))
 //                //intake off?
 //                //back to shoot
-//                .setTangent(Math.toRadians(150.0))
-//                .splineToLinearHeading(shootPosClose, Math.toRadians(150.0))
+//                .setTangent(Math.toRadians(30.0))
+//                .splineToLinearHeading(shootPosFar, Math.toRadians(30.0))
 //                //shoot
 //                .waitSeconds(3)
 //
 //                //to park
-//                .setTangent(Math.toRadians(180.0))
-//                .splineToLinearHeading(parkPosClose, Math.toRadians(-180.0))
+//                .setTangent(Math.toRadians(-90))
+//                .splineToLinearHeading(parkPosFar, Math.toRadians(-90))
 //
 //                .build()
 //        );
+//        //Near Auto
+        myBot.runAction(myBot.getDrive().actionBuilder(startPosClose)
+                //to scan
+                .setTangent(Math.toRadians(55.0))
+                .splineToLinearHeading(scanPos, Math.toRadians(45.0))
+                //scan
+                .waitSeconds(1)
+
+                //to shoot
+                .setTangent(Math.toRadians(55.0))
+                .splineToLinearHeading(shootPosClose, Math.toRadians(55.0))
+                //shoot
+                .waitSeconds(3)
+
+                //topickup1
+                .setTangent(Math.toRadians(45.0))
+                .splineToLinearHeading(startPickup1, Math.toRadians(-45.0))
+                //intake on
+                //pickup1
+                .setTangent(Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup1, Math.toRadians(-90.0))
+                //intake off?
+                //back to shoot
+                .setTangent(Math.toRadians(125.0))
+                .splineToLinearHeading(shootPosClose, Math.toRadians(125.0))
+                //shoot
+                .waitSeconds(3)
+
+                //topickup2
+                .setTangent(Math.toRadians(30.0))
+                .splineToLinearHeading(startPickup2, Math.toRadians(-30.0))
+                //intake on
+                //pickup2
+                .setTangent(Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup2, Math.toRadians(-90.0))
+                //intake off?
+
+                ///*
+                //back to shoot no gate
+                .setTangent(Math.toRadians(145.0))
+                .splineToLinearHeading(shootPosClose, Math.toRadians(145.0))
+                //shoot
+                .waitSeconds(3)
+                //*/
+
+                /*
+                //to gate
+                .setTangent(Math.toRadians(125.0))
+                .splineToLinearHeading(gatePose, Math.toRadians(-90.0))
+                //wait for balls to roooooolllll
+                .waitSeconds(8.0)
+                //back to shoot
+                .setTangent(Math.toRadians(130.0))
+                .splineToLinearHeading(shootPosClose, Math.toRadians(130.0))
+                //shoot
+                .waitSeconds(3)
+                */
+
+                //topickup3
+                .setTangent(Math.toRadians(20.0))
+                .splineToLinearHeading(startPickup3, Math.toRadians(-20.0))
+                //intake on
+                //pickup3
+                .setTangent(Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup3, Math.toRadians(-90.0))
+                //intake off?
+                //back to shoot
+                .setTangent(Math.toRadians(150.0))
+                .splineToLinearHeading(shootPosClose, Math.toRadians(150.0))
+                //shoot
+                .waitSeconds(3)
+
+                //to park
+                .setTangent(Math.toRadians(180.0))
+                .splineToLinearHeading(parkPosClose, Math.toRadians(-180.0))
+
+                .build()
+        );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
                 .setDarkMode(true)

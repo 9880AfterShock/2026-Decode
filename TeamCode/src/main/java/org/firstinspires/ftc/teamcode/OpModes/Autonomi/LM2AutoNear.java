@@ -105,8 +105,8 @@ public class LM2AutoNear extends LinearOpMode {
                 .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(scanPos)
-                .setTangent(posMultiplier*Math.toRadians(-125.0))
-                .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(-125.0));
+                .setTangent(posMultiplier*Math.toRadians(55.0))
+                .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(55.0));
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
