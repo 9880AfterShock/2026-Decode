@@ -55,10 +55,10 @@ public class GoalVision {
 
         aprilTag.setDecimation(2);
 
-        visionPortal = new VisionPortal.Builder()
-                .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
-                .addProcessor(aprilTag)
-                .build();
+//        visionPortal = new VisionPortal.Builder()
+//                .setCamera(opmode.hardwareMap.get(WebcamName.class, "Webcam"))
+//                .addProcessor(aprilTag)
+//                .build();
 
         GoalVision.opmode = opmode;
         goalDistance = 0.0;

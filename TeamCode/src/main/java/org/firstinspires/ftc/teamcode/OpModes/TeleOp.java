@@ -49,7 +49,7 @@ public class TeleOp extends LinearOpMode {
         DriverTest.initControls(this);
         Hood.initAim(this);
         //QuickAlignment.initAprilTag(this);
-//        GoalVision.initAprilTag(this);
+        GoalVision.initAprilTag(this);
         Shield.initLocking(this);
 
 //        QuickSpindexer.initSpindexer(this);
