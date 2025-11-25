@@ -108,7 +108,7 @@ public class ControlManager {
 
         Arm.updateIntake(intaking, ejecting, canFire);
 
-        Distance.updateSensor();
+//        Distance.updateSensor();
 
         //ColorSensor.updateSensor(2.5F);
 
