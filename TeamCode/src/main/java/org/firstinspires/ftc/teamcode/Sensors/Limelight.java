@@ -63,6 +63,11 @@ public class Limelight {
             double y = botpose_mt2.getPosition().y;
             opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
         }
+
+        Pose2d fieldPos = getFieldPosition();
+        if (fieldPos != null) {
+            opmode.telemetry.addData("Field Pos Location:", "(" + fieldPos.position.x + ", " + fieldPos.position.y + ")");
+        }
 //
 //        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
 //        for (LLResultTypes.FiducialResult fiducial : fiducials) {
@@ -75,6 +80,7 @@ public class Limelight {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
         LLResult result = limelight.getLatestResult();
+
         if (result != null && result.isValid()) {
             return result.getBotpose_MT2();
         }
