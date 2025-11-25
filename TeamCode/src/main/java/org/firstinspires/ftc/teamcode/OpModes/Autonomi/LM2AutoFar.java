@@ -39,7 +39,7 @@ public class LM2AutoFar extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 4200;
+        double rpm = 4100;
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
