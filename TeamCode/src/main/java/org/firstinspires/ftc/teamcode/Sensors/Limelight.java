@@ -38,6 +38,7 @@ public class Limelight {
     }
 
     public static void update() {
+        updatePosition();
 //        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
 //        for (AprilTagDetection detection : currentDetections) {
 //            if (detection.id == 21) {

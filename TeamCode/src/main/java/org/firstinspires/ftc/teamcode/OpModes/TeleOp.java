@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
+import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
@@ -51,6 +52,7 @@ public class TeleOp extends LinearOpMode {
         //QuickAlignment.initAprilTag(this);
         GoalVision.initAprilTag(this);
         Shield.initLocking(this);
+        Limelight.initDetection(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
@@ -72,6 +74,7 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            Limelight.update();
             ControlManager.update(false); //will need to add inpute using speical buttons for this later, not using atm
             RunLater.update();
             RunCondition.update();
