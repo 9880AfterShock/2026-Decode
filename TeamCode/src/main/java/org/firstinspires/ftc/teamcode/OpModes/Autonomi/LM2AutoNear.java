@@ -39,7 +39,7 @@ public class LM2AutoNear extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3050;
+        double rpm = 3200;
         double shotCooldown = 0.2+0.6;
 
         double posMultiplier = 1.0;
@@ -79,7 +79,8 @@ public class LM2AutoNear extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
-        Pose2d shootPosClose = new Pose2d(-30.0, posMultiplier*-33.0, posMultiplier*Math.toRadians(45));
+        Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
+        Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -105,10 +106,10 @@ public class LM2AutoNear extends LinearOpMode {
                 .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(scanPos)
-                .setTangent(posMultiplier*Math.toRadians(-125.0))
-                .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(-125.0));
+                .setTangent(posMultiplier*Math.toRadians(55.0))
+                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(55.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose)
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
         TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
@@ -127,7 +128,7 @@ public class LM2AutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(125.0));
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0));
 /*
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(30.0))
@@ -164,7 +165,7 @@ public class LM2AutoNear extends LinearOpMode {
                 .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(145.0));
         */
 
-        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose)
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(180.0))
                 .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
 
@@ -184,6 +185,11 @@ public class LM2AutoNear extends LinearOpMode {
         TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.3);
 
+        TrajectoryActionBuilder waitRev1 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.5);
+        TrajectoryActionBuilder waitRev2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.5);
+
         waitForStart();
 
         if (isStopRequested()) return;
@@ -194,18 +200,20 @@ public class LM2AutoNear extends LinearOpMode {
                         Shield.AutoShieldShoot(),
                         Arm.AutoArmIn(),
                         Hood.AutoHoodNear(),
-                        actionManager.rev(rpm), //moved here bc PID
+//                        actionManager.rev(rpm), //moved here bc PID
                         toScan.build(),
                         Obelisk.AutoScan(),
                         new ParallelAction(
+                                actionManager.rev(rpm),
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
 
                         waitVariable.build(),
+                        waitRev1.build(),
 
                         //First volley start
-                        actionManager.rev(rpm),
+//                        actionManager.rev(rpm),
 
                         actionManager.shotCue(1),
                         actionManager.waitForSpeedSafe(rpm),
@@ -272,6 +280,7 @@ public class LM2AutoNear extends LinearOpMode {
 
                         //Second volley start
                         actionManager.rev(rpm),
+                        waitRev2.build(),
 
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(rpm),
