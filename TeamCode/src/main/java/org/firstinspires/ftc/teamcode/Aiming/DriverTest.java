@@ -25,11 +25,11 @@ public class DriverTest {
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
-        shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
+        shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp"); //Port 3 or 4 on the expansion hub
         shooterUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterUp.setVelocity(0);
-        shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown");
+        shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown"); //Port 3 or 4 on the expansion hub
         shooterDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterDown.setVelocity(0);

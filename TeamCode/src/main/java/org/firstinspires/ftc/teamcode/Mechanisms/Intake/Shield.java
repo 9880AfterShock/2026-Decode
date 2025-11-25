@@ -15,7 +15,7 @@ public class Shield {
     public static String shieldState = "blocking";
 
     public static void initLocking(OpMode opmode) { // init motor
-        shield = opmode.hardwareMap.get(Servo.class, "shield"); // motor config name
+        shield = opmode.hardwareMap.get(Servo.class, "shield"); //Port 2 on control hub
         Shield.opmode = opmode;
         shieldState = "locking";
     }

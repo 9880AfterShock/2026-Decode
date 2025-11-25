@@ -16,7 +16,7 @@ public class Roller { // Prefix for commands
     public static double intakePower; //current intake power
 
     public static void initIntake(OpMode opmode) { // init motor
-        roller = opmode.hardwareMap.get(DcMotorEx.class, "roller"); // motor config name
+        roller = opmode.hardwareMap.get(DcMotorEx.class, "roller"); //Port 0 on expansion hub
         roller.setZeroPowerBehavior(FLOAT);
         roller.setDirection(DcMotorEx.Direction.REVERSE);
 

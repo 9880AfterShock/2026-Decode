@@ -17,7 +17,7 @@ public class Hood {
     public static String hoodState = "Near";
 
     public static void initAim(OpMode opmode) { // init motor
-        hood = opmode.hardwareMap.get(Servo.class, "hood"); // motor config name
+        hood = opmode.hardwareMap.get(Servo.class, "hood"); //Port 5 on expansion hub
         Hood.opmode = opmode;
         hoodState = "Near";
     }

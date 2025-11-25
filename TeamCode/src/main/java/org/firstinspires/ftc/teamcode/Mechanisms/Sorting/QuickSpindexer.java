@@ -22,7 +22,7 @@ public class QuickSpindexer { // Prefix for commands
     private static boolean wasCounterclockwise;
 
     public static void initSpindexer(OpMode opmode) { // init motor
-        spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); // motor config name
+        spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
         spindexer.setZeroPowerBehavior(BRAKE);
         spindexer.setTargetPosition(0);
         spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

@@ -87,7 +87,7 @@ public class Limelight {
         return null;
     }
 
-    public static List<LLResultTypes.FiducialResult> getFiducial() { //MetaTag2
+    public static List<LLResultTypes.FiducialResult> getFiducial() { //
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
         LLResult result = limelight.getLatestResult();
@@ -97,7 +97,7 @@ public class Limelight {
         return null;
     }
 
-    public static Pose2d getFieldPosition() { //MetaTag2
+    public static Pose2d getFieldPosition() { //
         List<LLResultTypes.FiducialResult> fiducials = getFiducial();
         for (LLResultTypes.FiducialResult fiducial : fiducials) {
             int id = fiducial.getFiducialId(); // The ID number of the fiducial

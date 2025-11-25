@@ -27,7 +27,7 @@ public class Arm { // Prefix for commands
     public static String intakeState = "Intaking";
 
     public static void initIntake(OpMode opmode) { // init motor
-        arm = opmode.hardwareMap.get(Servo.class, "arm"); // motor config name
+        arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
         Arm.opmode = opmode;
     }
 
