@@ -61,7 +61,7 @@ public class GoalVision {
 //                .build();
 
         GoalVision.opmode = opmode;
-        goalDistance = 0.0;
+        goalDistance = 60.0;
 
         lastSeen = null;
     }
