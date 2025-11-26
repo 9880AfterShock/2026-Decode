@@ -30,6 +30,7 @@ public class Limelight {
 
         limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
 
+        imu.resetYaw();
         //Start up data fetching
         limelight.start();
 
@@ -100,9 +101,12 @@ public class Limelight {
 
     public static Pose2d getFieldPosition() { //
         List<LLResultTypes.FiducialResult> fiducials = getFiducial();
-        for (LLResultTypes.FiducialResult fiducial : fiducials) {
-            int id = fiducial.getFiducialId(); // The ID number of the fiducial
-            opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+        if (fiducials != null) {
+            for (LLResultTypes.FiducialResult fiducial : fiducials) {
+                int id = fiducial.getFiducialId(); // The ID number of the fiducial
+                return new Pose2d(fiducial.getRobotPoseFieldSpace().getPosition().x*0.0254, fiducial.getRobotPoseFieldSpace().getPosition().z*0.0254, fiducial.getRobotPoseFieldSpace().getOrientation().getYaw());
+//            opmode.telemetry.addData("ROBOT IS AT " + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+            }
         }
         return null;
     }
