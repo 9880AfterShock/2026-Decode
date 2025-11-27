@@ -11,7 +11,7 @@ public class Distance { // Prefix for commands
     private static DistanceSensor sensorDistance;
 
     public static void initSensor(OpMode opmode) {
-        sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor");
+        sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor"); //Plugged into I2C Bus 0 on expansion hub
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) sensorDistance;
         Distance.opmode = opmode;
     }

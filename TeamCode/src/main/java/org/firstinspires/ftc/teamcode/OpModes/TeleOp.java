@@ -52,6 +52,7 @@ public class TeleOp extends LinearOpMode {
         //QuickAlignment.initAprilTag(this);
         GoalVision.initAprilTag(this);
         Shield.initLocking(this);
+        Distance.initSensor(this);
         Limelight.initDetection(this);
 
 //        QuickSpindexer.initSpindexer(this);
@@ -79,6 +80,7 @@ public class TeleOp extends LinearOpMode {
             RunLater.update();
             RunCondition.update();
             BallColorDetectinator.update();
+            Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }

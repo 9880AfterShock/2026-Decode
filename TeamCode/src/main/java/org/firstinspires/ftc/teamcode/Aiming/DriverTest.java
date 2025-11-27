@@ -41,27 +41,27 @@ public class DriverTest {
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
         double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/numTicks)*60);
-        if (!auto) {
-            if (GoalVision.goalDistance <+ 70) {
-                desSpeed = (-0.409716*GoalVision.goalDistance*GoalVision.goalDistance)+(65.95987*GoalVision.goalDistance)+1018.73728;
-                Hood.hoodState = "Near";
-                Hood.updateAim(false);
-            } else {
-                desSpeed = (-0.0439455*GoalVision.goalDistance*GoalVision.goalDistance)+(19.32957*GoalVision.goalDistance)+2434.93282;                Hood.hoodState = "Far";
-                Hood.updateAim(false);
-            }
-        }
+//        if (!auto) {
+//            if (GoalVision.goalDistance <+ 70) {
+//                desSpeed = (-0.409716*GoalVision.goalDistance*GoalVision.goalDistance)+(65.95987*GoalVision.goalDistance)+1018.73728;
+//                Hood.hoodState = "Near";
+//                Hood.updateAim(false);
+//            } else {
+//                desSpeed = (-0.0439455*GoalVision.goalDistance*GoalVision.goalDistance)+(19.32957*GoalVision.goalDistance)+2434.93282;                Hood.hoodState = "Far";
+//                Hood.updateAim(false);
+//            }
+//        }
 
-//        if (increase) {
-////            distanceFromGoal += 0.3048*0.5;
-////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed += 100;
-//        }
-//        if (decrease){
-////            distanceFromGoal -= 0.3048*0.5;
-////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed -= 100;
-//        }
+        if (increase) {
+//            distanceFromGoal += 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+            desSpeed += 50;
+        }
+        if (decrease){
+//            distanceFromGoal -= 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+            desSpeed -= 50;
+        }
         if (rev) {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
