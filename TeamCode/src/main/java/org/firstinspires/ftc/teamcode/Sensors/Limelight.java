@@ -1,8 +1,17 @@
 package org.firstinspires.ftc.teamcode.Sensors;
 
+import static org.firstinspires.ftc.teamcode.Enums.Motif.*;
+
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+import org.firstinspires.ftc.teamcode.Enums.Motif;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
@@ -21,6 +30,8 @@ public class Limelight {
     public static Motif motif;
     private static Limelight3A limelight;
     private static IMU imu;
+    private static final double METER_TO_INCH = 39.3701;
+
 
     public static void initDetection(OpMode opmode) {
         limelight = opmode.hardwareMap.get(Limelight3A.class, "limelight");
@@ -30,45 +41,52 @@ public class Limelight {
 
         limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
 
-        imu.resetYaw();
         //Start up data fetching
         limelight.start();
 
-        motif = Motif.unknown;
+        motif = unknown;
         Limelight.opmode = opmode;
     }
 
-    public static void update() {
-        updatePosition();
-//        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-//        for (AprilTagDetection detection : currentDetections) {
-//            if (detection.id == 21) {
-//                motif = Motif.GPP;
-//                break;
-//            }
-//            if (detection.id == 22) {
-//                motif = Motif.PGP;
-//                break;
-//            }
-//            if (detection.id == 23) {
-//                motif = Motif.PPG;
-//                break;
-//            }
-//        }
+    public static void update(){
+        LLStatus status = limelight.getStatus();
+        opmode.telemetry.addData("Name", "%s",
+                status.getName());
+        opmode.telemetry.addData("LL", "Temp: %.1fC, CPU: %.1f%%, FPS: %d",
+                status.getTemp(), status.getCpu(),(int)status.getFps());
+        opmode.telemetry.addData("Pipeline", "Index: %d, Type: %s",
+                status.getPipelineIndex(), status.getPipelineType());
+    }
+
+    public static void updateMotif() {
+        LLResult result = limelight.getLatestResult();
+        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+        int validTagsSeen = 0;
+        for (LLResultTypes.FiducialResult fiducial : fiducials) {
+            if (fiducial.getFiducialId() == 21) {
+                motif = GPP;
+                validTagsSeen += 1;
+            }
+            if (fiducial.getFiducialId() == 22) {
+                motif = PGP;
+                validTagsSeen += 1;
+            }
+            if (fiducial.getFiducialId() == 23) {
+                motif = PPG;
+                validTagsSeen += 1;
+            }
+        }
+        if (validTagsSeen != 1) {
+            motif = Motif.unknown;
+        }
+
         opmode.telemetry.addData("Motif Pattern", motif);
     }
 
     public static void updatePosition() {
-        Pose3D botpose_mt2 = getPosition();
-        if (botpose_mt2 != null) {
-            double x = botpose_mt2.getPosition().x;
-            double y = botpose_mt2.getPosition().y;
-            opmode.telemetry.addData("MT2 Location:", "(" + x + ", " + y + ")");
-        }
-
-        Pose2d fieldPos = getFieldPosition();
-        if (fieldPos != null) {
-            opmode.telemetry.addData("Field Pos Location:", "(" + fieldPos.position.x + ", " + fieldPos.position.y + ")");
+        Pose2d botpose = getPosition();
+        if (botpose != null) {
+            opmode.telemetry.addData("MT2 Location:", "(" + botpose.position.x + ", " + botpose.position.y + ")");
         }
 //
 //        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
@@ -78,36 +96,128 @@ public class Limelight {
 //        }
     }
 
-    public static Pose3D getPosition() { //MetaTag2
+    public static Pose2d getPosition() { //MetaTag2
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
+        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.RADIANS)); //not sure if this is the right angle unit, some docs say degrees some say radians
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {
-            return result.getBotpose_MT2();
+            return new Pose2d(result.getBotpose_MT2().getPosition().y*METER_TO_INCH, result.getBotpose_MT2().getPosition().x*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw() - 90)); //convert from wipilib cords in meters to ftc cords in inches
         }
         return null;
     }
-
-    public static List<LLResultTypes.FiducialResult> getFiducial() { //
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
-        LLResult result = limelight.getLatestResult();
-        if (result != null && result.isValid()) {
-            return result.getFiducialResults();
-        }
-        return null;
+    //
+    // public static List<LLResultTypes.FiducialResult> getFiducial() { //
+    //     YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+    //     limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES));
+    //     LLResult result = limelight.getLatestResult();
+    //     if (result != null && result.isValid()) {
+    //         return result.getFiducialResults();
+    //     }
+    //     return null;
+    // }
+    //
+    // public static Pose2d getFieldPosition() { //
+    //     List<LLResultTypes.FiducialResult> fiducials = getFiducial();
+    //     for (LLResultTypes.FiducialResult fiducial : fiducials) {
+    //         int id = fiducial.getFiducialId(); // The ID number of the fiducial
+    //         opmode.telemetry.addData("ROBOT IS AT" + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+    //     }
+    //     return null;
+    // }
+    public static void takeScreenShot(String fileName) {
+        limelight.captureSnapshot(fileName);
+    }
+    public static void clearScreenShots() {
+        limelight.deleteSnapshots();
     }
 
-    public static Pose2d getFieldPosition() { //
-        List<LLResultTypes.FiducialResult> fiducials = getFiducial();
-        if (fiducials != null) {
-            for (LLResultTypes.FiducialResult fiducial : fiducials) {
-                int id = fiducial.getFiducialId(); // The ID number of the fiducial
-                return new Pose2d(fiducial.getRobotPoseFieldSpace().getPosition().x*0.0254, fiducial.getRobotPoseFieldSpace().getPosition().z*0.0254, fiducial.getRobotPoseFieldSpace().getOrientation().getYaw());
-//            opmode.telemetry.addData("ROBOT IS AT " + fiducial.getRobotPoseFieldSpace(), "AT TAG ID" + id);
+
+
+
+
+    public static Action AutoScan() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+
+                List<LLResultTypes.FiducialResult> fiducials = limelight.getLatestResult().getFiducialResults();
+                int validTagsSeen = 0;
+                for (LLResultTypes.FiducialResult fiducial : fiducials) {
+                    if (fiducial.getFiducialId() == 21) {
+                        motif = GPP;
+                        validTagsSeen += 1;
+                    }
+                    if (fiducial.getFiducialId() == 22) {
+                        motif = PGP;
+                        validTagsSeen += 1;
+                    }
+                    if (fiducial.getFiducialId() == 23) {
+                        motif = PPG;
+                        validTagsSeen += 1;
+                    }
+                }
+                if (validTagsSeen != 1) {
+                    motif = Motif.unknown;
+                }
+
+                packet.put("Motif", motif);
+
+                if (opmode.getRuntime() - scanTime >= 2.0) {
+                    motif = GPP;
+                    return false;
+                }
+                return (motif != Motif.unknown);
             }
-        }
-        return null;
+        };
+    }
+
+    public static Action AutoScanWithInit() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first && motif != unknown){ //check if got during init
+                    return false;
+                }
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+
+                List<LLResultTypes.FiducialResult> fiducials = limelight.getLatestResult().getFiducialResults();
+                int validTagsSeen = 0;
+                for (LLResultTypes.FiducialResult fiducial : fiducials) {
+                    if (fiducial.getFiducialId() == 21) {
+                        motif = GPP;
+                        validTagsSeen += 1;
+                    }
+                    if (fiducial.getFiducialId() == 22) {
+                        motif = PGP;
+                        validTagsSeen += 1;
+                    }
+                    if (fiducial.getFiducialId() == 23) {
+                        motif = PPG;
+                        validTagsSeen += 1;
+                    }
+                }
+                if (validTagsSeen != 1) {
+                    motif = Motif.unknown;
+                }
+
+                packet.put("Motif", motif);
+
+                if (opmode.getRuntime() - scanTime >= 2.0) {
+                    motif = GPP;
+                    return false;
+                }
+                return (motif != Motif.unknown);
+            }
+        };
     }
 }
