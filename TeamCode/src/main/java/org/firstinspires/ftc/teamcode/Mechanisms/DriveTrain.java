@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
@@ -82,56 +83,25 @@ public class DriveTrain { // Prefix for commands
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         localizer.update();
         if (align) {
-            rotation = GoalVision.getRotation();
-//            if (rotation == -9880.0) {
-////                opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-////                opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
-////                opmode.telemetry.addData("Estimated Pos Heading", localizer.getPose().heading.toDouble());
-//                if (flipSide){
-//                    Pose2d targetFlipped = new Pose2d(goalTarget.position.x,- goalTarget.position.y, -goalTarget.heading.toDouble());
-//                    rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
-//                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-//                } else {
-//                    rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
-//                    rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-//                }
-//            }
-            if (rotation != -9880.0) {
-                localizer.setPose(new Pose2d(GoalVision.lastSeen.position.x, GoalVision.lastSeen.position.y, imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)));
-                imu.resetYaw();
-                IMUOffset = GoalVision.lastSeen.heading.toDouble();
-
-                turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
-                if (Math.abs(rotation) < 0.5) {
-                    turn = 0;
-                }
-            } else {
-                if (GoalVision.lastSeen != null) {
-                    opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-                    opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
-                    if (flipSide) {
-                        Pose2d targetFlipped = new Pose2d(goalTarget.position.x, -goalTarget.position.y, -goalTarget.heading.toDouble());
-                        rotation = Math.atan2(targetFlipped.position.x - localizer.getPose().position.x, targetFlipped.position.y - localizer.getPose().position.y);
-//                        rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-                    } else {
-                        rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y);
-//                        rotation = Math.atan2(Math.sin(rotation), Math.cos(rotation));
-                    }
-                    rotation = Math.toDegrees(rotation);
-//                    rotation = (Math.toDegrees((imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) + IMUOffset) - rotation));
-//                    turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
-//                    if (Math.abs(rotation) < 0.5) {
-//                        turn = 0;
-//                    }
-                }
+            Pose2d robotPosition = Limelight.getPosition();
+            if (robotPosition != null) {
+                localizer.setPose(robotPosition);
             }
+
+            rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
+
+            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+            if (Math.abs(rotation) < 0.5) {
+                turn = 0;
+            }
+
         }
 
-        opmode.telemetry.addData("ROTATION OFFSET", rotation);
-        opmode.telemetry.addData("IMU OFFSET", IMUOffset);
-        opmode.telemetry.addData("IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
-        opmode.telemetry.addData("Estimated Pos X", localizer.getPose().position.x);
-        opmode.telemetry.addData("Estimated Pos Y", localizer.getPose().position.y);
+        opmode.telemetry.addData("aimbot ROTATION OFFSET", rotation);
+//        opmode.telemetry.addData("IMU OFFSET", IMUOffset);
+        opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
+        opmode.telemetry.addData("DT Estimated Pos X", localizer.getPose().position.x);
+        opmode.telemetry.addData("DT Estimated Pos Y", localizer.getPose().position.y);
 
         double leftBackPower;
         double leftFrontPower;
