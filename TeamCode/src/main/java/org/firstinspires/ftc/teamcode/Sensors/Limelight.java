@@ -37,6 +37,7 @@ public class Limelight {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         imu.initialize(parameters);
+        imu.resetYaw();
         // telemetry.setMsTransmissionInterval(11); //idk what this does but its in the docs
         limelight.pipelineSwitch(0);
 
