@@ -76,7 +76,7 @@ public class Limelight {
                 validTagsSeen += 1;
             }
         }
-        if (validTagsSeen != 1) {
+        if (validTagsSeen > 1) {
             motif = Motif.unknown;
         }
 
