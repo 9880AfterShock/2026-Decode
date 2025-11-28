@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLStatus;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Enums.Motif;
@@ -29,10 +30,13 @@ public class Limelight {
     private static IMU imu;
     private static final double METER_TO_INCH = 39.3701;
 
-
     public static void initDetection(OpMode opmode) {
         limelight = opmode.hardwareMap.get(Limelight3A.class, "limelight");
         imu = opmode.hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
+        imu.initialize(parameters);
         // telemetry.setMsTransmissionInterval(11); //idk what this does but its in the docs
         limelight.pipelineSwitch(0);
 
@@ -56,6 +60,8 @@ public class Limelight {
                 status.getTemp(), status.getCpu(),(int)status.getFps());
         opmode.telemetry.addData("Pipeline", "Index: %d, Type: %s",
                 status.getPipelineIndex(), status.getPipelineType());
+
+        opmode.telemetry.addData("IMU ROTATION", imu.getRobotYawPitchRollAngles().getYaw());
     }
 
     public static void updateMotif() {
@@ -76,7 +82,7 @@ public class Limelight {
                 validTagsSeen += 1;
             }
         }
-        if (validTagsSeen > 1) {
+        if (validTagsSeen != 1) {
             motif = Motif.unknown;
         }
 
@@ -86,7 +92,7 @@ public class Limelight {
     public static void updatePosition() {
         Pose2d botpose = getPosition();
         if (botpose != null) {
-            opmode.telemetry.addData("MT2 Location:", "(" + botpose.position.x + ", " + botpose.position.y + ")");
+            opmode.telemetry.addData("LIMELIGHT POSITION: MT2 Location:", "(" + botpose.position.x + ", " + botpose.position.y + ", " + Math.toDegrees(botpose.heading.toDouble()) + ")");
         }
 //
 //        List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
@@ -98,11 +104,11 @@ public class Limelight {
 
     public static Pose2d getPosition() { //MetaTag2
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.RADIANS)); //not sure if this is the right angle unit, some docs say degrees some say radians
+        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES)); //not sure if this is the right angle unit, some docs say degrees some say radians
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {
-            return new Pose2d(result.getBotpose_MT2().getPosition().y*METER_TO_INCH, result.getBotpose_MT2().getPosition().x*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw() - 90)); //convert from wipilib cords in meters to ftc cords in inches
+            return new Pose2d(result.getBotpose_MT2().getPosition().y*METER_TO_INCH, result.getBotpose_MT2().getPosition().x*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw() /*- 90 */)); //convert from wipilib cords in meters to ftc cords in inches
         }
         return null;
     }
