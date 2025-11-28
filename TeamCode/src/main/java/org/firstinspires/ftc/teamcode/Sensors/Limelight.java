@@ -46,6 +46,9 @@ public class Limelight {
     }
 
     public static void update(){
+        updatePosition();
+        updateMotif();
+
         LLStatus status = limelight.getStatus();
         opmode.telemetry.addData("Name", "%s",
                 status.getName());
