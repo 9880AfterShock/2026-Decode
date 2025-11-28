@@ -34,7 +34,7 @@ public class DriveTrain { // Prefix for commands
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;
-    private static final double kP = 0.025;  //0.02 to 0.05
+    private static final double kP = -0.025;  //0.02 to 0.05
     private static double rotation;
     private static IMU imu;
     private static Pose2d pos;
@@ -74,6 +74,7 @@ public class DriveTrain { // Prefix for commands
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         imu.initialize(parameters);
+        imu.resetYaw();
         pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
         localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
 
@@ -88,18 +89,19 @@ public class DriveTrain { // Prefix for commands
                 localizer.setPose(robotPosition);
             }
 
-            rotation = Math.atan2(goalTarget.position.x - localizer.getPose().position.x, goalTarget.position.y - localizer.getPose().position.y) - localizer.getPose().heading.toDouble();
-
-            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+            rotation = Math.toDegrees(/*localizer.getPose().heading.toDouble() - */Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x))/* - 180*/;
+//            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
             if (Math.abs(rotation) < 0.5) {
-                turn = 0;
+//                turn = 0;
             }
 
         }
 
-        opmode.telemetry.addData("aimbot ROTATION OFFSET", rotation);
+        opmode.telemetry.addData("aimbot ROTATION needed to face goal", rotation);
 //        opmode.telemetry.addData("IMU OFFSET", IMUOffset);
+        opmode.telemetry.addData("aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
         opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
+        opmode.telemetry.addData("DT Estimated IMU LOCALIAZER", localizer.getPose().heading.toDouble());
         opmode.telemetry.addData("DT Estimated Pos X", localizer.getPose().position.x);
         opmode.telemetry.addData("DT Estimated Pos Y", localizer.getPose().position.y);
 
