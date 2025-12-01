@@ -80,13 +80,15 @@ public class DriveTrain { // Prefix for commands
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         localizer.update();
-        if (align) {
-            Pose2d robotPosition = Limelight.getPosition();
-            if (robotPosition != null) {
-                localizer.setPose(robotPosition);
-            }
 
-            rotation = Math.toDegrees(/*localizer.getPose().heading.toDouble() - */Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x))/* - 180*/;
+        Pose2d robotPosition = Limelight.getPosition();
+        if (robotPosition != null && !robotPosition.equals(new Pose2d(0.0, 0.0, 0.0))) {
+            localizer.setPose(robotPosition);
+        }
+        rotation = Math.toDegrees(Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x));
+        rotation = ((rotation + 360) % 360) - 180; //Mod to deal with atan range, 180 bc we need to face backwards
+
+        if (align) {
 //            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
             if (Math.abs(rotation) < 0.5) {
 //                turn = 0;
@@ -94,9 +96,9 @@ public class DriveTrain { // Prefix for commands
 
         }
 
-        opmode.telemetry.addData("aimbot ROTATION needed to face goal", rotation);
+        opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
 //        opmode.telemetry.addData("IMU OFFSET", IMUOffset);
-        opmode.telemetry.addData("aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
+        opmode.telemetry.addData("===aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
         opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
         opmode.telemetry.addData("DT Estimated IMU LOCALIAZER", localizer.getPose().heading.toDouble());
         opmode.telemetry.addData("DT Estimated Pos X", localizer.getPose().position.x);
