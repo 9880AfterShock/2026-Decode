@@ -77,7 +77,7 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            Gyroscope.updateGyro(gamepad1.start);
+            Gyroscope.updateGyro(gamepad1.backWasPressed());
             Limelight.update();
             ControlManager.update(false); //will need to add input using special buttons for this later, not using atm
             RunLater.update();
