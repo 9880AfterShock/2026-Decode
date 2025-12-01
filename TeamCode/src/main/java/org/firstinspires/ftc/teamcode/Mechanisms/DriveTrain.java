@@ -35,7 +35,7 @@ public class DriveTrain { // Prefix for commands
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;
-    private static final double kP = -0.025;  //0.02 to 0.05
+    private static final double kP = 0.02;  //try 0.008
     private static double rotation;
     private static IMU imu;
     private static Pose2d pos;
@@ -88,16 +88,11 @@ public class DriveTrain { // Prefix for commands
         }
         //rotation = Math.toDegrees(Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x));
         DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);
-        rotation = Math.toDegrees(Math.atan((goalTarget.position.x-localizer.getPose().position.x)/(goalTarget.position.y-localizer.getPose().position.y)));
+        rotation = Math.toDegrees(Math.atan2((goalTarget.position.y-localizer.getPose().position.y),(goalTarget.position.x-localizer.getPose().position.x)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         if (align) {
-            turn = (float) Range.clip((rotation - localizer.getPose().heading.toDouble()) * kP, -0.4, 0.4);
-
-            if (Math.abs(rotation) < 0.5) {
-                turn = 0;
-            }
-
+            turn = (float) ((AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()))) * -kP);
         }
 
         opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
