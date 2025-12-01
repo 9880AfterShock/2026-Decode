@@ -42,12 +42,12 @@ public class DriverTest {
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
         double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/numTicks)*60);
         if (!auto) {
-            if (GoalVision.goalDistance <+ 70) {
-                desSpeed = (0.12825*GoalVision.goalDistance*GoalVision.goalDistance)+(4.81307*GoalVision.goalDistance)+2504.82611;
+            if (distanceFromGoal <+ 70) { // Timo replaced GoalVision.goalDistance with distanceFromGoal
+                desSpeed = (0.12825*distanceFromGoal*distanceFromGoal)+(4.81307*distanceFromGoal)+2504.82611;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.0381041*GoalVision.goalDistance*GoalVision.goalDistance)+(21.14689*GoalVision.goalDistance)+2119.60164;                Hood.hoodState = "Far";
+                desSpeed = (-0.0381041*distanceFromGoal*distanceFromGoal)+(21.14689*distanceFromGoal)+2119.60164;                Hood.hoodState = "Far";
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
@@ -89,7 +89,7 @@ public class DriverTest {
 
         opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
-        opmode.telemetry.addData("Distance From Goal in feet", distanceFromGoal/0.3048);
+        opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
     }
