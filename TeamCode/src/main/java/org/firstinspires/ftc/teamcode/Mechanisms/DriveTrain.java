@@ -40,7 +40,7 @@ public class DriveTrain { // Prefix for commands
     private static IMU imu;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
-    private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
+    private static final Pose2d goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names
@@ -88,7 +88,7 @@ public class DriveTrain { // Prefix for commands
         }
         //rotation = Math.toDegrees(Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x));
         DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);
-        rotation = Math.toDegrees(Math.atan2((goalTarget.position.y-localizer.getPose().position.y),(goalTarget.position.x-localizer.getPose().position.x)));
+        rotation = Math.toDegrees(Math.atan2((goalTarget.position.x-localizer.getPose().position.x),(goalTarget.position.y-localizer.getPose().position.y)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         if (align) {
