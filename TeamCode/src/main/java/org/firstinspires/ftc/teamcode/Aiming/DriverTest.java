@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -22,6 +24,7 @@ public class DriverTest {
     private static DcMotorEx shooterUp;
     private static DcMotorEx shooterDown;
     public static boolean canFire;
+    private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -52,19 +55,18 @@ public class DriverTest {
                 Hood.updateAim(false);
             }
         }
-
-        if (increase) {
-//            distanceFromGoal += 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed += 50;
-            distanceFromGoal += 5;
-        }
-        if (decrease){
-//            distanceFromGoal -= 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed -= 50;
-            distanceFromGoal -= 5;
-        }
+//        if (increase) {
+////            distanceFromGoal += 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+////            desSpeed += 50;
+//            distanceFromGoal += 5;
+//        }
+//        if (decrease){
+////            distanceFromGoal -= 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+////            desSpeed -= 50;
+//            distanceFromGoal -= 5;
+//        }
         if (rev) {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
