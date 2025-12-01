@@ -27,17 +27,10 @@ public class Limelight {
     private static OpMode opmode;
     public static Motif motif;
     private static Limelight3A limelight;
-    private static IMU imu;
     private static final double METER_TO_INCH = 39.3701;
 
     public static void initDetection(OpMode opmode) {
         limelight = opmode.hardwareMap.get(Limelight3A.class, "limelight");
-        imu = opmode.hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
-        imu.initialize(parameters);
-        imu.resetYaw();
         // telemetry.setMsTransmissionInterval(11); //idk what this does but its in the docs
         limelight.pipelineSwitch(0);
 
@@ -61,8 +54,6 @@ public class Limelight {
                 status.getTemp(), status.getCpu(),(int)status.getFps());
         opmode.telemetry.addData("Pipeline", "Index: %d, Type: %s",
                 status.getPipelineIndex(), status.getPipelineType());
-
-        opmode.telemetry.addData("IMU ROTATION", imu.getRobotYawPitchRollAngles().getYaw());
     }
 
     public static void updateMotif() {
@@ -104,8 +95,7 @@ public class Limelight {
     }
 
     public static Pose2d getPosition() { //MetaTag2
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw(AngleUnit.DEGREES)); //not sure if this is the right angle unit, some docs say degrees some say radians
+        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees());
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {

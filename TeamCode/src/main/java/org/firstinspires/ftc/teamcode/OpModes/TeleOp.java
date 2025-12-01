@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
+import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
@@ -54,6 +55,7 @@ public class TeleOp extends LinearOpMode {
         Shield.initLocking(this);
         Distance.initSensor(this);
         Limelight.initDetection(this);
+        Gyroscope.initSensor(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
@@ -75,8 +77,9 @@ public class TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            Gyroscope.updateGyro(gamepad1.start);
             Limelight.update();
-            ControlManager.update(false); //will need to add inpute using speical buttons for this later, not using atm
+            ControlManager.update(false); //will need to add input using special buttons for this later, not using atm
             RunLater.update();
             RunCondition.update();
             BallColorDetectinator.update();
