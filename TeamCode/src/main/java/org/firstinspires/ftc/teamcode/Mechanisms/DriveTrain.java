@@ -40,7 +40,7 @@ public class DriveTrain { // Prefix for commands
     private static IMU imu;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
-    private static final Pose2d goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
+    private static Pose2d goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names
@@ -77,10 +77,17 @@ public class DriveTrain { // Prefix for commands
         imu.resetYaw();
         pos = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
         localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
+
+        goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         localizer.update();
+        if (flipSide){
+            goalTarget = new Pose2d(-60.0, 53.0, Math.toRadians(0.0));
+        } else {
+            goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
+        }
 
         Pose2d robotPosition = Limelight.getPosition();
         if (robotPosition != null && !robotPosition.equals(new Pose2d(0.0, 0.0, 0.0))) {

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
@@ -27,6 +28,7 @@ import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
+    public static Alliance alliance;
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
@@ -75,11 +77,14 @@ public class TeleOp extends LinearOpMode {
         Hood.goNear();
 
 
+        if (alliance == null){
+            alliance = Alliance.BLUE;
+        }
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             Gyroscope.updateGyro(gamepad1.backWasPressed());
             Limelight.update();
-            ControlManager.update(false); //will need to add input using special buttons for this later, not using atm
+            ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
             RunCondition.update();
             BallColorDetectinator.update();

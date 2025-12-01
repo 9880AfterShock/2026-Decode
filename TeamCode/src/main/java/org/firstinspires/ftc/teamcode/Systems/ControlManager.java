@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
 import static org.firstinspires.ftc.teamcode.Aiming.DriverTest.canFire;
+import static org.firstinspires.ftc.teamcode.OpModes.TeleOp.alliance;
 
 import com.qualcomm.hardware.adafruit.AdafruitI2cColorSensor;
 import com.qualcomm.hardware.ams.AMSColorSensor;
@@ -11,6 +12,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Color;
+import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.ColorType;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
@@ -61,6 +63,14 @@ public class ControlManager {
     }
 
     public static void update(boolean flipField) { //false is blue, true is red
+        if (driver.startWasPressed()) {
+            if (alliance == Alliance.BLUE) {
+                alliance = Alliance.RED;
+            } else {
+                alliance = Alliance.BLUE;
+            }
+        }
+
         //Spindexer
         boolean spinLeft = operator.dpadLeftWasPressed();
         boolean spinRight = operator.dpadRightWasPressed();
