@@ -92,7 +92,7 @@ public class DriveTrain { // Prefix for commands
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         if (align) {
-            turn = (float) ((AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()))) * -kP);
+            turn = (float) ((AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180)) * -kP);
         }
 
         opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
