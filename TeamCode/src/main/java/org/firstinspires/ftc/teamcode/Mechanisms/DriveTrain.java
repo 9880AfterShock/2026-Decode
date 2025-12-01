@@ -84,7 +84,7 @@ public class DriveTrain { // Prefix for commands
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         localizer.update();
         if (flipSide){
-            goalTarget = new Pose2d(-60.0, 53.0, Math.toRadians(0.0));
+            goalTarget = new Pose2d(60.0, -53.0, Math.toRadians(0.0));
         } else {
             goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
         }
