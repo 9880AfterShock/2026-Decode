@@ -87,20 +87,20 @@ public class DriveTrain { // Prefix for commands
             localizer.setPose(robotPosition);
         }
         //rotation = Math.toDegrees(Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x));
-        DriverTest.distanceFromGoal = Math.sqrt((goalTarget.position.x-DriveTrain.localizer.getPose().position.x * goalTarget.position.x-DriveTrain.localizer.getPose().position.x)+(goalTarget.position.y-DriveTrain.localizer.getPose().position.y * goalTarget.position.y-DriveTrain.localizer.getPose().position.y));
+        DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);
         rotation = Math.toDegrees(Math.atan((goalTarget.position.x-localizer.getPose().position.x)/(goalTarget.position.y-localizer.getPose().position.y)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         if (align) {
-//            turn = (float) Range.clip(rotation * kP, -0.4, 0.4);
+            turn = (float) Range.clip((rotation - localizer.getPose().heading.toDouble()) * kP, -0.4, 0.4);
+
             if (Math.abs(rotation) < 0.5) {
-//                turn = 0;
+                turn = 0;
             }
 
         }
 
         opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
-//        opmode.telemetry.addData("IMU OFFSET", IMUOffset);
         opmode.telemetry.addData("===aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
         opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
         opmode.telemetry.addData("DT Estimated IMU LOCALIAZER", localizer.getPose().heading.toDouble());

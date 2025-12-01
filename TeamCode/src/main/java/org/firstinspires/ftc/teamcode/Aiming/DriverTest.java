@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -45,7 +44,7 @@ public class DriverTest {
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
         double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/numTicks)*60);
         if (!auto) {
-            if (distanceFromGoal <+ 70) { // Timo replaced GoalVision.goalDistance with distanceFromGoal
+            if (distanceFromGoal < 70) { // Timo replaced GoalVision.goalDistance with distanceFromGoal
                 desSpeed = (0.12825*distanceFromGoal*distanceFromGoal)+(4.81307*distanceFromGoal)+2504.82611;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
