@@ -28,7 +28,7 @@ public class Distance { // Prefix for commands
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                return sensorDistance.getDistance(DistanceUnit.MM) > 200;
+                return sensorDistance.getDistance(DistanceUnit.MM) > 100;
             }
         };
     }
@@ -37,7 +37,7 @@ public class Distance { // Prefix for commands
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                return sensorDistance.getDistance(DistanceUnit.MM) < 200;
+                return sensorDistance.getDistance(DistanceUnit.MM) < 100;
             }
         };
     }
