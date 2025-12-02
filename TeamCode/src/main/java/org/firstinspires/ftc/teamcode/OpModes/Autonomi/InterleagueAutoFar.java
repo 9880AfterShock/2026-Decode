@@ -262,6 +262,6 @@ public class InterleagueAutoFar extends LinearOpMode {
                         toPark.build()
                 )
         );
-        TeleOp.autoEndRotation = 0.0;
+        TeleOp.autoEndRotation = 90.0;
     }
 }
