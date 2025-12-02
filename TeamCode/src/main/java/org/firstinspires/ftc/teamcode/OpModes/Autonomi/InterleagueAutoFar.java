@@ -8,7 +8,6 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
@@ -19,21 +18,22 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
-import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
+import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Disabled
 @Autonomous(name = "Far zone 6")
-public class LM2AutoFar extends LinearOpMode {
+public class InterleagueAutoFar extends LinearOpMode {
     @Override
     public void runOpMode() {
+        Gyroscope.initSensor(this);
+        Limelight.initDetection(this);
         //Mechs init
         Arm.initIntake(this);
         Roller.initIntake(this);
         RunLater.setup(this);
-        Obelisk.initDetection(this);
         DriverTest.initControls(this); //new
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager(this, 28);
@@ -73,8 +73,8 @@ public class LM2AutoFar extends LinearOpMode {
             if (posMultiplier == -1.0) {
                 telemetry.addData("Alliance", "Red");
             }
-            Obelisk.update();
-            telemetry.addData("Current Motif", Obelisk.motif);
+            Limelight.updateMotif();
+            telemetry.addData("Current Motif", Limelight.motif);
             telemetry.update();
         }
 
@@ -154,7 +154,7 @@ public class LM2AutoFar extends LinearOpMode {
                         Arm.AutoArmIn(),
                         Hood.AutoHoodFar(),
                         actionManager.rev(rpm), //moved here bc PID
-                        Obelisk.AutoScanWithInit(),
+                        Limelight.AutoScanWithInit(),
                         new ParallelAction(
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()

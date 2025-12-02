@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Enums.Motif;
+import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
 public class QuickSpindexer { // Prefix for commands
@@ -174,7 +175,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (first) {
-                    if (Obelisk.motif != currentInventory) {
+                    if (Limelight.motif != currentInventory) {
                         if ((Obelisk.motif == Motif.GPP && currentInventory == Motif.PPG) ||
                                 (Obelisk.motif == Motif.PGP && currentInventory == Motif.GPP) ||
                                 (Obelisk.motif == Motif.PPG && currentInventory == Motif.PGP)){
