@@ -98,7 +98,7 @@ public class DriveTrain { // Prefix for commands
         rotation = Math.toDegrees(Math.atan2((goalTarget.position.x-localizer.getPose().position.x),(goalTarget.position.y-localizer.getPose().position.y)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
-        if (align) {
+        if (align) { //CADEN PID GOES IN THE LINE RIGHT BELOW
             turn = (float) ((AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180)) * -kP);
         }
 
