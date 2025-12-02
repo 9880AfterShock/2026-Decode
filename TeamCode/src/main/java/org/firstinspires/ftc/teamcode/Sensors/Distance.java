@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Sensors;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -18,5 +22,23 @@ public class Distance { // Prefix for commands
 
     public static void updateSensor() {
         opmode.telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.MM));
+    }
+
+    public static Action waitForBallIn() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                return sensorDistance.getDistance(DistanceUnit.MM) > 5.0;
+            }
+        };
+    }
+
+    public static Action waitForBallPassed() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                return sensorDistance.getDistance(DistanceUnit.MM) < 5.0;
+            }
+        };
     }
 }
