@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
+import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
@@ -69,9 +71,11 @@ public class InterleagueAutoFar extends LinearOpMode {
             telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
+                TeleOp.alliance = Alliance.BLUE;
             }
             if (posMultiplier == -1.0) {
                 telemetry.addData("Alliance", "Red");
+                TeleOp.alliance = Alliance.RED;
             }
             Limelight.updateMotif();
             telemetry.addData("Current Motif", Limelight.motif);
@@ -258,5 +262,6 @@ public class InterleagueAutoFar extends LinearOpMode {
                         toPark.build()
                 )
         );
+        TeleOp.autoEndRotation = 0.0;
     }
 }
