@@ -176,14 +176,14 @@ public class QuickSpindexer { // Prefix for commands
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (first) {
                     if (Limelight.motif != currentInventory) {
-                        if ((Obelisk.motif == Motif.GPP && currentInventory == Motif.PPG) ||
-                                (Obelisk.motif == Motif.PGP && currentInventory == Motif.GPP) ||
-                                (Obelisk.motif == Motif.PPG && currentInventory == Motif.PGP)){
+                        if ((Limelight.motif == Motif.GPP && currentInventory == Motif.PPG) ||
+                                (Limelight.motif == Motif.PGP && currentInventory == Motif.GPP) ||
+                                (Limelight.motif == Motif.PPG && currentInventory == Motif.PGP)){
                             spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
                         }
-                        if ((Obelisk.motif == Motif.GPP && currentInventory == Motif.PGP) ||
-                                (Obelisk.motif == Motif.PGP && currentInventory == Motif.PPG) ||
-                                (Obelisk.motif == Motif.PPG && currentInventory == Motif.GPP)){
+                        if ((Limelight.motif == Motif.GPP && currentInventory == Motif.PGP) ||
+                                (Limelight.motif == Motif.PGP && currentInventory == Motif.PPG) ||
+                                (Limelight.motif == Motif.PPG && currentInventory == Motif.GPP)){
                             spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3)));
                         }
                     }
