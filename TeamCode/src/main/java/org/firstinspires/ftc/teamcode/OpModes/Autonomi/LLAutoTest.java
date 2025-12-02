@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 
 @Config
+@Disabled
 @Autonomous(name = "LL AUTO Test")
 public class LLAutoTest extends LinearOpMode {
     @Override
