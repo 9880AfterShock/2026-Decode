@@ -20,7 +20,6 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.OpModes.Autonomi.InterleagueAutoNear;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
@@ -28,9 +27,6 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import java.util.List;
-
-import kotlin.LateinitKt;
-import kotlin.Lazy;
 
 public class Limelight {
     private static OpMode opmode;
@@ -239,13 +235,19 @@ public class Limelight {
                     return true;
                 }
 
+                double dx = targetPos.position.x - currentPosShoot2.position.x;
+                double dy = targetPos.position.y - currentPosShoot2.position.y;
+
+
                 currentPosShoot1 = getPosition();
                 if (TeleOp.alliance == Alliance.RED){
                     currentPosShoot1 = new Pose2d(-currentPosShoot1.position.x, -currentPosShoot1.position.y, currentPosShoot1.heading.toDouble());
                 }
 
                 alignShoot1 = drive.actionBuilder(currentPosShoot1)
-                        .strafeToLinearHeading(new Vector2d(targetPos.position.x, targetPos.position.y), targetPos.heading.toDouble());
+                        .strafeToLinearHeading(new Vector2d(0.0, 0.0), 0.0);
+//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+//                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
                 return false;
             }
         };
@@ -264,23 +266,11 @@ public class Limelight {
                 }
 
                 alignShoot2 = drive.actionBuilder(currentPosShoot2)
-                        .strafeToLinearHeading(new Vector2d(targetPos.position.x, targetPos.position.y), targetPos.heading.toDouble());
+                        .strafeToLinearHeading(new Vector2d(0.0, 0.0), 0.0);
+//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+//                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
                 return false;
             }
         };
     }
-
-    public static Action AutoAim( MecanumDrive drive) {
-        return new Action() {
-            public boolean run(@NonNull TelemetryPacket packet) {
-                Pose2d currentPos = getPosition();
-                if (currentPos == null) {
-                    return true;
-                }
-                drive.localizer.setPose(currentPos);
-                return false;
-            }
-        };
-    }
-
 }

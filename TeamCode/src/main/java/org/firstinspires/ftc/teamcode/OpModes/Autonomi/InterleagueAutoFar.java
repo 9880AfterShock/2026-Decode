@@ -167,9 +167,9 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
-                        Limelight.AutoAim1(shootPosFar, drive, posMultiplier, -110.0, -110.0)
-                        )); Actions.runBlocking(new SequentialAction(
-                        Limelight.alignShoot1.build(),
+//                        Limelight.AutoAim1(shootPosFar, drive, posMultiplier, -110.0, -110.0)
+//                        )); Actions.runBlocking(new SequentialAction(
+//                        Limelight.alignShoot1.build(),
 
                         waitVariable.build(),
 
@@ -238,9 +238,9 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.PPG),
                                 toShoot2.build()
                         ),
-                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0)
-                        )); Actions.runBlocking(new SequentialAction(
-                        Limelight.alignShoot2.build(),
+//                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0)
+//                        )); Actions.runBlocking(new SequentialAction(
+//                        Limelight.alignShoot2.build(),
 
                         //Second volley start
                         actionManager.rev(rpm),
