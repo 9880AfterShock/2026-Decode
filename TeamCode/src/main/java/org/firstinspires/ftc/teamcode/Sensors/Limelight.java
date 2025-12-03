@@ -241,7 +241,7 @@ public class Limelight {
                 }
 
                 alignShoot1 = drive.actionBuilder(currentPosShoot1)
-                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+                        .setTangent(posMultiplier*Math.toRadians(posMultiplier*Math.toRadians(tangentStart)))
                         .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
                 return false;
             }
