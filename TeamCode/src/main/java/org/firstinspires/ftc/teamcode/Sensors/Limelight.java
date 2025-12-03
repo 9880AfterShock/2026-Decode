@@ -213,7 +213,7 @@ public class Limelight {
                     motif = GPP;
                     return false;
                 }
-                return (motif != Motif.unknown);
+                return (motif == Motif.unknown);
             }
         };
     }
