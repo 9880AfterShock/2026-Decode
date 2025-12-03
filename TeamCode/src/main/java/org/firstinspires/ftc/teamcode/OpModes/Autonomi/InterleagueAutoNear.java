@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Enums.Alliance;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
@@ -40,6 +42,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         DriverTest.initControls(this); //new
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
+        Distance.initSensor(this);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
@@ -119,6 +122,9 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
+        TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(shootPosClose1)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(10.0));
         TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
@@ -261,30 +267,45 @@ public class InterleagueAutoNear extends LinearOpMode {
                         Roller.AutoIntakeOn(),
 
                         toPickup1.build(),
+
+                        new ParallelAction(
+                                slowPickup1.build(),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallPassed(),
+                                        Arm.AutoArmIn()
+                                )
+                        ),
                         //intake is turned on earlier to be safe
-                        pickupFirst1.build(),
-                        waitBallIn1.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer1.build(),
-                        QuickSpindexer.turnLeft(),
-
-                        Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
-                        pickupSecond1.build(),
-                        waitBallIn2.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer2.build(),
-                        QuickSpindexer.turnLeft(),
-
-                        Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
-                        pickupThird1.build(),
-                        waitBallIn3.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer3.build(),
+//                        pickupFirst1.build(),
+//                        waitBallIn1.build(),
+//                        Arm.AutoArmInWait(),
+//                        Roller.AutoIntakeOff(),
+//                        waitBallInSpindexer1.build(),
+//                        QuickSpindexer.turnLeft(),
+//
+//                        Arm.AutoArmOut(),
+//                        Roller.AutoIntakeOn(),
+//                        pickupSecond1.build(),
+//                        waitBallIn2.build(),
+//                        Arm.AutoArmInWait(),
+//                        Roller.AutoIntakeOff(),
+//                        waitBallInSpindexer2.build(),
+//                        QuickSpindexer.turnLeft(),
+//
+//                        Arm.AutoArmOut(),
+//                        Roller.AutoIntakeOn(),
+//                        pickupThird1.build(),
+//                        waitBallIn3.build(),
+//                        Arm.AutoArmInWait(),
+//                        Roller.AutoIntakeOff(),
+//                        waitBallInSpindexer3.build(),
                         //First Pickup End
 
                         //Sort
