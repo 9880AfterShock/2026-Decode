@@ -241,8 +241,8 @@ public class Limelight {
                 }
 
                 alignShoot1 = drive.actionBuilder(currentPosShoot1)
-//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
-                        .strafeToLinearHeading(targetPos.position, targetPos.heading);
+                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
                 return false;
             }
         };
@@ -261,8 +261,8 @@ public class Limelight {
                 }
 
                 alignShoot2 = drive.actionBuilder(currentPosShoot2)
-//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
-                        .strafeToLinearHeading(targetPos.position, targetPos.heading);
+                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
                 return false;
             }
         };
