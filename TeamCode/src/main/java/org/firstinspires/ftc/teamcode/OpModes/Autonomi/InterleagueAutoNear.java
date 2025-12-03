@@ -107,6 +107,11 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
         Pose2d parkPosFar = new Pose2d(37.75, posMultiplier*-32.75, posMultiplier*Math.toRadians(90.0));
 
+        Pose2d currentPosShoot1;
+        Pose2d currentPosShoot2;
+        TrajectoryActionBuilder alignShoot1;
+        TrajectoryActionBuilder alignShoot2;
+
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(55.0))
                 .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0));
@@ -195,6 +200,9 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .waitSeconds(0.5);
         TrajectoryActionBuilder waitRev2 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.5);
+
+        Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
+
 
         waitForStart();
 

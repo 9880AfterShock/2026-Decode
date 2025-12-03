@@ -106,6 +106,11 @@ public class InterleagueAutoFar extends LinearOpMode {
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
         Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(90.0));
 
+        Pose2d currentPosShoot1;
+        Pose2d currentPosShoot2;
+        TrajectoryActionBuilder alignShoot1;
+        TrajectoryActionBuilder alignShoot2;
+
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
                 .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(110.0));
@@ -146,6 +151,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .waitSeconds(0.3);
         TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosFar)
                 .waitSeconds(0.3);
+
+        Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
 
         waitForStart();
 
