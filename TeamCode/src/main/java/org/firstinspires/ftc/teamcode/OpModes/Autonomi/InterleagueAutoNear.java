@@ -91,6 +91,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
+        Pose2d shootPosClose3 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -122,9 +123,9 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
-        TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(shootPosClose1)
+        TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(10.0));
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
         TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
@@ -155,11 +156,19 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder pickupThird2 = drive.actionBuilder(secondPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0));
+*/
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
+                .setTangent(posMultiplier*Math.toRadians(30.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-30.0));
+
+        TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(145.0));
-
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
+/*
         TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(20.0))
                 .splineToLinearHeading(startPickup3, posMultiplier*Math.toRadians(-20.0));
@@ -201,6 +210,8 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder waitRev1 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.5);
         TrajectoryActionBuilder waitRev2 = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.5);
+        TrajectoryActionBuilder waitRev3 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.5);
 
         TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosClose)
@@ -272,13 +283,14 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 slowPickup1.build(),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
-                                        Distance.waitForBallPassed(),
+                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmOut(),
                                         QuickSpindexer.turnLeft(),
                                         Distance.waitForBallIn(),
-                                        Distance.waitForBallPassed(),
+                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmOut(),
                                         QuickSpindexer.turnLeft(),
                                         Distance.waitForBallIn(),
-                                        Distance.waitForBallPassed(),
                                         Arm.AutoArmIn()
                                 )
                         ),
@@ -343,6 +355,54 @@ public class InterleagueAutoNear extends LinearOpMode {
 
                         actionManager.derev(),
                         //Second volley end
+
+                        //2nd pickup start
+                        Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
+                        Roller.AutoIntakeOn(),
+
+                        toPickup2.build(),
+
+                        new ParallelAction(
+                                slowPickup2.build(),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.turnLeft(),
+                                        Distance.waitForBallIn(),
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.turnLeft(),
+                                        Distance.waitForBallIn(),
+                                        Arm.AutoArmIn()
+                                )
+                        ),
+
+                        //Third volley start
+                        actionManager.rev(rpm),
+                        waitRev3.build(),
+
+                        actionManager.shotCue(7),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(8),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(9),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.derev(),
+                        //Third volley end
 
                         QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
