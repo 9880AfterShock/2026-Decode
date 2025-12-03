@@ -20,6 +20,7 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.OpModes.Autonomi.InterleagueAutoNear;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
@@ -27,6 +28,9 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import java.util.List;
+
+import kotlin.LateinitKt;
+import kotlin.Lazy;
 
 public class Limelight {
     private static OpMode opmode;
@@ -241,8 +245,7 @@ public class Limelight {
                 }
 
                 alignShoot1 = drive.actionBuilder(currentPosShoot1)
-                        .setTangent(posMultiplier*Math.toRadians(posMultiplier*Math.toRadians(tangentStart)))
-                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
+                        .strafeToLinearHeading(new Vector2d(targetPos.position.x, targetPos.position.y), targetPos.heading.toDouble());
                 return false;
             }
         };
@@ -261,8 +264,7 @@ public class Limelight {
                 }
 
                 alignShoot2 = drive.actionBuilder(currentPosShoot2)
-                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
-                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
+                        .strafeToLinearHeading(new Vector2d(targetPos.position.x, targetPos.position.y), targetPos.heading.toDouble());
                 return false;
             }
         };
