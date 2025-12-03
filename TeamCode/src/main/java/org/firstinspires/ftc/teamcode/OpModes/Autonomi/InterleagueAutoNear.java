@@ -89,7 +89,6 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
-        TeleOp.autoEndRotation = 0.0;
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -202,6 +201,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .waitSeconds(0.5);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
+        TeleOp.autoEndRotation = Math.toDegrees(parkPosClose.heading.toDouble());
 
 
         waitForStart();

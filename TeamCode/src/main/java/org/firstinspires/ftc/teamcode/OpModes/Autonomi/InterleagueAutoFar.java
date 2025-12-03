@@ -105,7 +105,6 @@ public class InterleagueAutoFar extends LinearOpMode {
 
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
         Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(90.0));
-        TeleOp.autoEndRotation = 90.0;
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
@@ -149,6 +148,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .waitSeconds(0.3);
 
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
+        TeleOp.autoEndRotation = Math.toDegrees(parkPosFar.heading.toDouble());
+
 
         waitForStart();
 
@@ -166,7 +167,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
-                        Limelight.AutoAim1(shootPosFar, drive, posMultiplier, -110.0, -110.0),
+                        Limelight.AutoAim1(shootPosFar, drive, posMultiplier, -110.0, -110.0)
+                        )); Actions.runBlocking(new SequentialAction(
                         Limelight.alignShoot1.build(),
 
                         waitVariable.build(),
@@ -236,7 +238,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.PPG),
                                 toShoot2.build()
                         ),
-                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0),
+                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0)
+                        )); Actions.runBlocking(new SequentialAction(
                         Limelight.alignShoot2.build(),
 
                         //Second volley start
