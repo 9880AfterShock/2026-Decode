@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -28,6 +30,11 @@ public class Limelight {
     public static Motif motif;
     private static Limelight3A limelight;
     private static final double METER_TO_INCH = 39.3701;
+
+    public static Pose2d currentPosShoot1;
+    public static Pose2d currentPosShoot2;
+    public static TrajectoryActionBuilder alignShoot1;
+    public static TrajectoryActionBuilder alignShoot2;
 
     public static void initDetection(OpMode opmode) {
         limelight = opmode.hardwareMap.get(Limelight3A.class, "limelight");
@@ -214,6 +221,30 @@ public class Limelight {
                     return false;
                 }
                 return (motif == Motif.unknown);
+            }
+        };
+    }
+
+    public static Action AutoAim1(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                currentPosShoot1 = getPosition();
+                alignShoot1 = drive.actionBuilder(currentPosShoot1)
+                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
+                return false;
+            }
+        };
+    }
+
+    public static Action AutoAim2(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                currentPosShoot1 = getPosition();
+                alignShoot2 = drive.actionBuilder(currentPosShoot2)
+                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
+                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
+                return false;
             }
         };
     }

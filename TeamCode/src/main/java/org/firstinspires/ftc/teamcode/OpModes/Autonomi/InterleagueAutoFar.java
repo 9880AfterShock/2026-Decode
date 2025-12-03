@@ -106,11 +106,6 @@ public class InterleagueAutoFar extends LinearOpMode {
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
         Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(90.0));
 
-        Pose2d currentPosShoot1;
-        Pose2d currentPosShoot2;
-        TrajectoryActionBuilder alignShoot1;
-        TrajectoryActionBuilder alignShoot2;
-
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
                 .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(110.0));
@@ -170,6 +165,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
+                        Limelight.AutoAim1(shootPosFar, drive, posMultiplier, -110.0, -110.0),
+                        Limelight.alignShoot1.build(),
 
                         waitVariable.build(),
 
@@ -238,6 +235,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.PPG),
                                 toShoot2.build()
                         ),
+                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0),
+                        Limelight.alignShoot2.build(),
 
                         //Second volley start
                         actionManager.rev(rpm),
