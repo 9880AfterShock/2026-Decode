@@ -8,16 +8,19 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -228,7 +231,15 @@ public class Limelight {
     public static Action AutoAim1(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
+                if (getPosition() == null) {
+                    return true;
+                }
+
                 currentPosShoot1 = getPosition();
+                if (TeleOp.alliance == Alliance.RED){
+                    currentPosShoot1 = new Pose2d(-currentPosShoot1.position.x, -currentPosShoot1.position.y, currentPosShoot1.heading.toDouble());
+                }
+
                 alignShoot1 = drive.actionBuilder(currentPosShoot1)
                         .setTangent(posMultiplier*Math.toRadians(tangentStart))
                         .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
@@ -240,7 +251,15 @@ public class Limelight {
     public static Action AutoAim2(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
+                if (getPosition() == null) {
+                    return true;
+                }
+
                 currentPosShoot2 = getPosition();
+                if (TeleOp.alliance == Alliance.RED){
+                    currentPosShoot2 = new Pose2d(-currentPosShoot2.position.x, -currentPosShoot2.position.y, currentPosShoot2.heading.toDouble());
+                }
+
                 alignShoot2 = drive.actionBuilder(currentPosShoot2)
                         .setTangent(posMultiplier*Math.toRadians(tangentStart))
                         .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
