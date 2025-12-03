@@ -80,6 +80,9 @@ public class TeleOp extends LinearOpMode {
         if (alliance == null){
             alliance = Alliance.BLUE;
         }
+        if (autoEndRotation == null) {
+            autoEndRotation = 0.0;
+        }
         Gyroscope.setRotation(autoEndRotation);
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
