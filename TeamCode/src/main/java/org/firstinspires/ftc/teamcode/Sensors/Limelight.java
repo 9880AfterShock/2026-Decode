@@ -240,7 +240,7 @@ public class Limelight {
     public static Action AutoAim2(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                currentPosShoot1 = getPosition();
+                currentPosShoot2 = getPosition();
                 alignShoot2 = drive.actionBuilder(currentPosShoot2)
                         .setTangent(posMultiplier*Math.toRadians(tangentStart))
                         .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));

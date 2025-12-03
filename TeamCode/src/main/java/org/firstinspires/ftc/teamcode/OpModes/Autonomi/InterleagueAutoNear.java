@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
@@ -88,6 +89,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
+        TeleOp.autoEndRotation = 0.0;
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -196,6 +198,9 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder waitRev2 = drive.actionBuilder(startPosClose)
                 .waitSeconds(0.5);
 
+        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosClose)
+                .waitSeconds(0.5);
+
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
 
 
@@ -217,7 +222,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
-                        Limelight.AutoAim1(shootPosClose1, drive, posMultiplier, 55.0, 55.0),
+                        Limelight.AutoAim1(shootPosClose1, drive, posMultiplier, 55.0, 55.0)
+                        )); Actions.runBlocking(new SequentialAction(
                         Limelight.alignShoot1.build(),
 
                         waitVariable.build(),
@@ -288,7 +294,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot2.build()
                         ),
-                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0),
+                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0)
+                        )); Actions.runBlocking(new SequentialAction(
                         Limelight.alignShoot2.build(),
 
                         //Second volley start
@@ -322,6 +329,5 @@ public class InterleagueAutoNear extends LinearOpMode {
                         toPark.build()
                 )
         );
-        TeleOp.autoEndRotation = 0.0;
     }
 }
