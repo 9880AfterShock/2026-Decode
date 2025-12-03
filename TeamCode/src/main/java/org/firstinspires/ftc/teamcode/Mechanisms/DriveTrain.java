@@ -22,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
+import org.firstinspires.ftc.teamcode.Systems.PID;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
@@ -35,9 +36,9 @@ public class DriveTrain { // Prefix for commands
     public static boolean slowMode = false;
     private static boolean slowModeButtonCurrentlyPressed = false;
     private static boolean slowModeButtonPreviouslyPressed = false;
-    private static final double kP = 0.02;  //try 0.008
     private static double rotation;
     private static IMU imu;
+    private static PID aimingPID;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
     private static Pose2d goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
@@ -79,6 +80,8 @@ public class DriveTrain { // Prefix for commands
         localizer = new TwoDeadWheelLocalizer(opmode.hardwareMap, imu, PARAMS.inPerTick, pos);
 
         goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
+
+        aimingPID = new PID(-0.025,0,0.015,3);
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
@@ -99,7 +102,7 @@ public class DriveTrain { // Prefix for commands
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         if (align) { //CADEN PID GOES IN THE LINE RIGHT BELOW
-            turn = (float) ((AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180)) * -kP);
+            turn = (float) aimingPID.step(AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180));
         }
 
         opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
