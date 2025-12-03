@@ -222,9 +222,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
-                        Limelight.AutoAim1(shootPosClose1, drive, posMultiplier, 55.0, 55.0)
-                        )); Actions.runBlocking(new SequentialAction(
-                        Limelight.alignShoot1.build(),
+                        Limelight.AutoAim(drive),
 
                         waitVariable.build(),
                         waitRev1.build(),
@@ -294,9 +292,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot2.build()
                         ),
-                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0)
-                        )); Actions.runBlocking(new SequentialAction(
-                        Limelight.alignShoot2.build(),
+                        Limelight.AutoAim(drive),
 
                         //Second volley start
                         actionManager.rev(rpm),

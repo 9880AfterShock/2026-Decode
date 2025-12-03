@@ -267,4 +267,18 @@ public class Limelight {
             }
         };
     }
+
+    public static Action AutoAim( MecanumDrive drive) {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                Pose2d currentPos = getPosition();
+                if (currentPos == null) {
+                    return true;
+                }
+                drive.localizer.setPose(currentPos);
+                return false;
+            }
+        };
+    }
+
 }
