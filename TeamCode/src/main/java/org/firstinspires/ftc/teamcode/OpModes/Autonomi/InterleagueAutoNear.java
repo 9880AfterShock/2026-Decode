@@ -118,6 +118,10 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(55.0))
                 .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(55.0));
 
+        TrajectoryActionBuilder toShootNoScan = drive.actionBuilder(startPosClose)
+                .setTangent(posMultiplier*Math.toRadians(35.0))
+                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
+
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
