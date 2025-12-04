@@ -89,8 +89,8 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
-        Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(55.0));
-        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-13.0, posMultiplier*Math.toRadians(70.0));
+//        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -160,8 +160,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0));
 */
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
-                .setTangent(posMultiplier*Math.toRadians(30.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-30.0));
+                .setTangent(posMultiplier*Math.toRadians(45.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-45.0));
 
         TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
@@ -189,9 +189,9 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(145.0));
         */
 
-        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose3)
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
+//        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose3)
+//                .setTangent(posMultiplier*Math.toRadians(180.0))
+//                .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
 
         TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosClose)
                 .waitSeconds(waitTime);
@@ -220,7 +220,7 @@ public class InterleagueAutoNear extends LinearOpMode {
 //                .waitSeconds(0.5);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(parkPosClose.heading.toDouble());
+        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
 
 
         waitForStart();
@@ -435,8 +435,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                         actionManager.derev(),
                         //Third volley end
 
-                        QuickSpindexer.resetForTele(), //should change later
-                        toPark.build()
+                        QuickSpindexer.resetForTele()//, //should change later
+//                        toPark.build()
                 )
         );
     }
