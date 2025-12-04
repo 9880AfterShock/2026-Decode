@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 6")
+@Autonomous(name = "Near zone 9")
 public class InterleagueAutoNear extends LinearOpMode {
     @Override
     public void runOpMode() {
