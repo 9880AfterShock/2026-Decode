@@ -92,7 +92,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
 //        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
 
-        Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
@@ -123,8 +123,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
-                .setTangent(posMultiplier*Math.toRadians(55.0))
-                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-55.0));
+                .setTangent(posMultiplier*Math.toRadians(45.0))
+                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-45.0));
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
