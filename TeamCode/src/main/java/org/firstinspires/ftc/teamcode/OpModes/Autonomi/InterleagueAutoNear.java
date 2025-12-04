@@ -286,17 +286,20 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
                                         Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
                                         Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
+                                        Distance.waitForBallPassed(),
                                         Roller.AutoIntakeOff()
                                 )
                         ),
@@ -373,17 +376,25 @@ public class InterleagueAutoNear extends LinearOpMode {
                         toPickup2.build(),
 
                         new ParallelAction(
-                                slowPickup2.build(),
+                                slowPickup1.build(),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallIn()
+                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallPassed(),
+                                        Roller.AutoIntakeOff()
                                 )
                         ),
 
