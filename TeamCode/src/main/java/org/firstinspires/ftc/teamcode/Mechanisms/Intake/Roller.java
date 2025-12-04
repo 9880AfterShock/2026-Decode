@@ -61,4 +61,13 @@ public class Roller { // Prefix for commands
             }
         };
     }
+
+    public static Action AutoIntakeEject() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                updateIntake(false, true, false, 1.0);
+                return false;
+            }
+        };
+    }
 }

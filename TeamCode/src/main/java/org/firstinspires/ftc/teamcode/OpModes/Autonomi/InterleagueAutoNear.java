@@ -91,7 +91,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
-        Pose2d shootPosClose3 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
+        Pose2d shootPosClose3 = new Pose2d(-40.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
         Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -284,14 +284,18 @@ public class InterleagueAutoNear extends LinearOpMode {
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
-                                        Arm.AutoArmOut(),
+                                        Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
-                                        Arm.AutoArmOut(),
+                                        Roller.AutoIntakeOff(),
                                         QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
-                                        Arm.AutoArmIn()
+                                        Roller.AutoIntakeOff()
                                 )
                         ),
                         //intake is turned on earlier to be safe
@@ -322,8 +326,11 @@ public class InterleagueAutoNear extends LinearOpMode {
 
                         //Sort
                         new ParallelAction(
+                                new SequentialAction(
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.toMotifFrom(Motif.GPP)
+                                ),
                                 Shield.AutoShieldShoot(),
-                                QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot2.build()
                         ),
 //                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0),
@@ -369,12 +376,23 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
                                         QuickSpindexer.turnLeft(),
+                                        Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
                                         QuickSpindexer.turnLeft(),
-                                        Distance.waitForBallIn(),
-                                        Arm.AutoArmIn()
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn()
                                 )
+                        ),
+
+                        //Sort
+                        new ParallelAction(
+                                new SequentialAction(
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                ),
+                                Shield.AutoShieldShoot(),
+                                toShoot2.build()
                         ),
 
                         //Third volley start
