@@ -432,10 +432,10 @@ public class InterleagueAutoNear extends LinearOpMode {
                         actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
-                        actionManager.derev(),
+                        actionManager.derev()
                         //Third volley end
 
-                        QuickSpindexer.resetForTele()//, //should change later
+//                        QuickSpindexer.resetForTele()//, //should change later
 //                        toPark.build()
                 )
         );

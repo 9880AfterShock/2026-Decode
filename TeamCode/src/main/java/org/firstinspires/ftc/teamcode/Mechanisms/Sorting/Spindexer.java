@@ -188,6 +188,7 @@ public class Spindexer {
     public void resetEncoder() {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        targetPos = 0.0;
     }
 
     public void setBalls(List<BallType> balls) {
