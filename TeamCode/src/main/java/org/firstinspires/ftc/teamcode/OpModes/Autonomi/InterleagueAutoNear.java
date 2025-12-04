@@ -4,13 +4,11 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Enums.Alliance;
@@ -48,7 +46,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Shield.initLocking(this);
 
         double rpm = 3200;
-        double shotCooldown = 0.2+0.6;
+        double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
         double waitTime = 0.0;
@@ -90,27 +88,27 @@ public class InterleagueAutoNear extends LinearOpMode {
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
         Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
-        Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
-        Pose2d shootPosClose3 = new Pose2d(-40.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(47.0));
-        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
+        Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(55.0));
+        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d startPickup2 = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d firstPickup3 = new Pose2d(35.5, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d secondPickup3 = new Pose2d(35.5, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
-
-        Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d parkPosFar = new Pose2d(37.75, posMultiplier*-32.75, posMultiplier*Math.toRadians(90.0));
+//        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d firstPickup3 = new Pose2d(35.5, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d secondPickup3 = new Pose2d(35.5, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+//        Pose2d endPickup3 = new Pose2d(35.5, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+//
+//        Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
+//        Pose2d parkPosFar = new Pose2d(37.75, posMultiplier*-32.75, posMultiplier*Math.toRadians(90.0));
 
         TrajectoryActionBuilder toScan = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(55.0))
@@ -126,15 +124,15 @@ public class InterleagueAutoNear extends LinearOpMode {
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
-        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
-        TrajectoryActionBuilder pickupSecond1 = drive.actionBuilder(firstPickup1)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(secondPickup1, posMultiplier*Math.toRadians(-90.0));
-        TrajectoryActionBuilder pickupThird1 = drive.actionBuilder(secondPickup1)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
+//        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
+//        TrajectoryActionBuilder pickupSecond1 = drive.actionBuilder(firstPickup1)
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(secondPickup1, posMultiplier*Math.toRadians(-90.0));
+//        TrajectoryActionBuilder pickupThird1 = drive.actionBuilder(secondPickup1)
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
         //need color sensor/proximity sensor/ distance sensor for this version:
 //        TrajectoryActionBuilder pickupFirstRow = drive.actionBuilder(startPickup1)
 //                .setTangent(posMultiplier*Math.toRadians(-90.0))
@@ -187,35 +185,35 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .splineToLinearHeading(shootPosClose, posMultiplier*Math.toRadians(145.0));
         */
 
-        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose2)
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosClose3)
                 .setTangent(posMultiplier*Math.toRadians(180.0))
                 .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
 
         TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosClose)
                 .waitSeconds(waitTime);
 
-        TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
-        TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
-        TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
-        TrajectoryActionBuilder waitBallInSpindexer1 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
-        TrajectoryActionBuilder waitBallInSpindexer2 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
-        TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallIn2 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallIn3 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallInSpindexer1 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallInSpindexer2 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
+//        TrajectoryActionBuilder waitBallInSpindexer3 = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.3);
 
         TrajectoryActionBuilder waitRev1 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.5);
+                .waitSeconds(0.1);
         TrajectoryActionBuilder waitRev2 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.5);
+                .waitSeconds(0.1);
         TrajectoryActionBuilder waitRev3 = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.5);
+                .waitSeconds(0.1);
 
-        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosClose)
-                .waitSeconds(0.5);
+//        TrajectoryActionBuilder waitTwenty = drive.actionBuilder(startPosClose)
+//                .waitSeconds(0.5);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
         TeleOp.autoEndRotation = Math.toDegrees(parkPosClose.heading.toDouble());
@@ -392,7 +390,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
-                                toShoot2.build()
+                                toShoot3.build()
                         ),
 
                         //Third volley start
