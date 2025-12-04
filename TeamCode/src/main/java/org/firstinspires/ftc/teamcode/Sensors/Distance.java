@@ -34,7 +34,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 1.0);
+                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 50.0);
             }
         };
     }
