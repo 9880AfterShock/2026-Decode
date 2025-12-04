@@ -376,7 +376,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                         toPickup2.build(),
 
                         new ParallelAction(
-                                slowPickup1.build(),
+                                slowPickup2.build(),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Arm.AutoArmInWait(),
