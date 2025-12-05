@@ -126,14 +126,14 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.5));
 
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-150.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-150.0));
         TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.5));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
