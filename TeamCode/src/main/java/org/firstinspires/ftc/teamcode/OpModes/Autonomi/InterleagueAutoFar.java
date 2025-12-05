@@ -90,7 +90,7 @@ public class InterleagueAutoFar extends LinearOpMode {
         //Poses
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25));
-        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-12.0, posMultiplier*Math.toRadians(28.5));
+        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-14.0, posMultiplier*Math.toRadians(28.5));
 
 
         Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
