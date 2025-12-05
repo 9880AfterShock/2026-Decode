@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 9, Gate instead of sorting")
+@Autonomous(name = "Near zone 9, Gate instead of Motif")
 public class InterleagueAutoNearGate extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -342,7 +342,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                        QuickSpindexer.toMotifFrom(Motif.PPG)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 toGate1.build()
@@ -414,7 +414,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.PPG)
+                                        QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 toShoot3.build()
