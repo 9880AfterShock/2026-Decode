@@ -40,6 +40,7 @@ public class InterleagueAutoFar extends LinearOpMode {
         DriverTest.initControls(this); //new
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager(this, 28);
+        Distance.initSensor(this);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
@@ -94,10 +95,10 @@ public class InterleagueAutoFar extends LinearOpMode {
         Pose2d secondPickup1 = new Pose2d(37.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(37.0, posMultiplier*-48.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(15.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d endPickup2 = new Pose2d(15.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d startPickup3 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup3 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -214,6 +215,10 @@ public class InterleagueAutoFar extends LinearOpMode {
                         actionManager.derev(),
                         //First volley end
 
+                        Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
+                        Roller.AutoIntakeOn(),
+
                         toPickup1.build(),
 
                         //First pickup start
@@ -277,6 +282,12 @@ public class InterleagueAutoFar extends LinearOpMode {
                         actionManager.derev(),
                         //Second volley end
 
+                        Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
+                        Roller.AutoIntakeOn(),
+
+                        toPickup2.build(),
+
                         //Second pickup start
                         new ParallelAction(
                                 slowPickup2.build(),
@@ -336,7 +347,7 @@ public class InterleagueAutoFar extends LinearOpMode {
                         Arm.AutoLaunchEnd(),
 
                         actionManager.derev(),
-                        //Second volley end
+                        //Third volley end
 
 //                        QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
