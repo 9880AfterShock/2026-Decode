@@ -90,7 +90,7 @@ public class InterleagueAutoFar extends LinearOpMode {
         //Poses
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25));
-        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(30.0));
+        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-12.0, posMultiplier*Math.toRadians(28.5));
 
 
         Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
@@ -109,7 +109,7 @@ public class InterleagueAutoFar extends LinearOpMode {
         Pose2d endPickup3 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d gatePose = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d parkPosFar = new Pose2d(60.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(90.0));
+        Pose2d parkPosFar = new Pose2d(-40.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(90.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
@@ -147,8 +147,8 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(35.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
-                .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-90));
+                .setTangent(posMultiplier*Math.toRadians(-125))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-125));
 
         TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosFar)
                 .waitSeconds(waitTime);
