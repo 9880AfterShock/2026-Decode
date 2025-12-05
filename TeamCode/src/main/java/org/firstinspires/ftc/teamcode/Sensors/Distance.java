@@ -34,7 +34,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 50.0);
+                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 2.0);
             }
         };
     }
@@ -54,7 +54,7 @@ public class Distance { // Prefix for commands
         };
     }
 
-    public static Action waitForBallInDelay() {
+    public static Action waitForBallInShortDelay() {
         return new Action() {
             private boolean first = true;
             double scanTime;
@@ -64,7 +64,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 2.0);
+                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 1.9);
             }
         };
     }

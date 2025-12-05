@@ -307,7 +307,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInDelay(),
+                                        Distance.waitForBallInShortDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )
@@ -404,7 +404,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInDelay(),
+                                        Distance.waitForBallInShortDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )

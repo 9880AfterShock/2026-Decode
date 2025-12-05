@@ -298,7 +298,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInDelay(),
+                                        Distance.waitForBallInShortDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )
@@ -392,7 +392,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInDelay(),
+                                        Distance.waitForBallInShortDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )
