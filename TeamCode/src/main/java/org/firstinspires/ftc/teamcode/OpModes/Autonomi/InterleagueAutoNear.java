@@ -95,12 +95,12 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-43.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d startPickup2 = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-43.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup3 = new Pose2d(35.5, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -127,7 +127,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-70.0));
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(6.0));
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 //        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
 //                .setTangent(posMultiplier*Math.toRadians(-90.0))
 //                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
@@ -165,7 +165,7 @@ public class InterleagueAutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(6.0));
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(145.0))

@@ -88,7 +88,10 @@ public class InterleagueAutoFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.5));
+        Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(23.5));
+        Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25));
+        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(30.0));
+
 
         Pose2d startPickup1 = new Pose2d(37.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d firstPickup1 = new Pose2d(37.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
@@ -110,9 +113,9 @@ public class InterleagueAutoFar extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-110.0))
-                .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(110.0));
+                .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(110.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar)
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
                 .setTangent(posMultiplier*Math.toRadians(180))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90));
         TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
@@ -126,24 +129,24 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.5));
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar)
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar2)
                 .setTangent(posMultiplier*Math.toRadians(-150.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-150.0));
         TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.5));
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(125.0));
+                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(125.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(35.0))
-                .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(35.0));
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(35.0));
 
-        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar)
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
                 .setTangent(posMultiplier*Math.toRadians(-90))
                 .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-90));
 
