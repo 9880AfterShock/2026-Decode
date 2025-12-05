@@ -405,11 +405,11 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
+                                actionManager.rev(rpm),
                                 toShoot3.build()
                         ),
 
                         //Third volley start
-                        actionManager.rev(rpm),
                         waitRev3.build(),
 
                         actionManager.shotCue(7),
