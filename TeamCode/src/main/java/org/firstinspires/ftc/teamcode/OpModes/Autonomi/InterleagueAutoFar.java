@@ -20,13 +20,14 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 6")
+@Autonomous(name = "Far zone 9")
 public class InterleagueAutoFar extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -44,7 +45,7 @@ public class InterleagueAutoFar extends LinearOpMode {
         Shield.initLocking(this);
 
         double rpm = 4100;
-        double shotCooldown = 0.2+0.6;
+        double shotCooldown = 0.2+0.2;
 
         double posMultiplier = 1.0;
         double waitTime = 0.0;
@@ -122,10 +123,24 @@ public class InterleagueAutoFar extends LinearOpMode {
         TrajectoryActionBuilder pickupThird1 = drive.actionBuilder(secondPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
+        TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
+
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar)
+                .setTangent(posMultiplier*Math.toRadians(-150.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-150.0));
+        TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
                 .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(125.0));
+
+        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup1)
+                .setTangent(posMultiplier*Math.toRadians(35.0))
+                .splineToLinearHeading(shootPosFar, posMultiplier*Math.toRadians(35.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar)
                 .setTangent(posMultiplier*Math.toRadians(-90))
@@ -199,48 +214,42 @@ public class InterleagueAutoFar extends LinearOpMode {
                         actionManager.derev(),
                         //First volley end
 
+                        toPickup1.build(),
 
                         //First pickup start
-                        Arm.AutoArmOut(),
-                        Shield.AutoShieldLock(),
-                        Roller.AutoIntakeOn(),
-
-                        toPickup1.build(),
-                        //intake is turned on earlier to be safe
-                        pickupFirst1.build(),
-                        waitBallIn1.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer1.build(),
-                        QuickSpindexer.turnLeft(),
-
-                        Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
-                        pickupSecond1.build(),
-                        waitBallIn2.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer2.build(),
-                        QuickSpindexer.turnLeft(),
-
-                        Arm.AutoArmOut(),
-                        Roller.AutoIntakeOn(),
-                        pickupThird1.build(),
-                        waitBallIn3.build(),
-                        Arm.AutoArmInWait(),
-                        Roller.AutoIntakeOff(),
-                        waitBallInSpindexer3.build(),
+                        new ParallelAction(
+                                slowPickup1.build(),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Distance.waitForBallPassed()
+                                )
+                        ),
                         //First Pickup End
 
                         //Sort
                         new ParallelAction(
+                                new SequentialAction(
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.toMotifFrom(Motif.PPG)
+                                ),
                                 Shield.AutoShieldShoot(),
-                                QuickSpindexer.toMotifFrom(Motif.PPG),
                                 toShoot2.build()
                         ),
-//                        Limelight.AutoAim2(shootPosFar, drive, posMultiplier, 125.0, 125.0)
-//                        )); Actions.runBlocking(new SequentialAction(
-//                        Limelight.alignShoot2.build(),
 
                         //Second volley start
                         actionManager.rev(rpm),
@@ -268,7 +277,68 @@ public class InterleagueAutoFar extends LinearOpMode {
                         actionManager.derev(),
                         //Second volley end
 
-                        QuickSpindexer.resetForTele(), //should change later
+                        //Second pickup start
+                        new ParallelAction(
+                                slowPickup2.build(),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmInWait(),
+                                        Distance.waitForBallPassed(),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Distance.waitForBallPassed()
+                                )
+                        ),
+                        //Second Pickup End
+
+                        //Sort
+                        new ParallelAction(
+                                new SequentialAction(
+                                        Arm.AutoArmInWait(),
+                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                ),
+                                Shield.AutoShieldShoot(),
+                                toShoot3.build()
+                        ),
+
+                        //Third volley start
+                        actionManager.rev(rpm),
+
+                        actionManager.shotCue(7),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(8),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(9),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.derev(),
+                        //Second volley end
+
+//                        QuickSpindexer.resetForTele(), //should change later
                         toPark.build()
                 )
         );
