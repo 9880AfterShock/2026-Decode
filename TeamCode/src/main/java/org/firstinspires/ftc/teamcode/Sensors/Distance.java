@@ -53,4 +53,19 @@ public class Distance { // Prefix for commands
             }
         };
     }
+
+    public static Action waitForBallInDelay() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 2.0);
+            }
+        };
+    }
 }

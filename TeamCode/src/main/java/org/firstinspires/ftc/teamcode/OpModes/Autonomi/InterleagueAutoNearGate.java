@@ -102,7 +102,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 //        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d gatePose1 = new Pose2d(0.0, -55.0, Math.toRadians(-90.0));
+        Pose2d gatePose1 = new Pose2d(3.0, -55.0, Math.toRadians(-90.0));
 
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -138,7 +138,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                 .splineToLinearHeading(gatePose1, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder openGate1 = drive.actionBuilder(gatePose1)
-                .waitSeconds(1.0);
+                .waitSeconds(0.1);
 //        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
 //                .setTangent(posMultiplier*Math.toRadians(-90.0))
 //                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
@@ -307,7 +307,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallInDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )
@@ -347,7 +347,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                 Shield.AutoShieldShoot(),
                                 toGate1.build()
                         ),
-                        openGate1.build(),
+//                        openGate1.build(),
 
                         toShoot2.build(),
 //                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0),
@@ -404,7 +404,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallIn(),
+                                        Distance.waitForBallInDelay(),
                                         Roller.AutoIntakeOff(),
                                         Distance.waitForBallPassed()
                                 )
@@ -414,7 +414,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                        QuickSpindexer.toMotifFrom(Motif.PPG)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 toShoot3.build()
