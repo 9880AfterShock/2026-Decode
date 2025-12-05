@@ -102,7 +102,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 //        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d gatePose = new Pose2d(0.0, -55.0, Math.toRadians(0.0));
+        Pose2d gatePose1 = new Pose2d(0.0, -55.0, Math.toRadians(-90.0));
 
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -134,10 +134,10 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 
         TrajectoryActionBuilder toGate1 = drive.actionBuilder(endPickup1)
                 .setReversed(true)
-                .setTangent(posMultiplier*Math.toRadians(70.0))
-                .splineToLinearHeading(gatePose, posMultiplier*Math.toRadians(-90.0));
+                .setTangent(posMultiplier*Math.toRadians(90))
+                .splineToLinearHeading(gatePose1, posMultiplier*Math.toRadians(-90.0));
 
-        TrajectoryActionBuilder openGate1 = drive.actionBuilder(gatePose)
+        TrajectoryActionBuilder openGate1 = drive.actionBuilder(gatePose1)
                 .waitSeconds(1.0);
 //        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
 //                .setTangent(posMultiplier*Math.toRadians(-90.0))
@@ -153,7 +153,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 //                .setTangent(posMultiplier*Math.toRadians(-90.0))
 //                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(10.0));
 
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(gatePose)
+        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(gatePose1)
                 .setTangent(posMultiplier*Math.toRadians(130.0))
                 .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0));
 /*
@@ -348,6 +348,8 @@ public class InterleagueAutoNearGate extends LinearOpMode {
                                 toGate1.build()
                         ),
                         openGate1.build(),
+
+                        toShoot2.build(),
 //                        Limelight.AutoAim2(shootPosClose2, drive, posMultiplier, 125.0, 125.0),
 //                        Limelight.alignShoot2.build(),
 
