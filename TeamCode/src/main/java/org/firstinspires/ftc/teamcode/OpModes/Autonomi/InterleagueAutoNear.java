@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 9")
+@Autonomous(name = "Near zone 9*")
 public class InterleagueAutoNear extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -87,7 +87,7 @@ public class InterleagueAutoNear extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
-        Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
+        Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
 //        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
@@ -100,7 +100,7 @@ public class InterleagueAutoNear extends LinearOpMode {
         Pose2d startPickup2 = new Pose2d(14.0, posMultiplier*-28.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-41.0, posMultiplier*-Math.toRadians(90.0));
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
 //        Pose2d firstPickup3 = new Pose2d(35.5, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
@@ -333,7 +333,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.GPP)
+                                        QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 toShoot2.build()
@@ -383,13 +383,13 @@ public class InterleagueAutoNear extends LinearOpMode {
                                         Arm.AutoArmInWait(),
                                         Distance.waitForBallPassed(),
                                         QuickSpindexer.turnLeft(),
-                                        Roller.AutoIntakeOn(),
-                                        Arm.AutoArmOut(),
-                                        Distance.waitForBallIn(),
-                                        Roller.AutoIntakeOff(),
-                                        Arm.AutoArmInWait(),
-                                        Distance.waitForBallPassed(),
-                                        QuickSpindexer.turnLeft(),
+//                                        Roller.AutoIntakeOn(),
+//                                        Arm.AutoArmOut(),
+//                                        Distance.waitForBallIn(),
+//                                        Roller.AutoIntakeOff(),
+//                                        Arm.AutoArmInWait(),
+//                                        Distance.waitForBallPassed(),
+//                                        QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallInShortDelay(),
@@ -402,7 +402,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                        QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 actionManager.rev(rpm),
@@ -425,12 +425,12 @@ public class InterleagueAutoNear extends LinearOpMode {
                         actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
-                        actionManager.shotCue(9),
-                        QuickSpindexer.turnRight(),
-                        actionManager.waitForSpeedSafe(rpm),
-                        Arm.AutoLaunchStart(),
-                        actionManager.waitFor(shotCooldown),
-                        Arm.AutoLaunchEnd(),
+//                        actionManager.shotCue(9),
+//                        QuickSpindexer.turnRight(),
+//                        actionManager.waitForSpeedSafe(rpm),
+//                        Arm.AutoLaunchStart(),
+//                        actionManager.waitFor(shotCooldown),
+//                        Arm.AutoLaunchEnd(),
 
                         actionManager.derev()
                         //Third volley end
