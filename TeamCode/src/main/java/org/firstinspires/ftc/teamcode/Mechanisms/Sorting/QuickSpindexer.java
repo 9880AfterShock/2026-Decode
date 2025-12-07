@@ -195,20 +195,4 @@ public class QuickSpindexer { // Prefix for commands
             }
         };
     }
-
-    public static Action magic8Ball(){ //have g, p, null
-        return new Action() {
-            private boolean first = true;
-            @Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if (first) {
-//                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
-                    first = false;
-                }
-                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
-                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //40 is tick margin of error
-            }
-        };
-    }
 }

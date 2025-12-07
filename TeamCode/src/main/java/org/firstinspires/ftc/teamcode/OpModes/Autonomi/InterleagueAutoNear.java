@@ -401,8 +401,8 @@ public class InterleagueAutoNear extends LinearOpMode {
                         //Sort
                         new ParallelAction(
                                 new SequentialAction(
-                                        Arm.AutoArmInWait(),
-                                        QuickSpindexer.magic8Ball()
+                                        Arm.AutoArmInWait()//,
+//                                        QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 actionManager.rev(rpm),
