@@ -333,7 +333,7 @@ public class InterleagueAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Arm.AutoArmInWait(),
-                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                        QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 toShoot2.build()
