@@ -12,20 +12,26 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Distance { // Prefix for commands
     private static OpMode opmode; // opmode var init
-    private static DistanceSensor sensorDistance;
+    private static DistanceSensor sensorDistanceIntake;
     private static DistanceSensor sensorDistanceSpindexer;
 
     public static void initSensor(OpMode opmode) {
-        sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor"); //Plugged into I2C Bus 0 on expansion hub
-//        sensorDistanceSpindexer = opmode.hardwareMap.get(DistanceSensor.class, "TBD"); //Plugged into I2C Bus 0 on control hub
-        Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) sensorDistance;
+        sensorDistanceIntake = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensorIntake"); //Plugged into I2C Bus 0 on expansion hub
+        sensorDistanceSpindexer = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensorSpindexer"); //Plugged into I2C Bus 0 on control hub
+        Rev2mDistanceSensor sensorTimeOfFlightIntake = (Rev2mDistanceSensor) sensorDistanceIntake;
+        Rev2mDistanceSensor sensorTimeOfFlightSpindexer = (Rev2mDistanceSensor) sensorDistanceSpindexer;
         Distance.opmode = opmode;
     }
 
     public static void updateSensor() {
-        opmode.telemetry.addData("Distance Sensor", sensorDistance.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceIntake.getDistance(DistanceUnit.MM));
     }
 
+
+
+
+    //Old Actions
     public static Action waitForBallIn() {
         return new Action() {
             private boolean first = true;
@@ -36,7 +42,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 2.0);
+                return !(sensorDistanceIntake.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 2.0);
             }
         };
     }
@@ -51,7 +57,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) >= 100 || opmode.getRuntime() - scanTime >= 1.0);
+                return !(sensorDistanceIntake.getDistance(DistanceUnit.MM) >= 100 || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
     }
@@ -66,7 +72,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(sensorDistance.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 1.9);
+                return !(sensorDistanceIntake.getDistance(DistanceUnit.MM) <= 100 || opmode.getRuntime() - scanTime >= 1.9);
             }
         };
     }
