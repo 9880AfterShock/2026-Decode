@@ -113,6 +113,16 @@ public class Limelight {
         }
         return null;
     }
+
+    public static Pose2d getPositionAuto() { //MetaTag2
+        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees());
+        LLResult result = limelight.getLatestResult();
+
+        if (result != null && result.isValid()) {
+            return new Pose2d(result.getBotpose_MT2().getPosition().x*METER_TO_INCH, result.getBotpose_MT2().getPosition().y*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw() /*- 90 */)); //convert from wipilib cords in meters to ftc cords in inches
+        }
+        return null;
+    }
     //
     // public static List<LLResultTypes.FiducialResult> getFiducial() { //
     //     YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
@@ -231,7 +241,7 @@ public class Limelight {
     public static Action Relocalize(MecanumDrive drive) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                Pose2d currentPos = getPosition();
+                Pose2d currentPos = getPositionAuto();
                 if (currentPos == null) {
                     return true;
                 } else {
