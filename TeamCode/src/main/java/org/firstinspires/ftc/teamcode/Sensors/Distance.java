@@ -25,7 +25,7 @@ public class Distance { // Prefix for commands
 
     public static void updateSensor() {
         opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
-        opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceIntake.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceSpindexer.getDistance(DistanceUnit.MM));
     }
 
 
