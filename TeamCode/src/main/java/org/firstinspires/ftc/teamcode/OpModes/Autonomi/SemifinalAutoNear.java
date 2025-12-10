@@ -87,7 +87,8 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
-        Pose2d shootPosClose1 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
+        Pose2d shootPosClose1PreAim = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
+        Pose2d shootPosClose1Aim = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
         Pose2d shootPosClose2 = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
         Pose2d shootPosClose3 = new Pose2d(-48.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
 //        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
@@ -116,13 +117,13 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(scanPos)
                 .setTangent(posMultiplier*Math.toRadians(55.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(55.0));
+                .splineToLinearHeading(shootPosClose1PreAim, posMultiplier*Math.toRadians(55.0));
 
         TrajectoryActionBuilder toShootNoScan = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(35.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
+                .splineToLinearHeading(shootPosClose1PreAim, posMultiplier*Math.toRadians(35.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1Aim)
                 .setTangent(posMultiplier*Math.toRadians(70.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-70.0));
         TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
@@ -171,9 +172,9 @@ public class SemifinalAutoNear extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(145.0))
                 .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
 
-        TrajectoryActionBuilder aimShoot1 = drive.actionBuilder(shootPosClose1)
-                .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(145.0));
+        TrajectoryActionBuilder aimShoot1 = drive.actionBuilder(shootPosClose1PreAim)
+                .setTangent(posMultiplier*Math.toRadians(0))
+                .splineToLinearHeading(shootPosClose1Aim, posMultiplier*Math.toRadians(0));
 /*
         TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(20.0))
