@@ -97,7 +97,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 30.0);
+                return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
     }

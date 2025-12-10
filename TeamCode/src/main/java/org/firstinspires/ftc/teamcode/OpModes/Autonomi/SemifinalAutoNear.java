@@ -291,53 +291,29 @@ public class SemifinalAutoNear extends LinearOpMode {
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
-                                        Roller.AutoIntakeOff(),
-                                        Distance.waitForBallInSpindexer()
+                                        Roller.AutoIntakeOff()
                                 )
                         ),
-                        //intake is turned on earlier to be safe
-//                        pickupFirst1.build(),
-//                        waitBallIn1.build(),
-//                        Arm.AutoArmInWait(),
-//                        Roller.AutoIntakeOff(),
-//                        waitBallInSpindexer1.build(),
-//                        QuickSpindexer.turnLeft(),
-//
-//                        Arm.AutoArmOut(),
-//                        Roller.AutoIntakeOn(),
-//                        pickupSecond1.build(),
-//                        waitBallIn2.build(),
-//                        Arm.AutoArmInWait(),
-//                        Roller.AutoIntakeOff(),
-//                        waitBallInSpindexer2.build(),
-//                        QuickSpindexer.turnLeft(),
-//
-//                        Arm.AutoArmOut(),
-//                        Roller.AutoIntakeOn(),
-//                        pickupThird1.build(),
-//                        waitBallIn3.build(),
-//                        Arm.AutoArmInWait(),
-//                        Roller.AutoIntakeOff(),
-//                        waitBallInSpindexer3.build(),
                         //First Pickup End
 
                         //Sort
                         new ParallelAction(
                                 new SequentialAction(
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
@@ -384,28 +360,28 @@ public class SemifinalAutoNear extends LinearOpMode {
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
-                                        Roller.AutoIntakeOff(),
-                                        Distance.waitForBallInSpindexer()
+                                        Roller.AutoIntakeOff()
                                 )
                         ),
 
                         //Sort
                         new ParallelAction(
                                 new SequentialAction(
-                                        Arm.AutoArmInWait(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
