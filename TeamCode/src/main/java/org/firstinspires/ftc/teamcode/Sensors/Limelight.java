@@ -228,48 +228,16 @@ public class Limelight {
         };
     }
 
-    public static Action AutoAim1(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
+    public static Action Relocalize(MecanumDrive drive) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (getPosition() == null) {
+                Pose2d currentPos = getPosition();
+                if (currentPos == null) {
                     return true;
+                } else {
+                    drive.localizer.setPose(currentPos);
+                    return false;
                 }
-
-                double dx = targetPos.position.x - currentPosShoot2.position.x;
-                double dy = targetPos.position.y - currentPosShoot2.position.y;
-
-
-                currentPosShoot1 = getPosition();
-                if (TeleOp.alliance == Alliance.RED){
-                    currentPosShoot1 = new Pose2d(-currentPosShoot1.position.x, -currentPosShoot1.position.y, currentPosShoot1.heading.toDouble());
-                }
-
-                alignShoot1 = drive.actionBuilder(currentPosShoot1)
-                        .strafeToLinearHeading(new Vector2d(0.0, 0.0), 0.0);
-//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
-//                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
-                return false;
-            }
-        };
-    }
-
-    public static Action AutoAim2(Pose2d targetPos, MecanumDrive drive, double posMultiplier, double tangentStart, double tangentEnd) {
-        return new Action() {
-            public boolean run(@NonNull TelemetryPacket packet) {
-                if (getPosition() == null) {
-                    return true;
-                }
-
-                currentPosShoot2 = getPosition();
-                if (TeleOp.alliance == Alliance.RED){
-                    currentPosShoot2 = new Pose2d(-currentPosShoot2.position.x, -currentPosShoot2.position.y, currentPosShoot2.heading.toDouble());
-                }
-
-                alignShoot2 = drive.actionBuilder(currentPosShoot2)
-                        .strafeToLinearHeading(new Vector2d(0.0, 0.0), 0.0);
-//                        .setTangent(posMultiplier*Math.toRadians(tangentStart))
-//                        .splineToLinearHeading(targetPos, posMultiplier*Math.toRadians(tangentEnd));
-                return false;
             }
         };
     }
