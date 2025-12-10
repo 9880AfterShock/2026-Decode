@@ -13,9 +13,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class Distance { // Prefix for commands
     private static OpMode opmode; // opmode var init
     private static DistanceSensor sensorDistance;
+    private static DistanceSensor sensorDistanceSpindexer;
 
     public static void initSensor(OpMode opmode) {
         sensorDistance = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensor"); //Plugged into I2C Bus 0 on expansion hub
+//        sensorDistanceSpindexer = opmode.hardwareMap.get(DistanceSensor.class, "TBD"); //Plugged into I2C Bus 0 on control hub
         Rev2mDistanceSensor sensorTimeOfFlight = (Rev2mDistanceSensor) sensorDistance;
         Distance.opmode = opmode;
     }
