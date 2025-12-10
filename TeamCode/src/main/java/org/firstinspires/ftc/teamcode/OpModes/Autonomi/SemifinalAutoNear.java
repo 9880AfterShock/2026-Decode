@@ -249,7 +249,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         ),
 
                         waitVariable.build(),
-                        Limelight.Relocalize(drive),
+//                        Limelight.Relocalize(drive),
                         aimShoot1.build(),
 
                         //First volley start
@@ -292,20 +292,20 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmInWait(),
-                                        Distance.waitForBallPassed(),
+                                        Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmInWait(),
-                                        Distance.waitForBallPassed(),
+                                        Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInShortDelay(),
+                                        Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Distance.waitForBallPassed()
+                                        Distance.waitForBallInSpindexer()
                                 )
                         ),
                         //intake is turned on earlier to be safe
@@ -346,7 +346,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         ),
 
                         //Second volley start
-                        Limelight.Relocalize(drive),
+//                        Limelight.Relocalize(drive),
                         aimShoot2.build(),
 
                         actionManager.shotCue(4),
@@ -385,20 +385,20 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmInWait(),
-                                        Distance.waitForBallPassed(),
+                                        Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.turnLeft(),
-//                                        Roller.AutoIntakeOn(),
-//                                        Arm.AutoArmOut(),
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmInWait(),
-//                                        Distance.waitForBallPassed(),
-//                                        QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
-                                        Distance.waitForBallInShortDelay(),
+                                        Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
-                                        Distance.waitForBallPassed()
+                                        Arm.AutoArmInWait(),
+                                        Distance.waitForBallInSpindexer(),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Distance.waitForBallInSpindexer()
                                 )
                         ),
 
@@ -414,7 +414,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         ),
 
                         //Third volley start
-                        Limelight.Relocalize(drive),
+//                        Limelight.Relocalize(drive),
                         aimShoot3.build(),
 
                         actionManager.shotCue(7),
