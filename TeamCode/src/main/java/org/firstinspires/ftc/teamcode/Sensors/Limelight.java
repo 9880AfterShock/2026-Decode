@@ -114,7 +114,7 @@ public class Limelight {
         return null;
     }
 
-    public static Pose2d getPositionAuto() { //MetaTag2
+    public static Pose2d getPositionAutoRed() { //MetaTag2
         limelight.updateRobotOrientation(Gyroscope.getRotationDegrees());
         LLResult result = limelight.getLatestResult();
 
@@ -241,12 +241,19 @@ public class Limelight {
     public static Action Relocalize(MecanumDrive drive) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                Pose2d currentPos = getPosition();
+                Pose2d currentPos;
+                if (TeleOp.alliance == Alliance.RED) {
+                    currentPos = getPositionAutoRed();
+                } else {
+                    currentPos = getPosition();
+                }
                 if (currentPos == null) {
                     return true;
                 } else {
+
                     packet.put("old pose", drive.localizer.getPose());
                     drive.localizer.setPose(currentPos);
+                    packet.put("cur pose", currentPos.position.toString());
                     packet.put("new pose", drive.localizer.getPose());
                     return false;
                 }
