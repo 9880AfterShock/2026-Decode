@@ -81,7 +81,7 @@ public class DriveTrain { // Prefix for commands
 
         goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
-        aimingPID = new PID(-0.025,0,0.015,3);
+        aimingPID = new PID(-0.01,-0.0,0.008,1);
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
