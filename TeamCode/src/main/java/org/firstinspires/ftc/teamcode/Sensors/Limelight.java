@@ -241,11 +241,13 @@ public class Limelight {
     public static Action Relocalize(MecanumDrive drive) {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                Pose2d currentPos = getPositionAuto();
+                Pose2d currentPos = getPosition();
                 if (currentPos == null) {
                     return true;
                 } else {
+                    packet.put("old pose", drive.localizer.getPose());
                     drive.localizer.setPose(currentPos);
+                    packet.put("new pose", drive.localizer.getPose());
                     return false;
                 }
             }

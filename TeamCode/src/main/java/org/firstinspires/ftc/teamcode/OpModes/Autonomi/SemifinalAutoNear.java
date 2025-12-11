@@ -249,7 +249,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         ),
 
                         waitVariable.build(),
-//                        Limelight.Relocalize(drive),
+                        Limelight.Relocalize(drive),
                         aimShoot1.build(),
 
                         //First volley start
