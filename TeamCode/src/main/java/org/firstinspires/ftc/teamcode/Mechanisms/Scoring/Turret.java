@@ -12,6 +12,8 @@ public class Turret {
     private static AnalogInput leftEncoder; //Left servo feedback wire
     private static AnalogInput rightEncoder; //Right servo feedback wire
     public static double targetPosition = 0.0;
+    public static double currentPosition = 0.0;
+
 
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
@@ -20,13 +22,16 @@ public class Turret {
 //        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
 
         targetPosition = 0.0;
+        currentPosition = getPosition();
         Turret.opmode = opmode;
     }
 
     public static void updateTurret(double increment) { // init motor
         targetPosition += increment;
 
-        double difference = targetPosition - getPosition();
+        updatePosition();
+
+        double difference = (targetPosition - currentPosition);
         setPower(Range.clip(difference,-1,1)); //PID goes here
 
         opmode.telemetry.addData("Turret", "WIP");
@@ -35,7 +40,16 @@ public class Turret {
     }
 
     private static double getPosition(){
-        return /*((*/(leftEncoder.getVoltage() / 3.3) * 360/*) + ((rightEncoder.getVoltage() / 3.3) * 360))/2*/; //average 2 encoder poses, might need to reset
+        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
+    }
+
+    private static void updatePosition(){
+        double diff = getPosition() - (currentPosition%360);
+        if (diff > 200) {
+            currentPosition += diff-360;
+        } else {
+            currentPosition += diff;
+        }
     }
 
     private static void setPower(double motorPower){ //set servo power from a hypothetical point of a motor controlling the turret
