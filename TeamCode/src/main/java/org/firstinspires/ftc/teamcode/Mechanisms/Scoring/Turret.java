@@ -16,8 +16,8 @@ public class Turret {
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
 //        rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into ___
-        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftTurret"); // plugged into ___
-//        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightTurret"); // plugged into ___
+        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
+//        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
 
         targetPosition = 0.0;
         Turret.opmode = opmode;
@@ -27,9 +27,11 @@ public class Turret {
         targetPosition += increment;
 
         double difference = targetPosition - getPosition();
-        setPower(Range.clip(difference*0.0001,-1,1)); //PID goes here
+        setPower(Range.clip(difference,-1,1)); //PID goes here
 
         opmode.telemetry.addData("Turret", "WIP");
+        opmode.telemetry.addData("TargetPos", targetPosition);
+        opmode.telemetry.addData("CurrentPos", getPosition());
     }
 
     private static double getPosition(){
