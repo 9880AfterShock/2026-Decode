@@ -102,7 +102,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 //        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-43.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d gatePose1 = new Pose2d(3.0, -55.0, Math.toRadians(-90.0));
+        Pose2d gatePose1 = new Pose2d(3.0, posMultiplier*-55.0, Math.toRadians(-90.0));
 
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
