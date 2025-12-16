@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
-public class PID {
+public class PID extends PIDAbstract {
     public double maxi;
     public double p;
     public double i;
@@ -24,17 +24,14 @@ public class PID {
         this.maxi = maxi;
     }
 
+    @Override
     public double step(double error) {
-        double out =  (error*p)+((this.lasterr-error)*d)+(this.iaccum*i);
+        double out = (error * p) + ((this.lasterr - error) * d) + (this.iaccum * i);
         this.lasterr = error;
         this.iaccum += error;
         if (this.maxi != 0) {
-            this.iaccum = Math.min(Math.max(this.iaccum,-this.maxi),this.maxi);
+            this.iaccum = Math.min(Math.max(this.iaccum, -this.maxi), this.maxi);
         }
         return out;
-    }
-
-    public double step(double goal, double current) {
-        return step(goal-current);
     }
 }
