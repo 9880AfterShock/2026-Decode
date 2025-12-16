@@ -63,4 +63,13 @@ public class Hood {
             }
         };
     }
+
+    public static Action AutoHoodUp() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                hood.setPosition(farPosition);
+                return false;
+            }
+        };
+    }
 }

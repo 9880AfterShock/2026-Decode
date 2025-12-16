@@ -32,7 +32,8 @@ public class Turret {
         updatePosition();
 
         double difference = (targetPosition - currentPosition);
-        setPower(Range.clip(difference,-1,1)); //PID goes here
+//        setPower(Range.clip(difference,-1,1)); //PID goes here
+        setPower(increment); //for now
 
         opmode.telemetry.addData("Turret", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
