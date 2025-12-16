@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Aimbot Near zone 9")
+@Autonomous(name = "Near zone 9")
 public class SemifinalAutoNear extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -49,28 +49,28 @@ public class SemifinalAutoNear extends LinearOpMode {
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
-        double waitTime = 0.0;
+//        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
-            telemetry.addLine("Use dpad to change delay, and x and b to select alliance");
+            telemetry.addLine("Use x and b to select alliance");
             if (gamepad1.xWasPressed()){
                 posMultiplier = 1.0;
             }
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
             }
-            if (gamepad1.dpadUpWasPressed()){
-                waitTime += 1.0;
-            }
-            if (gamepad1.dpadDownWasPressed()){
-                waitTime -= 1.0;
-            }
-            if (waitTime < 0.0){
-                waitTime = 0.0;
-            }
-            if (waitTime > 2.0){
-                waitTime = 2.0;
-            }
-            telemetry.addData("Wait time", waitTime);
+//            if (gamepad1.dpadUpWasPressed()){
+//                waitTime += 1.0;
+//            }
+//            if (gamepad1.dpadDownWasPressed()){
+//                waitTime -= 1.0;
+//            }
+//            if (waitTime < 0.0){
+//                waitTime = 0.0;
+//            }
+//            if (waitTime > 2.0){
+//                waitTime = 2.0;
+//            }
+//            telemetry.addData("Wait time", waitTime);
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
                 TeleOp.alliance = Alliance.BLUE;
@@ -87,22 +87,14 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         //Poses
         Pose2d scanPos = new Pose2d(-27.0, posMultiplier*-27.0, posMultiplier*Math.toRadians(-25.0));
-        Pose2d shootPosClose1PreAim = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
-        Pose2d shootPosClose1Aim = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
-        Pose2d shootPosClose2PreAim = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
-        Pose2d shootPosClose2Aim = new Pose2d(-25.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
-        Pose2d shootPosClose3PreAim = new Pose2d(-47.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
-        Pose2d shootPosClose3Aim = new Pose2d(-48.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
-//        Pose2d parkPosClose = new Pose2d(-60.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosClose1 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(53.0));
+        Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(50.0));
+        Pose2d shootPosClose3 = new Pose2d(-47.0, posMultiplier*-10.0, posMultiplier*Math.toRadians(80.0));
 
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-28.0, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d firstPickup1 = new Pose2d(-12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d secondPickup1 = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d startPickup2 = new Pose2d(14.0, posMultiplier*-28.0, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d firstPickup2 = new Pose2d(12.0, posMultiplier*-32.0, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d secondPickup2 = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(14.0, posMultiplier*-41.0, posMultiplier*-Math.toRadians(90.0));
 
 //        Pose2d startPickup3 = new Pose2d(35.5, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -119,70 +111,34 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(scanPos)
                 .setTangent(posMultiplier*Math.toRadians(55.0))
-                .splineToLinearHeading(shootPosClose1PreAim, posMultiplier*Math.toRadians(55.0));
+                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(55.0));
 
         TrajectoryActionBuilder toShootNoScan = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(35.0))
-                .splineToLinearHeading(shootPosClose1PreAim, posMultiplier*Math.toRadians(35.0));
+                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1Aim)
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(70.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-70.0));
-        TrajectoryActionBuilder slowPickup1 = drive.actionBuilder(startPickup1)
+        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
-//        TrajectoryActionBuilder pickupFirst1 = drive.actionBuilder(startPickup1)
-//                .setTangent(posMultiplier*Math.toRadians(-90.0))
-//                .splineToLinearHeading(firstPickup1, posMultiplier*Math.toRadians(-90.0));
-//        TrajectoryActionBuilder pickupSecond1 = drive.actionBuilder(firstPickup1)
-//                .setTangent(posMultiplier*Math.toRadians(-90.0))
-//                .splineToLinearHeading(secondPickup1, posMultiplier*Math.toRadians(-90.0));
-//        TrajectoryActionBuilder pickupThird1 = drive.actionBuilder(secondPickup1)
-//                .setTangent(posMultiplier*Math.toRadians(-90.0))
-//                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0));
-        //need color sensor/proximity sensor/ distance sensor for this version:
-//        TrajectoryActionBuilder pickupFirstRow = drive.actionBuilder(startPickup1)
-//                .setTangent(posMultiplier*Math.toRadians(-90.0))
-//                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(10.0));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose2PreAim, posMultiplier*Math.toRadians(125.0));
-/*
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose)
-                .setTangent(posMultiplier*Math.toRadians(30.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-30.0));
-        TrajectoryActionBuilder pickupFirst2 = drive.actionBuilder(startPickup2)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(firstPickup2, posMultiplier*Math.toRadians(-90.0));
-        TrajectoryActionBuilder pickupSecond2 = drive.actionBuilder(firstPickup2)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(secondPickup2, posMultiplier*Math.toRadians(-90.0));
-        TrajectoryActionBuilder pickupThird2 = drive.actionBuilder(secondPickup2)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0));
-*/
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2Aim)
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0));
+        
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(45.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-45.0));
 
-        TrajectoryActionBuilder slowPickup2 = drive.actionBuilder(startPickup2)
+        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickup2)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose3PreAim, posMultiplier*Math.toRadians(145.0));
-
-        TrajectoryActionBuilder aimShoot1 = drive.actionBuilder(shootPosClose1PreAim)
-                .setTangent(posMultiplier*Math.toRadians(0))
-                .splineToLinearHeading(shootPosClose1Aim, posMultiplier*Math.toRadians(0));
-        TrajectoryActionBuilder aimShoot2 = drive.actionBuilder(shootPosClose2PreAim)
-                .setTangent(posMultiplier*Math.toRadians(0))
-                .splineToLinearHeading(shootPosClose2Aim, posMultiplier*Math.toRadians(0));
-        TrajectoryActionBuilder aimShoot3 = drive.actionBuilder(shootPosClose3PreAim)
-                .setTangent(posMultiplier*Math.toRadians(0))
-                .splineToLinearHeading(shootPosClose3Aim, posMultiplier*Math.toRadians(0));
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
 /*
         TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosClose)
                 .setTangent(posMultiplier*Math.toRadians(20.0))
@@ -206,8 +162,8 @@ public class SemifinalAutoNear extends LinearOpMode {
 //                .setTangent(posMultiplier*Math.toRadians(180.0))
 //                .splineToLinearHeading(parkPosClose, posMultiplier*Math.toRadians(-180.0));
 
-        TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosClose)
-                .waitSeconds(waitTime);
+//        TrajectoryActionBuilder waitVariable = drive.actionBuilder(startPosClose)
+//                .waitSeconds(waitTime);
 
 //        TrajectoryActionBuilder waitBallIn1 = drive.actionBuilder(startPosClose)
 //                .waitSeconds(0.3);
@@ -226,7 +182,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                 .waitSeconds(20.0);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3Aim.heading.toDouble());
+        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
 
 
         waitForStart();
@@ -248,9 +204,9 @@ public class SemifinalAutoNear extends LinearOpMode {
                                 toShoot1.build()
                         ),
 
-                        waitVariable.build(),
+//                        waitVariable.build(),
 //                        Limelight.Relocalize(drive),
-                        aimShoot1.build(),
+//                        aimShoot1.build(),
 
                         //First volley start
 //                        actionManager.rev(rpm),
@@ -287,7 +243,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         toPickup1.build(),
 
                         new ParallelAction(
-                                slowPickup1.build(),
+                                pickup1.build(),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
@@ -323,7 +279,7 @@ public class SemifinalAutoNear extends LinearOpMode {
 
                         //Second volley start
 //                        Limelight.Relocalize(drive),
-                        aimShoot2.build(),
+//                        aimShoot2.build(),
 
                         actionManager.shotCue(4),
                         actionManager.waitForSpeedSafe(rpm),
@@ -356,7 +312,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         toPickup2.build(),
 
                         new ParallelAction(
-                                slowPickup2.build(),
+                                pickup2.build(),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
@@ -391,7 +347,7 @@ public class SemifinalAutoNear extends LinearOpMode {
 
                         //Third volley start
 //                        Limelight.Relocalize(drive),
-                        aimShoot3.build(),
+//                        aimShoot3.build(),
 
                         actionManager.shotCue(7),
                         actionManager.waitForSpeedSafe(rpm),
