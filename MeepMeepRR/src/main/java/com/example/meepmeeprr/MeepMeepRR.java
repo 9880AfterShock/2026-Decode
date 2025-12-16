@@ -27,6 +27,7 @@ public class MeepMeepRR {
 //        Pose2d parkPosFar = new Pose2d(60.0, -38.0, Math.toRadians(90.0));
         Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(-35.0));
         Pose2d scanPos = new Pose2d(-35.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-45.0));
+
         Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
         Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
         Pose2d shootPosClose3 = new Pose2d(-32.0, posMultiplier*-18.0, posMultiplier*Math.toRadians(55.0));
