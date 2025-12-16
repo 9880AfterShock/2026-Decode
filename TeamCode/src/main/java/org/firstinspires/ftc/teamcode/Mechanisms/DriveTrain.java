@@ -22,7 +22,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
+import org.firstinspires.ftc.teamcode.Systems.MultiPID;
 import org.firstinspires.ftc.teamcode.Systems.PID;
+import org.firstinspires.ftc.teamcode.Systems.PIDAbstract;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
@@ -38,7 +40,7 @@ public class DriveTrain { // Prefix for commands
     private static boolean slowModeButtonPreviouslyPressed = false;
     private static double rotation;
     private static IMU imu;
-    private static PID aimingPID;
+    private static PIDAbstract aimingPID;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
     private static Pose2d goalTarget = new Pose2d(-57.0, -57.0, Math.toRadians(0.0));
@@ -81,7 +83,10 @@ public class DriveTrain { // Prefix for commands
 
         goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
-        aimingPID = new PID(-0.01,-0.0,0.008,1);
+        aimingPID = new MultiPID(new PID(-0.01,0.0,0.008,1))
+                .addPID(new PID(-0.02,0.0,0.008,1),10);
+
+
     }
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
