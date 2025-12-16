@@ -42,7 +42,7 @@ public class ControlManager {
 
     private static boolean prevInstake;
 
-    public static boolean shot = false;
+    public static boolean shot = true;
 //    public static boolean canSpin = true;
     public static Supplier<Color> sensor;
     public static AdafruitI2cColorSensor color_sensor;
@@ -58,8 +58,8 @@ public class ControlManager {
         operator = opMode.gamepad2;
         spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
         classifier = new ColorClassifier<>(BallType.NONE,3);
-        classifier.addColor((new Color((double) 0.287, (double) 0.48, (double) 0.46, ColorType.RGB)).asHSV(), BallType.GREEN);
-        classifier.addColor((new Color((double) 0.292, (double) 0.475, (double) 0.458,ColorType.RGB)).asHSV(), BallType.PURPLE);
+        classifier.addColor((new Color((double) 0.278, (double) 0.465, (double) 0.432, ColorType.RGB)).asHSV(), BallType.GREEN);
+        classifier.addColor((new Color((double) 0.28417, (double) 0.455, (double) 0.43,ColorType.RGB)).asHSV(), BallType.PURPLE);
     }
 
     public static void update(boolean flipField) { //false is blue, true is red
@@ -87,6 +87,7 @@ public class ControlManager {
         boolean ejecting = driver.left_bumper;
 
         //DriverTest
+        boolean auto_shoot = operator.left_bumper;
         boolean increase = driver.dpadUpWasPressed();
         boolean decrease = driver.dpadDownWasPressed();
         boolean rev = operator.a;
@@ -95,10 +96,6 @@ public class ControlManager {
 
         //Hood
         boolean change_mode = operator.yWasPressed();
-
-//        Color Detection
-        boolean see_color = operator.bWasPressed();
-        boolean goto_motif = operator.leftBumperWasPressed();
 
         //BallRamp
 //        boolean cycleRamp = driver.bWasPressed();
@@ -113,10 +110,10 @@ public class ControlManager {
         //Obelisk.update();
         //SpindexerCamera.update();
         Alignment.updateAlignment();
+        opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
+        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE))) && canFire, speed);
 
-        Roller.updateIntake(intaking, ejecting, fire && canFire, speed);
-
-        Arm.updateIntake(intaking, ejecting, canFire);
+        Arm.updateIntake(intaking, ejecting, canFire || (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&canFire));
 
 //        Distance.updateSensor();
 
@@ -127,7 +124,7 @@ public class ControlManager {
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
         NormalizedRGBA color_test = color_sensor.getNormalizedColors();
         opMode.telemetry.addData("sensed color", color_test.red+", "+color_test.green+", "+color_test.blue);
-        if (see_color) {
+        if (Distance.ballInSpindexer() && spindexer.isLinedUp() && !auto_shoot) {
                 NormalizedRGBA color = color_sensor.getNormalizedColors();
                 Color data = new Color(color.red, color.green, color.blue, ColorType.RGB);
                 opMode.telemetry.addData("color: ", data.getRed()+", "+data.getGreen()+", "+data.getBlue());
@@ -137,13 +134,15 @@ public class ControlManager {
                 } else if (classification == BallType.PURPLE) {
                     spindexer.queueMessage(SpindexerMessage.INPURPLE);
                 }
+        } else if (spindexer.isLinedUp() && !auto_shoot) {
+            spindexer.queueMessage(SpindexerMessage.EJECT);
         }
 
-//        if (goto_motif) {
-//            spindexer.gotoMotif(Obelisk.motif);
-//        }
+        if (spindexer.isLinedUp() && auto_shoot && spindexer.getCurrentBall() == BallType.NONE) {
+            spindexer.queueMessage(SpindexerMessage.LEFT);
+        }
 
-        DriverTest.update(increase, decrease, fire, rev, intake_shooter, false);
+        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
         Shield.updateLocking(rev);
 
         if (spinLeft) {
@@ -152,19 +151,6 @@ public class ControlManager {
         if (spinRight) {
             spindexer.queueMessage(SpindexerMessage.LEFT);
         }
-//        if (cycleRamp) {
-//            canSpin = false;
-//            spindexer.queueMessage(SpindexerMessage.LINEUP);
-//            RunCondition.addAction(new ConditionAction(() -> {ballRamp.queueMessage(BallRampMessage.CYCLE); RunLater.addAction(new DelayedAction(() -> canSpin = true, 0.9));}, spindexer::isLinedUp));
-//        }
-//
-//        if (spinLeft && ((ballRamp.state == BallRampState.DOWN && shot)||ballRamp.state == BallRampState.UP) && canSpin) {
-//            shot = false;
-//            spindexer.queueMessage(SpindexerMessage.RIGHT);
-//        }
-//        if (spinRight && ballRamp.state == BallRampState.UP && canSpin) {
-//            spindexer.queueMessage(SpindexerMessage.LEFT);
-//        }
         if (operator.start && operator.back) {
             Spindexer.reset = true;
         }
