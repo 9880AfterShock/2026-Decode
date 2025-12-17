@@ -28,6 +28,8 @@ public class Distance { // Prefix for commands
     public static void updateSensor() {
         opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
         opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceSpindexer.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Ball In Intake", ballInIntake());
+        opmode.telemetry.addData("Ball In Spindexer", ballInSpindexer());
     }
 
     public static boolean ballInSpindexer(){
@@ -37,10 +39,6 @@ public class Distance { // Prefix for commands
     public static boolean ballInIntake(){
         return sensorDistanceIntake.getDistance(DistanceUnit.MM) <= 100;
     }
-
-
-
-
 
     public static Action waitForBallIn() {
         return new Action() {
