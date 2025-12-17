@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 public class DriverTest {
@@ -70,11 +72,14 @@ public class DriverTest {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(rotationsPerMinute-desSpeed) < 200 && fire) {
+                if (ControlManager.shot) {
+                    RunLater.addAction(new DelayedAction(() -> {
+                        ControlManager.shot = true;
+                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
+                    }, 3));
+                }
                 canFire = true;
-//                ControlManager.ballRamp.queueMessage(BallRampMessage.UP);
-                ControlManager.shot = true;
-//                RunLater.addAction(new DelayedAction(() -> {ControlManager.ballRamp.queueMessage(BallRampMessage.DOWN);}, 0.2));
-                ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
+                ControlManager.shot = false;
             } else {
                 canFire = false;
             }
