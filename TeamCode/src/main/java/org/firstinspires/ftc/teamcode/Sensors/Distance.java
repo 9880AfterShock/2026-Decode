@@ -52,8 +52,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                packet.put("DISTANCE SENSOR INTAKE", ballInIntake());
-                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 20.0);
+                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 2.0);
             }
         };
     }
