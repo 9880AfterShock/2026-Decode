@@ -77,7 +77,7 @@ public class SemifinalAutoNear extends LinearOpMode {
         Pose2d scanPos = new Pose2d(-35.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-45.0));
         Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
         Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
-        Pose2d shootPosClose3 = new Pose2d(-32.0, posMultiplier*-18.0, posMultiplier*Math.toRadians(55.0));
+        Pose2d shootPosClose3 = new Pose2d(-35.0, posMultiplier*-18.0, posMultiplier*Math.toRadians(55.0));
 
         Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -212,7 +212,8 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
-                                        Roller.AutoIntakeOff()
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn()
                                 )
                         ),
                         //First Pickup End
@@ -220,7 +221,6 @@ public class SemifinalAutoNear extends LinearOpMode {
                         //Sort 1
                         new ParallelAction(
                                 new SequentialAction(
-                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
@@ -284,14 +284,14 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
                                         Distance.waitForBallIn(),
-                                        Roller.AutoIntakeOff()
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn()
                                 )
                         ),
 
                         //Sort 2
                         new ParallelAction(
                                 new SequentialAction(
-                                        Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
