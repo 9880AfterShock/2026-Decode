@@ -62,7 +62,7 @@ public class MeepMeepRR {
 
                 //to shoot no scan
 //                .setTangent(posMultiplier*Math.toRadians(35.0))
-//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
+//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0))
 
                 //toPickup1
                 .setTangent(posMultiplier*Math.toRadians(0.0))
