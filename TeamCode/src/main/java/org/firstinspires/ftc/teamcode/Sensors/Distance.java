@@ -35,7 +35,7 @@ public class Distance { // Prefix for commands
     }
 
     public static boolean ballInIntake(){
-        return sensorDistanceSpindexer.getDistance(DistanceUnit.MM) <= 100;
+        return sensorDistanceIntake.getDistance(DistanceUnit.MM) <= 100;
     }
 
 
@@ -52,7 +52,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 2.0);
+                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 20.0);
             }
         };
     }
