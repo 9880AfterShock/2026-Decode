@@ -21,7 +21,7 @@ public class QuickSpindexer { // Prefix for commands
     private static double targetPosition;
     private static boolean wasClockwise;
     private static boolean wasCounterclockwise;
-    private static final double errorMargin = 20.0; //in encoder ticks
+    private static final double errorMargin = 10.0; //in encoder ticks
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -63,7 +63,7 @@ public class QuickSpindexer { // Prefix for commands
                 if (Obelisk.motif == Motif.PPG) {
                     spindexer.setTargetPosition((int) ((10.0/360*1425.1) + (1425.1/3))); //10.0 is offset degrees
                 }
-                return abs(spindexer.getCurrentPosition()- spindexer.getTargetPosition()) > errorMargin*2; //40 is tick margin of error
+                return abs(spindexer.getCurrentPosition()- spindexer.getTargetPosition()) > 40; //40 is tick margin of error
             }
         };
     }
@@ -111,7 +111,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //20 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //20 is tick margin of error
             }
         };
     }
@@ -127,7 +127,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //20 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //20 is tick margin of error
             }
         };
     }
@@ -141,7 +141,7 @@ public class QuickSpindexer { // Prefix for commands
                     spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()-((1425.1/3)/2.5)));
                     first = false;
                 }
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 2/errorMargin; //10 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
@@ -155,7 +155,7 @@ public class QuickSpindexer { // Prefix for commands
                     spindexer.setTargetPosition((int) (spindexer.getCurrentPosition()+((1425.1/3)/2.5)));
                     first = false;
                 }
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 2/errorMargin; //10 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
@@ -165,7 +165,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public  boolean run (@NonNull TelemetryPacket telemetryPacket) {
                 spindexer.setTargetPosition(0);
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin/2; //10 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 10; //10 is tick margin of error
             }
         };
     }
