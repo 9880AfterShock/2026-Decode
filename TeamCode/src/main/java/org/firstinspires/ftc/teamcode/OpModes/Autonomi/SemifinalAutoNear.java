@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.RaceAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
@@ -126,6 +127,11 @@ public class SemifinalAutoNear extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(145.0))
                 .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
 
+        TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
+                .waitSeconds(5.0);
+        TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickup2)
+                .waitSeconds(5.0);
+
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
         TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
@@ -185,8 +191,11 @@ public class SemifinalAutoNear extends LinearOpMode {
 
                         toPickup1.build(),
 
-                        new ParallelAction(
-                                pickup1.build(),
+                        new RaceAction(
+                                new SequentialAction(
+                                        pickup1.build(),
+                                        waitPickup1.build()
+                                ),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
@@ -254,8 +263,11 @@ public class SemifinalAutoNear extends LinearOpMode {
 
                         toPickup2.build(),
 
-                        new ParallelAction(
-                                pickup2.build(),
+                        new RaceAction(
+                                new SequentialAction(
+                                        pickup2.build(),
+                                        waitPickup2.build()
+                                ),
                                 new SequentialAction(
                                         Distance.waitForBallIn(),
                                         Roller.AutoIntakeOff(),
