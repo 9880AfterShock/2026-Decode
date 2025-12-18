@@ -25,6 +25,7 @@ public class DriverTest {
     private static DcMotorEx shooterUp;
     private static DcMotorEx shooterDown;
     public static boolean canFire;
+    public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
     public static void initControls(OpMode opmode) {
@@ -45,13 +46,16 @@ public class DriverTest {
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
         double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/numTicks)*60);
+        avgSpeed *= 1.5;
+        avgSpeed += rotationsPerMinute*0.5;
+        avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) { // Timo experimenting, used to be 70 from goal
                 desSpeed = (0.12825*distanceFromGoal*distanceFromGoal)+(4.81307*distanceFromGoal)+2504.82611;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.0381041*distanceFromGoal*distanceFromGoal)+(21.14689*distanceFromGoal)+2119.60164;                Hood.hoodState = "Far";
+                desSpeed = (-0.0381041*distanceFromGoal*distanceFromGoal)+(21.14689*distanceFromGoal)+2119.60164;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
@@ -71,15 +75,15 @@ public class DriverTest {
         if (rev) {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
-            if (Math.abs(rotationsPerMinute-desSpeed) < 200 && fire) {
+            if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
-                        ControlManager.shot = true;
-                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
-                    }, 3));
+                            ControlManager.shot = true;
+                            ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
+                        }, 0.8));
                 }
-                canFire = true;
                 ControlManager.shot = false;
+                canFire = true;
             } else {
                 canFire = false;
             }
@@ -97,6 +101,7 @@ public class DriverTest {
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
+        opmode.telemetry.addData("Averaged RPM", avgSpeed);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
     }
 }
