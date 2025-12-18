@@ -94,6 +94,7 @@ public class TeleOp extends LinearOpMode {
             BallColorDetectinator.update();
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Alliance", alliance);
             telemetry.update();
         }
         //SpindexerCamera.stopVision();

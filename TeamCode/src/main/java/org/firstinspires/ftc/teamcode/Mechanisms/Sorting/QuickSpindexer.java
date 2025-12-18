@@ -21,6 +21,7 @@ public class QuickSpindexer { // Prefix for commands
     private static double targetPosition;
     private static boolean wasClockwise;
     private static boolean wasCounterclockwise;
+    private static final double errorMargin = 10.0; //in encoder ticks
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -78,7 +79,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //40 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //40 is tick margin of error
             }
         };
     }
@@ -94,7 +95,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //40 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //40 is tick margin of error
             }
         };
     }
@@ -191,7 +192,7 @@ public class QuickSpindexer { // Prefix for commands
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 20; //40 is tick margin of error
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //40 is tick margin of error
             }
         };
     }

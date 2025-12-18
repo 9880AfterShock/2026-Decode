@@ -28,8 +28,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 9")
-public class SemifinalAutoNear extends LinearOpMode {
+@Autonomous(name = "Far zone 9")
+public class SemifinalAutoFar extends LinearOpMode {
     @Override
     public void runOpMode() {
         Gyroscope.initSensor(this);
@@ -113,7 +113,7 @@ public class SemifinalAutoNear extends LinearOpMode {
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
                 .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0));
-        
+
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0))
