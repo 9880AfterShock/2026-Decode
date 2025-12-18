@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -13,6 +14,7 @@ public class Turret {
     private static AnalogInput rightEncoder; //Right servo feedback wire
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
+    private static final Pose2d turrentCenterOffset = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
 
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -57,4 +59,12 @@ public class Turret {
         leftServo.setPosition((motorPower/2)+0.5);
         rightServo.setPosition((motorPower/2)+0.5);
     }
+
+
+    public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){
+
+
+        return null;
+    }
+
 }
