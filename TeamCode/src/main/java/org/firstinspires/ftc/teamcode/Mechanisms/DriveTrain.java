@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -21,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
+import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.MultiPID;
 import org.firstinspires.ftc.teamcode.Systems.PID;
@@ -91,6 +93,12 @@ public class DriveTrain { // Prefix for commands
 
     public static void updateDrive(float strafe, float drive, float turn, boolean slowModeButton, boolean align, boolean flipSide) { //flips from blue side (false) to red side (true)
         localizer.update();
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay().setStroke("#3F51B5");
+        Drawing.drawRobot(packet.fieldOverlay(), localizer.getPose());
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
         if (flipSide){
             goalTarget = new Pose2d(57.0, -57.0, Math.toRadians(0.0));
         } else {

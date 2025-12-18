@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import java.util.Random;
 
-public class ColorDetectionTest {
+public class
+ColorDetectionTest {
     public ColorClassifier<BallType> classifier;
     @Before
     public void setup() {
