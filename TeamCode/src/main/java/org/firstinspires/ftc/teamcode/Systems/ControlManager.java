@@ -111,9 +111,9 @@ public class ControlManager {
         //SpindexerCamera.update();
         Alignment.updateAlignment();
         opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
-        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE))) && canFire, speed);
+        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
 
-        Arm.updateIntake(intaking, ejecting, canFire || (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&canFire));
+        Arm.updateIntake(intaking, ejecting, canFire );
 
 //        Distance.updateSensor();
 

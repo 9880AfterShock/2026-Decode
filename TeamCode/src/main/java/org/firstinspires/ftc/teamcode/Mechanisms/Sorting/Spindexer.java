@@ -270,6 +270,6 @@ public class Spindexer {
     }
 
     public boolean isLinedUp() {
-        return Math.abs(motor.getCurrentPosition()- motor.getTargetPosition()) < 20;
+        return Math.abs(motor.getCurrentPosition()- motor.getTargetPosition()) < (10d/360d)*ticksPerRotation;
     }
 }
