@@ -80,7 +80,7 @@ public class DriverTest {
                     RunLater.addAction(new DelayedAction(() -> {
                             ControlManager.shot = true;
                             ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
-                        }, 1));
+                        }, 0.8));
                 }
                 ControlManager.shot = false;
                 canFire = true;
