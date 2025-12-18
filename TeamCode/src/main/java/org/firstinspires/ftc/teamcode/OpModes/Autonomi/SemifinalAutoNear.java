@@ -202,6 +202,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -209,6 +210,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -223,6 +225,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
@@ -274,6 +277,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -281,6 +285,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -294,6 +299,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
