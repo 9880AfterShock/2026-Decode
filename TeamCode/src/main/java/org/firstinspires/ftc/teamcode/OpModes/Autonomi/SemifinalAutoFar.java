@@ -70,39 +70,31 @@ public class SemifinalAutoFar extends LinearOpMode {
             telemetry.update();
         }
 
-        Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(-35.0));
-        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosClose);
+        Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d scanPos = new Pose2d(-35.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar1 = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
+        Pose2d shootPosFar2 = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
+        Pose2d shootPosFar3 = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
 
-        Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
-        Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(45.0));
-        Pose2d shootPosClose3 = new Pose2d(-36.0, posMultiplier*-16.0, posMultiplier*Math.toRadians(63.0));
-
-        Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        TrajectoryActionBuilder toScan = drive.actionBuilder(startPosClose)
-                .setTangent(posMultiplier*Math.toRadians(55.0))
-                .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0));
+        Pose2d parkPosFar = new Pose2d(60.0, -38.0, Math.toRadians(90.0)); //or 0,-34 for burst park
 
-        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(scanPos)
-                .setTangent(posMultiplier*Math.toRadians(30.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(30.0));
+        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
+                .setTangent(posMultiplier*Math.toRadians(140.0))
+                .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(140.0));
 
-//        TrajectoryActionBuilder toShootNoScan = drive.actionBuilder(startPosClose)
-//                .setTangent(posMultiplier*Math.toRadians(35.0))
-//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
-
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0))
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
+                .setTangent(posMultiplier*Math.toRadians(180))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(-90))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
@@ -111,12 +103,12 @@ public class SemifinalAutoFar extends LinearOpMode {
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
-                .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0));
+                .setTangent(posMultiplier*Math.toRadians(45.0))
+                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(45.0));
 
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0))
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar2)
+                .setTangent(posMultiplier*Math.toRadians(-170.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-170.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0));
 
@@ -125,8 +117,12 @@ public class SemifinalAutoFar extends LinearOpMode {
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
-                .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
+                .setTangent(posMultiplier*Math.toRadians(35.0))
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(35.0));
+
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
+                .setTangent(Math.toRadians(-90))
+                .splineToLinearHeading(parkPosFar, Math.toRadians(-90));
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
@@ -134,8 +130,8 @@ public class SemifinalAutoFar extends LinearOpMode {
                 .waitSeconds(5.0);
 
 
-        Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
+        Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
+        TeleOp.autoEndRotation = Math.toDegrees(parkPosFar.heading.toDouble());
 
 
         waitForStart();
@@ -149,8 +145,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                         Arm.AutoArmIn(),
                         Hood.AutoHoodUp(),
                         actionManager.rev(rpm),
-                        toScan.build(),
-                        Limelight.AutoScan(),
+                        Limelight.AutoScanWithInit(),
                         new ParallelAction(
                                 actionManager.rev(rpm),
                                 QuickSpindexer.toMotifFrom(Motif.GPP),
@@ -331,7 +326,8 @@ public class SemifinalAutoFar extends LinearOpMode {
                         actionManager.waitFor(shotCooldown),
                         Arm.AutoLaunchEnd(),
 
-                        actionManager.derev()
+                        actionManager.derev(),
+                        toPark.build()
                 )
         );
     }
