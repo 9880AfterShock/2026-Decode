@@ -8,31 +8,41 @@ public class Hinge {
     private static Servo hingeRight; // init servo var
     private static OpMode opmode; // opmode var init
     public static double inPosition = 1.0;
-    public static double outPosition = 0.0;
-    public static boolean lifting = false;
+    public static double readyPosition = 0.8;
+    public static double outPosition = 0.3;
+    public static String lifting = "false";
 
     public static void initBase(OpMode opmode) { // init motor
         hingeLeft = opmode.hardwareMap.get(Servo.class, "hingeLeft"); //Port 3 on control hub
         hingeRight = opmode.hardwareMap.get(Servo.class, "hingeRight"); //Port 4 on control hub
         Hinge.opmode = opmode;
-        lifting = false;
+        lifting = "false";
     }
 
     public static void updateBase(boolean toggleBase) {
         if (toggleBase){
-            if (lifting) {
-                lifting = false;
+            if (lifting == "false") {
+                lifting = "ready";
             } else {
-                lifting = true;
+                if (lifting == "ready") {
+                    lifting = "true";
+                } else {
+                    lifting = "false";
+                }
             }
         }
 
-        if (lifting) {
+        if (lifting == "false") {
             hingeLeft.setPosition(outPosition);
             hingeRight.setPosition(outPosition);
         } else {
-            hingeLeft.setPosition(inPosition);
-            hingeRight.setPosition(inPosition);
+            if (lifting == "ready") {
+                hingeLeft.setPosition(readyPosition);
+                hingeRight.setPosition(readyPosition);
+            } else {
+                hingeLeft.setPosition(inPosition);
+                hingeRight.setPosition(inPosition);
+            }
         }
 
         opmode.telemetry.addData("Returning to Base?", lifting);
