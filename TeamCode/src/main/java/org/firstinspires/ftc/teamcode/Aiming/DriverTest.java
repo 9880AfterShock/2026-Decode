@@ -72,7 +72,7 @@ public class DriverTest {
 ////            desSpeed -= 50;
 //            distanceFromGoal -= 5;
 //        }
-        if (rev) {
+        if (rev && false && true) {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
@@ -92,10 +92,10 @@ public class DriverTest {
             shooterUp.setVelocity(0);
             shooterDown.setVelocity(0);
         }
-        if (!fire && !rev && intake) {
-            shooterUp.setVelocity(-25*30);
-            shooterDown.setVelocity(-25*30);
-        }
+//        if (!fire && !rev && intake) {
+//            shooterUp.setVelocity(-25*30);
+//            shooterDown.setVelocity(-25*30);
+//        }
 
         opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
