@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
+import org.firstinspires.ftc.teamcode.Mechanisms.Hinge;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
@@ -59,6 +60,7 @@ public class TeleOp extends LinearOpMode {
         Distance.initSensor(this);
         Limelight.initDetection(this);
         Gyroscope.initSensor(this);
+        Hinge.initBase(this);
 
 //        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);

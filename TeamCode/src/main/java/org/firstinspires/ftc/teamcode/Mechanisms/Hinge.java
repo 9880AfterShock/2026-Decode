@@ -11,9 +11,9 @@ public class Hinge {
     public static double outPosition = 1.0;
     public static boolean lifting = false;
 
-    public static void initAim(OpMode opmode) { // init motor
-        hingeLeft = opmode.hardwareMap.get(Servo.class, "hingeLeft"); //Port _ on _ hub
-        hingeRight = opmode.hardwareMap.get(Servo.class, "hingeRight"); //Port _ on _ hub
+    public static void initBase(OpMode opmode) { // init motor
+        hingeLeft = opmode.hardwareMap.get(Servo.class, "hingeLeft"); //Port 3 on control hub
+        hingeRight = opmode.hardwareMap.get(Servo.class, "hingeRight"); //Port 4 on control hub
         Hinge.opmode = opmode;
         lifting = false;
     }

@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Enums.ColorType;
 import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
+import org.firstinspires.ftc.teamcode.Mechanisms.Hinge;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
@@ -165,6 +166,8 @@ public class ControlManager {
         prevInstake = intaking;
 //        opMode.telemetry.addData("BallRamp mesages",ballRamp.messageQueue.size());
         opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
+
+        Hinge.updateBase(operator.yWasPressed());
     }
 }
 
