@@ -112,10 +112,10 @@ public class Limelight {
 
         if (result != null && result.isValid()) {
             Pose2d currentPose = new Pose2d(result.getBotpose_MT2().getPosition().x*METER_TO_INCH, result.getBotpose_MT2().getPosition().y*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw()));
-            TelemetryPacket packet = new TelemetryPacket();
-            packet.fieldOverlay().setStroke("#00FF00");
-            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
-            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+//            TelemetryPacket packet = new TelemetryPacket();
+//            packet.fieldOverlay().setStroke("#00FF00");
+//            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
+//            FtcDashboard.getInstance().sendTelemetryPacket(packet);
             return currentPose;
         }
         return null;
