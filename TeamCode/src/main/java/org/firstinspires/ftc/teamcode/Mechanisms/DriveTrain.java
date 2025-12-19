@@ -95,7 +95,7 @@ public class DriveTrain { // Prefix for commands
         localizer.update();
 
         TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay().setStroke("#3F51B5");
+        packet.fieldOverlay().setStroke("#00ffee");
         Drawing.drawRobot(packet.fieldOverlay(), localizer.getPose());
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
