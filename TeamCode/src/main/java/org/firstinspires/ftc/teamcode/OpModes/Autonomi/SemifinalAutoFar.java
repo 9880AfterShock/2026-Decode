@@ -140,15 +140,15 @@ public class SemifinalAutoFar extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-//                        actionManager.shotCue(0),
-//                        Shield.AutoShieldShoot(),
-//                        Arm.AutoArmIn(),
-//                        Hood.AutoHoodUp(),
-//                        actionManager.rev(rpm),
-//                        Limelight.AutoScanWithInit(),
+                        actionManager.shotCue(0),
+                        Shield.AutoShieldShoot(),
+                        Arm.AutoArmIn(),
+                        Hood.AutoHoodUp(),
+                        actionManager.rev(rpm),
+                        Limelight.AutoScanWithInit(),
                         new ParallelAction(
-//                                actionManager.rev(rpm),
-//                                QuickSpindexer.toMotifFrom(Motif.GPP),
+                                actionManager.rev(rpm),
+                                QuickSpindexer.toMotifFrom(Motif.GPP),
                                 toShoot1.build()
                         ),
 
@@ -156,75 +156,75 @@ public class SemifinalAutoFar extends LinearOpMode {
 //                        aimShoot1.build(),
 
                         //First volley start
-//                        actionManager.shotCue(1),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(2),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(3),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.derev(),
+                        actionManager.shotCue(1),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(2),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(3),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.derev(),
                         //First volley end
 
 
                         //First pickup start
-//                        Arm.AutoArmOut(),
-//                        Shield.AutoShieldLock(),
-//                        Roller.AutoIntakeOn(),
+                        Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
+                        Roller.AutoIntakeOn(),
 
                         toPickup1.build(),
 
                         new RaceAction(
                                 new SequentialAction(
-                                        pickup1.build()//,
-//                                        waitPickup1.build()
-                                )//,
-//                                new SequentialAction(
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn(),
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.turnLeft(),
-//                                        Roller.AutoIntakeOn(),
-//                                        Arm.AutoArmOut(),
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn(),
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.turnLeft(),
-//                                        Roller.AutoIntakeOn(),
-//                                        Arm.AutoArmOut(),
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn()
-//                                )
+                                        pickup1.build(),
+                                        waitPickup1.build()
+                                ),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn()
+                                )
                         ),
                         //First Pickup End
 
                         //Sort 1
                         new ParallelAction(
-//                                new SequentialAction(
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.toMotifFrom(Motif.GPP)
-//                                ),
-//                                Shield.AutoShieldShoot(),
-//                                actionManager.rev(rpm),
+                                new SequentialAction(
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.toMotifFrom(Motif.GPP)
+                                ),
+                                Shield.AutoShieldShoot(),
+                                actionManager.rev(rpm),
                                 toShoot2.build()
                         ),
 
@@ -232,73 +232,73 @@ public class SemifinalAutoFar extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
-//                        actionManager.shotCue(4),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(5),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(6),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
+                        actionManager.shotCue(4),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
 
-//                        actionManager.derev(),
+                        actionManager.shotCue(5),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(6),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.derev(),
                         //Second volley end
 
                         //2nd pickup start
-//                        Arm.AutoArmOut(),
-//                        Shield.AutoShieldLock(),
-//                        Roller.AutoIntakeOn(),
+                        Arm.AutoArmOut(),
+                        Shield.AutoShieldLock(),
+                        Roller.AutoIntakeOn(),
 
                         toPickup2.build(),
 
                         new RaceAction(
                                 new SequentialAction(
-                                        pickup2.build()//,
-//                                        waitPickup2.build()
-                                )//,
-//                                new SequentialAction(
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn(),
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.turnLeft(),
-//                                        Roller.AutoIntakeOn(),
-//                                        Arm.AutoArmOut(),
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn(),
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.turnLeft(),
-//                                        Roller.AutoIntakeOn(),
-//                                        Arm.AutoArmOut(),
-//                                        Distance.waitForBallIn(),
-//                                        Roller.AutoIntakeOff(),
-//                                        Arm.AutoArmIn()
-//                                )
+                                        pickup2.build(),
+                                        waitPickup2.build()
+                                ),
+                                new SequentialAction(
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn(),
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.turnLeft(),
+                                        Roller.AutoIntakeOn(),
+                                        Arm.AutoArmOut(),
+                                        Distance.waitForBallIn(),
+                                        Roller.AutoIntakeOff(),
+                                        Arm.AutoArmIn()
+                                )
                         ),
 
                         //Sort 2
                         new ParallelAction(
-//                                new SequentialAction(
-//                                        Distance.waitForBallInSpindexer(),
-//                                        actionManager.waitFor(0.1),
-//                                        QuickSpindexer.toMotifFrom(Motif.PGP)
-//                                ),
-//                                Shield.AutoShieldShoot(),
-//                                actionManager.rev(rpm),
+                                new SequentialAction(
+                                        Distance.waitForBallInSpindexer(),
+                                        actionManager.waitFor(0.1),
+                                        QuickSpindexer.toMotifFrom(Motif.PGP)
+                                ),
+                                Shield.AutoShieldShoot(),
+                                actionManager.rev(rpm),
                                 toShoot3.build()
                         ),
 
@@ -306,27 +306,27 @@ public class SemifinalAutoFar extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot3.build(),
 
-//                        actionManager.shotCue(7),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(8),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.shotCue(9),
-//                        QuickSpindexer.turnRight(),
-//                        actionManager.waitForSpeedSafe(rpm),
-//                        Arm.AutoLaunchStart(),
-//                        actionManager.waitFor(shotCooldown),
-//                        Arm.AutoLaunchEnd(),
-//
-//                        actionManager.derev(),
+                        actionManager.shotCue(7),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(8),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.shotCue(9),
+                        QuickSpindexer.turnRight(),
+                        actionManager.waitForSpeedSafe(rpm),
+                        Arm.AutoLaunchStart(),
+                        actionManager.waitFor(shotCooldown),
+                        Arm.AutoLaunchEnd(),
+
+                        actionManager.derev(),
                         toPark.build()
                 )
         );

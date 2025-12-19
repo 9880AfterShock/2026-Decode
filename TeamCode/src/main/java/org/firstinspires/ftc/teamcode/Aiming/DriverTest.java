@@ -72,7 +72,7 @@ public class DriverTest {
 ////            desSpeed -= 50;
 //            distanceFromGoal -= 5;
 //        }
-        if (rev && false && true) {
+        if (rev) {
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
