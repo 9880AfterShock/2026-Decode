@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 9")
+@Autonomous(name = "Far zone 9 (Uses middle)")
 public class SemifinalAutoFar extends LinearOpMode {
     @Override
     public void runOpMode() {
