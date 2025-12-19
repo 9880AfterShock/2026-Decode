@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Enums.Motif.*;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -14,6 +15,7 @@ import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Enums.Alliance;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 
@@ -109,7 +111,12 @@ public class Limelight {
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {
-            return new Pose2d(result.getBotpose_MT2().getPosition().y*METER_TO_INCH, result.getBotpose_MT2().getPosition().x*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw() /*- 90 */)); //convert from wipilib cords in meters to ftc cords in inches
+            Pose2d currentPose = new Pose2d(result.getBotpose_MT2().getPosition().x*METER_TO_INCH, result.getBotpose_MT2().getPosition().y*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw()));
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.fieldOverlay().setStroke("#00FF00");
+            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+            return currentPose;
         }
         return null;
     }

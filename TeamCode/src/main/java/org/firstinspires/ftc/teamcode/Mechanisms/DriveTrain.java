@@ -100,21 +100,20 @@ public class DriveTrain { // Prefix for commands
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         if (flipSide){
-            goalTarget = new Pose2d(57.0, -57.0, Math.toRadians(0.0));
+            goalTarget = new Pose2d(-57.0, 57.0, Math.toRadians(0.0));
         } else {
             goalTarget = new Pose2d(-57.0, -57.0, Math.toRadians(0.0));
         }
 
         Pose2d robotPosition = Limelight.getPosition();
-        if (robotPosition != null && !robotPosition.equals(new Pose2d(0.0, 0.0, 0.0))) {
+        if (robotPosition != null && !robotPosition.equals(new Pose2d(0.0, 0.0, 0.0))) { //check if invalid obelisk reading
             localizer.setPose(robotPosition);
         }
-        //rotation = Math.toDegrees(Math.atan2(goalTarget.position.y - localizer.getPose().position.y, goalTarget.position.x - localizer.getPose().position.x));
         DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);
-        rotation = Math.toDegrees(Math.atan2((goalTarget.position.x-localizer.getPose().position.x),(goalTarget.position.y-localizer.getPose().position.y)));
+        rotation = Math.toDegrees(Math.atan2((goalTarget.position.y-localizer.getPose().position.y),(goalTarget.position.x-localizer.getPose().position.x)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
-        if (align) { //CADEN PID GOES IN THE LINE RIGHT BELOW
+        if (align) { //PID \|/
             turn = (float) aimingPID.step(AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180));
         }
 
