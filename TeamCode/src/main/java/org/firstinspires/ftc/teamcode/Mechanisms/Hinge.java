@@ -33,15 +33,15 @@ public class Hinge {
         }
 
         if (lifting == "false") {
-            hingeLeft.setPosition(outPosition);
-            hingeRight.setPosition(outPosition);
+            hingeLeft.setPosition(inPosition);
+            hingeRight.setPosition(inPosition);
         } else {
             if (lifting == "ready") {
                 hingeLeft.setPosition(readyPosition);
                 hingeRight.setPosition(readyPosition);
             } else {
-                hingeLeft.setPosition(inPosition);
-                hingeRight.setPosition(inPosition);
+                hingeLeft.setPosition(outPosition);
+                hingeRight.setPosition(outPosition);
             }
         }
 
