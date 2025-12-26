@@ -46,7 +46,7 @@ public class SemifinalAutoNear extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3200;
+        double rpm = 3200; // Old 3200 was there for a while - Timo try to make better with slightly faster speed
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -82,8 +82,8 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
-
+        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
+        //Timo changed endPickup1 from -12, -45 to -12, -50
         Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
@@ -102,21 +102,22 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
+                //timo made faster
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
-
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
+                //Timo changed minTransVel on Pickup1 to 15.0, works for this pickup due to closer wall
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0));
-        
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
+                //Timo added a mintransvel to make this path faster
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0));
 
@@ -126,7 +127,8 @@ public class SemifinalAutoNear extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0));
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0), new TranslationalVelConstraint(40.0));
+                //Timo added a minTransVel to this one to experiment
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
@@ -225,7 +227,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(0.5), // Timo changed this from 0.1 to 0.5 for safety (no loss from this)
                                         QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
@@ -299,7 +301,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(0.5), // Changed to 0.5 here as well
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),

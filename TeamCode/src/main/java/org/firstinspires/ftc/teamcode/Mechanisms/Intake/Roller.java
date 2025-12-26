@@ -56,7 +56,7 @@ public class Roller { // Prefix for commands
     public static Action AutoIntakeOff() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                updateIntake(false, false, false, 1.0);
+                updateIntake(true, false, false, 0.3);
                 return false;
             }
         };

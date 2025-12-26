@@ -8,8 +8,8 @@ public class Hinge {
     private static Servo hingeRight; // init servo var
     private static OpMode opmode; // opmode var init
     public static double inPosition = 1.0;
-    public static double readyPosition = 0.8;
-    public static double outPosition = 0.3;
+    public static double readyPosition = 0.9;
+    public static double outPosition = 0.7;
     public static String lifting = "false";
 
     public static void initBase(OpMode opmode) { // init motor
