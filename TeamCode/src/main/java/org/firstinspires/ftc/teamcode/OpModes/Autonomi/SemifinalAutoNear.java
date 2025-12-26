@@ -145,6 +145,8 @@ public class SemifinalAutoNear extends LinearOpMode {
         if (isStopRequested()) return;
 
         Actions.runBlocking(
+            new RaceAction(
+                actionManager.updateSpeedOverTime(),
                 new SequentialAction(
                         actionManager.shotCue(0),
                         Shield.AutoShieldShoot(),
@@ -335,6 +337,7 @@ public class SemifinalAutoNear extends LinearOpMode {
 
                         actionManager.derev()
                 )
+        )
         );
     }
 }

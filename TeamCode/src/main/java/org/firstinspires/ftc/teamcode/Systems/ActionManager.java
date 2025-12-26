@@ -31,6 +31,7 @@ public class ActionManager {
     private final OpMode opmode;
     private final int shooterTicks;
     public boolean spindexerBias = false;
+    public static double avgSpeed = 0;
 
     public ActionManager(OpMode opmode, int shooterTicks) {
         this.shooterTicks = shooterTicks;
@@ -163,9 +164,9 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
-                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
-                return Math.abs(rotationsPerMinute-rpm) > 200;
+//                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
+//                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
+                return Math.abs(avgSpeed-rpm) > 200;
             }
         };
     }
@@ -212,6 +213,19 @@ public class ActionManager {
                     first = false;
                 }
                 return opmode.getRuntime() < startTime + time;
+            }
+        };
+    }
+
+    public Action updateSpeedOverTime() { //only for race actions (never ends)
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
+                avgSpeed *= 1.5;
+                avgSpeed += rotationsPerMinute*0.5;
+                avgSpeed /= 2;
+                return true;
             }
         };
     }
