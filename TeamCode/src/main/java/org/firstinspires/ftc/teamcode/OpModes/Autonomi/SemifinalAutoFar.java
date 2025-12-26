@@ -139,6 +139,8 @@ public class SemifinalAutoFar extends LinearOpMode {
         if (isStopRequested()) return;
 
         Actions.runBlocking(
+                new RaceAction(
+                        actionManager.updateSpeedOverTime(),
                 new SequentialAction(
                         actionManager.shotCue(0),
                         Shield.AutoShieldShoot(),
@@ -328,6 +330,7 @@ public class SemifinalAutoFar extends LinearOpMode {
 
                         actionManager.derev(),
                         toPark.build()
+                )
                 )
         );
     }
