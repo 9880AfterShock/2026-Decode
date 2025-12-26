@@ -44,17 +44,17 @@ public class MeepMeepRR {
         */
 //        /*
         Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
-        Pose2d shootPosFar1 = new Pose2d(54.5, -12.0, Math.toRadians(22.5));
-        Pose2d shootPosFar2 = new Pose2d(54.5, -12.0, Math.toRadians(22.5));
-        Pose2d shootPosFar3 = new Pose2d(54.5, -12.0, Math.toRadians(22.5));
+        Pose2d shootPosFar1 = new Pose2d(54.5, -13.0, Math.toRadians(22.5));
+        Pose2d shootPosFar2 = new Pose2d(54.5, -15.0, Math.toRadians(22.5));
+        Pose2d shootPosFar3 = new Pose2d(54.5, -17.0, Math.toRadians(22.5));
 
         Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d prePickup2 = new Pose2d(15.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(15.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup2 = new Pose2d(15.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d parkPosFar = new Pose2d(0.0, -34.0, Math.toRadians(22.5));
 //        */
