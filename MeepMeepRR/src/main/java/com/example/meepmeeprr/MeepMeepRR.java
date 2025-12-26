@@ -109,8 +109,8 @@ public class MeepMeepRR {
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
 
                 //toShoot3
-                .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0))
+                .setTangent(posMultiplier*Math.toRadians(125.0))
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0))
                         .waitSeconds(4.0) //shooting
 
                 .build()

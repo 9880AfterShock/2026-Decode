@@ -126,8 +126,8 @@ public class SemifinalAutoNear extends LinearOpMode {
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
-                .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(145.0), new TranslationalVelConstraint(40.0));
+                .setTangent(posMultiplier*Math.toRadians(125.0))
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0), new TranslationalVelConstraint(40.0));
                 //Timo added a minTransVel to this one to experiment
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
