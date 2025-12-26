@@ -78,12 +78,12 @@ public class SemifinalAutoFar extends LinearOpMode {
         Pose2d shootPosFar2 = new Pose2d(54.5, -12.0, Math.toRadians(22.5));
         Pose2d shootPosFar3 = new Pose2d(54.5, -12.0, Math.toRadians(22.5));
 
-        Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d parkPosFar = new Pose2d(0.0, -34.0, Math.toRadians(22.5));
@@ -93,8 +93,8 @@ public class SemifinalAutoFar extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(140.0));
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
-                .setTangent(posMultiplier*Math.toRadians(215.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(215.0))
+                .setTangent(posMultiplier*Math.toRadians(230.0))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(230.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
@@ -107,8 +107,8 @@ public class SemifinalAutoFar extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(65.0));
 
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar2)
-                .setTangent(posMultiplier*Math.toRadians(-160.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-160.0))
+                .setTangent(posMultiplier*Math.toRadians(-150.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-150.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0));
 
