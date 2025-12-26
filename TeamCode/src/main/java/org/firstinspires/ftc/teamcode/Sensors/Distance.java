@@ -50,7 +50,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 20.0);
+                return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
     }
