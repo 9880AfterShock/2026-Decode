@@ -83,7 +83,7 @@ public class SemifinalAutoNear extends LinearOpMode {
         Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
-        //Timo changed endPickup1 from -12, -45 to -12, -50
+
         Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
