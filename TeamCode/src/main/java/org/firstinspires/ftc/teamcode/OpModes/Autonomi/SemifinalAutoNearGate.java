@@ -239,7 +239,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 toGate1.build(),
                                                 actionManager.waitFor(0.1), //wait for balls to row
                                                 toShoot2.build()
@@ -317,7 +317,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        new ParallelAction(
+                                        new SequentialAction(
                                                 toGate2.build(),
                                                 actionManager.waitFor(0.1), //wait for balls to row
                                                 toShoot3.build()
