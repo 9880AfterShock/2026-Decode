@@ -46,7 +46,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3200; // Old 3200 was there for a while - Timo try to make better with slightly faster speed
+        double rpm = 3200;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -100,7 +100,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
-                //timo made faster
+
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 

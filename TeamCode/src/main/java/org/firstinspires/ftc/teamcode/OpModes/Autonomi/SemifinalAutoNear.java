@@ -46,7 +46,7 @@ public class SemifinalAutoNear extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3200; // Old 3200 was there for a while - Timo try to make better with slightly faster speed
+        double rpm = 3200;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -103,18 +103,18 @@ public class SemifinalAutoNear extends LinearOpMode {
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
-                //timo made faster
+
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
-                //Timo changed minTransVel on Pickup1 to 15.0, works for this pickup due to closer wall
+
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
                 .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
-                //Timo added a mintransvel to make this path faster
+
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
@@ -128,7 +128,6 @@ public class SemifinalAutoNear extends LinearOpMode {
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
                 .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0), new TranslationalVelConstraint(40.0));
-                //Timo added a minTransVel to this one to experiment
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
