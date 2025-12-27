@@ -109,6 +109,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
 
         TrajectoryActionBuilder toGate1 = drive.actionBuilder(endPickup1)
+                .setReversed(true)
                 .setTangent(posMultiplier*Math.toRadians(90.0))
                 .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
 
@@ -127,6 +128,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toGate2 = drive.actionBuilder(endPickup1)
+                .setReversed(true)
                 .setTangent(posMultiplier*Math.toRadians(180.0))
                 .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
 
