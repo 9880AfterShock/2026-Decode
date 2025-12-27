@@ -50,14 +50,19 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
+        boolean secondDump = false;
 //        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use x and b to select alliance");
+            telemetry.addLine("Use a to toggle 2nd dump");
             if (gamepad1.xWasPressed()){
                 posMultiplier = 1.0;
             }
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
+            }
+            if (gamepad1.aWasPressed()){
+                secondDump = !secondDump;
             }
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
@@ -91,11 +96,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(37.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0));
-
-//        TrajectoryActionBuilder toShootNoScan = drive.actionBuilder(startPosClose)
-//                .setTangent(posMultiplier*Math.toRadians(35.0))
-//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(35.0));
+                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0), new TranslationalVelConstraint(40.0));
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
@@ -126,13 +127,22 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
-        TrajectoryActionBuilder toGate2 = drive.actionBuilder(endPickup2)
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
+        TrajectoryActionBuilder toShoot3;
 
-        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(gatePos2)
-                .setTangent(posMultiplier*Math.toRadians(130.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
+        if (secondDump){
+            toShoot3 = drive.actionBuilder(gatePos2)
+                    .setTangent(posMultiplier*Math.toRadians(130.0))
+                    .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0))
+                    //doing gate
+                    .setTangent(posMultiplier*Math.toRadians(180.0))
+                    .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0))
+                    .waitSeconds(0.1);
+
+        } else {
+            toShoot3 = drive.actionBuilder(gatePos2)
+                    .setTangent(posMultiplier*Math.toRadians(125.0))
+                    .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
+        }
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
@@ -239,7 +249,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         actionManager.rev(rpm),
                                         new SequentialAction(
                                                 toGate1.build(),
-                                                actionManager.waitFor(0.1), //wait for balls to row
+                                                actionManager.waitFor(0.3), //wait for balls to roll
                                                 toShoot2.build()
                                         )
                                 ),
@@ -315,11 +325,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        new SequentialAction(
-                                                toGate2.build(),
-                                                actionManager.waitFor(0.1), //wait for balls to row
-                                                toShoot3.build()
-                                        )
+                                        toShoot3.build()
                                 ),
 
                                 //Third volley start
