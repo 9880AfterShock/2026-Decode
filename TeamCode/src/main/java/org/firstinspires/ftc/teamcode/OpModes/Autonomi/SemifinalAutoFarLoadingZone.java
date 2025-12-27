@@ -83,9 +83,9 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
         Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d prePickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d startPickup2 = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d midPickup2 = new Pose2d(58.25, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d endPickup2 = new Pose2d(62.5, posMultiplier*-61.0, posMultiplier*-Math.toRadians(10.0));
+        Pose2d startPickup2 = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickup2 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickup2 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
         Pose2d parkPosFar = new Pose2d(15.0, -34.0, Math.toRadians(90));
 
