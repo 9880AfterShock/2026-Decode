@@ -40,11 +40,10 @@ public class MeepMeepRR {
 
         Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*Math.toRadians(-90.0));
 
-
-        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
-        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 //        */
         /*
         Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
