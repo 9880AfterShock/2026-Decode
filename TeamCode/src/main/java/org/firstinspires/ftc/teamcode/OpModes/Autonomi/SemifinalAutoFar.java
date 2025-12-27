@@ -223,7 +223,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
                                         actionManager.waitFor(0.1),
-                                        QuickSpindexer.toMotifFrom(Motif.GPP)
+                                        QuickSpindexer.toMotifFrom(Motif.PPG)
                                 ),
                                 Shield.AutoShieldShoot(),
                                 actionManager.rev(rpm),
