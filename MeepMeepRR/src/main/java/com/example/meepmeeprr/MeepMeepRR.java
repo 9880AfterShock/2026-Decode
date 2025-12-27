@@ -41,6 +41,10 @@ public class MeepMeepRR {
         Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
+
+
+        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(90.0));
 //        */
         /*
         Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
@@ -100,10 +104,19 @@ public class MeepMeepRR {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
 
-                //toShoot2
-                .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0))
-                        .waitSeconds(4.0) //shooting
+                //toShoot2 no gate
+//                .setTangent(posMultiplier*Math.toRadians(125.0))
+//                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0))
+
+                //toGate1
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0))
+
+                //toShoot2 after gate
+                .setTangent(posMultiplier*Math.toRadians(130.0))
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0))
+
+                .waitSeconds(4.0) //shooting
 
                 //toPickup2
                 .setTangent(posMultiplier*Math.toRadians(0.0))
@@ -115,10 +128,19 @@ public class MeepMeepRR {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
 
-                //toShoot3
-                .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0))
-                        .waitSeconds(4.0) //shooting
+                //toShoot3 no Gate
+//                .setTangent(posMultiplier*Math.toRadians(125.0))
+//                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0))
+
+                //to gate 2
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
+
+                //to shoot after gate 3
+                .setTangent(posMultiplier*Math.toRadians(130.0))
+                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(130.0))
+
+                .waitSeconds(4.0) //shooting
 
                 .build()
         );

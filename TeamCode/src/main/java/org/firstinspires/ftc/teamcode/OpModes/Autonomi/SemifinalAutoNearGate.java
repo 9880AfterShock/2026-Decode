@@ -86,6 +86,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*-Math.toRadians(90.0));
 
+        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(-90.0));
+        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*-Math.toRadians(-90.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(37.0))
@@ -105,11 +107,15 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
-        //Timo changed minTransVel on Pickup1 to 15.0, works for this pickup due to closer wall
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
-                .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
-        //Timo added a mintransvel to make this path faster
+
+        TrajectoryActionBuilder toGate1 = drive.actionBuilder(endPickup1)
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
+
+        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(gatePos1)
+                .setTangent(posMultiplier*Math.toRadians(130.0))
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
+
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
@@ -120,10 +126,13 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
-        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
-                .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0), new TranslationalVelConstraint(40.0));
-        //Timo added a minTransVel to this one to experiment
+        TrajectoryActionBuilder toGate2 = drive.actionBuilder(endPickup1)
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
+
+        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(gatePos2)
+                .setTangent(posMultiplier*Math.toRadians(130.0))
+                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
@@ -224,11 +233,15 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.GPP)
+                                                QuickSpindexer.toMotifFrom(Motif.PGP)
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        toShoot2.build()
+                                        new ParallelAction(
+                                                toGate1.build(),
+                                                actionManager.waitFor(0.1), //wait for balls to row
+                                                toShoot2.build()
+                                        )
                                 ),
 
                                 //Second volley start
@@ -298,11 +311,15 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.PGP)
+                                                QuickSpindexer.toMotifFrom(Motif.PPG)
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        toShoot3.build()
+                                        new ParallelAction(
+                                                toGate2.build(),
+                                                actionManager.waitFor(0.1), //wait for balls to row
+                                                toShoot3.build()
+                                        )
                                 ),
 
                                 //Third volley start
