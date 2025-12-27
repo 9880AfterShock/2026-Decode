@@ -72,6 +72,11 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 telemetry.addData("Alliance", "Red");
                 TeleOp.alliance = Alliance.RED;
             }
+            if (secondDump){
+                telemetry.addData("Second Dump", "Active");
+            } else {
+                telemetry.addData("Second Dump", "Disabled");
+            }
             telemetry.update();
         }
 
@@ -91,8 +96,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(37.0))
@@ -130,16 +135,16 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         TrajectoryActionBuilder toShoot3;
 
         if (secondDump){
-            toShoot3 = drive.actionBuilder(gatePos2)
-                    .setTangent(posMultiplier*Math.toRadians(130.0))
-                    .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0))
+            toShoot3 = drive.actionBuilder(endPickup2)
                     //doing gate
                     .setTangent(posMultiplier*Math.toRadians(180.0))
-                    .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0))
-                    .waitSeconds(0.1);
+                    .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
+                    .waitSeconds(0.1)
 
+                    .setTangent(posMultiplier*Math.toRadians(130.0))
+                    .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
         } else {
-            toShoot3 = drive.actionBuilder(gatePos2)
+            toShoot3 = drive.actionBuilder(endPickup2)
                     .setTangent(posMultiplier*Math.toRadians(125.0))
                     .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
         }
