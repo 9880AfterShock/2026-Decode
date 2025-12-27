@@ -86,8 +86,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
                 .setTangent(posMultiplier*Math.toRadians(37.0))
@@ -126,7 +126,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
-        TrajectoryActionBuilder toGate2 = drive.actionBuilder(endPickup1)
+        TrajectoryActionBuilder toGate2 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(180.0))
                 .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
 
