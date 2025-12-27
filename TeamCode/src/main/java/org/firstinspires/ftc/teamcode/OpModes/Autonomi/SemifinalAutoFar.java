@@ -75,7 +75,7 @@ public class SemifinalAutoFar extends LinearOpMode {
 
         //Poses
         Pose2d shootPosFar1 = new Pose2d(54.5, -13.0, Math.toRadians(22.5));
-        Pose2d shootPosFar2 = new Pose2d(54.5, -15.0, Math.toRadians(22.5));
+        Pose2d shootPosFar2 = new Pose2d(54.5, -15.0, Math.toRadians(25.0));
         Pose2d shootPosFar3 = new Pose2d(54.5, -17.0, Math.toRadians(22.5));
 
         Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
