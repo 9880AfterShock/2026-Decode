@@ -229,7 +229,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.5), // Timo changed this from 0.1 to 0.5 for safety (no loss from this)
+                                        actionManager.waitFor(0.5),
                                         QuickSpindexer.toMotifFrom(Motif.GPP)
                                 ),
                                 Shield.AutoShieldShoot(),
@@ -303,7 +303,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.5), // Changed to 0.5 here as well
+                                        actionManager.waitFor(0.5),
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),

@@ -222,7 +222,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(0.5),
                                         QuickSpindexer.toMotifFrom(Motif.PPG)
                                 ),
                                 Shield.AutoShieldShoot(),
@@ -296,7 +296,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                         new ParallelAction(
                                 new SequentialAction(
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(0.5),
                                         QuickSpindexer.toMotifFrom(Motif.PGP)
                                 ),
                                 Shield.AutoShieldShoot(),
