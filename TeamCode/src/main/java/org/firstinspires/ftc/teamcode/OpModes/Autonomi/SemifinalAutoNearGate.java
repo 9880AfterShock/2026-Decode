@@ -70,7 +70,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
             telemetry.update();
         }
 
-        Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(-35.0));
+        Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(55.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosClose);
 
         //Poses
