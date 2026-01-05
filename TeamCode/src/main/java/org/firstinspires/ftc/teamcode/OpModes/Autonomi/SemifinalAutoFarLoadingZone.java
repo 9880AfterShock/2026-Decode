@@ -134,7 +134,7 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(parkPosFar.heading.toDouble());
+        TeleOp.autoEndPosition = parkPosFar;
 
 
         waitForStart();

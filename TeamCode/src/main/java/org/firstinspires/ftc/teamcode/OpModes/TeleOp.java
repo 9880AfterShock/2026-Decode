@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
     public static Alliance alliance;
-    public static Double autoEndRotation;
+    public static Pose2d autoEndPosition;
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
@@ -82,10 +82,10 @@ public class TeleOp extends LinearOpMode {
         if (alliance == null){
             alliance = Alliance.BLUE;
         }
-        if (autoEndRotation == null) {
-            autoEndRotation = 0.0;
+        if (autoEndPosition == null) {
+            autoEndPosition = new Pose2d(0.0, 0.0, 0.0);
         }
-        Gyroscope.setRotation(autoEndRotation);
+        Gyroscope.setRotation(Math.toDegrees(autoEndPosition.heading.toDouble()));
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             Gyroscope.updateGyro(gamepad1.backWasPressed());
