@@ -233,7 +233,7 @@ public class InterleagueAutoNearGate extends LinearOpMode {
 //                .waitSeconds(0.5);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
+//        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
 
 
         Limelight.motif = Motif.GPP;
