@@ -7,9 +7,10 @@ public class Hinge {
     private static Servo hingeLeft; // init servo var
     private static Servo hingeRight; // init servo var
     private static OpMode opmode; // opmode var init
-    public static double inPosition = 1.0;
-    public static double readyPosition = 0.9;
-    public static double outPosition = 0.7;
+    public static double leftInPosition = 0.95;
+    public static double leftOutPosition = 0.65;
+    public static double rightInPosition = 1.0;
+    public static double rightOutPosition = 0.7;
     public static Boolean lifting = false;
 
     public static void initBase(OpMode opmode) { // init motor
@@ -25,11 +26,11 @@ public class Hinge {
         }
 
         if (lifting) {
-            hingeLeft.setPosition(outPosition);
-            hingeRight.setPosition(outPosition);
+            hingeLeft.setPosition(leftOutPosition);
+            hingeRight.setPosition(rightOutPosition);
         } else {
-            hingeLeft.setPosition(inPosition);
-            hingeRight.setPosition(inPosition);
+            hingeLeft.setPosition(leftInPosition);
+            hingeRight.setPosition(rightInPosition);
         }
 
         opmode.telemetry.addData("Returning to Base?", lifting);
