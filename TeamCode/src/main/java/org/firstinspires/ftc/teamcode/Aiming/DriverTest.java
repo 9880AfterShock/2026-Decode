@@ -72,7 +72,8 @@ public class DriverTest {
 //            distanceFromGoal -= 5;
 //        }
         if (rev) {
-            shooter.setSpeed(desSpeed);
+            shooterUp.setVelocity((desSpeed*numTicks)/60);
+            shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
@@ -87,13 +88,13 @@ public class DriverTest {
             }
         } else {
             canFire = false;
-            shooter.setSpeed(1000);
+            shooterUp.setVelocity(0.0);
+            shooterDown.setVelocity(0.0);
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
 //            shooterDown.setVelocity(-25*30);
 //        }
-        shooter.update();
         opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);

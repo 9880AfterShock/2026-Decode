@@ -9,11 +9,14 @@ import org.firstinspires.ftc.teamcode.Systems.PIDAbstract;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FlywheelMotor {
     private double speed;
     private final PIDAbstract pid;
     private final List<DcMotorEx> motors;
     private final double ticks;
+    public double lastPidOutput;
+    public double lastError;
     public void setSpeed(double speed) {
         this.speed = speed;
     }
@@ -26,7 +29,7 @@ public class FlywheelMotor {
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.motors = List.of(motor);
         this.speed = 0.0;
-        this.pid = new PID(0.1,0,0.01);
+        this.pid = new PID(0.001,0,0);
         this.ticks = ticks;
     }
     public FlywheelMotor(List<DcMotorEx> motors, double ticks) {
@@ -36,16 +39,18 @@ public class FlywheelMotor {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         this.speed = 0.0;
-        this.pid = new PID(0.1,0,0.01);
+        this.pid = new PID(0.0012,0.001,0, 500.0);
         this.ticks = ticks;
     }
 
     public void update() {
         if (!motors.isEmpty()) {
-            double val = Math.min(1.0,Math.max(-1.0,pid.step((motors.get(0).getVelocity()/ticks)*60)));
+            double val = Math.min(1.0,Math.max(-0.05,pid.step(speed,(motors.get(0).getVelocity()/ticks)*60)));
             for (DcMotorEx motor : motors) {
                 motor.setPower(val);
             }
+            lastError = speed-((motors.get(0).getVelocity()/ticks)*60);
+            lastPidOutput = val;
         }
     }
 }
