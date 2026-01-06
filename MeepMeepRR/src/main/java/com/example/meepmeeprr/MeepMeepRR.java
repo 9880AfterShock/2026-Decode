@@ -26,7 +26,7 @@ public class MeepMeepRR {
 //        Pose2d shootPosFar = new Pose2d(57.5, -12.0, Math.toRadians(22.5));
 //        Pose2d parkPosFar = new Pose2d(60.0, -38.0, Math.toRadians(90.0));
 
-//        /*
+        /*
         Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(-35.0));
         Pose2d scanPos = new Pose2d(-35.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-45.0));
 
@@ -44,30 +44,58 @@ public class MeepMeepRR {
 
         Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
-//        */
+        */
         /*
-        Pose2d startPosFar = new Pose2d(62.6, -16.0, Math.toRadians(0.0));
-        Pose2d shootPosFar1 = new Pose2d(54.5, -13.0, Math.toRadians(22.5));
-        Pose2d shootPosFar2 = new Pose2d(54.5, -15.0, Math.toRadians(25.0));
-        Pose2d shootPosFar3 = new Pose2d(56.0, -17.0, Math.toRadians(22.5));
+        Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
+        Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+        Pose2d shootPosFar3 = new Pose2d(56.0, posMultiplier*-17.0, posMultiplier*Math.toRadians(22.5));
 
         Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-35, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
 
+
         //Loading zone
-        Pose2d prePickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d startPickup2 = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d midPickup2 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d endPickup2 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
+//        Pose2d prePickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+//        Pose2d startPickup2 = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+//        Pose2d midPickup2 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+//        Pose2d endPickup2 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
         //Middle
-//        Pose2d prePickup2 = new Pose2d(15.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d startPickup2 = new Pose2d(15.0, posMultiplier*-35, posMultiplier*Math.toRadians(-90.0));
-//        Pose2d endPickup2 = new Pose2d(15.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
+        Pose2d prePickup2 = new Pose2d(15.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(15.0, posMultiplier*-35, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup2 = new Pose2d(15.0, posMultiplier*-50.0, posMultiplier*-Math.toRadians(90.0));
 
-        Pose2d parkPosFar = new Pose2d(15.0, -34.0, Math.toRadians(90));
+        Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
         */
+
+///*
+        //Far zone CYCLES
+        Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0));
+
+        Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
+        Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+        Pose2d shootPosFar4 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+
+        //Loading zone pickup
+        Pose2d prePickup1 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d startPickup1 = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickup1 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickup1 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
+
+        Pose2d prePickup2 = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup2 = new Pose2d(53.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+
+        Pose2d prePickup3 = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup3 = new Pose2d(63.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup3 = new Pose2d(53.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+
+        Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
+//*/
+
 
         MeepMeep meepMeep = new MeepMeep(600);
 
@@ -78,71 +106,71 @@ public class MeepMeepRR {
                 .build();
 
         //New auto near
-        myBot.runAction(myBot.getDrive().actionBuilder(startPosClose)
-//                //toScan
-//                .setTangent(posMultiplier*Math.toRadians(55.0))
-//                .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0))
-//                        .waitSeconds(2.0) //scanning
+//        myBot.runAction(myBot.getDrive().actionBuilder(startPosClose)
+////                //toScan
+////                .setTangent(posMultiplier*Math.toRadians(55.0))
+////                .splineToLinearHeading(scanPos, posMultiplier*Math.toRadians(45.0))
+////                        .waitSeconds(2.0) //scanning
+////
+////                //toShoot1
+////                .setTangent(posMultiplier*Math.toRadians(30.0))
+////                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(30.0))
+////                        .waitSeconds(4.0) //shooting
 //
-//                //toShoot1
-//                .setTangent(posMultiplier*Math.toRadians(30.0))
-//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(30.0))
-//                        .waitSeconds(4.0) //shooting
-
-                //to shoot no scan
-                .setTangent(posMultiplier*Math.toRadians(37.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0))
-
-                //toPickup1
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0))
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0))
-
-                //pickUp1
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
-
-                //toShoot2 no gate
-//                .setTangent(posMultiplier*Math.toRadians(125.0))
-//                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0))
-
-                //toGate1
-                .setTangent(posMultiplier*Math.toRadians(90.0))
-                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0))
-
-                //toShoot2 after gate
-                .setTangent(posMultiplier*Math.toRadians(130.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0))
-
-                .waitSeconds(4.0) //shooting
-
-                //toPickup2
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0))
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0))
-
-                //pickup2
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
-
-                //toShoot3 no Gate
-//                .setTangent(posMultiplier*Math.toRadians(125.0))
-//                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0))
-
-                //to gate 2
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
-
-                //to shoot after gate 3
-                .setTangent(posMultiplier*Math.toRadians(130.0))
-                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(130.0))
-
-                .waitSeconds(4.0) //shooting
-
-                .build()
-        );
+//                //to shoot no scan
+//                .setTangent(posMultiplier*Math.toRadians(37.0))
+//                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0))
+//
+//                //toPickup1
+//                .setTangent(posMultiplier*Math.toRadians(0.0))
+//                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0))
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0))
+//
+//                //pickUp1
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
+//
+//                //toShoot2 no gate
+////                .setTangent(posMultiplier*Math.toRadians(125.0))
+////                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(125.0))
+//
+//                //toGate1
+//                .setTangent(posMultiplier*Math.toRadians(90.0))
+//                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0))
+//
+//                //toShoot2 after gate
+//                .setTangent(posMultiplier*Math.toRadians(130.0))
+//                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0))
+//
+//                .waitSeconds(4.0) //shooting
+//
+//                //toPickup2
+//                .setTangent(posMultiplier*Math.toRadians(0.0))
+//                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0))
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0))
+//
+//                //pickup2
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0))
+//
+//                //toShoot3 no Gate
+////                .setTangent(posMultiplier*Math.toRadians(125.0))
+////                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(155.0))
+//
+//                //to gate 2
+//                .setTangent(posMultiplier*Math.toRadians(180.0))
+//                .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
+//
+//                //to shoot after gate 3
+//                .setTangent(posMultiplier*Math.toRadians(130.0))
+//                .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(130.0))
+//
+//                .waitSeconds(4.0) //shooting
+//
+//                .build()
+//        );
 
 //        //Far auto
 //        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
@@ -310,8 +338,8 @@ public class MeepMeepRR {
 //                .build()
 //        );
 
-        //New auto far
 
+//        //New auto far
 //        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
 //
 //                //toShoot1
@@ -369,6 +397,73 @@ public class MeepMeepRR {
 //
 //                .build()
 //        );
+
+        //New auto far CYCLES
+        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
+
+                //toShoot1
+                .setTangent(posMultiplier*Math.toRadians(160.0))
+                .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(160.0))
+                .waitSeconds(4.0) //shooting
+
+                //toPickup1
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(-90.0))
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0))
+
+                //pickup1
+                .setTangent(posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(midPickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(5.0))
+                .setTangent(posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(5.0))
+
+                //toShoot2
+                .setTangent(posMultiplier*Math.toRadians(100.0))
+                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(100.0))
+                .waitSeconds(4.0) //shooting
+
+
+
+                //cycle1
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0))
+
+                //toShoot3
+                .setTangent(posMultiplier*Math.toRadians(87.0))
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(87.0))
+                .waitSeconds(4.0) //shooting
+
+
+
+                //Cycle 2
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(prePickup3, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(startPickup3, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(endPickup3, posMultiplier*Math.toRadians(-90.0))
+
+                //toShoot4
+                .setTangent(posMultiplier*Math.toRadians(87.0))
+                .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(87.0))
+                .waitSeconds(4.0) //shooting
+
+
+
+
+
+
+                //toPark
+                .setTangent(Math.toRadians(202.5))
+                .splineToLinearHeading(parkPosFar, Math.toRadians(202.5), new TranslationalVelConstraint(100.0))
+
+                .build()
+        );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
                 .setDarkMode(true)
