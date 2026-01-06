@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Far zone 9 (Uses human player)")
+@Autonomous(name = "Far zone cycle gate runoff")
 public class SemifinalAutoFarCycle extends LinearOpMode {
     @Override
     public void runOpMode() {
