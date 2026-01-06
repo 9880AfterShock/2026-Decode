@@ -5,11 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.FlywheelMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
+
+import java.util.List;
 
 public class DriverTest {
     private static OpMode opmode;
@@ -24,6 +27,7 @@ public class DriverTest {
     private static double lastTime;
     private static DcMotorEx shooterUp;
     private static DcMotorEx shooterDown;
+    private static FlywheelMotor shooter;
     public static boolean canFire;
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
@@ -31,13 +35,8 @@ public class DriverTest {
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
         shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp"); //Port 3 or 4 on the expansion hub
-        shooterUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterUp.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterUp.setVelocity(0);
         shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown"); //Port 3 or 4 on the expansion hub
-        shooterDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterDown.setVelocity(0);
+        shooter = new FlywheelMotor(List.of(shooterUp,shooterDown),numTicks);
         distanceFromGoal = 60;
         lastPos = shooterUp.getCurrentPosition();
         lastTime = opmode.getRuntime();
@@ -45,7 +44,7 @@ public class DriverTest {
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
-        double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/numTicks)*60);
+        double rotationsPerMinute = Math.abs(shooter.getSpeed());
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
@@ -68,13 +67,12 @@ public class DriverTest {
 //        }
 //        if (decrease){
 ////            distanceFromGoal -= 0.3048*0.5;
-////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
 ////            desSpeed -= 50;
 //            distanceFromGoal -= 5;
 //        }
         if (rev) {
-            shooterUp.setVelocity((desSpeed*numTicks)/60);
-            shooterDown.setVelocity((desSpeed*numTicks)/60);
+            shooter.setSpeed(desSpeed);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
@@ -89,14 +87,13 @@ public class DriverTest {
             }
         } else {
             canFire = false;
-            shooterUp.setVelocity(0);
-            shooterDown.setVelocity(0);
+            shooter.setSpeed(1000);
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
 //            shooterDown.setVelocity(-25*30);
 //        }
-
+        shooter.update();
         opmode.telemetry.addData("Can fire? ", canFire);
         opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
