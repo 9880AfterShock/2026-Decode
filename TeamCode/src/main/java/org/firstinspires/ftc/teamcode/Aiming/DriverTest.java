@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.FlywheelMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.PID;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -31,6 +32,9 @@ public class DriverTest {
     public static boolean canFire;
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
+
+//    private static PID shooterPID = new PID(0.001,0.0,0.0);
+//    private static double shooterTargetVel =
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -72,6 +76,7 @@ public class DriverTest {
 //            distanceFromGoal -= 5;
 //        }
         if (rev) {
+            // (kS * signum(targetVel)) + (kV * targetVel)
             shooterUp.setVelocity((desSpeed*numTicks)/60);
             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
