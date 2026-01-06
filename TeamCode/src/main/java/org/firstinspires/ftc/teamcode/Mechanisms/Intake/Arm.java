@@ -23,7 +23,7 @@ public class Arm { // Prefix for commands
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
     public static double neutralPosition = 0.57;
-    public static double transferPosition = 0.73;
+    public static double transferPosition = 0.78;
     public static String intakeState = "Intaking";
 
     public static void initIntake(OpMode opmode) { // init motor
