@@ -167,7 +167,8 @@ public class ActionManager {
 //                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
 //                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
 //                return Math.abs(rotationsPerMinute-rpm) > 50;
-                return Math.abs(avgSpeed-rpm) > 50;
+                DriverTest.update(false, false, false, true, false, true);
+                return Math.abs(avgSpeed-rpm) > 200;
             }
         };
     }
