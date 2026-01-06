@@ -201,7 +201,7 @@ public class InterleagueAutoNearSmall extends LinearOpMode {
                 .waitSeconds(0.5);
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(parkPosClose.heading.toDouble());
+//        TeleOp.autoEndRotation = Math.toDegrees(parkPosClose.heading.toDouble());
 
 
         waitForStart();

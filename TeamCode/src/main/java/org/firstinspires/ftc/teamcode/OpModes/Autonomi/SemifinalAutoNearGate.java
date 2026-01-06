@@ -156,7 +156,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(shootPosClose3.heading.toDouble());
+        TeleOp.autoEndPosition = shootPosClose3;
 
 
         waitForStart();

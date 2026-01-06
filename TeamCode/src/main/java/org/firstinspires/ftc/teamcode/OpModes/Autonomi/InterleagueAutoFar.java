@@ -169,7 +169,7 @@ public class InterleagueAutoFar extends LinearOpMode {
                 .waitSeconds(0.3);
 
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
-        TeleOp.autoEndRotation = Math.toDegrees(parkPosFar.heading.toDouble());
+//        TeleOp.autoEndRotation = Math.toDegrees(parkPosFar.heading.toDouble());
 
 
         waitForStart();
