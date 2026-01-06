@@ -162,6 +162,7 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
 
                                 //First volley start
                                 actionManager.shotCue(1),
+                                actionManager.waitFor(1.0),
                                 actionManager.waitForSpeedSafe(rpm),
                                 Arm.AutoLaunchStart(),
                                 actionManager.waitFor(shotCooldown),
