@@ -159,7 +159,6 @@ public class ControlManager {
             Spindexer.reset = false;
             spindexer.resetEncoder();
         }
-
         spindexer.update();
 //        ballRamp.update();
 
