@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.FlywheelMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
@@ -14,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Systems.PID;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
+import java.net.ProtocolException;
 import java.util.List;
 
 import kotlin.jvm.JvmField;
@@ -25,11 +29,8 @@ public class DriverTest {
 
     private static final double numTicks = 28;
 
-    private static double lastPos;
-
     public static double desSpeed = 3300;
 
-    private static double lastTime;
     private static DcMotorEx shooterUp;
     private static DcMotorEx shooterDown;
     private static FlywheelMotor shooter;
@@ -37,10 +38,13 @@ public class DriverTest {
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
-//    private static double idleSpeed = 500;
-//    private static PID shooterPID = new PID(0.0,0.0,0.0);
-//    public static double kS = 0.01; //3805 is 0.055
-//    public static double kV = 0.00019; //3805 is 0.0005
+    private static double idleSpeed = 500;
+    private static PID shooterPID = new PID(0.00070,0.0,0.0);
+    public static double kS = 0.01; //3805 is 0.055
+    public static double kV = 0.000195; //3805 is 0.0005
+
+    public static double kP = 0.0007; //for dash
+    public static double kD = 0.0; //for dash
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -50,12 +54,18 @@ public class DriverTest {
         shooterDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter = new FlywheelMotor(List.of(shooterUp,shooterDown),numTicks);
         distanceFromGoal = 60;
-        lastPos = shooterUp.getCurrentPosition();
-        lastTime = opmode.getRuntime();
         canFire = false;
+
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.put("Current RPM", 0.0);
+        packet.put("Desired RPM", 0.0);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
+        shooterPID.p = kP;
+        shooterPID.d = kD;
         double rotationsPerMinute = Math.abs(shooter.getSpeed());
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
@@ -84,11 +94,11 @@ public class DriverTest {
 //            distanceFromGoal -= 5;
 //        }
         if (rev) {
-//            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
-//            shooterUp.setPower(shooterPower);
-//            shooterDown.setPower(shooterPower);
-             shooterUp.setVelocity((desSpeed*numTicks)/60);
-             shooterDown.setVelocity((desSpeed*numTicks)/60);
+            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+            shooterUp.setPower(shooterPower);
+            shooterDown.setPower(shooterPower);
+//             shooterUp.setVelocity((desSpeed*numTicks)/60);
+//             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
@@ -106,8 +116,10 @@ public class DriverTest {
 //            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
 //            shooterUp.setPower(shooterPower);
 //            shooterDown.setPower(shooterPower);
-             shooterUp.setVelocity(0.0);
-             shooterDown.setVelocity(0.0);
+//             shooterUp.setVelocity(0.0);
+//             shooterDown.setVelocity(0.0);
+            shooterUp.setPower(0.0);
+            shooterDown.setPower(0.0);
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
@@ -119,14 +131,19 @@ public class DriverTest {
         opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
         opmode.telemetry.addData("Averaged RPM", avgSpeed);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.put("Current RPM", rotationsPerMinute);
+        packet.put("Desired RPM", desSpeed);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 }
 //for feedworward
 //tune kstatic first //done
-//tune kv
+//tune kv //done? maybe
 
-//P
-//D
+//P //done
+//D //idk what to do here, figure out later
 //no I
 
 //then test shooting speed
