@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import kotlin.jvm.JvmField;
 
+@Config
 public class DriverTest {
     private static OpMode opmode;
     public static double distanceFromGoal;
@@ -35,15 +37,15 @@ public class DriverTest {
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
-    private static double idleSpeed = 500;
-    private static PID shooterPID = new PID(0.0,0.0,0.0);
-    public static double kS = 0.0; //3805 is 0.055
-    public static double kV = 0.0; //3805 is 0.0005
+//    private static double idleSpeed = 500;
+//    private static PID shooterPID = new PID(0.0,0.0,0.0);
+//    public static double kS = 0.01; //3805 is 0.055
+//    public static double kV = 0.00019; //3805 is 0.0005
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
-        shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp"); //Port 3 or 4 on the expansion hub
-        shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown"); //Port 3 or 4 on the expansion hub
+        shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp"); //Port 3 or 4 on the expansion hub //one with encoder
+        shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown"); //Port 3 or 4 on the expansion hub //one without encoder
         shooterUp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooterDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooter = new FlywheelMotor(List.of(shooterUp,shooterDown),numTicks);
@@ -82,11 +84,11 @@ public class DriverTest {
 //            distanceFromGoal -= 5;
 //        }
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
-            shooterUp.setPower(shooterPower);
-            shooterDown.setPower(shooterPower);
-            // shooterUp.setVelocity((desSpeed*numTicks)/60);
-            // shooterDown.setVelocity((desSpeed*numTicks)/60);
+//            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+//            shooterUp.setPower(shooterPower);
+//            shooterDown.setPower(shooterPower);
+             shooterUp.setVelocity((desSpeed*numTicks)/60);
+             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
@@ -101,11 +103,11 @@ public class DriverTest {
             }
         } else {
             canFire = false;
-            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
-            shooterUp.setPower(shooterPower);
-            shooterDown.setPower(shooterPower);
-            // shooterUp.setVelocity(0.0);
-            // shooterDown.setVelocity(0.0);
+//            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+//            shooterUp.setPower(shooterPower);
+//            shooterDown.setPower(shooterPower);
+             shooterUp.setVelocity(0.0);
+             shooterDown.setVelocity(0.0);
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
@@ -120,7 +122,7 @@ public class DriverTest {
     }
 }
 //for feedworward
-//tune kstatic first
+//tune kstatic first //done
 //tune kv
 
 //P
