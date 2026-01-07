@@ -71,28 +71,28 @@ public class DriverTest {
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
         if (!auto) {
-            if (distanceFromGoal < 50) { // Timo experimenting, used to be 70 from goal
-                desSpeed = (0.12825*distanceFromGoal*distanceFromGoal)+(4.81307*distanceFromGoal)+2504.82611-500;
+            if (distanceFromGoal < 50) {
+//                desSpeed = (-0.817614*distanceFromGoal*distanceFromGoal)+(75.97537*distanceFromGoal)+836.07039;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.0381041*distanceFromGoal*distanceFromGoal)+(21.14689*distanceFromGoal)+2119.60164-500;
+//                desSpeed = (-0.0381041*distanceFromGoal*distanceFromGoal)+(21.14689*distanceFromGoal)+2119.60164-500;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
         }
-//        if (increase) {
-////            distanceFromGoal += 0.3048*0.5;
-////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-////            desSpeed += 50;
+        if (increase) {
+//            distanceFromGoal += 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+            desSpeed += 50;
 //            distanceFromGoal += 5;
-//        }
-//        if (decrease){
-////            distanceFromGoal -= 0.3048*0.5;
-////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
-////            desSpeed -= 50;
+        }
+        if (decrease){
+//            distanceFromGoal -= 0.3048*0.5;
+//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
+            desSpeed -= 50;
 //            distanceFromGoal -= 5;
-//        }
+        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
             shooterUp.setPower(shooterPower);
