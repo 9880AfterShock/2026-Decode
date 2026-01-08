@@ -46,7 +46,7 @@ public class SemifinalAutoFar extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3250;
+        double rpm = 3300;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -133,6 +133,8 @@ public class SemifinalAutoFar extends LinearOpMode {
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
         TeleOp.autoEndPosition = parkPosFar;
 
+        double ballInSpindexerTimer = 0.2;
+
 
         waitForStart();
 
@@ -200,7 +202,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(ballInSpindexerTimer),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -208,7 +210,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(ballInSpindexerTimer),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -275,7 +277,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(ballInSpindexerTimer),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),
@@ -283,7 +285,7 @@ public class SemifinalAutoFar extends LinearOpMode {
                                         Roller.AutoIntakeOff(),
                                         Arm.AutoArmIn(),
                                         Distance.waitForBallInSpindexer(),
-                                        actionManager.waitFor(0.1),
+                                        actionManager.waitFor(ballInSpindexerTimer),
                                         QuickSpindexer.turnLeft(),
                                         Roller.AutoIntakeOn(),
                                         Arm.AutoArmOut(),

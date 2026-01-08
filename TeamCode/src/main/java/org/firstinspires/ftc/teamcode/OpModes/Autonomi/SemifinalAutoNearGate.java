@@ -158,6 +158,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
         TeleOp.autoEndPosition = shootPosClose3;
 
+        double ballInSpindexerTimer = 0.2;
+
 
         waitForStart();
 
@@ -224,7 +226,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.1),
+                                                actionManager.waitFor(ballInSpindexerTimer),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
@@ -232,7 +234,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.1),
+                                                actionManager.waitFor(ballInSpindexerTimer),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
@@ -303,7 +305,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.1),
+                                                actionManager.waitFor(ballInSpindexerTimer),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
@@ -311,7 +313,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.1),
+                                                actionManager.waitFor(ballInSpindexerTimer),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
