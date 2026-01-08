@@ -46,7 +46,7 @@ public class SemifinalAutoFar extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3300;
+        double rpm = 3350;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
