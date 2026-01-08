@@ -46,7 +46,7 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3150;
+        double rpm = 3250;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;

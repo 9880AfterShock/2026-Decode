@@ -175,7 +175,7 @@ public class ActionManager {
 //                return Math.abs(rotationsPerMinute-rpm) > 50;
 //                DriverTest.update(false, false, false, true, false, true);
                 autoRev = true;
-                return Math.abs(avgSpeed-rpm) > 200;
+                return Math.abs(avgSpeed-rpm) > 50;
             }
         };
     }
