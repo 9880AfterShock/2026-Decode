@@ -87,6 +87,7 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
         Pose2d midPickup2 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
         Pose2d endPickup2 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
+        Pose2d parkRotationFar = new Pose2d(40.0, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
         Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
@@ -124,6 +125,8 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(100.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
+                .setTangent(posMultiplier*Math.toRadians(202.5))
+                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(202.5))
                 .setTangent(posMultiplier*Math.toRadians(202.5))
                 .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(202.5), new TranslationalVelConstraint(100.0));
 

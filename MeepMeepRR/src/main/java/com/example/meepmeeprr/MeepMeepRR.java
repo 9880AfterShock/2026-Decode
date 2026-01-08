@@ -93,6 +93,7 @@ public class MeepMeepRR {
         Pose2d startPickup3 = new Pose2d(63.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup3 = new Pose2d(53.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
 
+        Pose2d parkRotationFar = new Pose2d(40.0, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
         Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
 //*/
 
@@ -459,8 +460,10 @@ public class MeepMeepRR {
 
 
                 //toPark
-                .setTangent(Math.toRadians(202.5))
-                .splineToLinearHeading(parkPosFar, Math.toRadians(202.5), new TranslationalVelConstraint(100.0))
+                .setTangent(posMultiplier*Math.toRadians(202.5))
+                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(202.5))
+                .setTangent(posMultiplier*Math.toRadians(202.5))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(202.5), new TranslationalVelConstraint(100.0))
 
                 .build()
         );
