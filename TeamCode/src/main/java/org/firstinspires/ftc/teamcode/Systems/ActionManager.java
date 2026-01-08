@@ -32,6 +32,8 @@ public class ActionManager {
     private final int shooterTicks;
     public boolean spindexerBias = false;
     public static double avgSpeed = 0;
+    private static boolean autoRev = false;
+    private static boolean autoFire = false;
 
     public ActionManager(OpMode opmode, int shooterTicks) {
         this.shooterTicks = shooterTicks;
@@ -47,6 +49,8 @@ public class ActionManager {
         shooterDown.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooterDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterDown.setVelocity(0);
+        autoRev = false;
+        autoFire = false;
     }
     public Action cycleRamp() {
         return new Action() {
@@ -66,7 +70,8 @@ public class ActionManager {
         return telemetryPacket -> {
 
             DriverTest.desSpeed = rpm;
-            DriverTest.update(false, false, false, true, false, true);
+            autoRev = true;
+//            DriverTest.update(false, false, false, true, false, true);
 
             spindexerBias = true;
 //            shooterUp.setVelocity((rpm*shooterTicks)/60);
@@ -124,7 +129,8 @@ public class ActionManager {
     public Action derev() {
         return telemetryPacket -> {
             spindexerBias = false;
-            DriverTest.update(false, false, false, false, false, true);
+            autoRev = false;
+//            DriverTest.update(false, false, false, false, false, true);
             spindexer.update();
             return false;
         };
@@ -167,7 +173,8 @@ public class ActionManager {
 //                double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
 //                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
 //                return Math.abs(rotationsPerMinute-rpm) > 50;
-                DriverTest.update(false, false, false, true, false, true);
+//                DriverTest.update(false, false, false, true, false, true);
+                autoRev = true;
                 return Math.abs(avgSpeed-rpm) > 200;
             }
         };
@@ -223,6 +230,8 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                DriverTest.update(false,false, autoFire, autoRev, false, true);
+
                 double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
                 avgSpeed *= 1.5;
                 avgSpeed += rotationsPerMinute*0.5;
