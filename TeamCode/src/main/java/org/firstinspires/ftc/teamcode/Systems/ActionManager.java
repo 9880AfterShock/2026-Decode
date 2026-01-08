@@ -232,6 +232,7 @@ public class ActionManager {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 DriverTest.update(false,false, autoFire, autoRev, false, true);
 
+//                avgSpeed = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
                 double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
                 avgSpeed *= 1.5;
                 avgSpeed += rotationsPerMinute*0.5;
