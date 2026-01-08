@@ -166,6 +166,8 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         if (isStopRequested()) return;
 
+        Limelight.motif = Motif.GPP;
+
         Actions.runBlocking(
                 new RaceAction(
                         actionManager.updateSpeedOverTime(),
@@ -175,7 +177,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 Arm.AutoArmIn(),
                                 Hood.AutoHoodUp(),
                                 actionManager.rev(rpm),
-                                Limelight.AutoScanWithInit(),
+//                                Limelight.AutoScanWithInit(),
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         QuickSpindexer.toMotifFrom(Motif.GPP),
@@ -291,11 +293,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 Shield.AutoShieldLock(),
                                 Roller.AutoIntakeOn(),
 
-                                cycle1.build(), //wrong
-
                                 new RaceAction(
                                         new SequentialAction(
-                                                cycle1.build(), //wrong
+                                                cycle1.build(),
                                                 waitPickup2.build()
                                         ),
                                         new SequentialAction(
@@ -358,6 +358,86 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 Arm.AutoLaunchEnd(),
 
                                 actionManager.derev(),
+
+
+
+
+
+                                //3nd pickup start
+                                Arm.AutoArmOut(),
+                                Shield.AutoShieldLock(),
+                                Roller.AutoIntakeOn(),
+
+                                new RaceAction(
+                                        new SequentialAction(
+                                                cycle2.build(),
+                                                waitPickup3.build()
+                                        ),
+                                        new SequentialAction(
+                                                Distance.waitForBallInLonger(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
+                                        )
+                                ),
+
+                                //Sort 4
+                                new ParallelAction(
+                                        new SequentialAction(
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(0.5),
+                                                QuickSpindexer.toMotifFrom(Motif.PGP)
+                                        ),
+                                        Shield.AutoShieldShoot(),
+                                        actionManager.rev(rpm),
+                                        toShoot4.build()
+                                ),
+
+                                //Fourth volley start
+
+                                actionManager.shotCue(10),
+                                actionManager.waitForSpeedSafe(rpm),
+                                Arm.AutoLaunchStart(),
+                                actionManager.waitFor(shotCooldown),
+                                Arm.AutoLaunchEnd(),
+
+                                actionManager.shotCue(11),
+                                QuickSpindexer.turnRight(),
+                                actionManager.waitForSpeedSafe(rpm),
+                                Arm.AutoLaunchStart(),
+                                actionManager.waitFor(shotCooldown),
+                                Arm.AutoLaunchEnd(),
+
+                                actionManager.shotCue(12),
+                                QuickSpindexer.turnRight(),
+                                actionManager.waitForSpeedSafe(rpm),
+                                Arm.AutoLaunchStart(),
+                                actionManager.waitFor(shotCooldown),
+                                Arm.AutoLaunchEnd(),
+
+                                actionManager.derev(),
+
+
+
+
+
+
+
                                 toPark.build()
                         )
                 )
