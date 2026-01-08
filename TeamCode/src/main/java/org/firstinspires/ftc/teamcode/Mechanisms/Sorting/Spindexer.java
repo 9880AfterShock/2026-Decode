@@ -92,64 +92,66 @@ public class Spindexer {
     }
 
     public void update() {
-        if (!reset) {
-            //opmode.telemetry.addData("SPINDEXER CURRENT",motor.getCurrent(CurrentUnit.AMPS));
-            SpindexerMessage msg = messageQueue.poll();
-            if (msg == null) {
-                msg = SpindexerMessage.NONE;
-            }
-            switch (msg) {
-                case RIGHT:
-                    index = Math.floorMod(index + 1, balls.size());
-                    targetPos += ticksPerRotation / 3;
-                    motor.setTargetPosition((int) targetPos);
-                    break;
-                case LEFT:
-                    index = Math.floorMod(index - 1, balls.size());
-                    targetPos -= ticksPerRotation / 3;
-                    motor.setTargetPosition((int) targetPos);
-                    break;
-                case INGREEN:
-                    balls.set(index, BallType.GREEN);
-                    break;
-                case INPURPLE:
-                    balls.set(index, BallType.PURPLE);
-                    break;
-                case EJECT:
-                    balls.set(index, BallType.NONE);
-                    break;
-                case INUNKOWN:
-                    balls.set(Math.abs(index % balls.size()), BallType.UNKOWN);
-                    break;
-                case LINEUP:
-                    motor.setTargetPosition((int) (targetPos - (ticksPerRotation / 3) / 2.5));
-                    isLineup = true;
-                    RunCondition.addAction(new ConditionAction(() -> {
+        while (!reset && !messageQueue.isEmpty()) {
+            if (!reset) {
+                //opmode.telemetry.addData("SPINDEXER CURRENT",motor.getCurrent(CurrentUnit.AMPS));
+                SpindexerMessage msg = messageQueue.poll();
+                if (msg == null) {
+                    msg = SpindexerMessage.NONE;
+                }
+                switch (msg) {
+                    case RIGHT:
+                        index = Math.floorMod(index + 1, balls.size());
+                        targetPos += ticksPerRotation / 3;
+                        motor.setTargetPosition((int) targetPos);
+                        break;
+                    case LEFT:
+                        index = Math.floorMod(index - 1, balls.size());
+                        targetPos -= ticksPerRotation / 3;
+                        motor.setTargetPosition((int) targetPos);
+                        break;
+                    case INGREEN:
+                        balls.set(index, BallType.GREEN);
+                        break;
+                    case INPURPLE:
+                        balls.set(index, BallType.PURPLE);
+                        break;
+                    case EJECT:
+                        balls.set(index, BallType.NONE);
+                        break;
+                    case INUNKOWN:
+                        balls.set(Math.abs(index % balls.size()), BallType.UNKOWN);
+                        break;
+                    case LINEUP:
+                        motor.setTargetPosition((int) (targetPos - (ticksPerRotation / 3) / 2.5));
+                        isLineup = true;
+                        RunCondition.addAction(new ConditionAction(() -> {
+                            RunLater.addAction(new DelayedAction(() -> {
+                                isLineup = false;
+                                motor.setTargetPosition((int) targetPos);
+
+                            }, 0.85));
+                        }, this::isLinedUp));
+                        break;
+                    case LINEUPFixed:
+                        int fixedTargetPos = motor.getTargetPosition();
+                        motor.setTargetPosition((int) (fixedTargetPos - (ticksPerRotation / 3) / 2.5));
+                        isLineup = true;
                         RunLater.addAction(new DelayedAction(() -> {
                             isLineup = false;
-                            motor.setTargetPosition((int) targetPos);
+                            motor.setTargetPosition((int) (fixedTargetPos));
 
                         }, 0.85));
-                    }, this::isLinedUp));
-                    break;
-                case LINEUPFixed:
-                    int fixedTargetPos = motor.getTargetPosition();
-                    motor.setTargetPosition((int) (fixedTargetPos - (ticksPerRotation / 3) / 2.5));
-                    isLineup = true;
-                    RunLater.addAction(new DelayedAction(() -> {
-                        isLineup = false;
-                        motor.setTargetPosition((int) (fixedTargetPos));
-
-                    }, 0.85));
-                    break;
-                case NONE:
-                    if (!isLineup) {
-                        motor.setTargetPosition((int) targetPos);
-                    }
-                    break;
+                        break;
+                    case NONE:
+                        if (!isLineup) {
+                            motor.setTargetPosition((int) targetPos);
+                        }
+                        break;
+                }
+            } else {
+                motor.setTargetPosition(motor.getTargetPosition() + 30);
             }
-        } else {
-            motor.setTargetPosition(motor.getTargetPosition() + 30);
         }
     }
 
