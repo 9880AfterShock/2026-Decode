@@ -86,14 +86,14 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         Pose2d endPickup1 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
         Pose2d prePickup2 = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d midPickup2 = new Pose2d(58.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(53.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d midPickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup2 = new Pose2d(48.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickup3 = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup3 = new Pose2d(63.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d midPickup3 = new Pose2d(58.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup3 = new Pose2d(53.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup3 = new Pose2d(63.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d midPickup3 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickup3 = new Pose2d(48.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d parkRotationFar = new Pose2d(40.0, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
         Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
