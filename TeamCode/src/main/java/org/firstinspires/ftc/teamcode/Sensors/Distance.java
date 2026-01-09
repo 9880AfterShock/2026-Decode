@@ -114,4 +114,19 @@ public class Distance { // Prefix for commands
             }
         };
     }
+
+    public static Action waitForBallInCycles() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+                return !(ballInIntake());
+            }
+        };
+    }
 }
