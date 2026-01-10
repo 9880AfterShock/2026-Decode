@@ -435,7 +435,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 //Fourth volley start
 
                                 new RaceAction(
-                                        actionManager.haveEnoughBalls(0.0),
+                                        actionManager.haveEnoughBalls(1),
                                         new SequentialAction(
                                                 actionManager.shotCue(10),
                                                 actionManager.waitForSpeedSafe(rpm),
