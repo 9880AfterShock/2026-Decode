@@ -57,7 +57,7 @@ public class ControlManager {
         ControlManager.opMode=opMode;
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
-        spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
+//        spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
         classifier = new ColorClassifier<>(BallType.NONE,3);
         classifier.addColor((new Color((double) 0.278, (double) 0.465, (double) 0.432, ColorType.RGB)).asHSV(), BallType.GREEN);
         classifier.addColor((new Color((double) 0.28417, (double) 0.455, (double) 0.43,ColorType.RGB)).asHSV(), BallType.PURPLE);
@@ -123,48 +123,49 @@ public class ControlManager {
         Hood.updateAim(change_mode);
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
-        NormalizedRGBA color_test = color_sensor.getNormalizedColors();
-        opMode.telemetry.addData("sensed color", color_test.red+", "+color_test.green+", "+color_test.blue);
-        if (Distance.ballInSpindexer() && spindexer.isLinedUp() && !auto_shoot) {
-                NormalizedRGBA color = color_sensor.getNormalizedColors();
-                Color data = new Color(color.red, color.green, color.blue, ColorType.RGB);
-                opMode.telemetry.addData("color: ", data.getRed()+", "+data.getGreen()+", "+data.getBlue());
-                BallType classification = classifier.classify(data);
-                if (classification == BallType.GREEN) {
-                    spindexer.queueMessage(SpindexerMessage.INGREEN);
-                } else if (classification == BallType.PURPLE) {
-                    spindexer.queueMessage(SpindexerMessage.INPURPLE);
-                }
-        } else if (spindexer.isLinedUp() && !auto_shoot) {
-            spindexer.queueMessage(SpindexerMessage.EJECT);
-        }
-
-        if (spindexer.isLinedUp() && auto_shoot && spindexer.getCurrentBall() == BallType.NONE) {
-            spindexer.queueMessage(SpindexerMessage.LEFT);
-        }
+//        NormalizedRGBA color_test = color_sensor.getNormalizedColors();
+//        opMode.telemetry.addData("sensed color", color_test.red+", "+color_test.green+", "+color_test.blue);
+//        if (Distance.ballInSpindexer() && spindexer.isLinedUp() && !auto_shoot) {
+//                NormalizedRGBA color = color_sensor.getNormalizedColors();
+//                Color data = new Color(color.red, color.green, color.blue, ColorType.RGB);
+//                opMode.telemetry.addData("color: ", data.getRed()+", "+data.getGreen()+", "+data.getBlue());
+//                BallType classification = classifier.classify(data);
+//                if (classification == BallType.GREEN) {
+//                    spindexer.queueMessage(SpindexerMessage.INGREEN);
+//                } else if (classification == BallType.PURPLE) {
+//                    spindexer.queueMessage(SpindexerMessage.INPURPLE);
+//                }
+//        } else if (spindexer.isLinedUp() && !auto_shoot) {
+//            spindexer.queueMessage(SpindexerMessage.EJECT);
+//        }
+//
+//        if (spindexer.isLinedUp() && auto_shoot && spindexer.getCurrentBall() == BallType.NONE) {
+//            spindexer.queueMessage(SpindexerMessage.LEFT);
+//        }
 
         DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
         Shield.updateLocking(rev);
 
-        if (spinLeft) {
-            spindexer.queueMessage(SpindexerMessage.RIGHT);
-        }
-        if (spinRight) {
-            spindexer.queueMessage(SpindexerMessage.LEFT);
-        }
-        if (operator.start && operator.back) {
-            Spindexer.reset = true;
-        }
-        if (Spindexer.reset && operator.backWasReleased()) {
-            Spindexer.reset = false;
-            spindexer.resetEncoder();
-        }
-        spindexer.update();
+//        if (spinLeft) {
+//            spindexer.queueMessage(SpindexerMessage.RIGHT);
+//        }
+//        if (spinRight) {
+//            spindexer.queueMessage(SpindexerMessage.LEFT);
+//        }
+        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased());
+//        if (operator.start && operator.back) {
+//            Spindexer.reset = true;
+//        }
+//        if (Spindexer.reset && operator.backWasReleased()) {
+//            Spindexer.reset = false;
+//            spindexer.resetEncoder();
+//        }
+//        spindexer.update();
 //        ballRamp.update();
 
         prevInstake = intaking;
 //        opMode.telemetry.addData("BallRamp mesages",ballRamp.messageQueue.size());
-        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
+//        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
 
         Hinge.updateBase(operator.yWasPressed());
     }

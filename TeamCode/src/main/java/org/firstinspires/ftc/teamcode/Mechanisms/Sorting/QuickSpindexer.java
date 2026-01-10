@@ -50,6 +50,30 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setPower(1.0);
     }
 
+    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
+
+        if (clockwise && !wasClockwise){
+            targetPosition += 1425.1/3;
+        }
+        if (counterclockwise && !wasCounterclockwise) {
+            targetPosition -= 1425.1/3;
+        }
+        if (reseting) {
+            targetPosition += 10;
+        }
+        if (reset){
+            spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            spindexer.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            targetPosition = 0;
+        }
+
+        spindexer.setTargetPosition((int) targetPosition);
+        wasClockwise = clockwise;
+        wasCounterclockwise = counterclockwise;
+
+        spindexer.setPower(1.0);
+    }
+
     public static Action goToMotif(){
         return new Action() {
             @Override

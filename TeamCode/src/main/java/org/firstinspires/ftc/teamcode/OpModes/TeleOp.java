@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
@@ -62,7 +63,7 @@ public class TeleOp extends LinearOpMode {
         Gyroscope.initSensor(this);
         Hinge.initBase(this);
 
-//        QuickSpindexer.initSpindexer(this);
+        QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
 
 //        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
