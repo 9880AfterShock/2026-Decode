@@ -34,6 +34,7 @@ public class ActionManager {
     public static double avgSpeed = 0;
     private static boolean autoRev = false;
     private static boolean autoFire = false;
+    public static int ballCount = 0;
 
     public ActionManager(OpMode opmode, int shooterTicks) {
         this.shooterTicks = shooterTicks;
@@ -238,6 +239,25 @@ public class ActionManager {
                 avgSpeed += rotationsPerMinute*0.5;
                 avgSpeed /= 2;
                 return true;
+            }
+        };
+    }
+
+    public Action setBallCount(int newCount) { //only for race actions (never ends)
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                ballCount = newCount;
+                return false;
+            }
+        };
+    }
+
+    public Action haveEnoughBalls(int targetCount) { //return false if if there is no ball, true if there is
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return ballCount >= targetCount;
             }
         };
     }

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
+import android.service.quickaccesswallet.SelectWalletCardRequest;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -303,7 +305,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 waitPickup2.build()
                                         ),
                                         new SequentialAction(
+                                                actionManager.setBallCount(0),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(1),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -312,6 +316,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(2),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -320,6 +325,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(3),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn()
                                         )
@@ -329,8 +335,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.PGP)
+                                                actionManager.waitFor(0.5)
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
@@ -341,26 +346,38 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot3.build(),
 
-                                actionManager.shotCue(7),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
-                                actionManager.shotCue(8),
-                                QuickSpindexer.turnRight(),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
-                                actionManager.shotCue(9),
-                                QuickSpindexer.turnRight(),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(1),
+                                        new SequentialAction(
+                                                actionManager.shotCue(7),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(2),
+                                        new SequentialAction(
+                                                actionManager.shotCue(8),
+                                                QuickSpindexer.turnRight(),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(3),
+                                        new SequentialAction(
+                                                actionManager.shotCue(9),
+                                                QuickSpindexer.turnRight(),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
                                 actionManager.derev(),
 
 
@@ -378,7 +395,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 waitPickup3.build()
                                         ),
                                         new SequentialAction(
+                                                actionManager.setBallCount(0),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(1),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -387,6 +406,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(2),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -395,6 +415,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(3),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn()
                                         )
@@ -404,8 +425,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.PGP)
+                                                actionManager.waitFor(0.5)
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
@@ -414,26 +434,38 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
                                 //Fourth volley start
 
-                                actionManager.shotCue(10),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
-                                actionManager.shotCue(11),
-                                QuickSpindexer.turnRight(),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
-                                actionManager.shotCue(12),
-                                QuickSpindexer.turnRight(),
-                                actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
-
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(0.0),
+                                        new SequentialAction(
+                                                actionManager.shotCue(10),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(2),
+                                        new SequentialAction(
+                                                actionManager.shotCue(11),
+                                                QuickSpindexer.turnRight(),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
+                                new RaceAction(
+                                        actionManager.haveEnoughBalls(3),
+                                        new SequentialAction(
+                                                actionManager.shotCue(12),
+                                                QuickSpindexer.turnRight(),
+                                                actionManager.waitForSpeedSafe(rpm),
+                                                Arm.AutoLaunchStart(),
+                                                actionManager.waitFor(shotCooldown),
+                                                Arm.AutoLaunchEnd()
+                                        )
+                                ),
                                 actionManager.derev(),
 
 
