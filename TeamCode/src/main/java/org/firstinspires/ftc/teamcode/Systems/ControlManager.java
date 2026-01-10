@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 
 public class ControlManager {
     private static OpMode opMode;
-    public static Spindexer spindexer;
+//    public static Spindexer spindexer;
 //    public static BallRamp ballRamp;
     private static Gamepad driver;
     private static Gamepad operator;
@@ -111,8 +111,9 @@ public class ControlManager {
         //Obelisk.update();
         //SpindexerCamera.update();
         Alignment.updateAlignment();
-        opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
-        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
+//        opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
+//        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
+        Roller.updateIntake(intaking, ejecting, fire && canFire, speed);
 
         Arm.updateIntake(intaking, ejecting, canFire );
 
@@ -143,7 +144,8 @@ public class ControlManager {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
 
-        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
+        DriverTest.update(increase, decrease, fire, rev, intake_shooter, false);
+//        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
         Shield.updateLocking(rev);
 
 //        if (spinLeft) {

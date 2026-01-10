@@ -103,7 +103,7 @@ public class DriverTest {
                 if (ControlManager.shot) {
                     RunLater.addAction(new DelayedAction(() -> {
                         ControlManager.shot = true;
-                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
+//                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
                     }, 0.8));
                 }
                 ControlManager.shot = false;
