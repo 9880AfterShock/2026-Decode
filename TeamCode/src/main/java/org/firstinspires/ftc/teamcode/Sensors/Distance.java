@@ -129,4 +129,19 @@ public class Distance { // Prefix for commands
             }
         };
     }
+
+    public static Action waitForBallInSpindexerCycles() {
+        return new Action() {
+            private boolean first = true;
+            double scanTime;
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (first){
+                    scanTime = opmode.getRuntime();
+                    first = false;
+                }
+                return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 2.5);
+            }
+        };
+    }
 }
