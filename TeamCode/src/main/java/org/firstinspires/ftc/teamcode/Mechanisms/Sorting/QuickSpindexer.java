@@ -59,7 +59,7 @@ public class QuickSpindexer { // Prefix for commands
             targetPosition -= 1425.1/3;
         }
         if (reseting) {
-            targetPosition += 10;
+            targetPosition += 30;
         }
         if (reset){
             spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
