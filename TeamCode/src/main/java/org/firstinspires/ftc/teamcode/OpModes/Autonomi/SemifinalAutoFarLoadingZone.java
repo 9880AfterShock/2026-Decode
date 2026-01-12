@@ -269,9 +269,9 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
                                 Shield.AutoShieldLock(),
-                                Roller.AutoIntakeOn(),
 
                                 toPickup2.build(),
+                                Roller.AutoIntakeOn(),
 
                                 new RaceAction(
                                         new SequentialAction(

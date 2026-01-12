@@ -222,9 +222,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 //First pickup start
                                 Arm.AutoArmOut(),
                                 Shield.AutoShieldLock(),
-                                Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
+                                Roller.AutoIntakeOn(),
 
                                 new RaceAction(
                                         new SequentialAction(
