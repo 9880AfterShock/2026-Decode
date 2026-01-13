@@ -92,13 +92,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         Pose2d midPickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup2 = new Pose2d(48.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickup3 = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup3 = new Pose2d(63.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d midPickup3 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup3 = new Pose2d(48.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d parkRotationFar = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d parkPosFar = new Pose2d(63.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d parkRotationFar = new Pose2d(40.0, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
-        Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90));
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
                 .setTangent(posMultiplier*Math.toRadians(160.0))
@@ -126,33 +122,27 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-80.0))
                 .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-80.0))
                 .setTangent(posMultiplier*Math.toRadians(-80.0))
-                .splineToLinearHeading(midPickup2, posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(midPickup2, posMultiplier*Math.toRadians(180.0), new TranslationalVelConstraint(5.0))
                 .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0));
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(87.0))
                 .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(87.0));
 
-        TrajectoryActionBuilder cycle2 = drive.actionBuilder(shootPosFar2)
-                .setTangent(posMultiplier*Math.toRadians(-80.0))
-                .splineToLinearHeading(prePickup3, posMultiplier*Math.toRadians(-80.0))
-                .setTangent(posMultiplier*Math.toRadians(-80.0))
-                .splineToLinearHeading(startPickup3, posMultiplier*Math.toRadians(-80.0))
-                .setTangent(posMultiplier*Math.toRadians(-80.0))
-                .splineToLinearHeading(midPickup3, posMultiplier*Math.toRadians(180.0))
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(endPickup3, posMultiplier*Math.toRadians(-90.0));
-
         TrajectoryActionBuilder toShoot4 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(87.0))
                 .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(87.0));
 
-        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar4)
-                .setTangent(posMultiplier*Math.toRadians(202.5))
-                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(202.5))
-                .setTangent(posMultiplier*Math.toRadians(202.5))
-                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(202.5), new TranslationalVelConstraint(100.0));
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-80.0));
+//                .setTangent(posMultiplier*Math.toRadians(202.5))
+//                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(202.5))
+//                .setTangent(posMultiplier*Math.toRadians(202.5))
+//                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(202.5), new TranslationalVelConstraint(100.0));
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
@@ -298,6 +288,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 Arm.AutoArmOut(),
                                 Shield.AutoShieldLock(),
                                 Roller.AutoIntakeOn(),
+                                actionManager.shotCue(101),
 
                                 new RaceAction(
                                         new SequentialAction(
@@ -305,10 +296,12 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 waitPickup2.build()
                                         ),
                                         new SequentialAction(
+                                                Distance.waitForBallNotInCycles(),
                                                 actionManager.setBallCount(0),
                                                 Distance.waitForBallInCycles(),
                                                 actionManager.setBallCount(1),
                                                 Roller.AutoIntakeOff(),
+                                                actionManager.shotCue(102),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexerCycles(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
@@ -381,98 +374,89 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 actionManager.derev(),
 
 
-
-
-
-                                //3nd pickup start
-                                Arm.AutoArmOut(),
-                                Shield.AutoShieldLock(),
-                                Roller.AutoIntakeOn(),
-
-                                new RaceAction(
-                                        new SequentialAction(
-                                                cycle2.build(),
-                                                waitPickup3.build()
-                                        ),
-                                        new SequentialAction(
-                                                actionManager.setBallCount(0),
-                                                Distance.waitForBallInCycles(),
-                                                actionManager.setBallCount(1),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
-                                                Roller.AutoIntakeOn(),
-                                                Arm.AutoArmOut(),
-                                                Distance.waitForBallInCycles(),
-                                                actionManager.setBallCount(2),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
-                                                Roller.AutoIntakeOn(),
-                                                Arm.AutoArmOut(),
-                                                Distance.waitForBallInCycles(),
-                                                actionManager.setBallCount(3),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn()
-                                        )
-                                ),
-
-                                //Sort 4
-                                new ParallelAction(
-                                        new SequentialAction(
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5)
-                                        ),
-                                        Shield.AutoShieldShoot(),
-                                        actionManager.rev(rpm),
-                                        toShoot4.build()
-                                ),
-
-                                //Fourth volley start
-
-                                new RaceAction(
-                                        actionManager.haveEnoughBalls(1),
-                                        new SequentialAction(
-                                                actionManager.shotCue(10),
-                                                actionManager.waitForSpeedSafe(rpm),
-                                                Arm.AutoLaunchStart(),
-                                                actionManager.waitFor(shotCooldown),
-                                                Arm.AutoLaunchEnd()
-                                        )
-                                ),
-                                new RaceAction(
-                                        actionManager.haveEnoughBalls(2),
-                                        new SequentialAction(
-                                                actionManager.shotCue(11),
-                                                QuickSpindexer.turnRight(),
-                                                actionManager.waitForSpeedSafe(rpm),
-                                                Arm.AutoLaunchStart(),
-                                                actionManager.waitFor(shotCooldown),
-                                                Arm.AutoLaunchEnd()
-                                        )
-                                ),
-                                new RaceAction(
-                                        actionManager.haveEnoughBalls(3),
-                                        new SequentialAction(
-                                                actionManager.shotCue(12),
-                                                QuickSpindexer.turnRight(),
-                                                actionManager.waitForSpeedSafe(rpm),
-                                                Arm.AutoLaunchStart(),
-                                                actionManager.waitFor(shotCooldown),
-                                                Arm.AutoLaunchEnd()
-                                        )
-                                ),
-                                actionManager.derev(),
-
-
-
-
-
-
+//                                //3nd pickup start
+//                                Arm.AutoArmOut(),
+//                                Shield.AutoShieldLock(),
+//                                Roller.AutoIntakeOn(),
+//
+//                                new RaceAction(
+//                                        new SequentialAction(
+//                                                cycle2.build(),
+//                                                waitPickup3.build()
+//                                        ),
+//                                        new SequentialAction(
+//                                                actionManager.setBallCount(0),
+//                                                Distance.waitForBallInCycles(),
+//                                                actionManager.setBallCount(1),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn(),
+//                                                Distance.waitForBallInSpindexer(),
+//                                                actionManager.waitFor(ballInSpindexerTimer),
+//                                                QuickSpindexer.turnLeft(),
+//                                                Roller.AutoIntakeOn(),
+//                                                Arm.AutoArmOut(),
+//                                                Distance.waitForBallInCycles(),
+//                                                actionManager.setBallCount(2),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn(),
+//                                                Distance.waitForBallInSpindexer(),
+//                                                actionManager.waitFor(ballInSpindexerTimer),
+//                                                QuickSpindexer.turnLeft(),
+//                                                Roller.AutoIntakeOn(),
+//                                                Arm.AutoArmOut(),
+//                                                Distance.waitForBallInCycles(),
+//                                                actionManager.setBallCount(3),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn()
+//                                        )
+//                                ),
+//
+//                                //Sort 4
+//                                new ParallelAction(
+//                                        new SequentialAction(
+//                                                Distance.waitForBallInSpindexer(),
+//                                                actionManager.waitFor(0.5)
+//                                        ),
+//                                        Shield.AutoShieldShoot(),
+//                                        actionManager.rev(rpm),
+//                                        toShoot4.build()
+//                                ),
+//
+//                                //Fourth volley start
+//
+//                                new RaceAction(
+//                                        actionManager.haveEnoughBalls(1),
+//                                        new SequentialAction(
+//                                                actionManager.shotCue(10),
+//                                                actionManager.waitForSpeedSafe(rpm),
+//                                                Arm.AutoLaunchStart(),
+//                                                actionManager.waitFor(shotCooldown),
+//                                                Arm.AutoLaunchEnd()
+//                                        )
+//                                ),
+//                                new RaceAction(
+//                                        actionManager.haveEnoughBalls(2),
+//                                        new SequentialAction(
+//                                                actionManager.shotCue(11),
+//                                                QuickSpindexer.turnRight(),
+//                                                actionManager.waitForSpeedSafe(rpm),
+//                                                Arm.AutoLaunchStart(),
+//                                                actionManager.waitFor(shotCooldown),
+//                                                Arm.AutoLaunchEnd()
+//                                        )
+//                                ),
+//                                new RaceAction(
+//                                        actionManager.haveEnoughBalls(3),
+//                                        new SequentialAction(
+//                                                actionManager.shotCue(12),
+//                                                QuickSpindexer.turnRight(),
+//                                                actionManager.waitForSpeedSafe(rpm),
+//                                                Arm.AutoLaunchStart(),
+//                                                actionManager.waitFor(shotCooldown),
+//                                                Arm.AutoLaunchEnd()
+//                                        )
+//                                ),
+//                                actionManager.derev(),
 
                                 toPark.build()
                         )
