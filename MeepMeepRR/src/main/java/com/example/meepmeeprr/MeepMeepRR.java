@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.noahbres.meepmeep.MeepMeep;
+import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
@@ -97,6 +98,7 @@ public class MeepMeepRR {
         MeepMeep meepMeep = new MeepMeep(600);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
+//                .setColorScheme(new ColorSchemeBlueDark())
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14.0,15.6) //17.9 when intake out, but to be safe
@@ -397,7 +399,6 @@ public class MeepMeepRR {
 
         //New auto far CYCLES
         myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
-
                 //toShoot1
                 .setTangent(posMultiplier*Math.toRadians(160.0))
                 .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(160.0))
