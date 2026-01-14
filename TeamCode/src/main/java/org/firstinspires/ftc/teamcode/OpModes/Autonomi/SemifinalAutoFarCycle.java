@@ -201,7 +201,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 actionManager.waitFor(shotCooldown),
                                 Arm.AutoLaunchEnd(),
 
-                                actionManager.derev(),
+//                                actionManager.derev(),
                                 //First volley end
 
 
@@ -277,7 +277,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 actionManager.waitFor(shotCooldown),
                                 Arm.AutoLaunchEnd(),
 
-                                actionManager.derev(),
+//                                actionManager.derev(),
                                 //Second volley end
 
                                 //2nd pickup start

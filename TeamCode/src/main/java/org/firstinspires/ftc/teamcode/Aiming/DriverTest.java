@@ -38,7 +38,7 @@ public class DriverTest {
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
-    private final static double idleSpeed = 1000;
+    private final static double idleSpeed = 1500;
     private static PID shooterPID = new PID(0.00070,0.0,0.0);
     public static double kS = 0.01; //3805 is 0.055
     public static double kV = 0.000195; //3805 is 0.0005
@@ -121,16 +121,8 @@ public class DriverTest {
 //            shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity(0.0);
 //             shooterDown.setVelocity(0.0);
-            if (isFarAuto){
-                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
-                if (shooterPower > shooterUp.getPower()) {
-                    shooterUp.setPower(shooterPower);
-                    shooterDown.setPower(shooterPower);
-                }
-            } else {
-                shooterUp.setPower(0.0);
-                shooterDown.setPower(0.0);
-            }
+            shooterUp.setPower(0.0);
+            shooterDown.setPower(0.0);
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
