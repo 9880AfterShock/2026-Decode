@@ -79,7 +79,6 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
-        Pose2d shootPosFar4 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
 
         //Loading zone pickup
         Pose2d prePickup1 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
@@ -87,10 +86,10 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         Pose2d midPickup1 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
         Pose2d endPickup1 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
-        Pose2d prePickup2 = new Pose2d(59.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-120.0));
-        Pose2d startPickup2 = new Pose2d(59.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-120.0));
-        Pose2d midPickup2 = new Pose2d(54.75, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
-        Pose2d endPickup2 = new Pose2d(39.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
+        Pose2d prePickup2 = new Pose2d(60.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d midPickup2 = new Pose2d(57.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
+        Pose2d endPickup2 = new Pose2d(44.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
 
         Pose2d parkRotationFar = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d parkPosFar = new Pose2d(63.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
@@ -118,19 +117,19 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         TrajectoryActionBuilder cycle1 = drive.actionBuilder(shootPosFar2)
                 //to there
-                .setTangent(posMultiplier*Math.toRadians(-85.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-85.0))
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0))
+                .setTangent(posMultiplier*Math.toRadians(-75.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-75.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-80.0), new TranslationalVelConstraint(40.0))
                 //going across wall
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(midPickup2, posMultiplier*Math.toRadians(180.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(-135.0))
+                .splineToLinearHeading(midPickup2, posMultiplier*Math.toRadians(-135.0), new TranslationalVelConstraint(40.0))
                 .setTangent(posMultiplier*Math.toRadians(180.0))
                 .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(180.0), new TranslationalVelConstraint(40.0));
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
-                .setTangent(posMultiplier*Math.toRadians(70.0))
-                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(70.0));
+                .setTangent(posMultiplier*Math.toRadians(75.0))
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
                 .setTangent(posMultiplier*Math.toRadians(-80.0))
