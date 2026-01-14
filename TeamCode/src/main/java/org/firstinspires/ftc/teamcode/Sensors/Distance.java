@@ -53,7 +53,7 @@ public class Distance { // Prefix for commands
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
-    }
+    } // Torin was here
 
     public static Action waitForBallPassed() {
         return new Action() {

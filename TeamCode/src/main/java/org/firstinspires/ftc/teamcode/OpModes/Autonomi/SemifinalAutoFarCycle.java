@@ -89,7 +89,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         Pose2d prePickup2 = new Pose2d(60.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d midPickup2 = new Pose2d(57.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
-        Pose2d endPickup2 = new Pose2d(44.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
+        Pose2d endPickup2 = new Pose2d(42.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
 
         Pose2d parkRotationFar = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d parkPosFar = new Pose2d(63.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
@@ -101,7 +101,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(40.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
@@ -113,7 +113,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(100.0))
-                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(100.0));
+                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(100.0), new TranslationalVelConstraint(40.0));
 
         TrajectoryActionBuilder cycle1 = drive.actionBuilder(shootPosFar2)
                 //to there
@@ -129,7 +129,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(75.0))
-                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0));
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0), new TranslationalVelConstraint(40.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
                 .setTangent(posMultiplier*Math.toRadians(-80.0))
@@ -302,8 +302,8 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexerCycles(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
+                                                QuickSpindexer.turnLeft(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
                                                 actionManager.setBallCount(2),
@@ -311,8 +311,8 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexerCycles(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
+                                                QuickSpindexer.turnLeft(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallInCycles(),
                                                 actionManager.setBallCount(3),
@@ -324,8 +324,8 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 //Sort 2
                                 new ParallelAction(
                                         new SequentialAction(
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5)
+                                                actionManager.waitFor(0.2),
+                                                QuickSpindexer.turnRight()
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
