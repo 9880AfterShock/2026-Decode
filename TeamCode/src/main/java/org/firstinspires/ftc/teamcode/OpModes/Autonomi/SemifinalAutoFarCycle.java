@@ -145,9 +145,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
         TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickup2)
-                .waitSeconds(2.0);
-        TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickup2)
-                .waitSeconds(2.0);
+                .waitSeconds(1.5);
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
@@ -325,13 +323,16 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
                                 //Sort 2
                                 new ParallelAction(
                                         new SequentialAction(
-                                                actionManager.waitFor(0.2),
+                                                Distance.waitForBallInSpindexer(),
+                                                Roller.AutoIntakeEject(),
+                                                actionManager.waitFor(0.5),
                                                 QuickSpindexer.turnRight()
                                         ),
                                         Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
                                         toShoot3.build()
                                 ),
+                                Roller.AutoIntakeOff(),
 
                                 //Third volley start
 //                        Limelight.Relocalize(drive),

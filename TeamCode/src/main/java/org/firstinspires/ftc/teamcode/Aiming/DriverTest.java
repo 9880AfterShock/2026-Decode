@@ -38,7 +38,7 @@ public class DriverTest {
     public static double avgSpeed = 0;
     private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
-    private static double idleSpeed = 500;
+    private final static double idleSpeed = 1000;
     private static PID shooterPID = new PID(0.00070,0.0,0.0);
     public static double kS = 0.01; //3805 is 0.055
     public static double kV = 0.000195; //3805 is 0.0005
