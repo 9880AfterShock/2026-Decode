@@ -45,6 +45,7 @@ public class DriverTest {
 
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
+    public static boolean isFarAuto = false;
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -61,6 +62,8 @@ public class DriverTest {
         packet.put("Current RPM", 0.0);
         packet.put("Desired RPM", 0.0);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+        isFarAuto = false;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
@@ -113,13 +116,21 @@ public class DriverTest {
             }
         } else {
             canFire = false;
-//            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+//            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
 //            shooterUp.setPower(shooterPower);
 //            shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity(0.0);
 //             shooterDown.setVelocity(0.0);
-            shooterUp.setPower(0.0);
-            shooterDown.setPower(0.0);
+            if (isFarAuto){
+                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
+                if (shooterPower > shooterUp.getPower()) {
+                    shooterUp.setPower(shooterPower);
+                    shooterDown.setPower(shooterPower);
+                }
+            } else {
+                shooterUp.setPower(0.0);
+                shooterDown.setPower(0.0);
+            }
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
