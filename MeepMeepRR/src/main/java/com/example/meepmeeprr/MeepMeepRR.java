@@ -77,6 +77,7 @@ public class MeepMeepRR {
 
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+        Pose2d preShootPosFar3 = new Pose2d(53, posMultiplier*-20.0, posMultiplier*Math.toRadians(25.0));
         Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
 
         //Loading zone pickup
@@ -437,6 +438,8 @@ public class MeepMeepRR {
 
 
                 //toShoot3
+                .setTangent(posMultiplier*Math.toRadians(75.0))
+                .splineToLinearHeading(preShootPosFar3, posMultiplier*Math.toRadians(75.0))
                 .setTangent(posMultiplier*Math.toRadians(75.0))
                 .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0))
                 .waitSeconds(4.0) //shooting

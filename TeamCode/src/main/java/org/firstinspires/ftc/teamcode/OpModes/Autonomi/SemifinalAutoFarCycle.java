@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
-import android.service.quickaccesswallet.SelectWalletCardRequest;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -79,6 +77,7 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
         //Poses
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
+        Pose2d preShootPosFar3 = new Pose2d(53, posMultiplier*-20.0, posMultiplier*Math.toRadians(25.0));
         Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
 
         //Loading zone pickup
@@ -130,7 +129,9 @@ public class SemifinalAutoFarCycle extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
                 .setTangent(posMultiplier*Math.toRadians(75.0))
-                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0), new TranslationalVelConstraint(40.0));
+                .splineToLinearHeading(preShootPosFar3, posMultiplier*Math.toRadians(75.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(75.0))
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0));
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
                 .setTangent(posMultiplier*Math.toRadians(-80.0))
