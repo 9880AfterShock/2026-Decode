@@ -46,7 +46,7 @@ public class SemifinalAutoFar extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
         Shield.initLocking(this);
 
-        double rpm = 3350;
+        double rpm = 3375;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -74,14 +74,18 @@ public class SemifinalAutoFar extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
+        Pose2d shootPosFar1;
         Pose2d shootPosFar2;
+        Pose2d shootPosFar3;
         if (posMultiplier == 1.0){
+            shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25.0));
             shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
         } else {
+            shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
             shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
+            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
         }
-        Pose2d shootPosFar3 = new Pose2d(54.5, posMultiplier*-17.0, posMultiplier*Math.toRadians(22.5));
 
         Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
