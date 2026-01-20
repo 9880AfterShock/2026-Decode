@@ -51,6 +51,7 @@ public class ControlManager {
     public static double intake_speed_revving = 0.5;
     public static double intake_speed_default = 1.0;
     private static int tripleIncrement = 0;
+    private final static double delayTime = 1.0;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -181,7 +182,7 @@ public class ControlManager {
         Hinge.updateBase(operator.yWasPressed());
     }
 
-    private static boolean autoShootSpindex(double startTime, double currentTime, double delayTime, double increments){
+    private static boolean autoShootSpindex(double startTime, double currentTime){
         if (((currentTime-startTime)-(delayTime*tripleIncrement)) > 0) {
             tripleIncrement += 1;
             return true;
