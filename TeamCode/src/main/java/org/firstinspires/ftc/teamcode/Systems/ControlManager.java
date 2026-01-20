@@ -50,6 +50,7 @@ public class ControlManager {
     public static ColorClassifier<BallType> classifier;
     public static double intake_speed_revving = 0.5;
     public static double intake_speed_default = 1.0;
+    private static int tripleIncrement = 0;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -58,12 +59,14 @@ public class ControlManager {
         driver = opMode.gamepad1;
         operator = opMode.gamepad2;
 //        spindexer = new Spindexer("spindexer", opMode, 1425.1, 10, () -> operator.a);
-        classifier = new ColorClassifier<>(BallType.NONE,3);
-        classifier.addColor((new Color((double) 0.278, (double) 0.465, (double) 0.432, ColorType.RGB)).asHSV(), BallType.GREEN);
-        classifier.addColor((new Color((double) 0.28417, (double) 0.455, (double) 0.43,ColorType.RGB)).asHSV(), BallType.PURPLE);
+//        classifier = new ColorClassifier<>(BallType.NONE,3);
+//        classifier.addColor((new Color((double) 0.278, (double) 0.465, (double) 0.432, ColorType.RGB)).asHSV(), BallType.GREEN);
+//        classifier.addColor((new Color((double) 0.28417, (double) 0.455, (double) 0.43,ColorType.RGB)).asHSV(), BallType.PURPLE);
+
+        tripleIncrement = 0;
     }
 
-    public static void update(boolean flipField) { //false is blue, true is red
+    public static void update(boolean flipField) {//false is blue, true is red
         if (driver.startWasPressed()) {
             if (alliance == Alliance.BLUE) {
                 alliance = Alliance.RED;
@@ -71,6 +74,12 @@ public class ControlManager {
                 alliance = Alliance.BLUE;
             }
         }
+
+        if (operator.left_bumper) {
+
+        }
+
+
 
         //Spindexer
         boolean spinLeft = operator.dpadLeftWasPressed();
@@ -170,6 +179,15 @@ public class ControlManager {
 //        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
 
         Hinge.updateBase(operator.yWasPressed());
+    }
+
+    private static boolean autoShootSpindex(double startTime, double currentTime, double delayTime, double increments){
+        if (((currentTime-startTime)-(delayTime*tripleIncrement)) > 0) {
+            tripleIncrement += 1;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
