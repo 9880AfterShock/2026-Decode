@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Prongs {
     private static Servo prongs; // init sevo var
     private static OpMode opmode; // opmode var init
-    public static double intakingPosition = 0.7;
-    public static double primingPosition = 0.92;
-    public static double shootingPosition = 0.87;
+    public static double intakingPosition = 0.75;
+    public static double shootingPosition = 0.95;
+    public static double primingPosition = 1.0;
 
     public static void initGrate(OpMode opmode) { // init motor
         prongs = opmode.hardwareMap.get(Servo.class, "shield"); //Port 2 on control hub, not renaming servo
