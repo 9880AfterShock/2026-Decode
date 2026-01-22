@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.FlywheelMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.PID;
@@ -104,6 +105,7 @@ public class DriverTest {
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
+                    QuickSpindexer.fullCycle();
                     RunLater.addAction(new DelayedAction(() -> {
                         ControlManager.shot = true;
 //                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);

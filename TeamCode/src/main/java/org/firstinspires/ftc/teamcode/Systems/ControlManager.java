@@ -106,6 +106,7 @@ public class ControlManager {
         boolean fire = driver.right_bumper;
         boolean intake_shooter = operator.x;
 
+
         //Hood
         boolean change_mode = operator.yWasPressed();
 
@@ -158,7 +159,7 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire, rev, true, false);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
 //        Shield.updateLocking(rev);
-        Prongs.updateGrate(driver.dpad_down, driver.dpad_left);
+        Prongs.updateGrate(rev, driver.dpad_left);
 
 //        if (spinLeft) {
 //            spindexer.queueMessage(SpindexerMessage.RIGHT);

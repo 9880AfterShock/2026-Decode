@@ -54,24 +54,31 @@ public class QuickSpindexer { // Prefix for commands
 
         if (clockwise && !wasClockwise){
             targetPosition += 1425.1/3;
+            spindexer.setPower(1.0);
         }
         if (counterclockwise && !wasCounterclockwise) {
             targetPosition -= 1425.1/3;
+            spindexer.setPower(1.0);
         }
         if (reseting) {
             targetPosition += 30;
+            spindexer.setPower(1.0);
         }
         if (reset){
             spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             spindexer.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             targetPosition = 0;
+            spindexer.setPower(1.0);
         }
 
         spindexer.setTargetPosition((int) targetPosition);
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
+    }
 
-        spindexer.setPower(1.0);
+    public static void fullCycle(){
+        targetPosition += 1425.1;
+        spindexer.setPower(0.7);
     }
 
     public static Action goToMotif(){
