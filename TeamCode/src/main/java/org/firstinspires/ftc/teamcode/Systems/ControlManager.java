@@ -127,7 +127,7 @@ public class ControlManager {
 //        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
         Roller.updateIntake(intaking, ejecting, false, speed);
 
-        Arm.updateIntake(intaking, ejecting, false );
+        Arm.updateIntake(intaking, ejecting, rev );
 
 //        Distance.updateSensor();
 

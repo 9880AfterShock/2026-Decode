@@ -9,12 +9,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Color;
-import org.firstinspires.ftc.teamcode.Enums.BallType;
-import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
 
 public class Arm { // Prefix for commands
@@ -23,7 +19,7 @@ public class Arm { // Prefix for commands
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
     public static double neutralPosition = 0.57;
-    public static double transferPosition = 0.78;
+    public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
 
     public static void initIntake(OpMode opmode) { // init motor
@@ -31,15 +27,15 @@ public class Arm { // Prefix for commands
         Arm.opmode = opmode;
     }
 
-    public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed, boolean transfering) {
+    public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed, boolean revving) {
         if (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed){
             intakeState = "Intaking";
             arm.setPosition(intakePosition);
         } else {
-            if (transfering) {
-                if (intakeState != "Transferring") {
-                    intakeState = "Transferring";
-                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(transferPosition);}, 0.2));
+            if (revving) {
+                if (intakeState != "revving") {
+                    intakeState = "revving";
+                    arm.setPosition(revPosition);
                 }
             } else {
                 intakeState = "Neutral";
@@ -74,7 +70,7 @@ public class Arm { // Prefix for commands
             private boolean first = true;
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (first) {
-                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(transferPosition);}, 0.2));
+                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(revPosition);}, 0.2));
                     Roller.updateIntake(false, false, true, 1.0);
                     first = false;
                 }
@@ -97,7 +93,7 @@ public class Arm { // Prefix for commands
     public static Action AutoArmTransfer() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                arm.setPosition(transferPosition);
+                arm.setPosition(revPosition);
                 intakeState = "Transferring";
                 return false;
             }
