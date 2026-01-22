@@ -75,7 +75,7 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-                desSpeed = (-0.817614*distanceFromGoal*distanceFromGoal)+(75.97537*distanceFromGoal)+836.07039;
+                desSpeed = (-0.817614*distanceFromGoal*distanceFromGoal)+(75.97537*distanceFromGoal)+836.07039 + 100;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
