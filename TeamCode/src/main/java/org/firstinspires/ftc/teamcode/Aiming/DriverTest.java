@@ -120,9 +120,14 @@ public class DriverTest {
                 shooterUp.setPower(0.0);
                 shooterDown.setPower(0.0);
             } else {
-                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
-                shooterUp.setPower(shooterPower);
-                shooterDown.setPower(shooterPower);
+                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
+                if (shooterPower > 0){
+                    shooterUp.setPower(shooterPower);
+                    shooterDown.setPower(shooterPower);
+                } else {
+                    shooterUp.setPower(0.0);
+                    shooterDown.setPower(0.0);
+                }
             }
         }
 //        if (!fire && !rev && intake) {
