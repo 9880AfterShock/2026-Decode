@@ -97,7 +97,7 @@ public class DriverTest {
 //            distanceFromGoal -= 5;
         }
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
@@ -116,13 +116,14 @@ public class DriverTest {
             }
         } else {
             canFire = false;
-//            double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
-//            shooterUp.setPower(shooterPower);
-//            shooterDown.setPower(shooterPower);
-//             shooterUp.setVelocity(0.0);
-//             shooterDown.setVelocity(0.0);
-            shooterUp.setPower(0.0);
-            shooterDown.setPower(0.0);
+            if (intake){
+                shooterUp.setPower(0.0);
+                shooterDown.setPower(0.0);
+            } else {
+                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute); //if this is wrong, it will just go to max right as it start, (which means switch shooter up and down)
+                shooterUp.setPower(shooterPower);
+                shooterDown.setPower(shooterPower);
+            }
         }
 //        if (!fire && !rev && intake) {
 //            shooterUp.setVelocity(-25*30);
