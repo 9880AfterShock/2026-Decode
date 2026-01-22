@@ -167,7 +167,7 @@ public class ControlManager {
 //        if (spinRight) {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
-        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased());
+        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased(), operator.aWasPressed(), operator.aWasReleased());
 //        if (operator.start && operator.back) {
 //            Spindexer.reset = true;
 //        }

@@ -50,7 +50,16 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setPower(1.0);
     }
 
-    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
+    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset, boolean applyOffset, boolean removeOffset) {
+
+        if (applyOffset){
+            targetPosition -= 1425.1/9;
+            spindexer.setPower(1.0);
+        }
+        if (removeOffset){
+            targetPosition += 1425.1/9;
+            spindexer.setPower(1.0);
+        }
 
         if (clockwise && !wasClockwise){
             targetPosition += 1425.1/3;
