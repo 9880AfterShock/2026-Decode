@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.ColorClassifier;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
@@ -154,9 +155,10 @@ public class ControlManager {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
 
-        DriverTest.update(increase, decrease, fire, rev, intake_shooter, false);
+        DriverTest.update(increase, decrease, fire, rev, true, false);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
-        Shield.updateLocking(rev);
+//        Shield.updateLocking(rev);
+        Prongs.updateGrate(driver.dpad_down, driver.dpad_left);
 
 //        if (spinLeft) {
 //            spindexer.queueMessage(SpindexerMessage.RIGHT);
