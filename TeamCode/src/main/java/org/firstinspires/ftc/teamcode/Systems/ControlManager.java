@@ -53,6 +53,7 @@ public class ControlManager {
     public static double intake_speed_default = 1.0;
     private static int tripleIncrement = 0;
     private final static double delayTime = 1.0;
+    private static boolean armOverride = false;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -66,6 +67,7 @@ public class ControlManager {
 //        classifier.addColor((new Color((double) 0.28417, (double) 0.455, (double) 0.43,ColorType.RGB)).asHSV(), BallType.PURPLE);
 
         tripleIncrement = 0;
+        armOverride = false;
     }
 
     public static void update(boolean flipField) {//false is blue, true is red
@@ -78,7 +80,15 @@ public class ControlManager {
         }
 
         if (operator.left_trigger > 0.5) {
-
+            if(QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1]){
+                int nextSlot = QuickSpindexer.currentSlot-1;
+                if (nextSlot < 1) nextSlot = 3;
+                if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned() && !armOverride){
+                    armOverride = true;
+                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.2));
+                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
+                }
+            }
         }
 
 
@@ -127,7 +137,11 @@ public class ControlManager {
 //        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
         Roller.updateIntake(intaking, ejecting, false, speed);
 
-        Arm.updateIntake(intaking, ejecting, rev );
+        if (!armOverride){
+            Arm.updateIntake(intaking, ejecting, rev);
+        } else {
+            Arm.updateIntake(false, false, false);
+        }
 
 //        Distance.updateSensor();
 
@@ -159,7 +173,7 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire, rev, true, false);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
 //        Shield.updateLocking(rev);
-        Prongs.updateGrate(rev, driver.dpad_left);
+        Prongs.updateGrate(rev, driver.dpad_left || operator.left_trigger > 0.5);
 
 //        if (spinLeft) {
 //            spindexer.queueMessage(SpindexerMessage.RIGHT);

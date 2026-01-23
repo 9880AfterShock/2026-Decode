@@ -15,6 +15,8 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 
+import java.util.Arrays;
+
 public class QuickSpindexer { // Prefix for commands
     public static DcMotor spindexer; // init motor var
     private static OpMode opmode; // opmode var init
@@ -81,7 +83,7 @@ public class QuickSpindexer { // Prefix for commands
         }
 
         if (offset){
-            spindexer.setTargetPosition((int) (targetPosition + 1425.1/9));
+            spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
         } else {
             spindexer.setTargetPosition((int) targetPosition);
         }
@@ -90,11 +92,19 @@ public class QuickSpindexer { // Prefix for commands
         wasCounterclockwise = counterclockwise;
         opmode.telemetry.addData("Current Spindexer Slot", currentSlot);
         opmode.telemetry.addData("Ball in ACTIVE slot?", hasBall[currentSlot-1]);
+        opmode.telemetry.addData("Spindexer Array", Arrays.toString(hasBall));
     }
 
     public static void fullCycle(){
         targetPosition += 1425.1;
         spindexer.setPower(0.7);
+    }
+
+    public static void turnIntake(){
+        targetPosition -= 1425.1/3;
+        currentSlot -= 1;
+        if (currentSlot < 1) currentSlot = 3;
+        spindexer.setPower(1.0);
     }
 
     public static Action goToMotif(){

@@ -28,11 +28,7 @@ public class Distance { // Prefix for commands
 
     public static void updateSensor() {
         if (QuickSpindexer.aligned()){
-            if (ballInSpindexer()){
-                QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = true;
-            } else {
-                QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = false;
-            }
+            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = ballInSpindexer();
         }
 
         opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
