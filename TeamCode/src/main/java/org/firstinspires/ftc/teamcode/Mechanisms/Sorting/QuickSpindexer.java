@@ -60,12 +60,14 @@ public class QuickSpindexer { // Prefix for commands
         if (clockwise && !wasClockwise){
             targetPosition += 1425.1/3;
             spindexer.setPower(1.0);
-            currentSlot = (currentSlot+1) % 3;
+            currentSlot += 1;
+            if (currentSlot > 3) currentSlot = 1;
         }
         if (counterclockwise && !wasCounterclockwise) {
             targetPosition -= 1425.1/3;
             spindexer.setPower(1.0);
-            currentSlot = (currentSlot-1) % 3;
+            currentSlot -= 1;
+            if (currentSlot < 1) currentSlot = 3;
         }
         if (reseting) {
             targetPosition += 30;
