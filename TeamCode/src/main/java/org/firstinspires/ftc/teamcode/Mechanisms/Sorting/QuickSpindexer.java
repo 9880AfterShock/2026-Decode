@@ -97,6 +97,7 @@ public class QuickSpindexer { // Prefix for commands
 
     public static void fullCycle(){
         targetPosition += 1425.1;
+        spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
         spindexer.setPower(0.7);
     }
 
@@ -104,6 +105,7 @@ public class QuickSpindexer { // Prefix for commands
         targetPosition -= 1425.1/3;
         currentSlot -= 1;
         if (currentSlot < 1) currentSlot = 3;
+        spindexer.setTargetPosition((int) targetPosition);
         spindexer.setPower(1.0);
     }
 
