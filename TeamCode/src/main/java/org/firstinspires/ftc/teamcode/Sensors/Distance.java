@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.sun.tools.javac.code.Types;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 
 public class Distance { // Prefix for commands
@@ -26,6 +27,14 @@ public class Distance { // Prefix for commands
     }
 
     public static void updateSensor() {
+        if (QuickSpindexer.aligned()){
+            if (ballInSpindexer()){
+                QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = true;
+            } else {
+                QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = false;
+            }
+        }
+
         opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
         opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceSpindexer.getDistance(DistanceUnit.MM));
         opmode.telemetry.addData("Ball In Intake", ballInIntake());

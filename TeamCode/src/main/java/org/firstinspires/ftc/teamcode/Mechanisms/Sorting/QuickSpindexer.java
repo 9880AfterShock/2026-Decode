@@ -22,6 +22,8 @@ public class QuickSpindexer { // Prefix for commands
     private static boolean wasClockwise;
     private static boolean wasCounterclockwise;
     private static final double errorMargin = 10.0; //in encoder ticks
+    public static boolean[] hasBall = new boolean[3];
+    public static int currentSlot = 1; //1 2 3 going clockwise
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -30,8 +32,11 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         spindexer.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         targetPosition = 0;
+        spindexer.setPower(1.0);
 
         QuickSpindexer.opmode = opmode;
+        hasBall = new boolean[3];
+        currentSlot = 1;
     }
 
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
@@ -50,24 +55,17 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setPower(1.0);
     }
 
-    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset, boolean applyOffset, boolean removeOffset) {
-
-        if (applyOffset){
-            targetPosition -= 1425.1/9;
-            spindexer.setPower(1.0);
-        }
-        if (removeOffset){
-            targetPosition += 1425.1/9;
-            spindexer.setPower(1.0);
-        }
+    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset, boolean offset) {
 
         if (clockwise && !wasClockwise){
             targetPosition += 1425.1/3;
             spindexer.setPower(1.0);
+            currentSlot = (currentSlot+1) % 3;
         }
         if (counterclockwise && !wasCounterclockwise) {
             targetPosition -= 1425.1/3;
             spindexer.setPower(1.0);
+            currentSlot = (currentSlot-1) % 3;
         }
         if (reseting) {
             targetPosition += 30;
@@ -80,9 +78,16 @@ public class QuickSpindexer { // Prefix for commands
             spindexer.setPower(1.0);
         }
 
-        spindexer.setTargetPosition((int) targetPosition);
+        if (offset){
+            spindexer.setTargetPosition((int) (targetPosition + 1425.1/9));
+        } else {
+            spindexer.setTargetPosition((int) targetPosition);
+        }
+
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
+        opmode.telemetry.addData("Current Spindexer Slot", currentSlot);
+        opmode.telemetry.addData("Ball in ACTIVE slot?", hasBall[currentSlot-1]);
     }
 
     public static void fullCycle(){
@@ -235,5 +240,9 @@ public class QuickSpindexer { // Prefix for commands
                 return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin; //40 is tick margin of error
             }
         };
+    }
+
+    public static boolean aligned(){
+        return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) < errorMargin;
     }
 }

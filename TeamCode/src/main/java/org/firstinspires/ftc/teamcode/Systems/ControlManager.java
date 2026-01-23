@@ -77,7 +77,7 @@ public class ControlManager {
             }
         }
 
-        if (operator.left_bumper) {
+        if (operator.left_trigger > 0.5) {
 
         }
 
@@ -167,7 +167,7 @@ public class ControlManager {
 //        if (spinRight) {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
-        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased(), operator.aWasPressed(), operator.aWasReleased());
+        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased(), operator.a);
 //        if (operator.start && operator.back) {
 //            Spindexer.reset = true;
 //        }

@@ -96,7 +96,7 @@ public class TeleOp extends LinearOpMode {
             ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
             RunCondition.update();
-            BallColorDetectinator.update();
+//            BallColorDetectinator.update();
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);
