@@ -99,6 +99,7 @@ public class QuickSpindexer { // Prefix for commands
         targetPosition += 1425.1;
         spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
         spindexer.setPower(0.7);
+        hasBall = new boolean[3];
     }
 
     public static void turnIntake(){

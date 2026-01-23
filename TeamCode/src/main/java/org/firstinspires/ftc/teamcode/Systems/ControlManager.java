@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.Systems;
 import static org.firstinspires.ftc.teamcode.Aiming.DriverTest.canFire;
 import static org.firstinspires.ftc.teamcode.OpModes.TeleOp.alliance;
 
+import android.sax.StartElementListener;
+
 import com.qualcomm.hardware.adafruit.AdafruitI2cColorSensor;
 import com.qualcomm.hardware.ams.AMSColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -197,6 +199,7 @@ public class ControlManager {
 //        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
 
         Hinge.updateBase(operator.yWasPressed());
+        opMode.telemetry.addData("ARM OVERRIDE", armOverride);
     }
 
     private static boolean autoShootSpindex(double startTime, double currentTime){
