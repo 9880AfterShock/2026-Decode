@@ -31,6 +31,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -82,15 +83,27 @@ public class ControlManager {
         }
 
         if (operator.left_trigger > 0.5) {
-            if(QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1]){
-                int nextSlot = QuickSpindexer.currentSlot-1;
-                if (nextSlot < 1) nextSlot = 3;
-                if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned() && !armOverride){
-                    armOverride = true;
-                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.2));
-                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
+            int nextSlot = QuickSpindexer.currentSlot-1;
+            if (nextSlot < 1) nextSlot = 3;
+            if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned() && !armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
+                armOverride = true;
+                RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
+                if (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1]) {
+                    QuickSpindexer.turnIntake();
                 }
             }
+
+
+//
+//            if(QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1]){
+//                int nextSlot = QuickSpindexer.currentSlot-1;
+//                if (nextSlot < 1) nextSlot = 3;
+//                if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned() && !armOverride){
+//                    armOverride = true;
+//                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.2));
+//                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
+//                }
+//            }
         }
 
 
@@ -137,7 +150,7 @@ public class ControlManager {
         Alignment.updateAlignment();
 //        opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
 //        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
-        Roller.updateIntake(intaking, ejecting, false, speed);
+        Roller.updateIntake(intaking && !armOverride, ejecting, false, speed);
 
         if (!armOverride){
             Arm.updateIntake(intaking, ejecting, rev);
