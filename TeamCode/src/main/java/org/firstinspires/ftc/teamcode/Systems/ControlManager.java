@@ -199,7 +199,7 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire, rev, true, false);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
 //        Shield.updateLocking(rev);
-        Prongs.updateGrate(rev, driver.dpad_left || operator.left_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]));
+        Prongs.updateGrate(rev, operator.right_trigger > 0.5 || operator.left_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]));
 
 //        if (spinLeft) {
 //            spindexer.queueMessage(SpindexerMessage.RIGHT);
@@ -207,7 +207,7 @@ public class ControlManager {
 //        if (spinRight) {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
-        QuickSpindexer.updateSpindexerResetIncluded(spinLeft, spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased(), operator.a);
+        QuickSpindexer.updateSpindexerResetIncluded(spinLeft && !(rev || driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])), spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased(), operator.a);
 //        if (operator.start && operator.back) {
 //            Spindexer.reset = true;
 //        }

@@ -90,9 +90,9 @@ public class QuickSpindexer { // Prefix for commands
 
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
-//        opmode.telemetry.addData("Current Spindexer Slot", currentSlot);
+        opmode.telemetry.addData("Current Spindexer Slot", currentSlot);
 //        opmode.telemetry.addData("Ball in ACTIVE slot?", hasBall[currentSlot-1]);
-//        opmode.telemetry.addData("Spindexer Array", Arrays.toString(hasBall));
+        opmode.telemetry.addData("Spindexer Array", Arrays.toString(hasBall));
 
 //        opmode.telemetry.addData("DEXER raw ticks", spindexer.getTargetPosition());
 //        opmode.telemetry.addData("DEXER target", targetPosition);
