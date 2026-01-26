@@ -181,7 +181,6 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.addRevOffset(),
                                 new ParallelAction(
                                         actionManager.rev(rpm),
-                                        QuickSpindexer.toMotifFrom(Motif.GPP),
                                         toShoot1.build()
                                 ),
 
@@ -247,8 +246,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.PGP)
+                                                actionManager.waitFor(0.5)
                                         ),
 //                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
@@ -264,20 +262,23 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
-                                actionManager.shotCue(4),
+                                actionManager.shotCue(40),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
-                                actionManager.shotCue(5),
+                                actionManager.shotCue(50),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
-                                actionManager.shotCue(6),
+                                actionManager.shotCue(60),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
+                                actionManager.shotCue(70),
                                 QuickSpindexer.removeRevOffset(),
+
+                                actionManager.shotCue(700),
                                 //Second volley end
 
                                 //2nd pickup start
@@ -320,8 +321,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(0.5),
-                                                QuickSpindexer.toMotifFrom(Motif.PPG)
+                                                actionManager.waitFor(0.5)
                                         ),
 //                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
