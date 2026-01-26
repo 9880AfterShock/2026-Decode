@@ -212,7 +212,7 @@ public class ControlManager {
 //        if (spinRight) {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
-        QuickSpindexer.updateSpindexerResetIncluded(spinLeft && !(rev || driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])), spinRight, operator.start && operator.back, Spindexer.reset && operator.backWasReleased());
+        QuickSpindexer.updateSpindexerResetIncluded(spinLeft && !(rev || driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])), spinRight && !(!rev && (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])), operator.start && operator.back, Spindexer.reset && operator.backWasReleased());
 //        if (operator.start && operator.back) {
 //            Spindexer.reset = true;
 //        }
