@@ -26,6 +26,7 @@ public class QuickSpindexer { // Prefix for commands
     private static final double errorMargin = 10.0; //in encoder ticks
     public static boolean[] hasBall = new boolean[3];
     public static int currentSlot = 1; //1 2 3 going clockwise
+    public static boolean spindexerOffset = false;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -39,6 +40,7 @@ public class QuickSpindexer { // Prefix for commands
         QuickSpindexer.opmode = opmode;
         hasBall = new boolean[3];
         currentSlot = 1;
+        spindexerOffset = false;
     }
 
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
@@ -57,7 +59,7 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setPower(1.0);
     }
 
-    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset, boolean offset) {
+    public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
 
         if (clockwise && !wasClockwise){
             targetPosition += 1425.1/3;
@@ -82,7 +84,7 @@ public class QuickSpindexer { // Prefix for commands
             spindexer.setPower(1.0);
         }
 
-        if (offset){
+        if (spindexerOffset){
             spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
         } else {
             spindexer.setTargetPosition((int) targetPosition);
@@ -101,6 +103,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void fullCycle(){
+        spindexerOffset = false;
         targetPosition += 1425.1;
         spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
         spindexer.setPower(0.7);
@@ -181,18 +184,19 @@ public class QuickSpindexer { // Prefix for commands
         };
     }
 
-    public static Action removeRevOffset(){
+    public static Action removeRevOffset(){ //no delay
         return new Action() {
-            private boolean first = true;
+//            private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if (first) {
+//                if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/9)));
-                    first = false;
-                }
-                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
-                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
-                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin;
+//                    first = false;
+//                }
+//                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+//                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+//                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin;
+                return false;
             }
         };
     }

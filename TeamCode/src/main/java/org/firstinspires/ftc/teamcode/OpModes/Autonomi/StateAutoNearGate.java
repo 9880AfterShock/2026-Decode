@@ -192,6 +192,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 //First volley start
                                 actionManager.shotCue(1),
                                 actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(2),
@@ -203,7 +204,6 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
-                                QuickSpindexer.removeRevOffset(),
                                 //First volley end
 
 
@@ -268,6 +268,7 @@ public class StateAutoNearGate extends LinearOpMode {
 
                                 actionManager.shotCue(40),
                                 actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(50),
@@ -280,7 +281,6 @@ public class StateAutoNearGate extends LinearOpMode {
 
                                 actionManager.derev(),
                                 actionManager.shotCue(70),
-                                QuickSpindexer.removeRevOffset(),
 
                                 actionManager.shotCue(700),
                                 //Second volley end
@@ -341,6 +341,7 @@ public class StateAutoNearGate extends LinearOpMode {
 
                                 actionManager.shotCue(7),
                                 actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(8),
@@ -351,7 +352,6 @@ public class StateAutoNearGate extends LinearOpMode {
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
-                                QuickSpindexer.removeRevOffset(),
                                 actionManager.derev()
                         )
                 )
