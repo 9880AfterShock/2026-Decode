@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 
-//@Disabled
+@Disabled
 @Autonomous(name="Go forward after 25 seconds")
 public class ForwardAuto extends LinearOpMode {
     private DcMotor frontLeftDrive   = null;

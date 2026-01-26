@@ -9,7 +9,6 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
@@ -18,8 +17,9 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
-import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
+//import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
@@ -29,9 +29,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Disabled
 @Autonomous(name = "Near zone 9 (Gate instead of motif)")
-public class SemifinalAutoNearGate extends LinearOpMode {
+public class StateAutoNearGate extends LinearOpMode {
     @Override
     public void runOpMode() {
         Gyroscope.initSensor(this);
@@ -46,7 +45,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
         Distance.initSensor(this);
 
         QuickSpindexer.initSpindexer(this); //ugly but works
-        Shield.initLocking(this);
+//        Shield.initLocking(this);
+        Prongs.initGrate(this);
 
         double rpm = 2600;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
@@ -173,7 +173,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                         actionManager.updateSpeedOverTime(),
                         new SequentialAction(
                                 actionManager.shotCue(0),
-                                Shield.AutoShieldShoot(),
+//                                Shield.AutoShieldShoot(),
+                                Prongs.AutoProngsPrime(),
                                 Arm.AutoArmIn(),
                                 Hood.AutoHoodUp(),
                                 actionManager.rev(rpm),
@@ -213,7 +214,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
 
                                 //First pickup start
                                 Arm.AutoArmOut(),
-                                Shield.AutoShieldLock(),
+//                                Shield.AutoShieldLock(),
+                                Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
@@ -254,7 +256,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 actionManager.waitFor(0.5),
                                                 QuickSpindexer.toMotifFrom(Motif.PGP)
                                         ),
-                                        Shield.AutoShieldShoot(),
+//                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
                                         new SequentialAction(
                                                 toGate1.build(),
@@ -292,7 +294,8 @@ public class SemifinalAutoNearGate extends LinearOpMode {
 
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
-                                Shield.AutoShieldLock(),
+//                                Shield.AutoShieldLock(),
+                                Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup2.build(),
@@ -332,7 +335,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                                 actionManager.waitFor(0.5),
                                                 QuickSpindexer.toMotifFrom(Motif.PPG)
                                         ),
-                                        Shield.AutoShieldShoot(),
+//                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
                                         toShoot3.build()
                                 ),

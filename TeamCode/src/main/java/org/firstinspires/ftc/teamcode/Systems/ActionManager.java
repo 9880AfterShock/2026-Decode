@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
+import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
@@ -75,6 +76,7 @@ public class ActionManager {
 //            DriverTest.update(false, false, false, true, false, true);
 
             spindexerBias = true;
+            Prongs.updateGrate(true,false);
 //            shooterUp.setVelocity((rpm*shooterTicks)/60);
 //            shooterDown.setVelocity((rpm*shooterTicks)/60);
 //            shooterUp.setPower(0.82);
@@ -129,6 +131,7 @@ public class ActionManager {
 
     public Action derev() {
         return telemetryPacket -> {
+            Prongs.updateGrate(false,true);
             spindexerBias = false;
             autoRev = false;
 //            DriverTest.update(false, false, false, false, false, true);
