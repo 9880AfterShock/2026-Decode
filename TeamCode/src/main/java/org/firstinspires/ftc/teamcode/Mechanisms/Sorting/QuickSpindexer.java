@@ -165,6 +165,38 @@ public class QuickSpindexer { // Prefix for commands
         };
     }
 
+    public static Action addRevOffset(){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/9)));
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin;
+            }
+        };
+    }
+
+    public static Action removeRevOffset(){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/9)));
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin;
+            }
+        };
+    }
+
     public static Action removeBias(){
         return new Action() {
             private boolean first = true;

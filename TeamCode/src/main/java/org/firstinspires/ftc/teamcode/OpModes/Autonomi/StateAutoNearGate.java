@@ -178,6 +178,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 Arm.AutoArmIn(),
                                 Hood.AutoHoodUp(),
                                 actionManager.rev(rpm),
+                                QuickSpindexer.addRevOffset(),
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         QuickSpindexer.toMotifFrom(Motif.GPP),
@@ -201,6 +202,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
+                                QuickSpindexer.removeRevOffset(),
                                 //First volley end
 
 
@@ -250,6 +252,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                         ),
 //                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
+                                        QuickSpindexer.addRevOffset(),
                                         new SequentialAction(
                                                 toGate1.build(),
                                                 actionManager.waitFor(0.3), //wait for balls to roll
@@ -274,6 +277,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
+                                QuickSpindexer.removeRevOffset(),
                                 //Second volley end
 
                                 //2nd pickup start
@@ -321,6 +325,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                         ),
 //                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
+                                        QuickSpindexer.addRevOffset(),
                                         toShoot3.build()
                                 ),
 
@@ -340,7 +345,8 @@ public class StateAutoNearGate extends LinearOpMode {
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
-                                actionManager.derev()
+                                actionManager.derev(),
+                                QuickSpindexer.removeRevOffset()
                         )
                 )
         );
