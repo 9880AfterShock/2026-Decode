@@ -87,8 +87,8 @@ public class ControlManager {
         }
 
         if (operator.left_trigger > 0.5) {
-            int nextSlot = QuickSpindexer.currentSlot+1;
-            if (nextSlot > 3) nextSlot = 1;
+            int nextSlot = QuickSpindexer.currentSlot-1;
+            if (nextSlot < 1) nextSlot = 3;
             if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned()){
                 if (!armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
                     armOverride = true;
