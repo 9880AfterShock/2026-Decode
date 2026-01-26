@@ -89,11 +89,11 @@ public class ControlManager {
         if (operator.left_trigger > 0.5) {
             int nextSlot = QuickSpindexer.currentSlot-1;
             if (nextSlot < 1) nextSlot = 3;
-            if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned()){
+            if (QuickSpindexer.aligned()){
                 if (!armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
                     armOverride = true;
                 }
-                if (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
+                if (!QuickSpindexer.hasBall[nextSlot-1] && QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
                     cyclePrepped = true;
                     RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
                     RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.2));
