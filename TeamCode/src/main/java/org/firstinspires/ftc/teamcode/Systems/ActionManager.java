@@ -77,7 +77,7 @@ public class ActionManager {
 //            DriverTest.update(false, false, false, true, false, true);
 
             spindexerBias = true;
-            Prongs.updateGrate(true,false);
+//            Prongs.updateGrate(true,false);
 //            shooterUp.setVelocity((rpm*shooterTicks)/60);
 //            shooterDown.setVelocity((rpm*shooterTicks)/60);
 //            shooterUp.setPower(0.82);
