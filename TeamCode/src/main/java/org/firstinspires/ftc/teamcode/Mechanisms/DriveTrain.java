@@ -148,8 +148,8 @@ public class DriveTrain { // Prefix for commands
             rightFront.setPower(rightFrontPower);
         }
 
-        opmode.telemetry.addData("Front Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
-        opmode.telemetry.addData("Back Motors", "left (%.2f), right (%.2f)", leftBackPower, rightBackPower);
+//        opmode.telemetry.addData("Front Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
+//        opmode.telemetry.addData("Back Motors", "left (%.2f), right (%.2f)", leftBackPower, rightBackPower);
         opmode.telemetry.addData("Slow mode?", slowMode);
 //        opmode.telemetry.addData("HEY TIMO", "HERE IS THE MOTOR AMPS STUFFFF FOR DRIVE MOTORS");
 //        opmode.telemetry.addData("Front left", leftFront.getCurrent(CurrentUnit.AMPS));

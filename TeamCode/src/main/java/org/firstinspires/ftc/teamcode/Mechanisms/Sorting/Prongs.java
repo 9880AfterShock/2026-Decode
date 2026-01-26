@@ -29,7 +29,7 @@ public class Prongs {
                 prongs.setPosition(intakingPosition);
             }
         }
-        opmode.telemetry.addData("Prong Target", prongs.getPosition());
+//        opmode.telemetry.addData("Prong Target", prongs.getPosition());
     }
 
     public static Action AutoProngsIntake() {

@@ -43,8 +43,8 @@ public class Arm { // Prefix for commands
             }
         }
 
-        opmode.telemetry.addData("Intake Arm", intakeState);
-        opmode.telemetry.addData("Intake Pos", arm.getPosition());
+//        opmode.telemetry.addData("Intake Arm", intakeState);
+//        opmode.telemetry.addData("Intake Pos", arm.getPosition());
     }
 
 

@@ -223,7 +223,7 @@ public class ControlManager {
 //        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
 
         Hinge.updateBase(operator.yWasPressed());
-        opMode.telemetry.addData("ARM OVERRIDE", armOverride);
+//        opMode.telemetry.addData("ARM OVERRIDE", armOverride);
     }
 
     // private static boolean autoShootSpindex(double startTime, double currentTime){
