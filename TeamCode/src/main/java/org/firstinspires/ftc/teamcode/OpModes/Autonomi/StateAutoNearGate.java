@@ -190,23 +190,15 @@ public class StateAutoNearGate extends LinearOpMode {
                                 //First volley start
                                 actionManager.shotCue(1),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(2),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(3),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
                                 //First volley end
@@ -271,23 +263,15 @@ public class StateAutoNearGate extends LinearOpMode {
 
                                 actionManager.shotCue(4),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(5),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(6),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.derev(),
                                 //Second volley end
@@ -346,23 +330,15 @@ public class StateAutoNearGate extends LinearOpMode {
 
                                 actionManager.shotCue(7),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(8),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.shotCue(9),
-                                QuickSpindexer.turnRight(),
                                 actionManager.waitForSpeedSafe(rpm),
-                                Arm.AutoLaunchStart(),
-                                actionManager.waitFor(shotCooldown),
-                                Arm.AutoLaunchEnd(),
+                                QuickSpindexer.turnRight(),
 
                                 actionManager.derev()
                         )
