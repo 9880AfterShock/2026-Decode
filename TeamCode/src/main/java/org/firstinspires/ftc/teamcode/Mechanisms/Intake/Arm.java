@@ -90,11 +90,11 @@ public class Arm { // Prefix for commands
         };
     }
 
-    public static Action AutoArmTransfer() {
+    public static Action AutoArmRev() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 arm.setPosition(revPosition);
-                intakeState = "Transferring";
+                intakeState = "revving";
                 return false;
             }
         };
