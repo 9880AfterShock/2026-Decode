@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
-
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -27,12 +25,12 @@ import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
     public static Alliance alliance;
     public static Pose2d autoEndPosition;
+    public static boolean autoHasBalls;
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
@@ -87,6 +85,12 @@ public class TeleOp extends LinearOpMode {
         }
         if (autoEndPosition == null) {
             autoEndPosition = new Pose2d(0.0, 0.0, 0.0);
+        }
+        if (autoHasBalls){
+            QuickSpindexer.hasBall[0] = true;
+            QuickSpindexer.hasBall[1] = true;
+            QuickSpindexer.hasBall[2] = true;
+            autoHasBalls = false;
         }
         Gyroscope.setRotation(Math.toDegrees(autoEndPosition.heading.toDouble()));
         // run until the end of the match (driver presses STOP)

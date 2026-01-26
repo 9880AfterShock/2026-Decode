@@ -47,6 +47,7 @@ public class StateAutoNearGate extends LinearOpMode {
         QuickSpindexer.initSpindexer(this); //ugly but works
 //        Shield.initLocking(this);
         Prongs.initGrate(this);
+        TeleOp.autoHasBalls = true;
 
         double rpm = 2600;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
@@ -202,6 +203,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 actionManager.shotCue(3),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
+                                actionManager.hasBalls(false),
 
                                 actionManager.derev(),
                                 //First volley end
@@ -214,6 +216,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
+                                actionManager.hasBalls(true),
 
                                 new RaceAction(
                                         new SequentialAction(
@@ -266,23 +269,21 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
-                                actionManager.shotCue(40),
+                                actionManager.shotCue(4),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
 
-                                actionManager.shotCue(50),
+                                actionManager.shotCue(5),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
 
-                                actionManager.shotCue(60),
+                                actionManager.shotCue(6),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
+                                actionManager.hasBalls(false),
 
                                 actionManager.derev(),
-                                actionManager.shotCue(70),
-
-                                actionManager.shotCue(700),
                                 //Second volley end
 
                                 //2nd pickup start
@@ -292,6 +293,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 Roller.AutoIntakeOn(),
 
                                 toPickup2.build(),
+                                actionManager.hasBalls(true),
 
                                 new RaceAction(
                                         new SequentialAction(
@@ -351,6 +353,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 actionManager.shotCue(9),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
+                                actionManager.hasBalls(false),
 
                                 actionManager.derev()
                         )

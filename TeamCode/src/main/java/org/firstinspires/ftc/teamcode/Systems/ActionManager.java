@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Enums.BallType;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.BallRamp;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
+import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -261,6 +262,16 @@ public class ActionManager {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 return ballCount >= targetCount;
+            }
+        };
+    }
+
+    public Action hasBalls(boolean hasBalls) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                TeleOp.autoHasBalls = hasBalls;
+                return false;
             }
         };
     }
