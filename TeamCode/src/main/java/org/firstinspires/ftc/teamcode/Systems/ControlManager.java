@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Systems;
 import static org.firstinspires.ftc.teamcode.Aiming.DriverTest.canFire;
 import static org.firstinspires.ftc.teamcode.OpModes.TeleOp.alliance;
 
-import android.sax.StartElementListener;
+//import android.sax.StartElementListener;
 
 import com.qualcomm.hardware.adafruit.AdafruitI2cColorSensor;
 import com.qualcomm.hardware.ams.AMSColorSensor;
@@ -33,6 +33,8 @@ import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
 import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
@@ -40,7 +42,7 @@ import java.util.function.Supplier;
 
 public class ControlManager {
     private static OpMode opMode;
-//    public static Spindexer spindexer;
+    //    public static Spindexer spindexer;
 //    public static BallRamp ballRamp;
     private static Gamepad driver;
     private static Gamepad operator;
@@ -48,7 +50,7 @@ public class ControlManager {
     private static boolean prevInstake;
 
     public static boolean shot = true;
-//    public static boolean canSpin = true;
+    //    public static boolean canSpin = true;
     public static Supplier<Color> sensor;
     public static AdafruitI2cColorSensor color_sensor;
     public static ColorClassifier<BallType> classifier;
@@ -57,6 +59,7 @@ public class ControlManager {
     private static int tripleIncrement = 0;
     private final static double delayTime = 1.0;
     private static boolean armOverride = false;
+    private static boolean cyclePrepped = false;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -71,6 +74,7 @@ public class ControlManager {
 
         tripleIncrement = 0;
         armOverride = false;
+        cyclePrepped = false;
     }
 
     public static void update(boolean flipField) {//false is blue, true is red
@@ -83,13 +87,17 @@ public class ControlManager {
         }
 
         if (operator.left_trigger > 0.5) {
-            int nextSlot = QuickSpindexer.currentSlot-1;
-            if (nextSlot < 1) nextSlot = 3;
-            if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned() && !armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
-                armOverride = true;
-                RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
-                if (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1]) {
-                    QuickSpindexer.turnIntake();
+            int nextSlot = QuickSpindexer.currentSlot+1;
+            if (nextSlot > 3) nextSlot = 1;
+            if ((!QuickSpindexer.hasBall[nextSlot-1]) && QuickSpindexer.aligned()){
+                if (!armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
+                    armOverride = true;
+                }
+                if (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
+                    cyclePrepped = true;
+                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
+                    RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.2));
+                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.2));
                 }
             }
 
@@ -104,6 +112,9 @@ public class ControlManager {
 //                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.2));
 //                }
 //            }
+        } else {
+            armOverride = false;
+            cyclePrepped = false;
         }
 
 
@@ -124,7 +135,7 @@ public class ControlManager {
         boolean ejecting = driver.left_bumper;
 
         //DriverTest
-        boolean auto_shoot = operator.left_bumper;
+        // boolean auto_shoot = operator.left_bumper;
         boolean increase = driver.dpadUpWasPressed();
         boolean decrease = driver.dpadDownWasPressed();
         boolean rev = operator.a;
@@ -133,7 +144,7 @@ public class ControlManager {
 
 
         //Hood
-        boolean change_mode = operator.yWasPressed();
+        // boolean change_mode = operator.yWasPressed();
 
         //BallRamp
 //        boolean cycleRamp = driver.bWasPressed();
@@ -162,7 +173,7 @@ public class ControlManager {
 
 //        ColorSensor.updateSensor(2.5F);
 
-        Hood.updateAim(change_mode);
+        Hood.updateAim(false);
 
         //Wall_E.updateTarget(operator.left_bumper, operator.right_bumper);
 //        NormalizedRGBA color_test = color_sensor.getNormalizedColors();
@@ -215,13 +226,12 @@ public class ControlManager {
         opMode.telemetry.addData("ARM OVERRIDE", armOverride);
     }
 
-    private static boolean autoShootSpindex(double startTime, double currentTime){
-        if (((currentTime-startTime)-(delayTime*tripleIncrement)) > 0) {
-            tripleIncrement += 1;
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // private static boolean autoShootSpindex(double startTime, double currentTime){
+    //     if (((currentTime-startTime)-(delayTime*tripleIncrement)) > 0) {
+    //         tripleIncrement += 1;
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }
-

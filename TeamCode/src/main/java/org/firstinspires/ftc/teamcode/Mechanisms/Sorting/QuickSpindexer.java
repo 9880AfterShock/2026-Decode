@@ -258,6 +258,6 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static boolean aligned(){
-        return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) < errorMargin && spindexer.getTargetPosition() == targetPosition;
+        return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) < errorMargin && spindexer.getTargetPosition() == (int) targetPosition;
     }
 }
