@@ -27,6 +27,7 @@ public class QuickSpindexer { // Prefix for commands
     public static boolean[] hasBall = new boolean[3];
     public static int currentSlot = 1; //1 2 3 going clockwise
     public static boolean spindexerOffset = false;
+    final private static int offsetDivider = 12;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -85,7 +86,7 @@ public class QuickSpindexer { // Prefix for commands
         }
 
         if (spindexerOffset){
-            spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
+            spindexer.setTargetPosition((int) (targetPosition - 1425.1/offsetDivider));
         } else {
             spindexer.setTargetPosition((int) targetPosition);
         }
@@ -105,7 +106,7 @@ public class QuickSpindexer { // Prefix for commands
     public static void fullCycle(){
         spindexerOffset = false;
         targetPosition += 1425.1;
-        spindexer.setTargetPosition((int) (targetPosition - 1425.1/9));
+        spindexer.setTargetPosition((int) (targetPosition - 1425.1/offsetDivider));
         spindexer.setPower(0.7);
         hasBall = new boolean[3];
     }
@@ -174,7 +175,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (first) {
-                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/9)));
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/offsetDivider)));
                     first = false;
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
@@ -190,7 +191,7 @@ public class QuickSpindexer { // Prefix for commands
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 //                if (first) {
-                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/9)));
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/offsetDivider)));
 //                    first = false;
 //                }
 //                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());

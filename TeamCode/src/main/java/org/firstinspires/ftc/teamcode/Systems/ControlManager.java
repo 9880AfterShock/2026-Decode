@@ -92,6 +92,9 @@ public class ControlManager {
             if (QuickSpindexer.aligned()){
                 if (!armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
                     armOverride = true;
+                    if (QuickSpindexer.hasBall[nextSlot-1]) {
+                        QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = true;
+                    }
                 }
                 if (!QuickSpindexer.hasBall[nextSlot-1] && QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
                     cyclePrepped = true;
