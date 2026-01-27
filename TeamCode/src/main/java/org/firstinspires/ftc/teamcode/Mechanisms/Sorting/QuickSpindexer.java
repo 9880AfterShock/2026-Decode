@@ -103,6 +103,10 @@ public class QuickSpindexer { // Prefix for commands
 
     }
 
+    public static boolean has2Balls(){
+        return ((!hasBall[0] && hasBall[1] && hasBall [2]) || (hasBall[0] && !hasBall[1] && hasBall [2]) || (hasBall[0] && hasBall[1] && !hasBall [2]));
+    }
+
     public static void fullCycle(){
         spindexerOffset = false;
         targetPosition += 1425.1;
