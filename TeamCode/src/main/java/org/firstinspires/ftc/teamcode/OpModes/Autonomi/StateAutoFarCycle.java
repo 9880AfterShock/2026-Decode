@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
-//import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
+import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
@@ -29,8 +29,8 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 9 (Gate instead of motif)")
-public class StateAutoNearGate extends LinearOpMode {
+@Autonomous(name = "Far zone cycle gate runoff")
+public class StateAutoFarCycle extends LinearOpMode {
     @Override
     public void runOpMode() {
         Gyroscope.initSensor(this);
@@ -40,6 +40,7 @@ public class StateAutoNearGate extends LinearOpMode {
         Roller.initIntake(this);
         RunLater.setup(this);
         DriverTest.initControls(this); //new
+        DriverTest.isFarAuto = true;
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
         Distance.initSensor(this);
@@ -49,23 +50,18 @@ public class StateAutoNearGate extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 2600;
+        double rpm = 3375;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
-        boolean secondDump = false;
 //        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use x and b to select alliance");
-            telemetry.addLine("Use a to toggle 2nd dump");
             if (gamepad1.xWasPressed()){
                 posMultiplier = 1.0;
             }
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
-            }
-            if (gamepad1.aWasPressed()){
-                secondDump = !secondDump;
             }
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
@@ -75,91 +71,98 @@ public class StateAutoNearGate extends LinearOpMode {
                 telemetry.addData("Alliance", "Red");
                 TeleOp.alliance = Alliance.RED;
             }
-            if (secondDump){
-                telemetry.addData("Second Dump", "Active");
-            } else {
-                telemetry.addData("Second Dump", "Disabled");
-            }
             telemetry.update();
         }
 
-        Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(55.0));
-        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosClose);
+        Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
-        Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(48.0));
-        Pose2d shootPosClose3 = new Pose2d(-37.0, posMultiplier*-15.0, posMultiplier*Math.toRadians(63.0));
+        Pose2d shootPosFar1;
+        Pose2d shootPosFar2;
+        Pose2d shootPosFar3;
+        if (posMultiplier == 1.0){
+            shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25.0));
+            shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
+        } else {
+            shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
+            shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
+            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
+        }
+        Pose2d preShootPosFar3 = new Pose2d(53, posMultiplier*-20.0, posMultiplier*Math.toRadians(25.0));
 
-        Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        //Loading zone pickup
+        Pose2d prePickup1 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d startPickup1 = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickup1 = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickup1 = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
-        Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickup2 = new Pose2d(60.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup2 = new Pose2d(63.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d midPickup2 = new Pose2d(57.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
+        Pose2d endPickup2 = new Pose2d(39.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-160.0));
 
-        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d parkRotationFar = new Pose2d(58.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d parkPosFar = new Pose2d(63.0, posMultiplier*-58.0, posMultiplier*Math.toRadians(-90.0));
 
-        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
-                .setTangent(posMultiplier*Math.toRadians(37.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0), new TranslationalVelConstraint(40.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
+        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosFar)
+                .setTangent(posMultiplier*Math.toRadians(160.0))
+                .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(160.0));
 
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(40.0))
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
 
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
-
-        TrajectoryActionBuilder toGate1 = drive.actionBuilder(endPickup1)
-                .setTangent(posMultiplier*Math.toRadians(90.0))
-                .splineToLinearHeading(gatePos1, posMultiplier*Math.toRadians(-90.0));
-
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(gatePos1)
-                .setTangent(posMultiplier*Math.toRadians(130.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
-
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0));
+                .splineToLinearHeading(midPickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(5.0))
+                .setTangent(posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(5.0));
 
-        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickup2)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
+        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
+                .setTangent(posMultiplier*Math.toRadians(100.0))
+                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(100.0), new TranslationalVelConstraint(40.0));
 
-        TrajectoryActionBuilder toShoot3;
+        TrajectoryActionBuilder cycle1 = drive.actionBuilder(shootPosFar2)
+                //to there
+                .setTangent(posMultiplier*Math.toRadians(-75.0))
+                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(-75.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-80.0), new TranslationalVelConstraint(40.0))
+                //going across wall
+                .setTangent(posMultiplier*Math.toRadians(-135.0))
+                .splineToLinearHeading(midPickup2, posMultiplier*Math.toRadians(-135.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(180.0), new TranslationalVelConstraint(40.0));
 
-        if (secondDump){
-            toShoot3 = drive.actionBuilder(endPickup2)
-                    //doing gate
-                    .setTangent(posMultiplier*Math.toRadians(180.0))
-                    .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
-                    .waitSeconds(0.1)
+        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(endPickup2)
+                .setTangent(posMultiplier*Math.toRadians(75.0))
+                .splineToLinearHeading(preShootPosFar3, posMultiplier*Math.toRadians(75.0), new TranslationalVelConstraint(40.0))
+                .setTangent(posMultiplier*Math.toRadians(75.0))
+                .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(75.0));
 
-                    .setTangent(posMultiplier*Math.toRadians(130.0))
-                    .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
-        } else {
-            toShoot3 = drive.actionBuilder(endPickup2)
-                    .setTangent(posMultiplier*Math.toRadians(125.0))
-                    .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
-        }
+        TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar3)
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(-80.0))
+                .setTangent(posMultiplier*Math.toRadians(-80.0))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(-80.0));
+//                .setTangent(posMultiplier*Math.toRadians(202.5))
+//                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(202.5))
+//                .setTangent(posMultiplier*Math.toRadians(202.5))
+//                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(202.5), new TranslationalVelConstraint(100.0));
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
                 .waitSeconds(5.0);
         TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickup2)
-                .waitSeconds(5.0);
+                .waitSeconds(1.5);
 
 
-        Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndPosition = shootPosClose3;
+        Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
+        TeleOp.autoEndPosition = parkPosFar;
 
         double ballInSpindexerTimer = 0.2;
 
@@ -167,6 +170,7 @@ public class StateAutoNearGate extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
+
         Limelight.motif = Motif.GPP;
 
         Actions.runBlocking(
@@ -182,8 +186,10 @@ public class StateAutoNearGate extends LinearOpMode {
                                 Arm.AutoArmRev(),
                                 QuickSpindexer.addRevOffset(),
                                 Prongs.AutoProngsShooting(),
+//                                Limelight.AutoScanWithInit(),
                                 new ParallelAction(
 //                                        actionManager.rev(rpm),
+//                                        QuickSpindexer.toMotifFrom(Motif.GPP),
                                         toShoot1.build()
                                 ),
 
@@ -205,7 +211,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
-                                actionManager.derev(),
+//                                actionManager.derev(),
                                 //First volley end
 
 
@@ -224,7 +230,7 @@ public class StateAutoNearGate extends LinearOpMode {
                                                 waitPickup1.build()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallInLonger(),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -256,13 +262,9 @@ public class StateAutoNearGate extends LinearOpMode {
                                                 Prongs.AutoProngsShooting()
                                         ),
 //                                        Shield.AutoShieldShoot(),
-                                        actionManager.rev(rpm),
+//                                        actionManager.rev(rpm),
                                         Arm.AutoArmRev(),
-                                        new SequentialAction(
-                                                toGate1.build(),
-                                                actionManager.waitFor(0.3), //wait for balls to roll
-                                                toShoot2.build()
-                                        )
+                                        toShoot2.build()
                                 ),
 
                                 //Second volley start
@@ -283,7 +285,6 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
-                                actionManager.derev(),
                                 //Second volley end
 
                                 //2nd pickup start
@@ -292,32 +293,37 @@ public class StateAutoNearGate extends LinearOpMode {
                                 Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
-                                toPickup2.build(),
                                 actionManager.hasBalls(true),
 
                                 new RaceAction(
                                         new SequentialAction(
-                                                pickup2.build(),
+                                                cycle1.build(),
                                                 waitPickup2.build()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallNotInCycles(),
+                                                actionManager.setBallCount(0),
+                                                Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(1),
+                                                Roller.AutoIntakeOff(),
+                                                actionManager.shotCue(102),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexerCycles(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                Roller.AutoIntakeOn(),
+                                                QuickSpindexer.turnLeft(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(2),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
+                                                Distance.waitForBallInSpindexerCycles(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
-                                                Arm.AutoArmOut(),
-                                                Distance.waitForBallIn(),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(ballInSpindexerTimer),
                                                 QuickSpindexer.turnLeft(),
-                                                Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallInCycles(),
+                                                actionManager.setBallCount(3),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn()
                                         )
@@ -332,10 +338,10 @@ public class StateAutoNearGate extends LinearOpMode {
                                                 Prongs.AutoProngsShooting()
                                         ),
 //                                        Shield.AutoShieldShoot(),
-                                        actionManager.rev(rpm),
                                         Arm.AutoArmRev(),
                                         toShoot3.build()
                                 ),
+                                Roller.AutoIntakeOff(),
 
                                 //Third volley start
 //                        Limelight.Relocalize(drive),
@@ -355,7 +361,9 @@ public class StateAutoNearGate extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
-                                actionManager.derev()
+                                actionManager.derev(),
+
+                                toPark.build()
                         )
                 )
         );

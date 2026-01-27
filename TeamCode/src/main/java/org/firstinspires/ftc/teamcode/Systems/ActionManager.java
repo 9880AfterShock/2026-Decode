@@ -132,7 +132,7 @@ public class ActionManager {
 
     public Action derev() {
         return telemetryPacket -> {
-            Prongs.updateGrate(false,true);
+//            Prongs.updateGrate(false,true);
             spindexerBias = false;
             autoRev = false;
 //            DriverTest.update(false, false, false, false, false, true);
