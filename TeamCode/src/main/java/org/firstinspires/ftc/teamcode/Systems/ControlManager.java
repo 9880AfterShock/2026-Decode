@@ -220,6 +220,9 @@ public class ControlManager {
                 spinRight && !((QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
                 operator.start && operator.back,
                 Spindexer.reset && operator.backWasReleased());
+        if (rev && spinLeft && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]))) {
+            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = false;
+        }
 //        if (operator.start && operator.back) {
 //            Spindexer.reset = true;
 //        }
