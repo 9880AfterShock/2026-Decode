@@ -153,6 +153,26 @@ public class QuickSpindexer { // Prefix for commands
         };
     }
 
+    public static Action autoFullCycle(boolean removeOffset){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    if (removeOffset) {
+                        spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+1425.1+(1425.1/offsetDivider)));
+                    }else {
+                        spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+1425.1));
+                    }
+                    first = false;
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > errorMargin;
+            }
+        };
+    }
+
     public static Action turnLeft(){
         return new Action() {
             private boolean first = true;

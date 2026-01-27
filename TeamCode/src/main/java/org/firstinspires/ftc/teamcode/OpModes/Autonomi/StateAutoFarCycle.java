@@ -164,7 +164,7 @@ public class StateAutoFarCycle extends LinearOpMode {
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
         TeleOp.autoEndPosition = parkPosFar;
 
-        double ballInSpindexerTimer = 0.2;
+        double ballInSpindexerTimer = 0.4;
 
 
         waitForStart();

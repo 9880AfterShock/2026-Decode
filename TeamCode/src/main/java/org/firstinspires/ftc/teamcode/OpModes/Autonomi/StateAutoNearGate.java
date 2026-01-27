@@ -161,7 +161,7 @@ public class StateAutoNearGate extends LinearOpMode {
         Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
         TeleOp.autoEndPosition = shootPosClose3;
 
-        double ballInSpindexerTimer = 0.2;
+        double ballInSpindexerTimer = 0.4;
 
 
         waitForStart();
@@ -191,18 +191,19 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        aimShoot1.build(),
 
                                 //First volley start
-                                actionManager.shotCue(1),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.removeRevOffset(),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(2),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(3),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.autoFullCycle(true),
+//                                actionManager.shotCue(1),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.removeRevOffset(),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(2),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(3),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -269,18 +270,19 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
-                                actionManager.shotCue(4),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.removeRevOffset(),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(5),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(6),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.autoFullCycle(true),
+//                                actionManager.shotCue(4),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.removeRevOffset(),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(5),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(6),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -341,18 +343,19 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot3.build(),
 
-                                actionManager.shotCue(7),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.removeRevOffset(),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(8),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
-
-                                actionManager.shotCue(9),
-                                actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.autoFullCycle(true),
+//                                actionManager.shotCue(7),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.removeRevOffset(),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(8),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
+//
+//                                actionManager.shotCue(9),
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev()
