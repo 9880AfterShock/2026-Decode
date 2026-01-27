@@ -120,7 +120,7 @@ public class ControlManager {
             cyclePrepped = false;
         }
 
-        if (operator.aWasPressed()){
+        if (operator.aWasPressed() && !(operator.left_trigger > 0.5)){
             QuickSpindexer.spindexerOffset = true;
         } else if (operator.aWasReleased()) {
             QuickSpindexer.spindexerOffset = false;
@@ -172,7 +172,7 @@ public class ControlManager {
         Roller.updateIntake(intaking && !armOverride, ejecting, false, speed);
 
         if (!armOverride){
-            Arm.updateIntake(intaking, ejecting, rev);
+            Arm.updateIntake(intaking, ejecting, rev && !(operator.left_trigger > 0.5));
         } else {
             Arm.updateIntake(false, false, false);
         }
@@ -207,7 +207,7 @@ public class ControlManager {
         DriverTest.update(increase, decrease, fire, rev, /*intaking*/ true, false);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
 //        Shield.updateLocking(rev);
-        Prongs.updateGrate(rev, operator.right_trigger > 0.5 || operator.left_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]));
+        Prongs.updateGrate(rev && !(operator.left_trigger > 0.5), operator.right_trigger > 0.5 || operator.left_trigger > 0.5 || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]));
 
 //        if (spinLeft) {
 //            spindexer.queueMessage(SpindexerMessage.RIGHT);
