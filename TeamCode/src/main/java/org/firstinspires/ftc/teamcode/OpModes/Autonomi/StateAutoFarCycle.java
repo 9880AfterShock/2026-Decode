@@ -257,7 +257,7 @@ public class StateAutoFarCycle extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(2.0),
+                                                actionManager.waitFor(1.0),
                                                 QuickSpindexer.addRevOffset(),
                                                 Prongs.AutoProngsShooting()
                                         ),
@@ -333,7 +333,7 @@ public class StateAutoFarCycle extends LinearOpMode {
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(2.0),
+                                                actionManager.waitFor(1.0),
                                                 QuickSpindexer.addRevOffset(),
                                                 Prongs.AutoProngsShooting()
                                         ),
