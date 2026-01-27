@@ -54,6 +54,8 @@ public class DriverTest {
         shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterDown"); //Port 3 or 4 on the expansion hub //one without encoder
         shooterUp.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shooterDown.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooterUp.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooterDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         shooter = new FlywheelMotor(List.of(shooterUp,shooterDown),numTicks);
         distanceFromGoal = 60;
         canFire = false;
@@ -134,12 +136,12 @@ public class DriverTest {
 //            shooterUp.setVelocity(-25*30);
 //            shooterDown.setVelocity(-25*30);
 //        }
-        opmode.telemetry.addData("Can fire? ", canFire);
-        opmode.telemetry.addData("Fire?", fire);
-        opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
-        opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
-        opmode.telemetry.addData("Averaged RPM", avgSpeed);
-        opmode.telemetry.addData("Desired Speed RPM", desSpeed);
+//        opmode.telemetry.addData("Can fire? ", canFire);
+//        opmode.telemetry.addData("Fire?", fire);
+//        opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
+//        opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
+//        opmode.telemetry.addData("Averaged RPM", avgSpeed);
+//        opmode.telemetry.addData("Desired Speed RPM", desSpeed);
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("Current RPM", rotationsPerMinute);
