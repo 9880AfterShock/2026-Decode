@@ -62,6 +62,8 @@ public class DriverTest {
 
 
         TelemetryPacket packet = new TelemetryPacket();
+        packet.put("Current RPM", 0.0);
+        packet.put("Desired RPM", 0.0);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         isFarAuto = false;
