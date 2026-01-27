@@ -60,8 +60,6 @@ public class DriverTest {
 
 
         TelemetryPacket packet = new TelemetryPacket();
-        packet.put("Current RPM", 0.0);
-        packet.put("Desired RPM", 0.0);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         isFarAuto = false;
@@ -85,18 +83,18 @@ public class DriverTest {
                 Hood.updateAim(false);
             }
         }
-        if (increase) {
-//            distanceFromGoal += 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-            desSpeed += 50;
-//            distanceFromGoal += 5;
-        }
-        if (decrease){
-//            distanceFromGoal -= 0.3048*0.5;
-//            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
-            desSpeed -= 50;
-//            distanceFromGoal -= 5;
-        }
+//        if (increase) {
+////            distanceFromGoal += 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
+//            desSpeed += 50;
+////            distanceFromGoal += 5;
+//        }
+//        if (decrease){
+////            distanceFromGoal -= 0.3048*0.5;
+////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
+//            desSpeed -= 50;
+////            distanceFromGoal -= 5;
+//        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
