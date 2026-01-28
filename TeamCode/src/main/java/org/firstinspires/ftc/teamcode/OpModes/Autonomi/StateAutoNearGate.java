@@ -191,6 +191,7 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        aimShoot1.build(),
 
                                 //First volley start
+                                actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
 //                                actionManager.shotCue(1),
 //                                actionManager.waitForSpeedSafe(rpm),
@@ -270,6 +271,7 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
+                                actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
 //                                actionManager.shotCue(4),
 //                                actionManager.waitForSpeedSafe(rpm),
@@ -343,6 +345,7 @@ public class StateAutoNearGate extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot3.build(),
 
+                                actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
 //                                actionManager.shotCue(7),
 //                                actionManager.waitForSpeedSafe(rpm),

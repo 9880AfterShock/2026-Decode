@@ -81,11 +81,11 @@ public class StateAutoFarCycle extends LinearOpMode {
         Pose2d shootPosFar1;
         Pose2d shootPosFar2;
         Pose2d shootPosFar3;
-        if (posMultiplier == 1.0){
+        if (posMultiplier == 1.0){ //Blue
             shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(25.0));
             shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
             shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
-        } else {
+        } else { //Red
             shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
             shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
             shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(20.0));
