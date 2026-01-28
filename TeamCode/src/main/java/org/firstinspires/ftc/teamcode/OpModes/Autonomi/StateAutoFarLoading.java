@@ -113,7 +113,7 @@ public class StateAutoFarLoading extends LinearOpMode {
 
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
+                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(4.0));
 
         TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
                 .setTangent(posMultiplier*Math.toRadians(65.0))
