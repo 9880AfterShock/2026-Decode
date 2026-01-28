@@ -50,7 +50,7 @@ public class StateAutoFarCycle extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 3375;
+        double rpm = 3300;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -88,7 +88,7 @@ public class StateAutoFarCycle extends LinearOpMode {
         } else {
             shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
             shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
-            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(22.5));
+            shootPosFar3 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(20.0));
         }
         Pose2d preShootPosFar3 = new Pose2d(53, posMultiplier*-20.0, posMultiplier*Math.toRadians(25.0));
 
