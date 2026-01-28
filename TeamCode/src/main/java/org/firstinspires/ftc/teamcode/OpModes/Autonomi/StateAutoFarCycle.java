@@ -338,6 +338,7 @@ public class StateAutoFarCycle extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
+                                                Roller.AutoIntakeEject(),
                                                 QuickSpindexer.addRevOffset(),
                                                 Prongs.AutoProngsShooting()
                                         ),
