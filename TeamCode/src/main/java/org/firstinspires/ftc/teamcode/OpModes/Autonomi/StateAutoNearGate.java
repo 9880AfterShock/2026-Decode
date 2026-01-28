@@ -177,7 +177,7 @@ public class StateAutoNearGate extends LinearOpMode {
 //                                Shield.AutoShieldShoot(),
                                 Prongs.AutoProngsPrime(),
                                 Arm.AutoArmIn(),
-                                Hood.AutoHoodUp(),
+                                Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
                                 Arm.AutoArmRev(),
                                 QuickSpindexer.addRevOffset(),

@@ -165,7 +165,7 @@ public class StateAutoFarLoading extends LinearOpMode {
 //                                Shield.AutoShieldShoot(),
                                 Prongs.AutoProngsPrime(),
                                 Arm.AutoArmIn(),
-                                Hood.AutoHoodUp(),
+                                Hood.AutoHoodFar(),
                                 actionManager.rev(rpm),
                                 Arm.AutoArmRev(),
                                 QuickSpindexer.addRevOffset(),
