@@ -340,7 +340,8 @@ public class StateAutoFarLoading extends LinearOpMode {
 
                                 actionManager.derev(),
 
-                                toPark.build()
+                                toPark.build(),
+                                actionManager.waitFor(5.0)
                         )
                 )
         );

@@ -358,7 +358,8 @@ public class StateAutoNearGate extends LinearOpMode {
 //                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
-                                actionManager.derev()
+                                actionManager.derev(),
+                                actionManager.waitFor(5.0)
                         )
                 )
         );
