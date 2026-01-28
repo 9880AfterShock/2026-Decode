@@ -353,6 +353,7 @@ public class StateAutoFarCycle extends LinearOpMode {
 
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
+                                QuickSpindexer.turnRight(), //extra turn for safety
 //                                actionManager.shotCue(7),
 //                                actionManager.waitForSpeedSafe(rpm),
 //                                QuickSpindexer.removeRevOffset(),
