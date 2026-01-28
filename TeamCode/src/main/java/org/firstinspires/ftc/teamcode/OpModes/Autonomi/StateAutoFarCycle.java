@@ -218,7 +218,7 @@ public class StateAutoFarCycle extends LinearOpMode {
                                 //First pickup start
                                 Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsIntake(),
+                                Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
@@ -243,7 +243,6 @@ public class StateAutoFarCycle extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                Prongs.AutoProngsPrime(),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
@@ -291,7 +290,7 @@ public class StateAutoFarCycle extends LinearOpMode {
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsIntake(),
+                                Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
                                 actionManager.hasBalls(true),
@@ -320,7 +319,6 @@ public class StateAutoFarCycle extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexerCycles(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                Prongs.AutoProngsPrime(),
                                                 Roller.AutoIntakeOn(),
                                                 QuickSpindexer.turnLeft(),
                                                 Arm.AutoArmOut(),
