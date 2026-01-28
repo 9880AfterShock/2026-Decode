@@ -149,6 +149,7 @@ public class QuickSpindexer { // Prefix for commands
                 if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/3)));
                     first = false;
+                    spindexer.setPower(1.0);
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
@@ -168,6 +169,7 @@ public class QuickSpindexer { // Prefix for commands
                     }else {
                         spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+1425.1));
                     }
+                    spindexer.setPower(0.7);
                     first = false;
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
@@ -185,6 +187,7 @@ public class QuickSpindexer { // Prefix for commands
                 if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
                     first = false;
+                    spindexer.setPower(1.0);
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
@@ -201,6 +204,7 @@ public class QuickSpindexer { // Prefix for commands
                 if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/offsetDivider)));
                     first = false;
+                    spindexer.setPower(1.0);
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
@@ -216,6 +220,7 @@ public class QuickSpindexer { // Prefix for commands
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 //                if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+(1425.1/offsetDivider)));
+                spindexer.setPower(1.0);
 //                    first = false;
 //                }
 //                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
