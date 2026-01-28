@@ -202,7 +202,7 @@ public class StateAutoFarLoading extends LinearOpMode {
                                 //First pickup start
                                 Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
@@ -227,6 +227,7 @@ public class StateAutoFarLoading extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
+                                                Prongs.AutoProngsPrime(),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
@@ -275,7 +276,7 @@ public class StateAutoFarLoading extends LinearOpMode {
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
 
                                 new RaceAction(
@@ -297,6 +298,7 @@ public class StateAutoFarLoading extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
+                                                Prongs.AutoProngsPrime(),
                                                 QuickSpindexer.turnLeft(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
