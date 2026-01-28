@@ -181,20 +181,20 @@ public class StateAutoFarLoading extends LinearOpMode {
 //                        aimShoot1.build(),
 
                                 //First volley start
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.shotCue(1),
                                 actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(1),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(2),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(3),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.removeRevOffset(),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(2),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(3),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -257,20 +257,20 @@ public class StateAutoFarLoading extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot2.build(),
 
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.shotCue(4),
                                 actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(4),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(5),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(6),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.removeRevOffset(),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(5),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(6),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -329,20 +329,20 @@ public class StateAutoFarLoading extends LinearOpMode {
 //                        Limelight.Relocalize(drive),
 //                        aimShoot3.build(),
 
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.shotCue(7),
                                 actionManager.waitForSpeedSafe(rpm),
-                                QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(7),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(8),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(9),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
+                                QuickSpindexer.removeRevOffset(),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(8),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
+
+                                actionManager.shotCue(9),
+                                actionManager.waitForSpeedSafe(rpm),
+                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
