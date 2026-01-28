@@ -276,6 +276,7 @@ public class StateAutoFarLoading extends LinearOpMode {
                                 Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
                                 Prongs.AutoProngsPrime(),
+                                toPickup2.build(),
                                 Roller.AutoIntakeOn(),
 
                                 new RaceAction(
