@@ -76,29 +76,29 @@ public class DriverTest {
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
-        if (!auto) {
-            if (distanceFromGoal < 50) {
-                desSpeed = (-0.817614*distanceFromGoal*distanceFromGoal)+(75.97537*distanceFromGoal)+836.07039 + 100;
-                Hood.hoodState = "Near";
-                Hood.updateAim(false);
-            } else {
-                desSpeed = (0.0718026*distanceFromGoal*distanceFromGoal)+(-1.08511*distanceFromGoal)+2434.47379;
-                Hood.hoodState = "Far";
-                Hood.updateAim(false);
-            }
-        }
-//        if (increase) {
+//        if (!auto) {
+//            if (distanceFromGoal < 50) {
+//                desSpeed = (-0.817614*distanceFromGoal*distanceFromGoal)+(75.97537*distanceFromGoal)+836.07039 + 100;
+//                Hood.hoodState = "Near";
+//                Hood.updateAim(false);
+//            } else {
+//                desSpeed = (0.0718026*distanceFromGoal*distanceFromGoal)+(-1.08511*distanceFromGoal)+2434.47379;
+//                Hood.hoodState = "Far";
+//                Hood.updateAim(false);
+//            }
+//        }
+        if (increase) {
 ////            distanceFromGoal += 0.3048*0.5;
 ////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036, Math.toRadians(30)).rpm;
-//            desSpeed += 50;
+            desSpeed += 50;
 ////            distanceFromGoal += 5;
-//        }
-//        if (decrease){
+        }
+        if (decrease){
 ////            distanceFromGoal -= 0.3048*0.5;
 ////            desSpeed = Trajectory.getVelocity(distanceFromGoal,1.1176-0.3937,0.036*numTicks)/60, Math.toRadians(30)).rpm;
-//            desSpeed -= 50;
+            desSpeed -= 50;
 ////            distanceFromGoal -= 5;
-//        }
+        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
