@@ -134,7 +134,7 @@ public class ControlManager {
         //Drive Train
         float strafe = driver.left_stick_x;
         float drive = -driver.left_stick_y;
-        float turn = driver.right_stick_x;
+        float turn = driver.right_stick_x*0.8f;
         boolean slowMode = driver.right_trigger > 0.1;
         boolean align = driver.x;
 

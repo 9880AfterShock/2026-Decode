@@ -11,7 +11,7 @@ public class Prongs {
     private static Servo prongs; // init sevo var
     private static OpMode opmode; // opmode var init
     public static double intakingPosition = 0.7;
-    public static double shootingPosition = 0.93;
+    public static double shootingPosition = 0.96;
     public static double primingPosition = 1.0;
 
     public static void initGrate(OpMode opmode) { // init motor
