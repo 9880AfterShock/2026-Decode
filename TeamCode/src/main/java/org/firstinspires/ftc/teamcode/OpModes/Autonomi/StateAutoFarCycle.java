@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
+import android.service.quickaccesswallet.SelectWalletCardRequest;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -218,12 +220,17 @@ public class StateAutoFarCycle extends LinearOpMode {
 
 
                                 //First pickup start
-                                Arm.AutoArmOut(),
 //                                Shield.AutoShieldLock(),
                                 Prongs.AutoProngsPrime(),
                                 Roller.AutoIntakeOn(),
 
-                                toPickup1.build(),
+                                new ParallelAction(
+                                        new SequentialAction(
+                                                actionManager.waitFor(1.0),
+                                                Arm.AutoArmOut()
+                                        ),
+                                        toPickup1.build()
+                                ),
                                 actionManager.hasBalls(true),
 
                                 new RaceAction(
