@@ -120,7 +120,7 @@ public class QuickSpindexer { // Prefix for commands
         currentSlot -= 1;
         if (currentSlot < 1) currentSlot = 3;
         spindexer.setTargetPosition((int) targetPosition);
-        spindexer.setPower(1.0);
+        spindexer.setPower(0.5);
     }
 
     public static Action goToMotif(){
@@ -187,7 +187,7 @@ public class QuickSpindexer { // Prefix for commands
                 if (first) {
                     spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
                     first = false;
-                    spindexer.setPower(1.0);
+                    spindexer.setPower(0.5);
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
                 telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());

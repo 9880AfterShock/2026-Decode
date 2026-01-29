@@ -39,7 +39,7 @@ public class Arm { // Prefix for commands
                 }
             } else {
                 intakeState = "Neutral";
-                arm.setPosition(neutralPosition);
+                arm.setPosition(revPosition); //Timo changed to always default to rev pos to help the intake
             }
         }
 
@@ -113,7 +113,7 @@ public class Arm { // Prefix for commands
     public static Action AutoArmIn() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                arm.setPosition(neutralPosition);
+                arm.setPosition(revPosition);
                 intakeState = "Neutral";
                 return false;
             }
