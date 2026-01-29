@@ -82,7 +82,7 @@ public class DriverTest {
 //                Hood.hoodState = "Near";
 //                Hood.updateAim(false);
 //            } else {
-//                desSpeed = (0.0718026*distanceFromGoal*distanceFromGoal)+(-1.08511*distanceFromGoal)+2434.47379;
+//                desSpeed = (-0.0426515*distanceFromGoal*distanceFromGoal)+(17.49391*distanceFromGoal)+1923.89458;
 //                Hood.hoodState = "Far";
 //                Hood.updateAim(false);
 //            }

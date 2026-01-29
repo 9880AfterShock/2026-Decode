@@ -45,7 +45,7 @@ public class DriveTrain { // Prefix for commands
     private static PIDAbstract aimingPID;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
-    private static Pose2d goalTarget = new Pose2d(-60.0, -57.0, Math.toRadians(0.0));
+    private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
         leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names

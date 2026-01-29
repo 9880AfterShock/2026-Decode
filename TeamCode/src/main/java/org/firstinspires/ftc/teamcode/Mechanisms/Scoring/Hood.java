@@ -31,6 +31,7 @@ public class Hood {
     }
 
     public static void updateAim(boolean toggleRange) {
+        hoodState = "Far";
         if (toggleRange){
             if (hoodState == "Near") {
                 hoodState = "Far";
