@@ -140,14 +140,15 @@ public class DriverTest {
 //        }
 //        opmode.telemetry.addData("Can fire? ", canFire);
 //        opmode.telemetry.addData("Fire?", fire);
-//        opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
+        opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
 //        opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
 //        opmode.telemetry.addData("Averaged RPM", avgSpeed);
-//        opmode.telemetry.addData("Desired Speed RPM", desSpeed);
+        opmode.telemetry.addData("Desired Speed RPM", desSpeed);
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("Current RPM", rotationsPerMinute);
         packet.put("Desired RPM", desSpeed);
+        packet.put("Goal Distance", distanceFromGoal);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 }
