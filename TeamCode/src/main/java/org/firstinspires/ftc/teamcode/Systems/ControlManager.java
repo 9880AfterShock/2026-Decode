@@ -98,9 +98,9 @@ public class ControlManager {
                 }
                 if (!QuickSpindexer.hasBall[nextSlot-1] && QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
                     cyclePrepped = true;
-                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.4));
-                    RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.4));
-                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.4));
+                    RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.3));
+                    RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.3));
+                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.3));
                 }
             }
 
