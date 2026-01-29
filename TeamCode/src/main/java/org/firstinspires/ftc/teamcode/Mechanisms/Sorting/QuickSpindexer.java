@@ -169,7 +169,7 @@ public class QuickSpindexer { // Prefix for commands
                     }else {
                         spindexer.setTargetPosition((int) (spindexer.getTargetPosition()+1425.1));
                     }
-                    spindexer.setPower(0.7);
+                    spindexer.setPower(0.6);
                     first = false;
                 }
                 telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
