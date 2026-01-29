@@ -90,7 +90,7 @@ public class StateAutoFarLoading extends LinearOpMode {
         }
 
         Pose2d prePickup1 = new Pose2d(36.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickup1 = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickup1 = new Pose2d(36.0, posMultiplier*-52.0, posMultiplier*-Math.toRadians(90.0));
 
         Pose2d prePickup2 = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));

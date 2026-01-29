@@ -87,7 +87,7 @@ public class StateAutoNearGate extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosClose);
 
         //Poses
-        Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(40.0));
+        Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(45.0));
         Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(48.0));
         Pose2d shootPosClose3 = new Pose2d(-37.0, posMultiplier*-15.0, posMultiplier*Math.toRadians(63.0));
 
