@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
+import org.firstinspires.ftc.teamcode.Systems.RunCountdown;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 
@@ -94,6 +95,7 @@ public class TeleOp extends LinearOpMode {
             ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
             RunCondition.update();
+            RunCountdown.update();
             BallColorDetectinator.update();
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
