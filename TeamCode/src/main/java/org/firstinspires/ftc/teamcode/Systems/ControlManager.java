@@ -60,6 +60,7 @@ public class ControlManager {
     private final static double delayTime = 1.0;
     private static boolean armOverride = false;
     private static boolean cyclePrepped = false;
+    private static boolean lastRev = false;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -100,7 +101,7 @@ public class ControlManager {
                     cyclePrepped = true;
                     RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.4));
                     RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.4));
-                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.4));
+                    RunLater.addAction(new DelayedAction(QuickSpindexer::turnIntake, 0.2));
                 }
             }
 
@@ -177,6 +178,24 @@ public class ControlManager {
             Arm.updateIntake(false, false, false);
         }
 
+
+        //if (rev) { // TIMO's STUPID FUNCTION FOR TESTING THE NEW TRANSFER
+          //  Arm.AutoArmOut();
+          //  RunLater.addAction(new DelayedAction(() -> {
+            //        if (lastRev) {
+            //            Arm.AutoArmIn();
+           //             lastRev=false;
+            //        }
+           //     }, 1.0));
+       // }
+
+        if (operator.aWasPressed()) {
+            lastRev = true;
+        }
+        if (operator.aWasReleased()) {
+            lastRev = false;
+        }
+
 //        Distance.updateSensor();
 
 //        ColorSensor.updateSensor(2.5F);
@@ -216,8 +235,8 @@ public class ControlManager {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
         QuickSpindexer.updateSpindexerResetIncluded(
-                spinLeft && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
-                spinRight && !((QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
+                spinLeft, // SAFEGUARD && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
+                spinRight, // SAFEGUARD && !((QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
                 operator.start && operator.back,
                 Spindexer.reset && operator.backWasReleased());
         if (rev && spinLeft && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]))) {

@@ -35,11 +35,24 @@ public class Arm { // Prefix for commands
             if (revving) {
                 if (intakeState != "revving") {
                     intakeState = "revving";
-                    arm.setPosition(revPosition);
+                    arm.setPosition(intakePosition);
+                    RunLater.addAction(new DelayedAction(() -> {
+                        arm.setPosition(revPosition);
+                    }, 1.0));
                 }
             } else {
-                intakeState = "Neutral";
-                arm.setPosition(revPosition); //Timo changed to always default to rev pos to help the intake
+                if (intakeState == "revving" ) {
+                    intakeState = "Neutral";
+                    arm.setPosition(intakePosition);
+                    RunLater.addAction(new DelayedAction(() -> {
+                        arm.setPosition(revPosition);
+                    }, 1.0));
+                } else {
+                    if (intakeState == "Intaking") {
+                        intakeState = "Neutral";
+                        arm.setPosition(revPosition);
+                    }
+                }
             }
         }
 

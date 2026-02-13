@@ -27,7 +27,7 @@ public class QuickSpindexer { // Prefix for commands
     public static boolean[] hasBall = new boolean[3];
     public static int currentSlot = 1; //1 2 3 going clockwise
     public static boolean spindexerOffset = false;
-    final private static int offsetDivider = 12;
+    final private static int offsetDivider = 24; // Old transfer used 12
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -120,7 +120,7 @@ public class QuickSpindexer { // Prefix for commands
         currentSlot -= 1;
         if (currentSlot < 1) currentSlot = 3;
         spindexer.setTargetPosition((int) targetPosition);
-        spindexer.setPower(0.6);
+        spindexer.setPower(0.9);
     }
 
     public static Action goToMotif(){
