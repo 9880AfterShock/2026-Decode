@@ -179,16 +179,6 @@ public class ControlManager {
         }
 
 
-        //if (rev) { // TIMO's STUPID FUNCTION FOR TESTING THE NEW TRANSFER
-          //  Arm.AutoArmOut();
-          //  RunLater.addAction(new DelayedAction(() -> {
-            //        if (lastRev) {
-            //            Arm.AutoArmIn();
-           //             lastRev=false;
-            //        }
-           //     }, 1.0));
-       // }
-
         if (operator.aWasPressed()) {
             lastRev = true;
         }
