@@ -22,7 +22,7 @@ public class Arm { // Prefix for commands
     public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
     public static double lastTransition = -9880.0;
-    public final static double transitionTimer = 0.5;
+    public final static double transitionTime = 0.5;
 
     public static void initIntake(OpMode opmode) { // init motor
         arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
@@ -31,7 +31,7 @@ public class Arm { // Prefix for commands
     }
 
     public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed, boolean revving) {
-        if (intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed){
+        if ((intakeButtonCurrentlyPressed || outTakeButtonCurrentlyPressed) && !revving && lastTransition == -9880.0){
             intakeState = "Intaking";
             arm.setPosition(intakePosition);
         } else {
@@ -41,7 +41,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else
-                if (lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime() && intakeState == "revving") {
+                if (lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime() && intakeState == "revving") {
                     arm.setPosition(revPosition);
                     lastTransition = -9880.0;
                 }
@@ -51,7 +51,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else {
-                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime()) {
+                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime()) {
                         arm.setPosition(revPosition);
                         lastTransition = -9880.0;
                     }
