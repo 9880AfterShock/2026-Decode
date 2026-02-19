@@ -170,7 +170,7 @@ public class ControlManager {
         Alignment.updateAlignment();
 //        opMode.telemetry.addData("Auto Shoot", (auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)));
 //        Roller.updateIntake(intaking, ejecting, (fire||(auto_shoot&&(spindexer.getCurrentBall() != BallType.NONE)&&spindexer.isLinedUp())) && canFire, speed);
-        Roller.updateIntake(intaking && !armOverride, ejecting, false, speed);
+        Roller.updateIntake(intaking && !armOverride && Arm.intakeState == "Intaking", ejecting, false, speed);
 
         if (!armOverride){
             Arm.updateIntake(intaking, ejecting, rev && !(operator.left_trigger > 0.5));
