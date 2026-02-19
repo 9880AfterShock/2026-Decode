@@ -21,10 +21,13 @@ public class Arm { // Prefix for commands
     public static double neutralPosition = 0.57;
     public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
+    public static double lastTransition = -9880.0;
+    public final static double transitionTimer = 0.5;
 
     public static void initIntake(OpMode opmode) { // init motor
         arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
         Arm.opmode = opmode;
+        lastTransition = -9880.0;
     }
 
     public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed, boolean revving) {
@@ -36,20 +39,18 @@ public class Arm { // Prefix for commands
                 if (intakeState != "revving") {
                     intakeState = "revving";
                     arm.setPosition(intakePosition);
-                    RunLater.addAction(new DelayedAction(() -> {
-                        arm.setPosition(revPosition);
-                    }, 1.0));
+                    lastTransition = opmode.getRuntime();
+                } else
+                if (lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime() && intakeState == "revving") {
+                    arm.setPosition(revPosition);
                 }
             } else {
                 if (intakeState == "revving" ) {
                     intakeState = "Neutral";
                     arm.setPosition(intakePosition);
-                    RunLater.addAction(new DelayedAction(() -> {
-                        arm.setPosition(revPosition);
-                    }, 1.0));
+                    lastTransition = opmode.getRuntime();
                 } else {
-                    if (intakeState == "Intaking") {
-                        intakeState = "Neutral";
+                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime()) {
                         arm.setPosition(revPosition);
                     }
                 }
