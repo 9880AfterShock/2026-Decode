@@ -225,8 +225,8 @@ public class ControlManager {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
         QuickSpindexer.updateSpindexerResetIncluded(
-                spinLeft, // SAFEGUARD && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
-                spinRight, // SAFEGUARD && !((QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
+                spinLeft && (Arm.lastTransition != -9880.0), // SAFEGUARD && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
+                spinRight && (Arm.lastTransition != -9880.0), // SAFEGUARD && !((QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2])),
                 operator.start && operator.back,
                 Spindexer.reset && operator.backWasReleased());
         if (rev && spinLeft && !(driver.dpad_left || operator.left_trigger > 0.5 || operator.right_trigger > 0.5 || (!rev && QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]))) {

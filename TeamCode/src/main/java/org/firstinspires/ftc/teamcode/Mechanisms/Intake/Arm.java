@@ -43,6 +43,7 @@ public class Arm { // Prefix for commands
                 } else
                 if (lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime() && intakeState == "revving") {
                     arm.setPosition(revPosition);
+                    lastTransition = -9880.0;
                 }
             } else {
                 if (intakeState == "revving" ) {
@@ -52,6 +53,7 @@ public class Arm { // Prefix for commands
                 } else {
                     if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTimer > opmode.getRuntime()) {
                         arm.setPosition(revPosition);
+                        lastTransition = -9880.0;
                     }
                 }
             }
