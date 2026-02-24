@@ -43,7 +43,8 @@ public class Turret {
     }
 
     private static double getPosition(){
-        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
+        return ((leftEncoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
+//        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
     }
 
     private static void updatePosition(){
