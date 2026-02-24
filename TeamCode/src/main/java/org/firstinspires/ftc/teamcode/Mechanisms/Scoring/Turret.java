@@ -14,7 +14,7 @@ public class Turret {
     private static AnalogInput rightEncoder; //Right servo feedback wire
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
-    private static final Pose2d turrentCenterOffset = new Pose2d(0.0, 0.0, Math.toRadians(0.0));
+    private static final double turrentCenterOffset = 5.0; //distance the robot is forward from the turret
 
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -60,11 +60,10 @@ public class Turret {
         rightServo.setPosition((motorPower/2)+0.5);
     }
 
-
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){
-
-
-        return null;
+        double x = (turrentCenterOffset*Math.cos(rotation)) + beforeTransform.position.x;
+        double y = (turrentCenterOffset*Math.sin(rotation)) + beforeTransform.position.y;
+        return new Pose2d(x, y, rotation);
     }
 
 }
