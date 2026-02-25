@@ -23,12 +23,15 @@ public class SensOrange {
     }
 
     public static void updateEncoder(){
-        int diff = currentPosition - (currentPosition%360);
+        int diff = getCurrentAngle() - ((currentPosition % 360 + 360) % 360);
+
         if (diff > 180) {
-            currentPosition += diff-360;
-        } else {
-            currentPosition += diff;
+            diff -= 360;
+        } else if (diff < -180) {
+            diff += 360;
         }
+
+        currentPosition += diff;
 
         opmode.telemetry.addData("SensOrange total ticks", getCurrentPosition());
         opmode.telemetry.addData("SensOrange current angle ticks", getCurrentAngle());
