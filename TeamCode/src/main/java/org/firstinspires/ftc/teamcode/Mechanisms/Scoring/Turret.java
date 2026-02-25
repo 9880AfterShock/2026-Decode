@@ -16,7 +16,6 @@ public class Turret {
     public static double currentPosition = 0.0;
     private static final double turrentCenterOffset = 5.0; //distance the robot is forward from the turret
 
-
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
         rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into ___
