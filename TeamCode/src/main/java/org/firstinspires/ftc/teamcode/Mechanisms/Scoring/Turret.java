@@ -14,7 +14,7 @@ public class Turret {
     private static AnalogInput rightEncoder; //Right servo feedback wire
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
-    private static final double turrentCenterOffset = 5.0; //distance the robot is forward from the turret
+    private static final double turrentCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
 
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
