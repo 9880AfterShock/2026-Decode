@@ -4,14 +4,14 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 public class Turret {
     private static OpMode opmode;
     private static Servo leftServo; //Left servo
     private static Servo rightServo; //Right servo
-    private static AnalogInput leftEncoder; //Left servo feedback wire
-    private static AnalogInput rightEncoder; //Right servo feedback wire
+//    private static AnalogInput leftEncoder; //Left servo feedback wire
+//    private static AnalogInput rightEncoder; //Right servo feedback wire
+    private static AnalogInput encoder;
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
     private static final double turrentCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
@@ -19,8 +19,9 @@ public class Turret {
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
         rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into ___
-        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
-        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
+        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
+//        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
+//        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
 
         targetPosition = 0.0;
         currentPosition = getPosition();
@@ -42,17 +43,20 @@ public class Turret {
     }
 
     private static double getPosition(){
-        return ((leftEncoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
+        return ((encoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
 //        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
     }
 
     private static void updatePosition(){
-        double diff = getPosition() - (currentPosition%360);
-        if (diff > 200) {
-            currentPosition += diff-360;
-        } else {
-            currentPosition += diff;
+        double diff = getPosition() - (((currentPosition % 360) + 360) % 360);
+
+        if (diff > 180) {
+            diff -= 360;
+        } else if (diff < -180) {
+            diff += 360;
         }
+
+        currentPosition += diff;
     }
 
     private static void setPower(double motorPower){ //set servo power from a hypothetical point of a motor controlling the turret
