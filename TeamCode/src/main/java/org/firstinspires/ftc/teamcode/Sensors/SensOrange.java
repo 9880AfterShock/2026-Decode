@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 public class SensOrange {
     private static OpMode opmode;
     private static int currentPosition = 0; //
-    private static AnalogInput absEncoder; //Right servo feedback wire
+    private static AnalogInput absEncoder; //Sensorange encoder (under spindexer axle)
     private static int offset = 0;
     public static void initSensor(OpMode opmode) {
         absEncoder = opmode.hardwareMap.get(AnalogInput.class, "sensOrange"); // plugged into ___
