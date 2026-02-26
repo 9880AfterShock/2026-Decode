@@ -9,19 +9,19 @@ public class Turret {
     private static OpMode opmode;
     private static Servo leftServo; //Left servo
     private static Servo rightServo; //Right servo
-//    private static AnalogInput leftEncoder; //Left servo feedback wire
-//    private static AnalogInput rightEncoder; //Right servo feedback wire
-    private static AnalogInput encoder;
+    private static AnalogInput leftEncoder; //Left servo feedback wire
+    private static AnalogInput rightEncoder; //Right servo feedback wire
+//    private static AnalogInput encoder;
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
     private static final double turrentCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
 
     public static void initTurret(OpMode opmode) { // init motor
-        leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into ___
-        rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into ___
-        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
-//        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
-//        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
+        leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
+        rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
+//        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
+        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
+        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
 
         targetPosition = 0.0;
         currentPosition = getPosition();
@@ -43,8 +43,8 @@ public class Turret {
     }
 
     private static double getPosition(){
-        return ((encoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
-//        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
+//        return ((encoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
+        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
     }
 
     private static void updatePosition(){
