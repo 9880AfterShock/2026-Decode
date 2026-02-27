@@ -28,7 +28,7 @@ public class Turret {
         Turret.opmode = opmode;
     }
 
-    public static void updateTurret(double increment) { // init motor
+    public static void updateTurret(double increment, double degrees) {
         targetPosition += increment;
 
         updatePosition();

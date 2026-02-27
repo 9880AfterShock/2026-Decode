@@ -24,7 +24,7 @@ public class TurretTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            Turret.updateTurret(gamepad1.left_stick_y);
+            Turret.updateTurret(gamepad1.left_stick_y, Math.atan2(Math.abs(gamepad2.right_stick_y), gamepad2.right_stick_x));
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }
