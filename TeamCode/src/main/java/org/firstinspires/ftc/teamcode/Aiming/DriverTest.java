@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
+import android.sax.StartElementListener;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -101,7 +103,7 @@ public class DriverTest {
 //        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
-            shooterUp.setPower(shooterPower);
+            shooterUp.setPower(-shooterPower); //one of the powerpole connecters is backwards
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
