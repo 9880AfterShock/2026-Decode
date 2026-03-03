@@ -175,7 +175,7 @@ public class SemifinalAutoNearGate extends LinearOpMode {
                                 actionManager.shotCue(0),
                                 Shield.AutoShieldShoot(),
                                 Arm.AutoArmIn(),
-                                Hood.AutoHoodUp(),
+                                Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
                                 new ParallelAction(
                                         actionManager.rev(rpm),

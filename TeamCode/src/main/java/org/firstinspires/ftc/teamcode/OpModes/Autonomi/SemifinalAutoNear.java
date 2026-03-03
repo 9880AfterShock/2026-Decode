@@ -153,7 +153,7 @@ public class SemifinalAutoNear extends LinearOpMode {
                         actionManager.shotCue(0),
                         Shield.AutoShieldShoot(),
                         Arm.AutoArmIn(),
-                        Hood.AutoHoodUp(),
+                        Hood.AutoHoodNear(),
                         actionManager.rev(rpm),
                         toScan.build(),
                         Limelight.AutoScan(),

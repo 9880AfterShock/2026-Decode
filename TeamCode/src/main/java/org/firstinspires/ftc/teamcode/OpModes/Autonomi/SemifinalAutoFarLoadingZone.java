@@ -164,7 +164,7 @@ public class SemifinalAutoFarLoadingZone extends LinearOpMode {
                                 actionManager.shotCue(0),
                                 Shield.AutoShieldShoot(),
                                 Arm.AutoArmIn(),
-                                Hood.AutoHoodUp(),
+                                Hood.AutoHoodFar(),
                                 actionManager.rev(rpm),
                                 Limelight.AutoScanWithInit(),
                                 new ParallelAction(
