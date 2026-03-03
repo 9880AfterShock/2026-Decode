@@ -103,7 +103,7 @@ public class DriverTest {
 //        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
-            shooterUp.setPower(-shooterPower); //one of the powerpole connecters is backwards
+            shooterUp.setPower(-shooterPower); //one of the powerpole connecters is backwards lol
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
