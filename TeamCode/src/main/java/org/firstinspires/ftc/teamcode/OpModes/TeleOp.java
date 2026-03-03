@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
@@ -65,6 +66,7 @@ public class TeleOp extends LinearOpMode {
 
         QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
+        Turret.initTurret(this);
 
 //        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
 
@@ -101,6 +103,7 @@ public class TeleOp extends LinearOpMode {
             RunLater.update();
             RunCondition.update();
 //            BallColorDetectinator.update();
+            Turret.updateTurret(gamepad2.left_stick_y, Math.atan2(Math.abs(gamepad2.right_stick_y), gamepad2.right_stick_x));
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);

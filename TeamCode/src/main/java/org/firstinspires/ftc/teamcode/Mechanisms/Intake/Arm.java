@@ -46,7 +46,7 @@ public class Arm { // Prefix for commands
                     lastTransition = -9880.0;
                 }
             } else {
-                if (intakeState == "revving" ) {
+                if (intakeState != "Neutral") {
                     intakeState = "Neutral";
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
@@ -59,8 +59,8 @@ public class Arm { // Prefix for commands
             }
         }
 
-        opmode.telemetry.addData("Intake Arm", intakeState);
-//        opmode.telemetry.addData("Intake Pos", arm.getPosition());
+        opmode.telemetry.addData("Intake Arm State", intakeState);
+        opmode.telemetry.addData("Intake Arm Pos", arm.getPosition());
     }
 
 
