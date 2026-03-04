@@ -14,6 +14,7 @@ public class Turret {
 //    private static AnalogInput encoder;
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
+    public static double turretAngle = 0.0; //to be added more
     private static final double turrentCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -67,7 +68,7 @@ public class Turret {
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){
         double x = (turrentCenterOffset*Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turrentCenterOffset*Math.sin(rotation)) + beforeTransform.position.y;
-        return new Pose2d(x, y, rotation);
+        return new Pose2d(x, y, beforeTransform.heading.toDouble() + turretAngle);
     }
 
 }
