@@ -80,11 +80,11 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-                desSpeed = (-0.229316*distanceFromGoal*distanceFromGoal)+(30.1883*distanceFromGoal)+1431.19228;
+                desSpeed = (-0.229316*distanceFromGoal*distanceFromGoal)+(30.1883*distanceFromGoal)+1431.19228 - 800; //minus 800 is temp test
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.115426*distanceFromGoal*distanceFromGoal)+(31.93722*distanceFromGoal)+1241.42659;
+                desSpeed = (-0.115426*distanceFromGoal*distanceFromGoal)+(31.93722*distanceFromGoal)+1241.42659 -800;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
