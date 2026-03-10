@@ -18,11 +18,11 @@ public class Arm { // Prefix for commands
     private static Servo arm; // init motor var
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
-    public static double neutralPosition = 0.57;
+    public static double neutralPosition = 0.65;
     public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
     public static double lastTransition = -9880.0;
-    public final static double transitionTime = 0.5;
+    public final static double transitionTime = 0.7;
 
     public static void initIntake(OpMode opmode) { // init motor
         arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
@@ -52,7 +52,7 @@ public class Arm { // Prefix for commands
                     lastTransition = opmode.getRuntime();
                 } else {
                     if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime()) {
-                        arm.setPosition(revPosition);
+                        arm.setPosition(neutralPosition);
                         lastTransition = -9880.0;
                     }
                 }

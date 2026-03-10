@@ -80,11 +80,11 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-                desSpeed = (-0.229316*distanceFromGoal*distanceFromGoal)+(30.1883*distanceFromGoal)+1431.19228 - 800; //minus 800 is temp test
+                desSpeed = (-0.229316*distanceFromGoal*distanceFromGoal)+(30.1883*distanceFromGoal)+1431.19228 - 300; //minus 300 is temp test
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.115426*distanceFromGoal*distanceFromGoal)+(31.93722*distanceFromGoal)+1241.42659 -800;
+                desSpeed = (-0.115426*distanceFromGoal*distanceFromGoal)+(31.93722*distanceFromGoal)+1241.42659 -300;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
@@ -103,8 +103,9 @@ public class DriverTest {
 //        }
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
-            shooterUp.setPower(-shooterPower); //one of the powerpole connecters is backwards lol
+            shooterUp.setPower(shooterPower); //one of the powerpole connecters is backwards lol
             shooterDown.setPower(shooterPower);
+            QuickSpindexer.spindexerOffset = true;
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
@@ -121,6 +122,7 @@ public class DriverTest {
                 canFire = false;
             }
         } else {
+            QuickSpindexer.spindexerOffset = false;
             canFire = false;
             if (intake){
                 shooterUp.setPower(0.0);
