@@ -12,6 +12,7 @@ public class MeepMeepRR {
     public final static double posMultiplier = 1.0;
     public static void main(String[] args) {
         Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d startPosNear = new Pose2d(-55.5, posMultiplier*-47.0, posMultiplier*Math.toRadians(55.0));
 
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
@@ -46,8 +47,8 @@ public class MeepMeepRR {
                 .build();
 
 
-        //New auto far
-        myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
+        //Premier Auto Near
+        myBot.runAction(myBot.getDrive().actionBuilder(startPosNear)
                 .setTangent(Math.toRadians(202.5))
                 .splineToLinearHeading(parkPosFar, Math.toRadians(202.5), new TranslationalVelConstraint(100.0))
 
