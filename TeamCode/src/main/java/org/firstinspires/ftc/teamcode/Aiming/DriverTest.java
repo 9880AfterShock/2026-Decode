@@ -100,7 +100,6 @@ public class DriverTest {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
-            QuickSpindexer.spindexerOffset = true;
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
@@ -117,7 +116,6 @@ public class DriverTest {
                 canFire = false;
             }
         } else {
-            QuickSpindexer.spindexerOffset = false;
             canFire = false;
             if (intake){
                 shooterUp.setPower(0.0);
