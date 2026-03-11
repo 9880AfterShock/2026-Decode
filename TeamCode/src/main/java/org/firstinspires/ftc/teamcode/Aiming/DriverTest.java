@@ -65,6 +65,7 @@ public class DriverTest {
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("Current RPM", 0.0);
+        packet.put("Avg RPM", 0.0);
         packet.put("Desired RPM", 0.0);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
@@ -97,7 +98,7 @@ public class DriverTest {
         }
 
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) /*+ shooterPID.step(desSpeed, rotationsPerMinute)*/;
+            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
@@ -121,14 +122,14 @@ public class DriverTest {
                 shooterUp.setPower(0.0);
                 shooterDown.setPower(0.0);
             } else {
-                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
-                if (shooterPower > 0){
-                    shooterUp.setPower(shooterPower);
-                    shooterDown.setPower(shooterPower);
-                } else {
+//                double shooterPower = (kS * Math.signum(idleSpeed)) + (kV * idleSpeed) + shooterPID.step(idleSpeed, rotationsPerMinute);
+//                if (shooterPower > 0){
+//                    shooterUp.setPower(shooterPower);
+//                    shooterDown.setPower(shooterPower);
+//                } else {
                     shooterUp.setPower(0.0);
                     shooterDown.setPower(0.0);
-                }
+//                }
             }
         }
 //        if (!fire && !rev && intake) {
@@ -144,6 +145,7 @@ public class DriverTest {
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("Current RPM", rotationsPerMinute);
+        packet.put("Avg RPM", avgSpeed);
         packet.put("Desired RPM", desSpeed);
         packet.put("Goal Distance", distanceFromGoal);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
