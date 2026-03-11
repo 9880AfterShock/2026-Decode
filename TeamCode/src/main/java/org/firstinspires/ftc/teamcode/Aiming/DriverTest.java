@@ -97,7 +97,7 @@ public class DriverTest {
         }
 
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
+            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) /*+ shooterPID.step(desSpeed, rotationsPerMinute)*/;
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
