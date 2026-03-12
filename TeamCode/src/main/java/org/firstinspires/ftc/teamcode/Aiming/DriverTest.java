@@ -39,7 +39,6 @@ public class DriverTest {
     private static FlywheelMotor shooter;
     public static boolean canFire;
     public static double avgSpeed = 0;
-    private static final Pose2d goalTarget = new Pose2d(-57.0, -55.0, Math.toRadians(0.0));
 
     private final static double idleSpeed = 1500;
     private static PID shooterPID = new PID(0.00070,0.0,0.0);
