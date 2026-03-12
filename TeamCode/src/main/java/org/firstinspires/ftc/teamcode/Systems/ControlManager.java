@@ -121,11 +121,7 @@ public class ControlManager {
             cyclePrepped = false;
         }
 
-        if (operator.aWasPressed() /*&& !(operator.left_trigger > 0.5)*/){
-            QuickSpindexer.spindexerOffset = true;
-        } else if (operator.aWasReleased()) {
-            QuickSpindexer.spindexerOffset = false;
-        }
+        QuickSpindexer.spindexerOffset = operator.a;
 
 
         //Spindexer
