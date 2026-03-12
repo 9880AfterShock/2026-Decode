@@ -110,7 +110,7 @@ public class QuickSpindexer { // Prefix for commands
     public static void fullCycle(){
         spindexerOffset = false;
         targetPosition += 1425.1;
-        spindexer.setTargetPosition((int) (targetPosition - 1425.1/offsetDivider));
+        spindexer.setTargetPosition((int) (targetPosition));
         spindexer.setPower(0.7);
         hasBall = new boolean[3];
     }
