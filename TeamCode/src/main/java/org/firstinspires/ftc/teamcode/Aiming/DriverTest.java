@@ -48,6 +48,9 @@ public class DriverTest {
 
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
+
+    public static double rapidFireCooldown = -200;
+
     public static boolean isFarAuto = false;
 
     public static void initControls(OpMode opmode) {
@@ -70,6 +73,8 @@ public class DriverTest {
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         isFarAuto = false;
+
+        rapidFireCooldown = -200;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
@@ -89,6 +94,7 @@ public class DriverTest {
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
+            desSpeed += rapidFireCooldown;
         }
 //        if (increase) {
 //            desSpeed += 50;
@@ -105,9 +111,11 @@ public class DriverTest {
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
+                    rapidFireCooldown = 200;
                     QuickSpindexer.fullCycle();
                     RunLater.addAction(new DelayedAction(() -> {
                         ControlManager.shot = true;
+                        rapidFireCooldown = -200;
 //                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
                     }, 0.8));
                 }
