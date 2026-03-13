@@ -30,6 +30,7 @@ public class QuickSpindexer { // Prefix for commands
     final private static int offsetDivider = 10;
     private static int lastTarget = 0;
     private static int preLastTarget = 0;
+    private static int lastPos = 0;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -96,6 +97,13 @@ public class QuickSpindexer { // Prefix for commands
             spindexer.setTargetPosition((int) targetPosition);
         }
 
+        //Logic for canceling, and retrying if we get stuck
+        logTargets((int) targetPosition, spindexer.getCurrentPosition());
+        if (spindexerStuck()){
+            abortTurn();
+            return;
+        }
+
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
         opmode.telemetry.addData("Current Spindexer Slot", currentSlot);
@@ -129,10 +137,20 @@ public class QuickSpindexer { // Prefix for commands
         spindexer.setPower(0.9);
     }
 
-    public static void logTargets(int currentTarget){
+    public static void logTargets(int currentTarget, int currentPos){
+        lastPos = currentPos;
         if (currentTarget != lastTarget){
+            preLastTarget = lastTarget;
             lastTarget = currentTarget;
         }
+    }
+
+    public static boolean spindexerStuck(){
+        return (abs(spindexer.getCurrentPosition() - lastPos) < 10 && abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 100);
+    }
+
+    public static void abortTurn(){
+        targetPosition = preLastTarget;
     }
 
     public static Action goToMotif(){
