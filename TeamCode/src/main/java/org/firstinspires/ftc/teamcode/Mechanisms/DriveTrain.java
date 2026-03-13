@@ -7,6 +7,7 @@ import static org.firstinspires.ftc.teamcode.MecanumDrive.PARAMS;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -30,6 +31,7 @@ import org.firstinspires.ftc.teamcode.Systems.PIDAbstract;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
+@Config
 public class DriveTrain { // Prefix for commands
     private static DcMotorEx leftRear; // init motor vars
     private static DcMotorEx leftFront;
