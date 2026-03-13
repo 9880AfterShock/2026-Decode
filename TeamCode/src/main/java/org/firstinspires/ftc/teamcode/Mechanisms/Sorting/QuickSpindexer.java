@@ -32,6 +32,8 @@ public class QuickSpindexer { // Prefix for commands
     private static int preLastTarget = 0;
     private static int lastPos = 0;
     private static boolean aborting = false;
+    private static int jamCount = 0;
+    private static int jamExcuses = 0;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -52,6 +54,8 @@ public class QuickSpindexer { // Prefix for commands
         lastPos = 0;
 
         aborting = false;
+        jamCount = 0;
+        jamExcuses = 0;
     }
 
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
@@ -73,12 +77,14 @@ public class QuickSpindexer { // Prefix for commands
     public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
 
         if (clockwise && !wasClockwise){
+            jamExcuses += 1;
             targetPosition += 1425.1/3;
             spindexer.setPower(1.0);
             currentSlot += 1;
             if (currentSlot > 3) currentSlot = 1;
         }
         if (counterclockwise && !wasCounterclockwise) {
+            jamExcuses += 1;
             targetPosition -= 1425.1/3;
             spindexer.setPower(1.0);
             currentSlot -= 1;
@@ -102,13 +108,17 @@ public class QuickSpindexer { // Prefix for commands
         }
 
         //Logic for canceling, and retrying if we get stuck
-        if (abs(spindexer.getTargetPosition() - spindexer.getCurrentPosition()) > 40){
+        if (abs(spindexer.getTargetPosition() - spindexer.getCurrentPosition()) < 40){
             aborting = false;
         }
-        if (spindexerStuck() && !aborting){
-            abortTurn();
-            aborting = true;
-            return;
+        if (spindexerStuck() && !aborting && !reseting){
+            jamExcuses -= 1;
+            if (jamExcuses < 0){
+                jamExcuses = 0;
+                abortTurn();
+                jamCount += 1;
+                aborting = true;
+            }
         }
 
         wasClockwise = clockwise;
@@ -123,6 +133,8 @@ public class QuickSpindexer { // Prefix for commands
 
         opmode.telemetry.addData("SPINDEXER JAM:", spindexerStuck());
         opmode.telemetry.addData("Last JAM pos:", lastPos);
+        opmode.telemetry.addData("JAM count", jamCount);
+        opmode.telemetry.addData("Last Pos Difference", spindexer.getCurrentPosition() - lastPos);
 //        opmode.telemetry.addData("DEXER int target", (int) targetPosition);
         logTargets((int) targetPosition, spindexer.getCurrentPosition());
 
@@ -133,6 +145,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void fullCycle(){
+        jamExcuses += 1;
         spindexerOffset = false;
         targetPosition += 1425.1;
         spindexer.setTargetPosition((int) (targetPosition));
@@ -141,6 +154,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void turnIntake(){
+        jamExcuses += 1;
         targetPosition -= 1425.1/3;
         currentSlot -= 1;
         if (currentSlot < 1) currentSlot = 3;
@@ -157,7 +171,11 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static boolean spindexerStuck(){
-        return (abs(spindexer.getCurrentPosition() - lastPos) < 10 && abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 100); //10 is more than the ticks per rotation, 100 is less than the biggest non-offset increment
+        return (
+                abs(spindexer.getCurrentPosition() - lastPos) < 10
+                &&
+                abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 150
+        ); //50 is more than the ticks per rotation, 150 is more than the offset turn
     }
 
     public static void abortTurn(){
