@@ -96,6 +96,7 @@ public class TeleOp extends LinearOpMode {
         }
         Gyroscope.setRotation(Math.toDegrees(autoEndPosition.heading.toDouble()));
         // run until the end of the match (driver presses STOP)
+        double loops = 1;
         while (opModeIsActive()) {
             Gyroscope.updateGyro(gamepad1.backWasPressed());
             Limelight.update();
@@ -107,6 +108,8 @@ public class TeleOp extends LinearOpMode {
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);
+            telemetry.addData("Looptime (MS per Loop)", runtime.milliseconds()/loops);
+            loops += 1;
             telemetry.update();
         }
         //SpindexerCamera.stopVision();
