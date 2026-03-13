@@ -112,7 +112,7 @@ public class DriveTrain { // Prefix for commands
         }
 
         Pose2d robotPosition = Limelight.getPosition();
-        if (robotPosition != null && !(robotPosition.position.x == 0.0 && robotPosition.position.y == 0.0)) { //check if invalid obelisk reading
+        if (robotPosition != null) { //check if invalid obelisk reading
             localizer.setPose(robotPosition);
         }
         DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);

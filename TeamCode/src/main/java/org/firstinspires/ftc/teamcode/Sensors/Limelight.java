@@ -117,7 +117,10 @@ public class Limelight {
 //            packet.fieldOverlay().setStroke("#00FF00");
 //            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
 //            FtcDashboard.getInstance().sendTelemetryPacket(packet);
-            return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees()));
+            Pose2d obeliskErrorPos = new Pose2d(0.0, 0.0, 0.0);
+            if (!currentPose.equals(obeliskErrorPos)) {
+                return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees()));
+            }
         }
         return null;
     }
