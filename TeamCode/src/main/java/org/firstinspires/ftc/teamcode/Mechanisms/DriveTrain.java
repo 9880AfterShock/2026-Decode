@@ -85,8 +85,8 @@ public class DriveTrain { // Prefix for commands
 
         goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
-        aimingPID = new MultiPID(new PID(-0.01,0.0,0.008,1))
-                .addPID(new PID(-0.02,0.0,0.008,1),10);
+        aimingPID = new MultiPID(new PID(-0.01,0.0,0.008,1)) //Normal PID
+                .addPID(new PID(-0.02,0.0,0.008,1),10); //Close Range PID
 
 
     }
