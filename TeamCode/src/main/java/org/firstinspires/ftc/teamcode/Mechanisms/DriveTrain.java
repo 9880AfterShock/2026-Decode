@@ -47,9 +47,9 @@ public class DriveTrain { // Prefix for commands
     private static PIDAbstract aimingPID;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
-    public static double nearP = -0.02;
+    public static double nearP = -0.0225;
     public static double nearD = 0.008;
-    public static double farP = -0.01;
+    public static double farP = -0.0085;
     public static double farD = 0.008;
     private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 

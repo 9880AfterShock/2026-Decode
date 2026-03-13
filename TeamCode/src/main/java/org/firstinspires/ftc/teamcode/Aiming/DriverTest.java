@@ -1,16 +1,12 @@
 package org.firstinspires.ftc.teamcode.Aiming;
 
-import android.sax.StartElementListener;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.FlywheelMotor;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
@@ -18,12 +14,8 @@ import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.PID;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
-import org.firstinspires.ftc.teamcode.messages.SpindexerMessage;
 
-import java.net.ProtocolException;
 import java.util.List;
-
-import kotlin.jvm.JvmField;
 
 @Config
 public class DriverTest {
@@ -48,7 +40,8 @@ public class DriverTest {
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
 
-    public static double rapidFireCooldown = -200;
+    public static final double rapidFireDifference = 250;
+    public static double rapidFireCooldown = -rapidFireDifference;
 
     public static boolean isFarAuto = false;
 
@@ -73,7 +66,7 @@ public class DriverTest {
 
         isFarAuto = false;
 
-        rapidFireCooldown = -200;
+        rapidFireCooldown = -rapidFireDifference;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
@@ -110,11 +103,11 @@ public class DriverTest {
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
             if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
                 if (ControlManager.shot) {
-                    rapidFireCooldown = 200;
+                    rapidFireCooldown = rapidFireDifference;
                     QuickSpindexer.fullCycle();
                     RunLater.addAction(new DelayedAction(() -> {
                         ControlManager.shot = true;
-                        rapidFireCooldown = -200;
+                        rapidFireCooldown = -rapidFireDifference;
 //                        ControlManager.spindexer.queueMessage(SpindexerMessage.EJECT);
                     }, 0.8));
                 }
