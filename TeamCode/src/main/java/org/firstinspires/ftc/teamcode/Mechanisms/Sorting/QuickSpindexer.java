@@ -31,6 +31,7 @@ public class QuickSpindexer { // Prefix for commands
     private static int lastTarget = 0;
     private static int preLastTarget = 0;
     private static int lastPos = 0;
+    private static boolean aborting = false;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -48,6 +49,9 @@ public class QuickSpindexer { // Prefix for commands
 
         lastTarget = 0;
         preLastTarget = 0;
+        lastPos = 0;
+
+        aborting = false;
     }
 
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
@@ -98,9 +102,12 @@ public class QuickSpindexer { // Prefix for commands
         }
 
         //Logic for canceling, and retrying if we get stuck
-        logTargets((int) targetPosition, spindexer.getCurrentPosition());
-        if (spindexerStuck()){
+        if (abs(spindexer.getTargetPosition() - spindexer.getCurrentPosition()) > 40){
+            aborting = false;
+        }
+        if (spindexerStuck() && !aborting){
             abortTurn();
+            aborting = true;
             return;
         }
 
@@ -113,7 +120,11 @@ public class QuickSpindexer { // Prefix for commands
         opmode.telemetry.addData("DEXER raw ticks", spindexer.getTargetPosition());
         opmode.telemetry.addData("DEXER target", targetPosition);
         opmode.telemetry.addData("Attempt Offset", spindexerOffset);
+
+        opmode.telemetry.addData("SPINDEXER JAM:", spindexerStuck());
+        opmode.telemetry.addData("Last JAM pos:", lastPos);
 //        opmode.telemetry.addData("DEXER int target", (int) targetPosition);
+        logTargets((int) targetPosition, spindexer.getCurrentPosition());
 
     }
 
@@ -146,7 +157,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static boolean spindexerStuck(){
-        return (abs(spindexer.getCurrentPosition() - lastPos) < 10 && abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 100);
+        return (abs(spindexer.getCurrentPosition() - lastPos) < 10 && abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 100); //10 is more than the ticks per rotation, 100 is less than the biggest non-offset increment
     }
 
     public static void abortTurn(){
