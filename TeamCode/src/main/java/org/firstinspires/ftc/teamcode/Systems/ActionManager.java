@@ -280,7 +280,7 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                DriverTest.rapidFireCooldown = DriverTest.rapidFireDifference;
+                DriverTest.desSpeed += DriverTest.rapidFireDifference;
                 return false;
             }
         };
@@ -290,7 +290,7 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                DriverTest.rapidFireCooldown = -DriverTest.rapidFireDifference;
+                DriverTest.desSpeed -= DriverTest.rapidFireDifference;
                 return false;
             }
         };
