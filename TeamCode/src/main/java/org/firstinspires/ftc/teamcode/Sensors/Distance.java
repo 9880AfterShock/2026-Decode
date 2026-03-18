@@ -17,6 +17,7 @@ public class Distance { // Prefix for commands
     private static OpMode opmode; // opmode var init
     private static DistanceSensor sensorDistanceIntake;
     private static DistanceSensor sensorDistanceSpindexer;
+    public static boolean missedIntake = false;
 
     public static void initSensor(OpMode opmode) {
         sensorDistanceIntake = opmode.hardwareMap.get(DistanceSensor.class, "distanceSensorIntake"); //Plugged into I2C Bus 0 on expansion hub
@@ -55,6 +56,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                missedIntake = (!ballInIntake()) && (opmode.getRuntime() - scanTime >= 1.0);
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
@@ -161,6 +163,16 @@ public class Distance { // Prefix for commands
                     first = false;
                 }
                 return ballInIntake();
+            }
+        };
+    }
+
+    public static Action setMissed(boolean state){
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                missedIntake = state;
+                return false;
             }
         };
     }

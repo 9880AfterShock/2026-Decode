@@ -175,6 +175,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
                 new RaceAction(
                         actionManager.updateSpeedOverTime(),
                         new SequentialAction(
+                                Distance.setMissed(false),
                                 Turret.lock(),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodNear(),
@@ -263,6 +264,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                 actionManager.startTripleRPMBoost(),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(),
+                                Distance.setMissed(false),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
