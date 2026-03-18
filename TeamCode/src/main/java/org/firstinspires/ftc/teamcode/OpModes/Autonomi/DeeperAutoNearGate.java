@@ -30,7 +30,7 @@ import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 @Config
-@Autonomous(name = "Near zone 9 (Gate instead of motif)")
+@Autonomous(name = "DEEPER Near zone 9 (Gate instead of motif)")
 public class DeeperAutoNearGate extends LinearOpMode {
     @Override
     public void runOpMode() {

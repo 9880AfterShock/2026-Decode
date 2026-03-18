@@ -27,7 +27,7 @@ import kotlin.random.RandomKt;
 public class ActionManager {
 
     public final Spindexer spindexer;
-    public final BallRamp ballRamp;
+//    public final BallRamp ballRamp;
     private final DcMotorEx shooterUp;
     private final DcMotorEx shooterDown;
     private final OpMode opmode;
@@ -43,7 +43,7 @@ public class ActionManager {
         spindexerBias = false;
         this.opmode = opmode;
         spindexer = new Spindexer("spindexer", opmode, 1425.1, 6, () -> spindexerBias, Arrays.asList(BallType.GREEN, BallType.PURPLE, BallType.PURPLE));
-        ballRamp = new BallRamp(opmode, "ramp", 0.04, 0.22);
+//        ballRamp = new BallRamp(opmode, "ramp", 0.04, 0.22);
         this.shooterUp = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
         this.shooterDown = opmode.hardwareMap.get(DcMotorEx.class, "shooterUp");
         shooterUp.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -60,9 +60,9 @@ public class ActionManager {
             private boolean first = true;
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
+//                if (first) {spindexer.queueMessage(SpindexerMessage.LINEUPFixed); RunLater.addAction(new DelayedAction(() -> ballRamp.queueMessage(BallRampMessage.CYCLE), 0.2)); first = false;}
                 spindexer.update();
-                ballRamp.update();
+//                ballRamp.update();
                 RunLater.update();
                 return !RunLater.isEmpty();
             }
@@ -111,11 +111,11 @@ public class ActionManager {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (first) {
-                    ballRamp.queueMessage(BallRampMessage.UP);
-                    ballRamp.update();
+//                    ballRamp.queueMessage(BallRampMessage.UP);
+//                    ballRamp.update();
                     RunLater.addAction(new DelayedAction(() -> {
-                        ballRamp.queueMessage(BallRampMessage.DOWN);
-                        ballRamp.update();
+//                        ballRamp.queueMessage(BallRampMessage.DOWN);
+//                        ballRamp.update();
                     }, 1.2));
                     RunLater.addAction(new DelayedAction(() -> {},1.4));
 //                    spindexer.queueMessage(SpindexerMessage.EJECT);
@@ -123,7 +123,7 @@ public class ActionManager {
                     first = false;
                 }
                 //spindexer.update();
-                ballRamp.update();
+//                ballRamp.update();
                 RunLater.update();
                 return !RunLater.isEmpty();
             }
@@ -153,8 +153,8 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                ballRamp.queueMessage(BallRampMessage.UP);
-                ballRamp.update();
+//                ballRamp.queueMessage(BallRampMessage.UP);
+//                ballRamp.update();
                 return false;
             }
         };
@@ -164,8 +164,8 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                ballRamp.queueMessage(BallRampMessage.DOWN);
-                ballRamp.update();
+//                ballRamp.queueMessage(BallRampMessage.DOWN);
+//                ballRamp.update();
                 return false;
             }
         };
