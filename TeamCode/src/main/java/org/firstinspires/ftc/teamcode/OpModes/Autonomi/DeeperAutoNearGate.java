@@ -190,35 +190,17 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                         toShoot1.build()
                                 ),
 
-//                        Limelight.Relocalize(drive),
-//                        aimShoot1.build(),
-
                                 //First volley start
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(1),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(2),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(3),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
-
                                 //First volley end
-
 
                                 //First pickup start
                                 Arm.AutoArmOut(),
-//                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
@@ -258,12 +240,14 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
-                                                QuickSpindexer.addRevOffset(),
-                                                Prongs.AutoProngsShooting()
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
                                         ),
-//                                        Shield.AutoShieldShoot(),
-                                        actionManager.rev(rpm),
-                                        Arm.AutoArmRev(),
                                         new SequentialAction(
                                                 toGate1.build(),
                                                 actionManager.waitFor(0.3), //wait for balls to roll
@@ -272,23 +256,8 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                 ),
 
                                 //Second volley start
-//                        Limelight.Relocalize(drive),
-//                        aimShoot2.build(),
-
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(4),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(5),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(6),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -296,8 +265,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
-//                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup2.build(),
@@ -336,33 +304,20 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
-                                                QuickSpindexer.addRevOffset(),
-                                                Prongs.AutoProngsShooting()
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
                                         ),
-//                                        Shield.AutoShieldShoot(),
-                                        actionManager.rev(rpm),
-                                        Arm.AutoArmRev(),
                                         toShoot3.build()
                                 ),
 
                                 //Third volley start
-//                        Limelight.Relocalize(drive),
-//                        aimShoot3.build(),
-
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.autoFullCycle(true),
-//                                actionManager.shotCue(7),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.removeRevOffset(),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(8),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
-//
-//                                actionManager.shotCue(9),
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
