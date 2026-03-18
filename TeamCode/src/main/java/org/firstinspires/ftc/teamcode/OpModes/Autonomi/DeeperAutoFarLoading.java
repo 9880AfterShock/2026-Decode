@@ -198,7 +198,7 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),*/
 
-                                actionManager.derev(),
+//                                actionManager.derev(),
                                 //First volley end
 
                                 //First pickup start
@@ -275,7 +275,7 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                 QuickSpindexer.turnRight(),
                                 actionManager.hasBalls(false),*/
 
-                                actionManager.derev(),
+//                                actionManager.derev(),
                                 //Second volley end
 
                                 //2nd pickup start
