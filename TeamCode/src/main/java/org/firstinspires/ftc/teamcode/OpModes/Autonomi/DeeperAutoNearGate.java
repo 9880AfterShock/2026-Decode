@@ -173,20 +173,20 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
         Actions.runBlocking(
                 new RaceAction(
-                        Turret.lock(),
                         actionManager.updateSpeedOverTime(),
                         new SequentialAction(
+                                Turret.lock(),
                                 actionManager.shotCue(0),
-//                                Shield.AutoShieldShoot(),
-                                Prongs.AutoProngsPrime(),
-                                Arm.AutoArmIn(),
                                 Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
-                                Arm.AutoArmRev(),
-                                QuickSpindexer.addRevOffset(),
-                                Prongs.AutoProngsShooting(),
                                 new ParallelAction(
-//                                        actionManager.rev(rpm),
+                                        new SequentialAction(
+                                                Arm.AutoArmOut(),
+                                                Prongs.AutoProngsShooting(),
+                                                QuickSpindexer.addRevOffset(),
+                                                actionManager.waitFor(0.5),
+                                                Arm.AutoArmRev()
+                                        ),
                                         toShoot1.build()
                                 ),
 
@@ -211,6 +211,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
+
                                 //First volley end
 
 
