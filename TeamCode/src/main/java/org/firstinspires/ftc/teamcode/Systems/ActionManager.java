@@ -275,4 +275,24 @@ public class ActionManager {
             }
         };
     }
+
+    public Action startTripleRPMBoost() { //just for rpm control
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                DriverTest.rapidFireCooldown = DriverTest.rapidFireDifference;
+                return false;
+            }
+        };
+    }
+
+    public Action endTripleRPMBoost() { //just for rpm control
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                DriverTest.rapidFireCooldown = -DriverTest.rapidFireDifference;
+                return false;
+            }
+        };
+    }
 }

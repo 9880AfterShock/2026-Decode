@@ -192,7 +192,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //First volley start
                                 actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
                                 QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -237,6 +239,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Sort 1
                                 new ParallelAction(
+                                        actionManager.rev(rpm),
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
@@ -257,7 +260,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Second volley start
                                 actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
                                 QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -301,6 +306,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Sort 2
                                 new ParallelAction(
+                                        actionManager.rev(rpm),
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
@@ -317,7 +323,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Third volley start
                                 actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
                                 QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
