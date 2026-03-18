@@ -165,28 +165,26 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                         new SequentialAction(
                                 Turret.lock(),
                                 actionManager.shotCue(0),
-//                                Shield.AutoShieldShoot(),
-                                Prongs.AutoProngsPrime(),
-                                Arm.AutoArmIn(),
                                 Hood.AutoHoodFar(),
                                 actionManager.rev(rpm),
-                                Arm.AutoArmRev(),
-                                QuickSpindexer.addRevOffset(),
-                                Prongs.AutoProngsShooting(),
-//                                Limelight.AutoScanWithInit(),
                                 new ParallelAction(
-//                                        actionManager.rev(rpm),
-//                                        QuickSpindexer.toMotifFrom(Motif.GPP),
+                                        new SequentialAction(
+                                                Arm.AutoArmOut(),
+                                                Prongs.AutoProngsShooting(),
+                                                QuickSpindexer.addRevOffset(),
+                                                actionManager.waitFor(0.5),
+                                                Arm.AutoArmRev()
+                                        ),
                                         toShoot1.build()
                                 ),
 
-//                        Limelight.Relocalize(drive),
-//                        aimShoot1.build(),
-
                                 //First volley start
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.autoFullCycle(true),
-                                actionManager.shotCue(1),
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
+                                actionManager.hasBalls(false),
+/*                                actionManager.shotCue(1),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
@@ -198,16 +196,14 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                 actionManager.shotCue(3),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
-                                actionManager.hasBalls(false),
+                                actionManager.hasBalls(false),*/
 
                                 actionManager.derev(),
                                 //First volley end
 
-
                                 //First pickup start
                                 Arm.AutoArmOut(),
-//                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
 
                                 toPickup1.build(),
@@ -247,22 +243,25 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
-                                                QuickSpindexer.addRevOffset(),
-                                                Prongs.AutoProngsShooting()
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
                                         ),
-//                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        Arm.AutoArmRev(),
                                         toShoot2.build()
                                 ),
 
                                 //Second volley start
-//                        Limelight.Relocalize(drive),
-//                        aimShoot2.build(),
-
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.autoFullCycle(true),
-                                actionManager.shotCue(4),
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
+                                actionManager.hasBalls(false),
+                                /*actionManager.shotCue(4),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
@@ -274,15 +273,14 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                 actionManager.shotCue(6),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
-                                actionManager.hasBalls(false),
+                                actionManager.hasBalls(false),*/
 
                                 actionManager.derev(),
                                 //Second volley end
 
                                 //2nd pickup start
                                 Arm.AutoArmOut(),
-//                                Shield.AutoShieldLock(),
-                                Prongs.AutoProngsPrime(),
+                                Prongs.AutoProngsIntake(),
                                 toPickup2.build(),
                                 Roller.AutoIntakeOn(),
 
@@ -319,22 +317,25 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                         new SequentialAction(
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(1.0),
-                                                QuickSpindexer.addRevOffset(),
-                                                Prongs.AutoProngsShooting()
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
                                         ),
-//                                        Shield.AutoShieldShoot(),
                                         actionManager.rev(rpm),
-                                        Arm.AutoArmRev(),
                                         toShoot3.build()
                                 ),
 
                                 //Third volley start
-//                        Limelight.Relocalize(drive),
-//                        aimShoot3.build(),
-
-//                                actionManager.waitForSpeedSafe(rpm),
-//                                QuickSpindexer.autoFullCycle(true),
-                                actionManager.shotCue(7),
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(),
+                                actionManager.hasBalls(false),
+                                /*actionManager.shotCue(7),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.removeRevOffset(),
                                 QuickSpindexer.turnRight(),
@@ -346,7 +347,7 @@ public class DeeperAutoFarLoading extends LinearOpMode {
                                 actionManager.shotCue(9),
                                 actionManager.waitForSpeedSafe(rpm),
                                 QuickSpindexer.turnRight(),
-                                actionManager.hasBalls(false),
+                                actionManager.hasBalls(false),*/
 
                                 actionManager.derev(),
 
