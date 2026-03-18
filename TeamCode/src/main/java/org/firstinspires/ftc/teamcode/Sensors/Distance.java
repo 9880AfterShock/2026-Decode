@@ -56,7 +56,6 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
-                missedIntake = (!ballInIntake()) && (opmode.getRuntime() - scanTime >= 1.0);
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
@@ -92,7 +91,7 @@ public class Distance { // Prefix for commands
         };
     }
 
-    public static Action waitForBallInSpindexer() {
+    public static Action waitForBallInSpindexer() { //has missed compatibility
         return new Action() {
             private boolean first = true;
             double scanTime;
@@ -102,6 +101,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                missedIntake = (!ballInSpindexer()) && opmode.getRuntime() - scanTime >= 1.0;
                 return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
