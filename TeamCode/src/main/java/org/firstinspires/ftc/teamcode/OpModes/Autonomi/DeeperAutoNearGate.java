@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
 //import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
@@ -43,6 +44,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
         Distance.initSensor(this);
+        Turret.initTurret(this);
 
         QuickSpindexer.initSpindexer(this);
 //        Shield.initLocking(this);
@@ -171,6 +173,7 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
         Actions.runBlocking(
                 new RaceAction(
+                        Turret.lock(),
                         actionManager.updateSpeedOverTime(),
                         new SequentialAction(
                                 actionManager.shotCue(0),

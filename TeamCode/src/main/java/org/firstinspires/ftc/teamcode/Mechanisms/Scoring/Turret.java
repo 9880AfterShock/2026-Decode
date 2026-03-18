@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 public class Turret {
     private static OpMode opmode;
@@ -69,6 +75,16 @@ public class Turret {
         double x = (turretCenterOffset *Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turretCenterOffset *Math.sin(rotation)) + beforeTransform.position.y;
         return new Pose2d(x, y, beforeTransform.heading.toDouble() + turretAngle);
+    }
+
+    public static Action lock() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                updateTurret(0.0, 0.0);
+                return false;
+            }
+        };
     }
 
 }
