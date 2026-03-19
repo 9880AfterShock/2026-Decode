@@ -76,6 +76,9 @@ public class DriverTest {
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
+        if (rapidFireCooldown == -rapidFireDifference && !auto){
+            rapidFireCooldown = 0;
+        }
         if (!auto) {
             if (distanceFromGoal < 50) {
                 desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
