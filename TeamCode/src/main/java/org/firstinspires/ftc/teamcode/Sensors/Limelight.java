@@ -119,7 +119,7 @@ public class Limelight {
 //            FtcDashboard.getInstance().sendTelemetryPacket(packet);
             Pose2d obeliskErrorPos = new Pose2d(0.0, 0.0, 0.0);
             if (!currentPose.equals(obeliskErrorPos)) {
-                return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees()));
+                return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees() - Turret.turretAngle));
             }
         }
         return null;

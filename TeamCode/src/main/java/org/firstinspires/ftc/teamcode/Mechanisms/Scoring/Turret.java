@@ -77,7 +77,7 @@ public class Turret {
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){ //rotation in degrees
         double x = (turretCenterOffset *Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turretCenterOffset *Math.sin(rotation)) + beforeTransform.position.y;
-        return new Pose2d(x, y, beforeTransform.heading.toDouble() - Math.toRadians(turretAngle));
+        return new Pose2d(x, y, beforeTransform.heading.toDouble() + Math.toRadians(turretAngle));
     }
 
     public static Action lock() {

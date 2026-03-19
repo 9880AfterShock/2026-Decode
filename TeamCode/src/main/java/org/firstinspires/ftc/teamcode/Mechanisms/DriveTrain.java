@@ -122,13 +122,13 @@ public class DriveTrain { // Prefix for commands
 
         double offsetFromGoal = AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180);
         if (align) { //PID \|/
-//            if (offsetFromGoal < 10) {
-//                turn = 0;
-//                Turret.targetPosition = offsetFromGoal;
-//            } else {
+            if (Math.abs(offsetFromGoal) < 30) {
+                turn = 0;
+                Turret.targetPosition = offsetFromGoal;
+            } else {
                 turn = (float) aimingPID.step(offsetFromGoal);
                 Turret.targetPosition = 0;
-//            }
+            }
         }
 
 //        opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
