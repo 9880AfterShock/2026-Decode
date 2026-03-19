@@ -40,7 +40,7 @@ public class DriverTest {
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
 
-    public static final double rapidFireDifference = 250;
+    public static final double rapidFireDifference = 150;
     public static double rapidFireCooldown = -rapidFireDifference;
 
     public static boolean isFarAuto = false;
@@ -76,9 +76,6 @@ public class DriverTest {
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
-        if (rapidFireCooldown == -rapidFireDifference && !auto){
-            rapidFireCooldown = 0;
-        }
         if (!auto) {
             if (distanceFromGoal < 50) {
                 desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;

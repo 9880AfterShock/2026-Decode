@@ -31,18 +31,21 @@ public class Turret {
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
 
         targetPosition = 0.0;
+        turretAngle = 0.0;
         currentPosition = getPosition();
         Turret.opmode = opmode;
     }
 
     public static void updateTurret(double increment, double degrees) {
-        targetPosition += increment;
+//        targetPosition += increment; //disabled for deper
 
         updatePosition();
 
         double difference = (targetPosition - currentPosition);
 //        setPower(Range.clip(difference,-1,1)); //PID goes here
-        setPower(increment); //for now
+        setPower(Math.max(-1, Math.min(1, targetPosition/47.0))); //for DEEPER
+//        turretAngle = (getPosition() - 180.0) * (94.0 / 310.0); //for DEEPER
+//        setPower(increment);
 
         opmode.telemetry.addData("Turret", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
