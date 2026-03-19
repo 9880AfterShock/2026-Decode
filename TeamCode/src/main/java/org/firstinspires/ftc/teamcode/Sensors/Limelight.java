@@ -108,7 +108,7 @@ public class Limelight {
     }
 
     public static Pose2d getPosition() { //MetaTag2
-        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees());
+        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.turretAngle);
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {

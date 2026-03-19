@@ -39,17 +39,17 @@ public class Turret {
     public static void updateTurret(double increment, double degrees) {
 //        targetPosition += increment; //disabled for deper
 
-        updatePosition();
+//        updatePosition();
 
-        double difference = (targetPosition - currentPosition);
+//        double difference = (targetPosition - currentPosition);
 //        setPower(Range.clip(difference,-1,1)); //PID goes here
         setPower(Math.max(-1, Math.min(1, targetPosition/47.0))); //for DEEPER
-//        turretAngle = (getPosition() - 180.0) * (94.0 / 310.0); //for DEEPER
+        turretAngle = (getPosition() - 180.0) * (94.0 / 310.0); //for DEEPER
 //        setPower(increment);
 
         opmode.telemetry.addData("Turret", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
-        opmode.telemetry.addData("CurrentPos", getPosition());
+        opmode.telemetry.addData("CurrentPos", turretAngle);
     }
 
     private static double getPosition(){
@@ -77,7 +77,7 @@ public class Turret {
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){ //rotation in degrees
         double x = (turretCenterOffset *Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turretCenterOffset *Math.sin(rotation)) + beforeTransform.position.y;
-        return new Pose2d(x, y, beforeTransform.heading.toDouble() + turretAngle);
+        return new Pose2d(x, y, beforeTransform.heading.toDouble() - Math.toRadians(turretAngle));
     }
 
     public static Action lock() {

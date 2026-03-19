@@ -24,6 +24,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Drawing;
+import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.MultiPID;
 import org.firstinspires.ftc.teamcode.Systems.PID;
@@ -119,16 +120,24 @@ public class DriveTrain { // Prefix for commands
         rotation = Math.toDegrees(Math.atan2((goalTarget.position.y-localizer.getPose().position.y),(goalTarget.position.x-localizer.getPose().position.x)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
+        double offsetFromGoal = AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180);
         if (align) { //PID \|/
-            turn = (float) aimingPID.step(AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180));
+//            if (offsetFromGoal < 10) {
+//                turn = 0;
+//                Turret.targetPosition = offsetFromGoal;
+//            } else {
+                turn = (float) aimingPID.step(offsetFromGoal);
+                Turret.targetPosition = 0;
+//            }
         }
 
-        opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
-        opmode.telemetry.addData("===aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
-        opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
-        opmode.telemetry.addData("DT Estimated IMU LOCALIAZER", localizer.getPose().heading.toDouble());
-        opmode.telemetry.addData("DT Estimated Pos X", localizer.getPose().position.x);
-        opmode.telemetry.addData("DT Estimated Pos Y", localizer.getPose().position.y);
+//        opmode.telemetry.addData("===aimbot ROTATION needed to face goal", rotation);
+//        opmode.telemetry.addData("===aimbot ROTATION needed to face goal - IMU ANGLE", rotation - imu.getRobotYawPitchRollAngles().getYaw());
+//        opmode.telemetry.addData("DT IMU ANGLE", imu.getRobotYawPitchRollAngles().getYaw());
+//        opmode.telemetry.addData("DT Estimated IMU LOCALIAZER", localizer.getPose().heading.toDouble());
+//        opmode.telemetry.addData("DT Estimated Pos X", localizer.getPose().position.x);
+//        opmode.telemetry.addData("DT Estimated Pos Y", localizer.getPose().position.y);
+        opmode.telemetry.addData("DRIVETRAIN offset need", offsetFromGoal);
 
         double leftBackPower;
         double leftFrontPower;
