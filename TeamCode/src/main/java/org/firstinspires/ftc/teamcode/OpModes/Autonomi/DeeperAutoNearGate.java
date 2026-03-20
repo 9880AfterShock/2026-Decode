@@ -193,9 +193,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //First volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(false),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(false),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),
@@ -261,9 +261,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Second volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(false),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(false),
                                 Distance.setMissed(false),
                                 actionManager.hasBalls(false),
 
@@ -325,9 +325,9 @@ public class DeeperAutoNearGate extends LinearOpMode {
 
                                 //Third volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(false),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(false),
                                 actionManager.hasBalls(false),
 
                                 actionManager.derev(),

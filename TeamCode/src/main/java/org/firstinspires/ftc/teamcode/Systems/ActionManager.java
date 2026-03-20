@@ -277,24 +277,32 @@ public class ActionManager {
         };
     }
 
-    public Action startTripleRPMBoost() { //just for rpm control
+    public Action startTripleRPMBoost(boolean farAuto) { //just for rpm control
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!Distance.missedIntake) {
-                    DriverTest.desSpeed += DriverTest.rapidFireDifference;
+                    if (farAuto){
+                        DriverTest.desSpeed += 250;
+                    } else {
+                        DriverTest.desSpeed += DriverTest.rapidFireDifference;
+                    }
                 }
                 return false;
             }
         };
     }
 
-    public Action endTripleRPMBoost() { //just for rpm control
+    public Action endTripleRPMBoost(boolean farAuto) { //just for rpm control
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!Distance.missedIntake) {
-                    DriverTest.desSpeed -= DriverTest.rapidFireDifference;
+                    if (farAuto){
+                        DriverTest.desSpeed -= 250;
+                    } else {
+                        DriverTest.desSpeed -= DriverTest.rapidFireDifference;
+                    }
                 }
                 return false;
             }

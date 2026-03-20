@@ -50,7 +50,7 @@ public class DeeperAutoFarLoading extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 2950;
+        double rpm = 3200;
         double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
 
         double posMultiplier = 1.0;
@@ -181,9 +181,9 @@ public class DeeperAutoFarLoading extends LinearOpMode {
 
                                 //First volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
 /*                                actionManager.shotCue(1),
                                 actionManager.waitForSpeedSafe(rpm),
@@ -258,9 +258,9 @@ public class DeeperAutoFarLoading extends LinearOpMode {
 
                                 //Second volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(true),
                                 Distance.setMissed(false),
                                 actionManager.hasBalls(false),
                                 /*actionManager.shotCue(4),
@@ -333,9 +333,9 @@ public class DeeperAutoFarLoading extends LinearOpMode {
 
                                 //Third volley start
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
                                 /*actionManager.shotCue(7),
                                 actionManager.waitForSpeedSafe(rpm),
