@@ -124,7 +124,9 @@ public class DriveTrain { // Prefix for commands
         if (align) { //PID \|/
             if (Math.abs(offsetFromGoal) < 40) {
                 turn = 0;
-                Turret.targetPosition = -offsetFromGoal;
+                if (Math.abs(Turret.turretAngle + offsetFromGoal) > 4) {
+                    Turret.targetPosition = -offsetFromGoal;
+                }
             } else {
                 turn = (float) aimingPID.step(offsetFromGoal);
                 Turret.targetPosition = 0;
