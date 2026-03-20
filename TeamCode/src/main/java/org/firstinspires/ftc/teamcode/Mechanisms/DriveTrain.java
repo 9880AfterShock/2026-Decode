@@ -52,6 +52,7 @@ public class DriveTrain { // Prefix for commands
     public static double nearD = 0.015;
     public static double farP = -0.008;
     public static double farD = 0.015;
+    public static double turretDampening = 3.5;
     private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
@@ -124,12 +125,12 @@ public class DriveTrain { // Prefix for commands
         if (align) { //PID \|/
             if (Math.abs(offsetFromGoal) < 40) {
                 turn = 0;
-                if (Math.abs(Turret.turretAngle + offsetFromGoal) > 4) {
+                if (Math.abs(Turret.turretAngle + offsetFromGoal) > turretDampening) {
                     Turret.targetPosition = -offsetFromGoal;
                 }
             } else {
                 turn = (float) aimingPID.step(offsetFromGoal);
-                Turret.targetPosition = 0;
+//                Turret.targetPosition = 0;
             }
         }
 
