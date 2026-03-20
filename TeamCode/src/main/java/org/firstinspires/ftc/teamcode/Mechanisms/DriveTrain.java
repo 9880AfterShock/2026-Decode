@@ -122,7 +122,7 @@ public class DriveTrain { // Prefix for commands
 
         double offsetFromGoal = AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180);
         if (align) { //PID \|/
-            if (Math.abs(offsetFromGoal) < 30) {
+            if (Math.abs(offsetFromGoal) < 40) {
                 turn = 0;
                 Turret.targetPosition = -offsetFromGoal;
             } else {
