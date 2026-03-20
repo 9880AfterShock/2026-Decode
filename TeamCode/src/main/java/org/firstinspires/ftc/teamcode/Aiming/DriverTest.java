@@ -40,7 +40,7 @@ public class DriverTest {
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
 
-    public static final double rapidFireDifference = 150;
+    public static final double rapidFireDifference = 150; //artifact, just for auto now
     public static double rapidFireCooldown = -rapidFireDifference;
 
     public static boolean isFarAuto = false;
@@ -86,7 +86,7 @@ public class DriverTest {
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
-            desSpeed += rapidFireCooldown;
+            desSpeed += (3.1*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-170;
         }
 //        if (increase) {
 //            desSpeed += 50;
