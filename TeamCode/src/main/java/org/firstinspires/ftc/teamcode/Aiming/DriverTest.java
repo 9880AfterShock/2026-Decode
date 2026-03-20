@@ -86,6 +86,9 @@ public class DriverTest {
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
+            if (distanceFromGoal > 110){
+                desSpeed += 600;
+            }
             desSpeed += (3.1*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-170;
         }
 //        if (increase) {
