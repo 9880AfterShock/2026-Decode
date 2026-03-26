@@ -39,7 +39,7 @@ public class Distance { // Prefix for commands
     }
 
     public static boolean ballInSpindexer(){
-        return sensorDistanceSpindexer.getDistance(DistanceUnit.MM) <= 150;
+        return sensorDistanceSpindexer.getDistance(DistanceUnit.MM) <= 100;
     }
 
     public static boolean ballInIntake(){
