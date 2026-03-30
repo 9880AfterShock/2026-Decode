@@ -19,7 +19,7 @@ public class MeepMeepRR {
         Pose2d shootPosFar3 = new Pose2d(56.0, posMultiplier*-17.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar4 = new Pose2d(56.0, posMultiplier*-17.0, posMultiplier*Math.toRadians(22.5));
 
-        Pose2d shootPosNear1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
+        Pose2d shootPosNear1 = new Pose2d(-24, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d prePickupNear = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupNear = new Pose2d(-12.0, posMultiplier*-35.0, posMultiplier*Math.toRadians(-90.0));
@@ -50,8 +50,8 @@ public class MeepMeepRR {
 
         //Premier Auto Near
         myBot.runAction(myBot.getDrive().actionBuilder(startPosNear)
-                .setTangent(Math.toRadians(202.5))
-                .splineToLinearHeading(shootPosNear1, Math.toRadians(202.5), new TranslationalVelConstraint(100.0))
+                .setTangent(Math.toRadians(50))
+                .splineToLinearHeading(shootPosNear1, Math.toRadians(50), new TranslationalVelConstraint(100.0))
 
                 .build()
         );
