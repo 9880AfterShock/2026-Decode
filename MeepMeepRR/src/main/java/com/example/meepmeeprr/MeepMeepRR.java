@@ -11,8 +11,8 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeepRR {
     public final static double posMultiplier = 1.0;
     public static void main(String[] args) {
-        Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0)); //tbd
-        Pose2d startPosNear = new Pose2d(-55.5, posMultiplier*-47.0, posMultiplier*Math.toRadians(55.0)); //tbd
+        Pose2d startPosFar = new Pose2d(62.6, posMultiplier*-16.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d startPosNear = new Pose2d(-47.0, posMultiplier*-49.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d shootPosFar1 = new Pose2d(54.5, posMultiplier*-13.0, posMultiplier*Math.toRadians(22.5));
         Pose2d shootPosFar2 = new Pose2d(54.5, posMultiplier*-15.0, posMultiplier*Math.toRadians(25.0));
@@ -41,10 +41,10 @@ public class MeepMeepRR {
         MeepMeep meepMeep = new MeepMeep(700); //600 is default
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
-//                .setColorScheme(new ColorSchemeBlueDark())
+                .setColorScheme(new ColorSchemeBlueDark()) //Toggle side with this and setting PosMultiplier
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14.0,17.0) //17.9 when intake out, but to be safe
+                .setDimensions(14.0,15.6) //17.0 for full bot, but this is for centered
                 .build();
 
 
