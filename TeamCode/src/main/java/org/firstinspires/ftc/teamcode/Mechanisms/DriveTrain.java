@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 public class DriveTrain { // Prefix for commands
     private static DcMotorEx leftRear; // init motor vars
     private static DcMotorEx leftFront;
-    private static DcMotorEx rightRear;
+private static DcMotorEx rightRear;
     private static DcMotorEx rightFront;
     private static OpMode opmode; // opmode var init
     private static final double speedDivider = 2.0; // divider for slow mode
@@ -56,10 +56,10 @@ public class DriveTrain { // Prefix for commands
     private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
-        leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); // motor config names
-        leftFront = opmode.hardwareMap.get(DcMotorEx.class, "leftFront");
-        rightRear = opmode.hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = opmode.hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftRear = opmode.hardwareMap.get(DcMotorEx.class, "leftRear"); //CH 3
+        leftFront = opmode.hardwareMap.get(DcMotorEx.class, "leftFront"); //CH 1
+        rightRear = opmode.hardwareMap.get(DcMotorEx.class, "rightRear"); //CH 2
+        rightFront = opmode.hardwareMap.get(DcMotorEx.class, "rightFront"); //CH 0
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE); // motor directions
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);

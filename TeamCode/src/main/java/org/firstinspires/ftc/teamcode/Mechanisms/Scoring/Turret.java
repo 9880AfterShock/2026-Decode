@@ -27,8 +27,8 @@ public class Turret {
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
         rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
 //        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
-        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into ___
-        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into ___
+        leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into CH 0
+        rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
 
         targetPosition = 0.0;
         turretAngle = 0.0;
