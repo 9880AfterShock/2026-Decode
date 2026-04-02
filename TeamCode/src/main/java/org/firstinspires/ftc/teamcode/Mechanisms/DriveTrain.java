@@ -125,7 +125,7 @@ private static DcMotorEx rightRear;
         if (align) { //PID \|/
             if (Math.abs(offsetFromGoal) < 40) {
                 turn = 0;
-                if (Math.abs(Turret.turretAngle + offsetFromGoal) > turretDampening) {
+                if (Math.abs(Turret.currentPosition + offsetFromGoal) > turretDampening) {
                     Turret.targetPosition = -offsetFromGoal;
                 }
             } else {

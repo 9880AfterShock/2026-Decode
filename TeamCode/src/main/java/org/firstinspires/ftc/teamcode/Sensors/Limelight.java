@@ -108,7 +108,7 @@ public class Limelight {
     }
 
     public static Pose2d getPosition() { //MetaTag2
-        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.turretAngle);
+        limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.currentPosition);
         LLResult result = limelight.getLatestResult();
 
         if (result != null && result.isValid()) {
@@ -119,7 +119,7 @@ public class Limelight {
 //            FtcDashboard.getInstance().sendTelemetryPacket(packet);
             Pose2d obeliskErrorPos = new Pose2d(0.0, 0.0, 0.0);
             if (!currentPose.equals(obeliskErrorPos)) {
-                return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees() - Turret.turretAngle));
+                return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees() - Turret.currentPosition));
             }
         }
         return null;

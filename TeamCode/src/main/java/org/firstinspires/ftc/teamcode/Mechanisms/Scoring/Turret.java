@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
@@ -20,7 +21,8 @@ public class Turret {
 //    private static AnalogInput encoder;
     public static double targetPosition = 0.0;
     public static double currentPosition = 0.0;
-    public static double turretAngle = 0.0; //to be added more
+    public static final double minTurret = -75.0;
+    public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -31,25 +33,21 @@ public class Turret {
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
 
         targetPosition = 0.0;
-        turretAngle = 0.0;
         currentPosition = getPosition();
         Turret.opmode = opmode;
     }
 
     public static void updateTurret(double increment, double degrees) {
-//        targetPosition += increment; //disabled for deper
+        updatePosition();
 
-//        updatePosition();
+        targetPosition = Range.clip(targetPosition, minTurret, maxTurret);
 
-//        double difference = (targetPosition - currentPosition);
-//        setPower(Range.clip(difference,-1,1)); //PID goes here
-        setPower(Math.max(-1, Math.min(1, targetPosition/47.0))); //for DEEPER
-        turretAngle = (getPosition() - 180.0) * (94.0 / 310.0); //for DEEPER
-//        setPower(increment);
+        double difference = (targetPosition - currentPosition);
+        setPower(Range.clip(difference,-1,1)); //PID goes here
 
         opmode.telemetry.addData("Turret", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
-        opmode.telemetry.addData("CurrentPos", turretAngle);
+        opmode.telemetry.addData("CurrentPos", currentPosition);
     }
 
     private static double getPosition(){
@@ -77,7 +75,7 @@ public class Turret {
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){ //rotation in degrees
         double x = (turretCenterOffset *Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turretCenterOffset *Math.sin(rotation)) + beforeTransform.position.y;
-        return new Pose2d(x, y, beforeTransform.heading.toDouble() + Math.toRadians(turretAngle));
+        return new Pose2d(x, y, beforeTransform.heading.toDouble() + Math.toRadians(currentPosition));
     }
 
     public static Action lock() {
