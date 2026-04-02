@@ -24,6 +24,7 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
+    //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
         leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
@@ -43,16 +44,21 @@ public class Turret {
         targetPosition = Range.clip(targetPosition, minTurret, maxTurret);
 
         double difference = (targetPosition - currentPosition);
-        setPower(Range.clip(difference,-1,1)); //PID goes here
+        setPower(0.0);
+//        setPower(Range.clip(difference*0.05,-1,1)); //PID goes here
 
         opmode.telemetry.addData("Turret", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
         opmode.telemetry.addData("CurrentPos", currentPosition);
+        opmode.telemetry.addData("Left encoder", (leftEncoder.getVoltage() / 3.245) * 360);
+        opmode.telemetry.addData("Right encoder", (rightEncoder.getVoltage() / 3.245) * 360);
+        opmode.telemetry.addData("Left power", leftServo.getPosition());
+        opmode.telemetry.addData("Right power", leftServo.getPosition());
     }
 
     private static double getPosition(){
 //        return ((encoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
-        return (((leftEncoder.getVoltage() / 3.3) * 360) + ((rightEncoder.getVoltage() / 3.3) * 360))/2; //average 2 encoder poses, might need to reset
+        return (((leftEncoder.getVoltage() / 3.245) * 360) + ((rightEncoder.getVoltage() / 3.245) * 360))/2; //average 2 encoder poses, might need to reset
     }
 
     private static void updatePosition(){
