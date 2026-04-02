@@ -123,7 +123,7 @@ private static DcMotorEx rightRear;
 
         double offsetFromGoal = AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180);
         if (align) { //PID \|/
-            if (Math.abs(offsetFromGoal) < 40) {
+            if (Math.abs(offsetFromGoal) < 70) {
                 turn = 0;
                 if (Math.abs(Turret.currentPosition + offsetFromGoal) > turretDampening) {
                     Turret.targetPosition = -offsetFromGoal;
