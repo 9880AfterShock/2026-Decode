@@ -20,10 +20,13 @@ public class Turret {
     private static AnalogInput rightEncoder; //Right servo feedback wire
 //    private static AnalogInput encoder;
     public static double targetPosition = 0.0;
+    public static double leftCurrentPosition = 0.0;
+    public static double rightCurrentPosition = 0.0;
     public static double currentPosition = 0.0;
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
+    public static double K = 0.005;
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -34,48 +37,53 @@ public class Turret {
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
 
         targetPosition = 0.0;
-        currentPosition = getPosition();
+        leftCurrentPosition = getPosition(leftEncoder.getVoltage());
+        rightCurrentPosition = getPosition(rightEncoder.getVoltage());
         Turret.opmode = opmode;
     }
 
     public static void updateTurret(double increment, double degrees) {
         updatePosition();
+        currentPosition = ((leftCurrentPosition + rightCurrentPosition) / 2) * (24.0/78);
 
-        targetPosition = Range.clip(targetPosition, minTurret, maxTurret);
 
-        double difference = (targetPosition - currentPosition);
-        setPower(0.0);
-//        setPower(Range.clip(difference*0.05,-1,1)); //PID goes here
+//        double difference = (targetPosition - currentPosition);
+        double leftDifference = (targetPosition - leftCurrentPosition); //ignore for now
+        double rightDifference = (targetPosition - rightCurrentPosition);
 
-        opmode.telemetry.addData("Turret", "WIP");
+//        leftServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
+//        rightServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
+
+        leftServo.setPosition(Range.clip(leftDifference*K,-1,1)); //PID goes here //ignore for now
+        rightServo.setPosition(Range.clip(rightDifference*K,-1,1)); //PID goes here
+
+        opmode.telemetry.addData("Turret:", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
-        opmode.telemetry.addData("CurrentPos", currentPosition);
-        opmode.telemetry.addData("Left encoder", (leftEncoder.getVoltage() / 3.245) * 360);
-        opmode.telemetry.addData("Right encoder", (rightEncoder.getVoltage() / 3.245) * 360);
-        opmode.telemetry.addData("Left power", leftServo.getPosition());
-        opmode.telemetry.addData("Right power", leftServo.getPosition());
+        opmode.telemetry.addData("CurrentPosLeft", leftCurrentPosition);
+        opmode.telemetry.addData("CurrentPosRight", rightCurrentPosition);
     }
 
-    private static double getPosition(){
-//        return ((encoder.getVoltage() / 3.3) * 360); //only one encoder in use myabe?
-        return (((leftEncoder.getVoltage() / 3.245) * 360) + ((rightEncoder.getVoltage() / 3.245) * 360))/2; //average 2 encoder poses, might need to reset
+    private static double getPosition(double voltage){
+        return ((voltage / 3.245) * 360);
     }
 
     private static void updatePosition(){
-        double diff = getPosition() - (((currentPosition % 360) + 360) % 360);
-
-        if (diff > 180) {
-            diff -= 360;
-        } else if (diff < -180) {
-            diff += 360;
-        }
-
-        currentPosition += diff;
+        leftCurrentPosition += normalizeAngle(getPosition(leftEncoder.getVoltage()) - (((leftCurrentPosition % 360) + 360) % 360));
+        rightCurrentPosition += normalizeAngle(getPosition(rightEncoder.getVoltage()) - (((rightCurrentPosition % 360) + 360) % 360));
     }
 
-    private static void setPower(double motorPower){ //set servo power from a hypothetical point of a motor controlling the turret
-        leftServo.setPosition((motorPower/2)+0.5);
-        rightServo.setPosition((motorPower/2)+0.5);
+    private static double normalizeAngle(double raw) {
+        double fixed = raw;
+        if (fixed > 180) {
+            fixed -= 360;
+        } else if (fixed < -180) {
+            fixed += 360;
+        }
+        return fixed;
+    }
+
+    private static double calcPower(double motorPower){ //set servo power from a hypothetical point of a motor controlling the turret
+        return (motorPower/2)+0.5;
     }
 
     public static Pose2d turretTransform(Pose2d beforeTransform, double rotation){ //rotation in degrees
