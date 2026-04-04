@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
-
 public class Turret {
     private static OpMode opmode;
     private static Servo leftServo; //Left servo
@@ -26,7 +24,8 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
-    public static double K = 0.005;
+    public static double K = 0.001;
+    public static double kStatic = 0.07;
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -53,11 +52,23 @@ public class Turret {
 
 //        leftServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
 //        rightServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
+        double leftDiffSign;
+        double righDiffSign;
+        if (leftDifference > 0){
+            leftDiffSign = 1;
+        } else {
+            leftDiffSign = -1;
+        }
+        if (rightDifference > 0){
+            righDiffSign = 1;
+        } else {
+            righDiffSign = -1;
+        }
 
-        leftServo.setPosition(Range.clip(leftDifference*K,-1,1)); //PID goes here //ignore for now
-        rightServo.setPosition(Range.clip(rightDifference*K,-1,1)); //PID goes here
+        leftServo.setPosition(calcPower(Range.clip(leftDifference*K+(leftDiffSign*kStatic),-1,1))); //PID goes here //ignore for now
+        rightServo.setPosition(calcPower(Range.clip(rightDifference*K+(righDiffSign*kStatic),-1,1))); //PID goes here
 
-        opmode.telemetry.addData("Turret:", "WIP");
+        opmode.telemetry.addData("Turret:___", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
         opmode.telemetry.addData("CurrentPosLeft", leftCurrentPosition);
         opmode.telemetry.addData("CurrentPosRight", rightCurrentPosition);
