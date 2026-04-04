@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+@Config
 public class Turret {
     private static OpMode opmode;
     private static Servo leftServo; //Left servo
@@ -24,7 +26,7 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
-    public static double K = 0.001;
+    public static double K = 0.005;
     public static double kStatic = 0.07;
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
@@ -70,8 +72,10 @@ public class Turret {
         } else {
             diffSign = -1;
         }
-        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
-        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+        leftServo.setPosition(calcPower(kStatic));
+        rightServo.setPosition(calcPower(kStatic));
+//        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+//        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
 
 //        leftServo.setPosition(calcPower(Range.clip(leftDifference*K+(leftDiffSign*kStatic),-1,1))); //PID goes here //ignore for now
 //        rightServo.setPosition(calcPower(Range.clip(rightDifference*K+(righDiffSign*kStatic),-1,1))); //PID goes here
