@@ -46,30 +46,39 @@ public class Turret {
         currentPosition = ((leftCurrentPosition + rightCurrentPosition) / 2) * (24.0/78);
 
 
-//        double difference = (targetPosition - currentPosition);
-        double leftDifference = (targetPosition - leftCurrentPosition); //ignore for now
-        double rightDifference = (targetPosition - rightCurrentPosition);
+        double difference = (targetPosition - currentPosition);
+//        double leftDifference = (targetPosition - leftCurrentPosition); //ignore for now
+//        double rightDifference = (targetPosition - rightCurrentPosition);
 
 //        leftServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
 //        rightServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
-        double leftDiffSign;
-        double righDiffSign;
-        if (leftDifference > 0){
-            leftDiffSign = 1;
+//        double leftDiffSign;
+//        double righDiffSign;
+//        if (leftDifference > 0){
+//            leftDiffSign = 1;
+//        } else {
+//            leftDiffSign = -1;
+//        }
+//        if (rightDifference > 0){
+//            righDiffSign = 1;
+//        } else {
+//            righDiffSign = -1;
+//        }
+        double diffSign;
+        if (difference > 0){
+            diffSign = 1;
         } else {
-            leftDiffSign = -1;
+            diffSign = -1;
         }
-        if (rightDifference > 0){
-            righDiffSign = 1;
-        } else {
-            righDiffSign = -1;
-        }
+        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
 
-        leftServo.setPosition(calcPower(Range.clip(leftDifference*K+(leftDiffSign*kStatic),-1,1))); //PID goes here //ignore for now
-        rightServo.setPosition(calcPower(Range.clip(rightDifference*K+(righDiffSign*kStatic),-1,1))); //PID goes here
+//        leftServo.setPosition(calcPower(Range.clip(leftDifference*K+(leftDiffSign*kStatic),-1,1))); //PID goes here //ignore for now
+//        rightServo.setPosition(calcPower(Range.clip(rightDifference*K+(righDiffSign*kStatic),-1,1))); //PID goes here
 
         opmode.telemetry.addData("Turret:___", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
+        opmode.telemetry.addData("CurrentPos", currentPosition);
         opmode.telemetry.addData("CurrentPosLeft", leftCurrentPosition);
         opmode.telemetry.addData("CurrentPosRight", rightCurrentPosition);
     }
