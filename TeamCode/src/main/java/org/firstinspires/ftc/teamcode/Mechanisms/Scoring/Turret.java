@@ -29,8 +29,11 @@ public class Turret {
     public static double K = 0.005;
     public static double kStatic = 0.07;
 
-    public static final double leftOffset = 0.0;
-    public static final double rightOffset = 0.0;
+    public static boolean leftWorking = true; //backup checks on analog input wires
+    public static boolean rightWorking = true;
+
+    public static final double leftOffset =  -26.292758089368256;
+    public static final double rightOffset = -34.72419106317416;
 
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
@@ -45,11 +48,27 @@ public class Turret {
         leftCurrentPosition = getPosition(leftEncoder.getVoltage());
         rightCurrentPosition = getPosition(rightEncoder.getVoltage());
         Turret.opmode = opmode;
+
+        leftWorking = true;
+        rightWorking = true;
     }
 
     public static void updateTurret(double increment, double degrees) {
         updatePosition();
-        currentPosition = (((leftCurrentPosition + leftOffset) + (rightCurrentPosition + rightOffset)) / 2) * (24.0/78);
+
+        leftWorking = leftEncoder.getVoltage() != 0;
+        rightWorking = leftEncoder.getVoltage() != 0;
+        if (leftWorking && rightWorking){
+            currentPosition = (((leftCurrentPosition + leftOffset) + (rightCurrentPosition + rightOffset)) / 2) * (24.0/78);
+        } else {
+            if (leftWorking){
+                currentPosition = ((leftCurrentPosition + leftOffset) * (24.0/78));
+            } else {
+                if (rightWorking){
+                    currentPosition = ((rightCurrentPosition + leftOffset) * (24.0/78));
+                }
+            }
+        }
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
@@ -61,8 +80,13 @@ public class Turret {
 
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
-//        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
-//        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+        if (leftWorking || rightWorking){
+            leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
+            rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
+        } else { //fuck
+            leftServo.setPosition(calcPower(0.00001));
+            rightServo.setPosition(calcPower(0.00001)); //lock turret?
+        }
 
         opmode.telemetry.addData("Turret:___", "WIP");
         opmode.telemetry.addData("-TargetPos", targetPosition);
