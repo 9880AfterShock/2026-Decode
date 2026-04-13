@@ -115,7 +115,8 @@ public class Turret {
     public static void updateTuner(TelemetryPacket packet) {
         updatePosition();
         leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
-        leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
+        rightServo.setPosition(calcPower(0.0)); //actually read ctrl hub
+        packet.addLine("Set the leftOffset and rightOffset to these");
         packet.put("Left Raw", leftCurrentPosition);
         packet.put("Right Raw", rightCurrentPosition);
     }
