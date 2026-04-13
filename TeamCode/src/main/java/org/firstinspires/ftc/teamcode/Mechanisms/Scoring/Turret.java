@@ -141,7 +141,7 @@ public class Turret {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                updateTurret(0.0, 0.0);
+                updateTurret(true, 0.0);
                 return false;
             }
         };
