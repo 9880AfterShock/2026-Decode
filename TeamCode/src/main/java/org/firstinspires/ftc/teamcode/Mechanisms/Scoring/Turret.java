@@ -32,8 +32,8 @@ public class Turret {
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  26.292758089368256;
-    public static final double rightOffset = 34.72419106317416;
+    public static final double leftOffset =  -26.1818181818182;
+    public static final double rightOffset = -33.06009244992295;
 
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
@@ -63,13 +63,13 @@ public class Turret {
         leftWorking = leftEncoder.getVoltage() != 0;
         rightWorking = leftEncoder.getVoltage() != 0;
         if (leftWorking && rightWorking){
-            currentPosition = (((leftCurrentPosition + leftOffset) + (rightCurrentPosition + rightOffset)) / 2) * (24.0/78);
+            currentPosition = (((leftCurrentPosition - leftOffset) + (rightCurrentPosition - rightOffset)) / 2) * (24.0/78);
         } else {
             if (leftWorking){
-                currentPosition = ((leftCurrentPosition + leftOffset) * (24.0/78));
+                currentPosition = ((leftCurrentPosition - leftOffset) * (24.0/78));
             } else {
                 if (rightWorking){
-                    currentPosition = ((rightCurrentPosition + leftOffset) * (24.0/78));
+                    currentPosition = ((rightCurrentPosition - rightOffset) * (24.0/78));
                 }
             }
         }
