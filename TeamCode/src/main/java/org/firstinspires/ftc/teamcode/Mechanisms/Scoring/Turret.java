@@ -58,6 +58,7 @@ public class Turret {
         } else {
             diffSign = -1;
         }
+
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
 //        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
@@ -113,8 +114,8 @@ public class Turret {
 
     public static void updateTuner(TelemetryPacket packet) {
         updatePosition();
-        opmode.telemetry.addData("-RawCurrentPosLeft", leftCurrentPosition);
-        opmode.telemetry.addData("-RawCurrentPosRight", rightCurrentPosition);
+        leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
+        leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
         packet.put("Left Raw", leftCurrentPosition);
         packet.put("Right Raw", rightCurrentPosition);
     }
