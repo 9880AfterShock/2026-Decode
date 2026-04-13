@@ -64,10 +64,12 @@ public class Turret {
         rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
 
         opmode.telemetry.addData("Turret:___", "WIP");
-        opmode.telemetry.addData("TargetPos", targetPosition);
-        opmode.telemetry.addData("CurrentPos", currentPosition);
-        opmode.telemetry.addData("CurrentPosLeft", leftCurrentPosition);
-        opmode.telemetry.addData("CurrentPosRight", rightCurrentPosition);
+        opmode.telemetry.addData("-TargetPos", targetPosition);
+        opmode.telemetry.addData("-CurrentPos", currentPosition);
+        opmode.telemetry.addData("-CurrentPosLeft", leftCurrentPosition + leftOffset);
+        opmode.telemetry.addData("-CurrentPosRight", rightCurrentPosition + rightOffset);
+        opmode.telemetry.addData("-RawCurrentPosLeft", leftCurrentPosition);
+        opmode.telemetry.addData("-RawCurrentPosRight", rightCurrentPosition);
     }
 
     private static double getPosition(double voltage){
