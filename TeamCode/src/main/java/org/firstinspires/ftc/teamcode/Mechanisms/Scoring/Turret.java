@@ -32,8 +32,8 @@ public class Turret {
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  -26.292758089368256;
-    public static final double rightOffset = -34.72419106317416;
+    public static final double leftOffset =  26.292758089368256;
+    public static final double rightOffset = 34.72419106317416;
 
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
@@ -53,7 +53,11 @@ public class Turret {
         rightWorking = true;
     }
 
-    public static void updateTurret(double increment, double degrees) {
+    public static void updateTurret(boolean overRide, double overRideDegrees) {
+        if (overRide){
+            targetPosition = overRideDegrees;
+        }
+
         updatePosition();
 
         leftWorking = leftEncoder.getVoltage() != 0;
@@ -70,6 +74,8 @@ public class Turret {
             }
         }
 
+        targetPosition = Range.clip(targetPosition, minTurret, maxTurret); //cap range for safety
+
         double difference = (targetPosition - currentPosition);
         double diffSign;
         if (difference > 0){
@@ -83,7 +89,7 @@ public class Turret {
         if (leftWorking || rightWorking){
             leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
             rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
-        } else { //fuck
+        } else {
             leftServo.setPosition(calcPower(0.00001));
             rightServo.setPosition(calcPower(0.00001)); //lock turret?
         }
@@ -95,6 +101,11 @@ public class Turret {
         opmode.telemetry.addData("-CurrentPosRight", rightCurrentPosition + rightOffset);
         opmode.telemetry.addData("-RawCurrentPosLeft", leftCurrentPosition);
         opmode.telemetry.addData("-RawCurrentPosRight", rightCurrentPosition);
+        opmode.telemetry.addData("-LeftEncoderWorking", leftWorking);
+        opmode.telemetry.addData("-RightEncoderWorking", rightWorking);
+        if (!(leftWorking && rightWorking)) {
+            opmode.telemetry.addData("ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ENCODER DC! ", "Axon encoder DC");
+        }
     }
 
     private static double getPosition(double voltage){
