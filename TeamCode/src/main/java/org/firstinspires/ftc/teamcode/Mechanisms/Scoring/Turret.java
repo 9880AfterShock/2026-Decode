@@ -28,6 +28,10 @@ public class Turret {
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
     public static double K = 0.005;
     public static double kStatic = 0.07;
+
+    public static final double leftOffset = 0.0;
+    public static final double rightOffset = 0.0;
+
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -45,40 +49,19 @@ public class Turret {
 
     public static void updateTurret(double increment, double degrees) {
         updatePosition();
-        currentPosition = ((leftCurrentPosition + rightCurrentPosition) / 2) * (24.0/78);
-
+        currentPosition = (((leftCurrentPosition + leftOffset) + (rightCurrentPosition + rightOffset)) / 2) * (24.0/78);
 
         double difference = (targetPosition - currentPosition);
-//        double leftDifference = (targetPosition - leftCurrentPosition); //ignore for now
-//        double rightDifference = (targetPosition - rightCurrentPosition);
-
-//        leftServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
-//        rightServo.setPosition(Range.clip(difference*K,-1,1)); //PID goes here
-//        double leftDiffSign;
-//        double righDiffSign;
-//        if (leftDifference > 0){
-//            leftDiffSign = 1;
-//        } else {
-//            leftDiffSign = -1;
-//        }
-//        if (rightDifference > 0){
-//            righDiffSign = 1;
-//        } else {
-//            righDiffSign = -1;
-//        }
         double diffSign;
         if (difference > 0){
             diffSign = 1;
         } else {
             diffSign = -1;
         }
-        leftServo.setPosition(calcPower(kStatic));
-        rightServo.setPosition(calcPower(kStatic));
-//        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
-//        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
-
-//        leftServo.setPosition(calcPower(Range.clip(leftDifference*K+(leftDiffSign*kStatic),-1,1))); //PID goes here //ignore for now
-//        rightServo.setPosition(calcPower(Range.clip(rightDifference*K+(righDiffSign*kStatic),-1,1))); //PID goes here
+//        leftServo.setPosition(calcPower(kStatic));
+//        rightServo.setPosition(calcPower(kStatic));
+        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
 
         opmode.telemetry.addData("Turret:___", "WIP");
         opmode.telemetry.addData("TargetPos", targetPosition);
@@ -124,5 +107,11 @@ public class Turret {
                 return false;
             }
         };
+    }
+
+    public static void updateTuner(TelemetryPacket packet) {
+        updatePosition();
+        packet.put("Left Raw", leftCurrentPosition);
+        packet.put("Right Raw", rightCurrentPosition);
     }
 }
