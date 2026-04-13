@@ -60,8 +60,8 @@ public class Turret {
         }
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
-        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
-        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+//        leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
+//        rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here //ignore for now
 
         opmode.telemetry.addData("Turret:___", "WIP");
         opmode.telemetry.addData("-TargetPos", targetPosition);
@@ -113,6 +113,8 @@ public class Turret {
 
     public static void updateTuner(TelemetryPacket packet) {
         updatePosition();
+        opmode.telemetry.addData("-RawCurrentPosLeft", leftCurrentPosition);
+        opmode.telemetry.addData("-RawCurrentPosRight", rightCurrentPosition);
         packet.put("Left Raw", leftCurrentPosition);
         packet.put("Right Raw", rightCurrentPosition);
     }
