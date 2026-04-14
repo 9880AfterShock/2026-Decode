@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.Systems.PID;
+
 @Config
 public class Turret {
     private static OpMode opmode;
@@ -35,6 +37,8 @@ public class Turret {
     public static final double leftOffset =  -26.1818181818182;
     public static final double rightOffset = -33.06009244992295;
 
+    public static PID mainPID;
+
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
@@ -51,6 +55,7 @@ public class Turret {
 
         leftWorking = true;
         rightWorking = true;
+        mainPID = new PID(1.0,0.0,0.0);
     }
 
     public static void updateTurret(boolean overRide, double overRideDegrees) {
@@ -87,8 +92,8 @@ public class Turret {
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
         if (leftWorking || rightWorking){
-            leftServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
-            rightServo.setPosition(calcPower(Range.clip(difference*K+(diffSign*kStatic),-1,1))); //PID goes here
+            leftServo.setPosition(calcPower(Range.clip(mainPID.step(difference) + (diffSign*kStatic),-1,1))); //PID goes here
+            rightServo.setPosition(calcPower(Range.clip(mainPID.step(difference) + (diffSign*kStatic),-1,1))); //PID goes here
         } else {
             leftServo.setPosition(calcPower(0.00001));
             rightServo.setPosition(calcPower(0.00001)); //lock turret?
