@@ -28,14 +28,17 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
-    public static double K = 0.005;
-    public static double kStatic = 0.07;
+    public static double kStatic = 0.08;
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  -26.1818181818182;
-    public static final double rightOffset = -33.06009244992295;
+    public static final double leftOffset =  0.7765793528505381;
+    public static final double rightOffset = -32.06163328197229;
+
+    public static double P = 0.008;
+    public static double D = 0.0;
+
 
     public static PID mainPID;
 
@@ -55,7 +58,7 @@ public class Turret {
 
         leftWorking = true;
         rightWorking = true;
-        mainPID = new PID(1.0,0.0,0.0);
+        mainPID = new PID(P,0.0,D);
     }
 
     public static void updateTurret(boolean overRide, double overRideDegrees) {
@@ -83,10 +86,14 @@ public class Turret {
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
-        if (difference > 0){
-            diffSign = 1;
+        if (Math.abs(difference) > 2){
+            if (difference > 0){
+                diffSign = 1;
+            } else {
+                diffSign = -1;
+            }
         } else {
-            diffSign = -1;
+            diffSign = 0.0; //freeze static boost if we are close enough to target
         }
 
 //        leftServo.setPosition(calcPower(kStatic));
