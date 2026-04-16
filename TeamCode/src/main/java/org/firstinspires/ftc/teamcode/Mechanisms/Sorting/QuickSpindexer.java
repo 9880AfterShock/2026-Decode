@@ -4,6 +4,8 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import static java.lang.Math.abs;
 
+import android.hardware.Sensor;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -14,6 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
+import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
 
 import java.util.Arrays;
 
@@ -34,6 +37,7 @@ public class QuickSpindexer { // Prefix for commands
     private static boolean aborting = false;
     private static int jamCount = 0;
     private static int jamExcuses = 0;
+    private static double offset = 0.0;
 
     public static void initSpindexer(OpMode opmode) { // init motor
         spindexer = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
@@ -56,6 +60,8 @@ public class QuickSpindexer { // Prefix for commands
         aborting = false;
         jamCount = 0;
         jamExcuses = 0;
+
+        offset = ((SensOrange.getCurrentAngle()%120)/360.0)*1425.1;
     }
 
     public static void updateSpindexer(boolean clockwise, boolean counterclockwise) {
@@ -75,7 +81,6 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
-
         if (clockwise && !wasClockwise){
             jamExcuses += 1;
             targetPosition += 1425.1/3;
@@ -97,14 +102,15 @@ public class QuickSpindexer { // Prefix for commands
         if (reset){
             spindexer.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             spindexer.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            offset = 0;
             targetPosition = 0;
             spindexer.setPower(1.0);
         }
 
         if (spindexerOffset){
-            spindexer.setTargetPosition((int) ((targetPosition) - (1425.1/offsetDivider)));
+            spindexer.setTargetPosition((int) (((targetPosition) - (1425.1/offsetDivider)) + offset));
         } else {
-            spindexer.setTargetPosition((int) targetPosition);
+            spindexer.setTargetPosition((int) (targetPosition + offset));
         }
 
         //Logic for canceling, and retrying if we get stuck

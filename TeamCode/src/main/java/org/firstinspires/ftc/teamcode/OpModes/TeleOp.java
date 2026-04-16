@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
+import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
@@ -38,6 +39,7 @@ public class TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        SensOrange.initSensor(this);
 
         //Init Functions
         DriveTrain.initDrive(this);
@@ -98,6 +100,7 @@ public class TeleOp extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         double loops = 1;
         while (opModeIsActive()) {
+            SensOrange.updateEncoder();
             Gyroscope.updateGyro(gamepad1.backWasPressed());
             Limelight.update();
             ControlManager.update(alliance == Alliance.RED);

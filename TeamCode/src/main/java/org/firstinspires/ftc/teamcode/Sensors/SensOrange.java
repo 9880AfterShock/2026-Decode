@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 
 public class SensOrange {
     private static OpMode opmode;
-    private static int currentPosition = 0; //
+    public static int currentPosition = 0; //
     private static AnalogInput absEncoder; //Sensorange encoder (under spindexer axle)
-    private static int offset = 0;
+    private static int offset = 100;
     public static void initSensor(OpMode opmode) {
-        absEncoder = opmode.hardwareMap.get(AnalogInput.class, "sensOrange"); // plugged into ___
+        absEncoder = opmode.hardwareMap.get(AnalogInput.class, "sensOrange"); // plugged into Control Hub 2/3
         currentPosition = 0;
         SensOrange.opmode = opmode;
     }
@@ -19,7 +19,7 @@ public class SensOrange {
     }
 
     public static int getCurrentAngle(){
-        return (int) ((absEncoder.getVoltage()-0.043)/3.1*360 + offset);
+        return (int) ((absEncoder.getVoltage()-0.043)/3.1*360 - offset);
     }
 
     public static void updateEncoder(){
