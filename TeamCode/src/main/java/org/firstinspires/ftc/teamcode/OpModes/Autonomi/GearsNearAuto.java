@@ -135,7 +135,7 @@ public class GearsNearAuto extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
                 .setTangent(posMultiplier*Math.toRadians(50))
-                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
+                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), intakeSpeed);
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosNear1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
@@ -233,7 +233,7 @@ public class GearsNearAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*45.0),
+                                Turret.setTurretTarget(posMultiplier*-45.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
