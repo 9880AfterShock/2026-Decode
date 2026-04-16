@@ -30,6 +30,7 @@ import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
+import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
@@ -40,6 +41,7 @@ import java.util.Arrays;
 public class GearsNearAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
+        SensOrange.initSensor(this);
         Gyroscope.initSensor(this);
         Limelight.initDetection(this);
         //Mechs init
