@@ -159,6 +159,26 @@ public class Turret {
         };
     }
 
+    public static Action turretLoop() { //only for race actions, never ends!!!
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                updateTurret(false, 0.0);
+                return true;
+            }
+        };
+    }
+
+    public static Action setTurretTarget(double degrees) { //only for race actions, never ends!!!
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                targetPosition = degrees;
+                return false;
+            }
+        };
+    }
+
     public static void updateTuner(TelemetryPacket packet) {
         updatePosition();
         leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
