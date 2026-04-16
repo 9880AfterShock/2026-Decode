@@ -207,6 +207,13 @@ public class GearsNearAuto extends LinearOpMode {
                 .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), driveSpeed);
         }
 
+        TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupNear)
+                .waitSeconds(5.0);
+        TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickupMiddle)
+                .waitSeconds(5.0);
+        TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickupFar)
+                .waitSeconds(5.0);
+
 
         Gyroscope.setRotation(Math.toDegrees(startPosNear.heading.toDouble()));
         TeleOp.autoEndPosition = shootPosNear4;
@@ -217,7 +224,6 @@ public class GearsNearAuto extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
-        Limelight.motif = Motif.GPP;
 
         Actions.runBlocking(
                 new RaceAction(
@@ -225,15 +231,149 @@ public class GearsNearAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(0.0),
+                                Turret.setTurretTarget(posMultiplier*45.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
+                                new ParallelAction(
+                                        new SequentialAction(
+                                                Arm.AutoArmOut(),
+                                                Prongs.AutoProngsShooting(),
+                                                QuickSpindexer.addRevOffset(),
+                                                actionManager.waitFor(0.5),
+                                                Arm.AutoArmRev()
+                                        ),
+                                        toShoot1.build()
+                                ),
 
-
-
+                                //First Volley
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(false),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(false),
+                                actionManager.hasBalls(false),
                                 actionManager.derev(),
-                                actionManager.waitFor(5.0)
+
+                                //First Pickup
+                                Arm.AutoArmOut(),
+                                Prongs.AutoProngsIntake(),
+                                Roller.AutoIntakeOn(),
+                                toPickup1.build(),
+                                actionManager.hasBalls(true),
+                                new RaceAction(
+                                        new SequentialAction(
+                                                pickup1.build(),
+                                                waitPickup1.build()
+                                        ),
+                                        new SequentialAction(
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
+                                        )
+                                ),
+
+                                //2nd Sort
+                                new ParallelAction(
+                                        actionManager.rev(rpm),
+                                        new SequentialAction(
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(1.0),
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
+                                        ),
+                                        toShoot2.build()
+                                ),
+
+                                //2nd volley
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(false),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(false),
+                                Distance.setMissed(false),
+                                actionManager.hasBalls(false),
+
+                                //2nd Pickup
+                                Arm.AutoArmOut(),
+                                Prongs.AutoProngsIntake(),
+                                Roller.AutoIntakeOn(),
+                                toPickup2.build(),
+                                actionManager.hasBalls(true),
+                                new RaceAction(
+                                        new SequentialAction(
+                                                pickup2.build(),
+                                                waitPickup2.build()
+                                        ),
+                                        new SequentialAction(
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn(),
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(ballInSpindexerTimer),
+                                                QuickSpindexer.turnLeft(),
+                                                Roller.AutoIntakeOn(),
+                                                Arm.AutoArmOut(),
+                                                Distance.waitForBallIn(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
+                                        )
+                                ),
+
+                                //2nd Sort
+                                new ParallelAction(
+                                        actionManager.rev(rpm),
+                                        new SequentialAction(
+                                                Distance.waitForBallInSpindexer(),
+                                                actionManager.waitFor(1.0),
+                                                new SequentialAction(
+                                                        Arm.AutoArmOut(),
+                                                        Prongs.AutoProngsShooting(),
+                                                        QuickSpindexer.addRevOffset(),
+                                                        actionManager.waitFor(0.5),
+                                                        Arm.AutoArmRev()
+                                                )
+                                        ),
+                                        toShoot3.build()
+                                ),
+
+                                //Third Volley
+                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.startTripleRPMBoost(false),
+                                QuickSpindexer.autoFullCycle(true),
+                                actionManager.endTripleRPMBoost(false),
+                                actionManager.hasBalls(false),
+
+                                //Ending
+                                actionManager.derev(),
+                                actionManager.waitFor(30.0)
                         )
                 )
         );
