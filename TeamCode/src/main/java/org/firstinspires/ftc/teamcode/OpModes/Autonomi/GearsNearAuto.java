@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.OpModes.Autonomi;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.RaceAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
+import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -30,6 +33,8 @@ import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Systems.ActionManager;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
+import java.util.Arrays;
+
 @Config
 @Autonomous(name = "GEARS Near zone 9")
 public class GearsNearAuto extends LinearOpMode {
@@ -41,31 +46,41 @@ public class GearsNearAuto extends LinearOpMode {
         Arm.initIntake(this);
         Roller.initIntake(this);
         RunLater.setup(this);
-        DriverTest.initControls(this); //new
+        DriverTest.initControls(this);
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
         Distance.initSensor(this);
         Turret.initTurret(this);
 
         QuickSpindexer.initSpindexer(this);
-//        Shield.initLocking(this);
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
         double rpm = 2200;
-        double shotCooldown = 0.2+0.2; // 0.2 + actual cooldown
+        double dumpTime = 1.0;
 
         double posMultiplier = 1.0;
-        boolean secondDump = false; //just leaving in bc easier
+        boolean firstDump = false;
+        boolean secondDump = false;
+        boolean thirdDump = false;
 //        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use x and b to select alliance");
-            telemetry.addLine("Use a to toggle 2nd dump");
+            telemetry.addLine("Use DPAD (up left and right) to toggle dumps");
             if (gamepad1.xWasPressed()){
                 posMultiplier = 1.0;
             }
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
+            }
+            if (gamepad1.dpadUpWasPressed()){
+                firstDump =!firstDump;
+            }
+            if (gamepad1.dpadLeftWasPressed()){
+                secondDump =!secondDump;
+            }
+            if (gamepad1.dpadRightWasPressed()){
+                thirdDump =!thirdDump;
             }
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
@@ -75,82 +90,126 @@ public class GearsNearAuto extends LinearOpMode {
                 telemetry.addData("Alliance", "Red");
                 TeleOp.alliance = Alliance.RED;
             }
+            telemetry.addData("First Dump", firstDump);
+            telemetry.addData("Second Dump", secondDump);
+            telemetry.addData("Third Dump", thirdDump);
             telemetry.update();
         }
 
-        Pose2d startPosClose = new Pose2d(-51.5, posMultiplier*-50.5, posMultiplier*Math.toRadians(55.0));
-        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosClose);
+        VelConstraint driveSpeed = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(120.0),
+                new AngularVelConstraint(Math.PI)
+        ));
+
+        VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(15.0),
+                new AngularVelConstraint(Math.PI/2)
+        ));
+
+        Pose2d startPosNear = new Pose2d(-47.0, posMultiplier*-49.0, posMultiplier*Math.toRadians(0.0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosNear);
 
         //Poses
-        Pose2d shootPosClose1 = new Pose2d(-20.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(45.0));
-        Pose2d shootPosClose2 = new Pose2d(-24.0, posMultiplier*-25.0, posMultiplier*Math.toRadians(48.0));
-        Pose2d shootPosClose3 = new Pose2d(-37.0, posMultiplier*-15.0, posMultiplier*Math.toRadians(63.0));
+        Pose2d shootPosNear1 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosNear2 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosNear3 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
-        Pose2d prePickup1 = new Pose2d(-12.0, posMultiplier*-26.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup1 = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup1 = new Pose2d(-12.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupNear = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupNear = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupNear = new Pose2d(-12.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickup2 = new Pose2d(12.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickup2 = new Pose2d(12.0, posMultiplier*-28.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickup2 = new Pose2d(12.0, posMultiplier*-45.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupMiddle = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupMiddle = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupMiddle = new Pose2d(12.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePos1 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePos2 = new Pose2d(0.0, posMultiplier*-51.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
-        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosClose)
-                .setTangent(posMultiplier*Math.toRadians(37.0))
-                .splineToLinearHeading(shootPosClose1, posMultiplier*Math.toRadians(37.0), new TranslationalVelConstraint(40.0));
+        Pose2d gatePosNear1 = new Pose2d(-3.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosClose1)
+        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
+                .setTangent(posMultiplier*Math.toRadians(50))
+                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
+
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosNear1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup1, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
-
+                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup1, posMultiplier*Math.toRadians(-90.0));
+                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed);
 
-        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickup1)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup1, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(15.0));
+        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupNear)
+                .setTangent(posMultiplier*Math.toRadians(-90))
+                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
 
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickup1)
-                .setTangent(posMultiplier*Math.toRadians(135.0))
-                .splineToLinearHeading(shootPosClose2, posMultiplier*Math.toRadians(135.0), new TranslationalVelConstraint(40.0));
-
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosClose2)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickup2, posMultiplier*Math.toRadians(0.0), new TranslationalVelConstraint(40.0))
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickup2, posMultiplier*Math.toRadians(-90.0));
-
-        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickup2)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(endPickup2, posMultiplier*Math.toRadians(-90.0), new TranslationalVelConstraint(5.0));
-
-        TrajectoryActionBuilder toShoot3;
-
-        if (secondDump){
-            toShoot3 = drive.actionBuilder(endPickup2)
-                    //doing gate
-                    .setTangent(posMultiplier*Math.toRadians(180.0))
-                    .splineToLinearHeading(gatePos2, posMultiplier*Math.toRadians(-90.0))
-                    .waitSeconds(0.1)
-
-                    .setTangent(posMultiplier*Math.toRadians(130.0))
-                    .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(130.0), new TranslationalVelConstraint(40.0));
-        } else {
-            toShoot3 = drive.actionBuilder(endPickup2)
+        TrajectoryActionBuilder toShoot2;
+        if (firstDump) {
+            toShoot2 = drive.actionBuilder(endPickupNear)
+                    .setTangent(posMultiplier*Math.toRadians(90.0))
+                    .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+                    .waitSeconds(dumpTime)
                     .setTangent(posMultiplier*Math.toRadians(125.0))
-                    .splineToLinearHeading(shootPosClose3, posMultiplier*Math.toRadians(125.0), new TranslationalVelConstraint(40.0));
+                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), driveSpeed);
+        } else{
+            toShoot2 = drive.actionBuilder(endPickupNear)
+                .setTangent(posMultiplier*Math.toRadians(110.0))
+                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), driveSpeed);
         }
 
-        TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickup1)
-                .waitSeconds(5.0);
-        TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickup2)
-                .waitSeconds(5.0);
+        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosNear2)
+                .setTangent(posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(prePickupMiddle, posMultiplier*Math.toRadians(-30.0), driveSpeed)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(startPickupMiddle, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+
+        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickupMiddle)
+                .setTangent(posMultiplier*Math.toRadians(-90))
+                .splineToLinearHeading(endPickupMiddle, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
+
+        TrajectoryActionBuilder toShoot3;
+        if (secondDump) {
+            toShoot3 = drive.actionBuilder(endPickupMiddle)
+                    .setTangent(posMultiplier*Math.toRadians(-180.0))
+                    .splineToLinearHeading(gatePosNear2, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+                    .waitSeconds(1.0)
+                    .setTangent(posMultiplier*Math.toRadians(135.0))
+                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), driveSpeed);
+        } else{
+            toShoot3 = drive.actionBuilder(endPickupMiddle)
+                    .setTangent(posMultiplier*Math.toRadians(140.0))
+                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), driveSpeed);
+        }
+
+        TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosNear3)
+                .setTangent(posMultiplier*Math.toRadians(0.0))
+                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-15.0), driveSpeed)
+                .setTangent(posMultiplier*Math.toRadians(-90.0))
+                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+
+        TrajectoryActionBuilder pickup3 = drive.actionBuilder(startPickupFar)
+                .setTangent(posMultiplier*Math.toRadians(-90))
+                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
+
+        TrajectoryActionBuilder toShoot4;
+        if (thirdDump) {
+            toShoot4 = drive.actionBuilder(endPickupFar)
+                    .setTangent(posMultiplier*Math.toRadians(180.0))
+                    .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+                    .waitSeconds(1.0)
+                    .setTangent(posMultiplier*Math.toRadians(145.0))
+                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), driveSpeed);
+        } else{
+            toShoot4 = drive.actionBuilder(endPickupFar)
+                .setTangent(posMultiplier*Math.toRadians(160.0))
+                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), driveSpeed);
+        }
 
 
-        Gyroscope.setRotation(Math.toDegrees(startPosClose.heading.toDouble()));
-        TeleOp.autoEndPosition = shootPosClose3;
+        Gyroscope.setRotation(Math.toDegrees(startPosNear.heading.toDouble()));
+        TeleOp.autoEndPosition = shootPosNear4;
 
         double ballInSpindexerTimer = 0.4;
 

@@ -45,14 +45,12 @@ public class MeepMeepRR {
         Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d parkPosFar = new Pose2d(15.0, posMultiplier*-34.0, posMultiplier*Math.toRadians(90)); //tbd
-
-        VelConstraint drive = new MinVelConstraint(Arrays.asList(
+        VelConstraint driveSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(120.0),
                 new AngularVelConstraint(Math.PI)
         ));
 
-        VelConstraint intake = new MinVelConstraint(Arrays.asList(
+        VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(15.0),
                 new AngularVelConstraint(Math.PI/2)
         ));
@@ -71,70 +69,70 @@ public class MeepMeepRR {
         myBot.runAction(myBot.getDrive().actionBuilder(startPosNear)
                 //toShoot1
                 .setTangent(posMultiplier*Math.toRadians(50))
-                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), drive)
+                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed)
 
                 //toPickup1
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
                 //pickup1
                 .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), intake)
+                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), intakeSpeed)
 
                 //toShoot1
                 //noGate
 //                .setTangent(posMultiplier*Math.toRadians(110.0))
-//                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), drive)
+//                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), driveSpeed)
                 //yesGate
                 .setTangent(posMultiplier*Math.toRadians(90.0))
-                .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .waitSeconds(1.0)
                 .setTangent(posMultiplier*Math.toRadians(125.0))
-                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), drive)
+                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), driveSpeed)
 
                 //toPickup2
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupMiddle, posMultiplier*Math.toRadians(-30.0), drive)
+                .splineToLinearHeading(prePickupMiddle, posMultiplier*Math.toRadians(-30.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupMiddle, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(startPickupMiddle, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
                 //pickup2
                 .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupMiddle, posMultiplier*Math.toRadians(-90.0), intake)
+                .splineToLinearHeading(endPickupMiddle, posMultiplier*Math.toRadians(-90.0), intakeSpeed)
 
                 //toShoot3
                 //noGate
 //                .setTangent(posMultiplier*Math.toRadians(140.0))
-//                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), drive)
+//                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), driveSpeed)
                 //yesGate
                 .setTangent(posMultiplier*Math.toRadians(-180.0))
-                .splineToLinearHeading(gatePosNear2, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(gatePosNear2, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .waitSeconds(1.0)
                 .setTangent(posMultiplier*Math.toRadians(135.0))
-                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), drive)
+                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), driveSpeed)
 
                 //toPickup3
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-15.0), drive)
+                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-15.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
                 //pickup3
                 .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intake)
+                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed)
 
                 //toShoot4
                 //noGate
 //                .setTangent(posMultiplier*Math.toRadians(160.0))
-//                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), drive)
+//                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), driveSpeed)
                 //yesGate
                 .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), drive)
+                .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .waitSeconds(1.0)
                 .setTangent(posMultiplier*Math.toRadians(145.0))
-                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), drive)
+                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), driveSpeed)
 
 
                 .build()
