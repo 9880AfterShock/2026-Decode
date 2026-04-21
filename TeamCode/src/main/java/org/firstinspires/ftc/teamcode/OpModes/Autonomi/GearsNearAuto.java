@@ -21,7 +21,6 @@ import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
-//import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
@@ -37,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "GEARS Near zone 9")
+@Autonomous(name = "GEARS Near zone 12")
 public class GearsNearAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -99,9 +98,12 @@ public class GearsNearAuto extends LinearOpMode {
         }
 
         VelConstraint driveSpeed = new MinVelConstraint(Arrays.asList(
-                new TranslationalVelConstraint(120.0),
+                new TranslationalVelConstraint(40.0),
                 new AngularVelConstraint(Math.PI)
         ));
+
+//        double driveSpeed = 40.0;
+//        double intakeSpeed = 15.0;
 
         VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(15.0),
@@ -119,7 +121,7 @@ public class GearsNearAuto extends LinearOpMode {
 
         Pose2d prePickupNear = new Pose2d(-12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupNear = new Pose2d(-12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupNear = new Pose2d(-12.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupNear = new Pose2d(-12.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupMiddle = new Pose2d(12.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupMiddle = new Pose2d(12.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
@@ -135,7 +137,7 @@ public class GearsNearAuto extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
                 .setTangent(posMultiplier*Math.toRadians(50))
-                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), intakeSpeed);
+                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosNear1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
@@ -233,7 +235,7 @@ public class GearsNearAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-45.0),
+                                Turret.setTurretTarget(posMultiplier*-40.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodNear(),
                                 actionManager.rev(rpm),
