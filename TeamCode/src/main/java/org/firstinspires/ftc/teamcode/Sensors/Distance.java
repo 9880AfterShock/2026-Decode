@@ -34,6 +34,7 @@ public class Distance { // Prefix for commands
 
         opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
         opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceSpindexer.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Spindexer Aligned", QuickSpindexer.aligned());
         opmode.telemetry.addData("Ball In Intake", ballInIntake());
         opmode.telemetry.addData("Ball In Spindexer", ballInSpindexer());
     }
