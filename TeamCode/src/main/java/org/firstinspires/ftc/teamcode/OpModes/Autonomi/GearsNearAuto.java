@@ -57,7 +57,7 @@ public class GearsNearAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 2200;
+        double rpm = 2300;
         double dumpTime = 1.0;
 
         double posMultiplier = 1.0;
@@ -110,7 +110,7 @@ public class GearsNearAuto extends LinearOpMode {
 //        double intakeSpeed = 15.0;
 
         VelConstraint wallIntakeSpeed = new MinVelConstraint(Arrays.asList(
-                new TranslationalVelConstraint(15.0),
+                new TranslationalVelConstraint(20.0),
                 new AngularVelConstraint(Math.PI/2)
         ));
         VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
@@ -135,7 +135,7 @@ public class GearsNearAuto extends LinearOpMode {
         Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickupFar = new Pose2d(38.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupFar = new Pose2d(38.0, posMultiplier*-29.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
@@ -252,7 +252,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmOut(),
                                                 Prongs.AutoProngsShooting(),
                                                 QuickSpindexer.addRevOffset(),
-                                                actionManager.waitFor(0.5),
+                                                actionManager.waitFor(0.3),
                                                 Arm.AutoArmRev()
                                         ),
                                         toShoot1.build()
@@ -311,7 +311,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                         Arm.AutoArmOut(),
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
-                                                        actionManager.waitFor(0.5),
+                                                        actionManager.waitFor(0.3),
                                                         Arm.AutoArmRev()
                                                 )
                                         ),
@@ -371,7 +371,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                         Arm.AutoArmOut(),
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
-                                                        actionManager.waitFor(0.5),
+                                                        actionManager.waitFor(0.3),
                                                         Arm.AutoArmRev()
                                                 )
                                         ),
@@ -431,7 +431,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                         Arm.AutoArmOut(),
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
-                                                        actionManager.waitFor(0.5),
+                                                        actionManager.waitFor(0.3),
                                                         Arm.AutoArmRev()
                                                 )
                                         ),
