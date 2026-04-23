@@ -29,6 +29,7 @@ public class Gyroscope { // Prefix for commands
     public static void updateGyro(boolean resetOrientation){
         if (resetOrientation) {
             setRotation(0.0);
+            offset = 0.0;
         }
         opmode.telemetry.addData("IMU ROTATION after offset is applied", getRotationDegrees());
     }
