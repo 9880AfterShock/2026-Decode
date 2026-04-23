@@ -101,12 +101,20 @@ public class GearsNearAuto extends LinearOpMode {
                 new TranslationalVelConstraint(40.0),
                 new AngularVelConstraint(Math.PI)
         ));
+        VelConstraint rushSpeed = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(50.0),
+                new AngularVelConstraint(Math.PI)
+        ));
 
 //        double driveSpeed = 40.0;
 //        double intakeSpeed = 15.0;
 
+        VelConstraint wallIntakeSpeed = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(15.0),
+                new AngularVelConstraint(Math.PI/2)
+        ));
         VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
-                new TranslationalVelConstraint(10.0),
+                new TranslationalVelConstraint(15.0),
                 new AngularVelConstraint(Math.PI/2)
         ));
 
@@ -121,15 +129,15 @@ public class GearsNearAuto extends LinearOpMode {
 
         Pose2d prePickupNear = new Pose2d(-10.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupNear = new Pose2d(-10.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupNear = new Pose2d(-10.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupNear = new Pose2d(-10.0, posMultiplier*-50.5, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupMiddle = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupFar = new Pose2d(38.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d gatePosNear1 = new Pose2d(-3.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
@@ -147,7 +155,7 @@ public class GearsNearAuto extends LinearOpMode {
 
         TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupNear)
                 .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
+                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), wallIntakeSpeed);
 
         TrajectoryActionBuilder toShoot2;
         if (firstDump) {
@@ -156,11 +164,11 @@ public class GearsNearAuto extends LinearOpMode {
                     .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                     .waitSeconds(dumpTime)
                     .setTangent(posMultiplier*Math.toRadians(125.0))
-                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), driveSpeed);
+                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), rushSpeed);
         } else{
             toShoot2 = drive.actionBuilder(endPickupNear)
                 .setTangent(posMultiplier*Math.toRadians(110.0))
-                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), driveSpeed);
+                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), rushSpeed);
         }
 
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosNear2)
@@ -180,11 +188,11 @@ public class GearsNearAuto extends LinearOpMode {
                     .splineToLinearHeading(gatePosNear2, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                     .waitSeconds(1.0)
                     .setTangent(posMultiplier*Math.toRadians(135.0))
-                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), driveSpeed);
+                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), rushSpeed);
         } else{
             toShoot3 = drive.actionBuilder(endPickupMiddle)
                     .setTangent(posMultiplier*Math.toRadians(140.0))
-                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), driveSpeed);
+                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), rushSpeed);
         }
 
         TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosNear3)
@@ -204,25 +212,25 @@ public class GearsNearAuto extends LinearOpMode {
                     .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                     .waitSeconds(1.0)
                     .setTangent(posMultiplier*Math.toRadians(145.0))
-                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), driveSpeed);
+                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), rushSpeed);
         } else{
             toShoot4 = drive.actionBuilder(endPickupFar)
                 .setTangent(posMultiplier*Math.toRadians(160.0))
-                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), driveSpeed);
+                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), rushSpeed);
         }
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupNear)
-                .waitSeconds(2.0);
+                .waitSeconds(4.0);
         TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickupMiddle)
-                .waitSeconds(2.0);
+                .waitSeconds(4.0);
         TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickupFar)
-                .waitSeconds(2.0);
+                .waitSeconds(4.0);
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosNear.heading.toDouble()));
         TeleOp.autoEndPosition = shootPosNear4;
 
-        double ballInSpindexerTimer = 0.4;
+        double ballInSpindexerTimer = 0.0;
 
 
         waitForStart();
@@ -266,7 +274,9 @@ public class GearsNearAuto extends LinearOpMode {
                                         new SequentialAction(
                                                 toPickup1.build(),
                                                 pickup1.build(),
-                                                waitPickup1.build()
+                                                waitPickup1.build(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
                                                 Distance.waitForBallInTimer(5.0),
@@ -274,7 +284,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),
@@ -282,7 +292,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),
@@ -324,7 +334,9 @@ public class GearsNearAuto extends LinearOpMode {
                                         new SequentialAction(
                                                 toPickup2.build(),
                                                 pickup2.build(),
-                                                waitPickup2.build()
+                                                waitPickup2.build(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
                                                 Distance.waitForBallInTimer(6.0),
@@ -332,7 +344,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),
@@ -340,7 +352,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),
@@ -382,7 +394,9 @@ public class GearsNearAuto extends LinearOpMode {
                                         new SequentialAction(
                                                 toPickup3.build(),
                                                 pickup3.build(),
-                                                waitPickup3.build()
+                                                waitPickup3.build(),
+                                                Roller.AutoIntakeOff(),
+                                                Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
                                                 Distance.waitForBallInTimer(7.0),
@@ -390,7 +404,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),
@@ -398,7 +412,7 @@ public class GearsNearAuto extends LinearOpMode {
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
                                                 actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeft(),
+                                                QuickSpindexer.turnLeftHalfTime(),
                                                 Roller.AutoIntakeOn(),
                                                 Arm.AutoArmOut(),
                                                 Distance.waitForBallIn(),

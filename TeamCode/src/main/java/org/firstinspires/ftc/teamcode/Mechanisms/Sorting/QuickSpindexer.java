@@ -261,6 +261,23 @@ public class QuickSpindexer { // Prefix for commands
         };
     }
 
+    public static Action turnLeftHalfTime(){
+        return new Action() {
+            private boolean first = true;
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                if (first) {
+                    spindexer.setTargetPosition((int) (spindexer.getTargetPosition()-(1425.1/3)));
+                    first = false;
+                    spindexer.setPower(0.6);
+                }
+                telemetryPacket.put("Spin Pose", spindexer.getCurrentPosition());
+                telemetryPacket.put("Spin Target Pose", spindexer.getTargetPosition());
+                return abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition())/2.0 > errorMargin; //40 is tick margin of error
+            }
+        };
+    }
+
     public static Action addRevOffset(){
         return new Action() {
             private boolean first = true;
