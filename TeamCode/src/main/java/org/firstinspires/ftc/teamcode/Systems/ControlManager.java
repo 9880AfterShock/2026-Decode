@@ -76,6 +76,7 @@ public class ControlManager {
         tripleIncrement = 0;
         armOverride = false;
         cyclePrepped = false;
+        Arm.updateIntake(true, false, false); //setup arm seq
     }
 
     public static void update(boolean flipField) {//false is blue, true is red
