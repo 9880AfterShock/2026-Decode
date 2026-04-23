@@ -106,7 +106,7 @@ public class GearsNearAuto extends LinearOpMode {
 //        double intakeSpeed = 15.0;
 
         VelConstraint intakeSpeed = new MinVelConstraint(Arrays.asList(
-                new TranslationalVelConstraint(15.0),
+                new TranslationalVelConstraint(10.0),
                 new AngularVelConstraint(Math.PI/2)
         ));
 
@@ -120,15 +120,15 @@ public class GearsNearAuto extends LinearOpMode {
         Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d prePickupNear = new Pose2d(-10.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupNear = new Pose2d(-10.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupNear = new Pose2d(-10.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupNear = new Pose2d(-10.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupMiddle = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-38.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d gatePosNear1 = new Pose2d(-3.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
@@ -256,7 +256,7 @@ public class GearsNearAuto extends LinearOpMode {
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(false),
                                 actionManager.hasBalls(false),
-                                actionManager.derev(),
+//                                actionManager.derev(),
 
                                 //First Pickup
                                 Arm.AutoArmOut(),
