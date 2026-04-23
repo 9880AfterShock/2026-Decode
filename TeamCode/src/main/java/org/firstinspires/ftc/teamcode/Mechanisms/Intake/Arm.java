@@ -28,6 +28,7 @@ public class Arm { // Prefix for commands
         arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
         Arm.opmode = opmode;
         lastTransition = -9880.0;
+        arm.setPosition(revPosition);
     }
 
     public static void updateIntake(boolean intakeButtonCurrentlyPressed, boolean outTakeButtonCurrentlyPressed, boolean revving) {
