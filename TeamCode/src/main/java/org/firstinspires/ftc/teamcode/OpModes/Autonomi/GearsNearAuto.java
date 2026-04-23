@@ -212,11 +212,11 @@ public class GearsNearAuto extends LinearOpMode {
         }
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupNear)
-                .waitSeconds(5.0);
+                .waitSeconds(2.0);
         TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickupMiddle)
-                .waitSeconds(5.0);
+                .waitSeconds(2.0);
         TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickupFar)
-                .waitSeconds(5.0);
+                .waitSeconds(2.0);
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosNear.heading.toDouble()));
@@ -262,15 +262,14 @@ public class GearsNearAuto extends LinearOpMode {
                                 Arm.AutoArmOut(),
                                 Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
-                                toPickup1.build(),
-                                actionManager.hasBalls(true),
                                 new RaceAction(
                                         new SequentialAction(
+                                                toPickup1.build(),
                                                 pickup1.build(),
                                                 waitPickup1.build()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallInTimer(5.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -321,15 +320,14 @@ public class GearsNearAuto extends LinearOpMode {
                                 Arm.AutoArmOut(),
                                 Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
-                                toPickup2.build(),
-                                actionManager.hasBalls(true),
                                 new RaceAction(
                                         new SequentialAction(
+                                                toPickup2.build(),
                                                 pickup2.build(),
                                                 waitPickup2.build()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallInTimer(6.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -379,16 +377,15 @@ public class GearsNearAuto extends LinearOpMode {
                                 Arm.AutoArmOut(),
                                 Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
-                                toPickup3.build(),
-                                actionManager.hasBalls(true),
                                 Turret.setTurretTarget(posMultiplier*-50.0),
                                 new RaceAction(
                                         new SequentialAction(
+                                                toPickup3.build(),
                                                 pickup3.build(),
                                                 waitPickup3.build()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallIn(),
+                                                Distance.waitForBallInTimer(7.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
