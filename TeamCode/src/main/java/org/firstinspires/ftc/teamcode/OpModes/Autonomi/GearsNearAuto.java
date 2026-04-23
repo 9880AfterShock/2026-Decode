@@ -389,7 +389,7 @@ public class GearsNearAuto extends LinearOpMode {
                                 Arm.AutoArmOut(),
                                 Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
-                                Turret.setTurretTarget(posMultiplier*-50.0),
+                                Turret.setTurretTarget(posMultiplier*-65.0),
                                 new RaceAction(
                                         new SequentialAction(
                                                 toPickup3.build(),
