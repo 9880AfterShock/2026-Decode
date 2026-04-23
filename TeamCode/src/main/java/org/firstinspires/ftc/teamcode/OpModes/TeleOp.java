@@ -107,7 +107,19 @@ public class TeleOp extends LinearOpMode {
             RunLater.update();
             RunCondition.update();
 //            BallColorDetectinator.update();
+
             Turret.updateTurret(false, 0.0);
+//            /*
+            if (gamepad2.left_stick_y == 0 && gamepad2.left_stick_x == 0){
+                Turret.updateTurret(gamepad2.left_stick_button, 0.0);
+            } else {
+                if (gamepad1.left_stick_y < 0){
+                    Turret.updateTurret(gamepad2.left_stick_button, 90+Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x)));
+                } else{
+                    Turret.updateTurret(gamepad2.left_stick_button, 90+Math.toDegrees(Math.atan2(-gamepad2.left_stick_y, -gamepad2.left_stick_x)));
+                }
+            }//*/
+
             Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);
