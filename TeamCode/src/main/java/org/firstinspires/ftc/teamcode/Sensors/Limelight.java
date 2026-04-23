@@ -111,7 +111,7 @@ public class Limelight {
         limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.currentPosition);
         LLResult result = limelight.getLatestResult();
 
-        if (result != null && result.isValid() && Math.abs(Turret.currentPosition - Turret.targetPosition) < 2) {
+        if (result != null && result.isValid() && Math.abs(Turret.currentPosition - Turret.targetPosition) < 2) { //2nd clause is temp, TODO remove when time
             Pose2d currentPose = new Pose2d(result.getBotpose_MT2().getPosition().x*METER_TO_INCH, result.getBotpose_MT2().getPosition().y*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw()));
 //            TelemetryPacket packet = new TelemetryPacket();
 //            packet.fieldOverlay().setStroke("#00FF00");
