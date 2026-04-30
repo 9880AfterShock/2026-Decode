@@ -13,7 +13,7 @@ public class BulkRead {
 
     }
 
-    public static void limeLightUpdate(){ //for after bulk read, but before anything else, write to LL and fetch fidicuial results
+    public static void limeLightUpdate(){ //for after bulk read (for gyro and axon), but before anything else, write to LL and fetch fidicuial results
 
     }
 
