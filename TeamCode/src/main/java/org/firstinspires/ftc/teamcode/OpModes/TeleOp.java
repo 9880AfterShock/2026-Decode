@@ -38,7 +38,7 @@ public class TeleOp extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
 
     @Override
-    public void runOpMode() {
+public void runOpMode() {
         SensOrange.initSensor(this);
 
         //Init Functions
