@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -27,12 +28,14 @@ import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import java.util.List;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="9880 Decode TeleOp")
 public class TeleOp extends LinearOpMode {
     public static Alliance alliance;
     public static Pose2d autoEndPosition;
     public static boolean autoHasBalls;
+    public static List<LynxModule> allHubs;
 
     // Declare OpMode members.
     ElapsedTime runtime = new ElapsedTime();
@@ -99,9 +102,20 @@ public void runOpMode() {
         Gyroscope.setRotation(Math.toDegrees(autoEndPosition.heading.toDouble()));
         // run until the end of the match (driver presses STOP)
         double loops = 1;
+
+        allHubs = hardwareMap.getAll(LynxModule.class);
+
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        }
+
         while (opModeIsActive()) {
             SensOrange.updateEncoder();
             Gyroscope.updateGyro(gamepad1.backWasPressed());
+            for (LynxModule hub : allHubs) {
+                hub.clearBulkCache();
+            }
+            Distance.updateSensor();
             Limelight.update();
             ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
@@ -120,12 +134,15 @@ public void runOpMode() {
                 }
             }//*/
 
-            Distance.updateSensor();
+//            Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);
             telemetry.addData("Looptime (MS per Loop)", runtime.milliseconds()/loops);
             loops += 1;
             telemetry.update();
+//            for (LynxModule hub : allHubs) {
+//                hub.clearBulkCache();
+//            }
         }
         //SpindexerCamera.stopVision();
         //Obelisk.stopVision();
