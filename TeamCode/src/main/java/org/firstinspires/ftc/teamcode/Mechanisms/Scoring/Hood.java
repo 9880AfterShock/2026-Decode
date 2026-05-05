@@ -8,16 +8,19 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 public class Hood {
-    private static Servo hood; // init motor var
+    private static Servo hoodServo; // init motor var
+    private static BulkWriteServo hood; // init motor var
     private static OpMode opmode; // opmode var init
     public static double farPosition = 0.98; //could be as "high" (low) as 0.97 //old 0.96
     public static double nearPosition = 1.0; //old 0.98 ---- Note to Timo: 0.96 is far, 0.98 is near
     public static String hoodState = "Near";
 
     public static void initAim(OpMode opmode) { // init motor
-        hood = opmode.hardwareMap.get(Servo.class, "hood"); //Port 5 on expansion hub
+        hoodServo = opmode.hardwareMap.get(Servo.class, "hood"); //Port 5 on expansion hub
+        hood = new BulkWriteServo(hoodServo);
         Hood.opmode = opmode;
         hoodState = "Near";
     }
@@ -50,7 +53,7 @@ public class Hood {
     public static Action AutoHoodNear() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                hood.setPosition(nearPosition);
+                hoodServo.setPosition(nearPosition);
                 return false;
             }
         };
@@ -58,7 +61,7 @@ public class Hood {
     public static Action AutoHoodFar() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                hood.setPosition(farPosition);
+                hoodServo.setPosition(farPosition);
                 return false;
             }
         };

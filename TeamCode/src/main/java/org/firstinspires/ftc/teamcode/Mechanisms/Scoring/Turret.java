@@ -12,12 +12,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Systems.PID;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 @Config
 public class Turret {
     private static OpMode opmode;
-    private static Servo leftServo; //Left servo
-    private static Servo rightServo; //Right servo
+    private static BulkWriteServo leftServo; //Left servo
+    private static BulkWriteServo rightServo; //Right servo
+    private static Servo leftServoReal; //Left servo
+    private static Servo rightServoReal; //Right servo
     private static AnalogInput leftEncoder; //Left servo feedback wire
     private static AnalogInput rightEncoder; //Right servo feedback wire
 //    private static AnalogInput encoder;
@@ -45,8 +48,10 @@ public class Turret {
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
-        leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
-        rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
+        leftServoReal = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
+        rightServoReal = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
+        leftServo = new BulkWriteServo(leftServoReal);
+        rightServo = new BulkWriteServo(rightServoReal);
 //        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
         leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into CH 0
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
@@ -154,6 +159,8 @@ public class Turret {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 updateTurret(true, 0.0);
+                leftServo.bulkWrite();
+                rightServo.bulkWrite();
                 return false;
             }
         };
@@ -164,6 +171,8 @@ public class Turret {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 updateTurret(false, 0.0);
+                leftServo.bulkWrite();
+                rightServo.bulkWrite();
                 return true;
             }
         };
