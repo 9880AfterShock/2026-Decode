@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
@@ -14,9 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Hinge;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
-import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
-import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
@@ -28,6 +25,7 @@ import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
 import org.firstinspires.ftc.teamcode.Systems.BulkWriterTracker;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
+import org.firstinspires.ftc.teamcode.Systems.RunCountdown;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.List;
 
@@ -49,6 +47,7 @@ public class TeleOp extends LinearOpMode {
         //Init Functions
         DriveTrain.initDrive(this);
         RunLater.setup(this);
+        RunCountdown.setup(this);
         //FieldCentricDrive.initDrive(this);
         //Obelisk.initDetection(this);
         //SpindexerCamera.initDetection(this);
@@ -122,6 +121,7 @@ public class TeleOp extends LinearOpMode {
             ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
             RunCondition.update();
+            RunCountdown.update();
 //            BallColorDetectinator.update();
 
 //            Turret.updateTurret(false, 0.0);

@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode.Systems;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class RunCountdown {
     private static OpMode opMode;
     private static HashMap<String,CountdownAction> countDowns;
 
-    public static void init(OpMode opMode) {
+    public static void setup(OpMode opMode) {
         RunCountdown.opMode = opMode;
+        countDowns = new HashMap<>();
     }
 
     public static void addAction(CountdownAction action,String id) {
