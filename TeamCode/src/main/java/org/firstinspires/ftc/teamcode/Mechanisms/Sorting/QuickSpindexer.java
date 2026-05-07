@@ -119,15 +119,15 @@ public class QuickSpindexer { // Prefix for commands
         if (abs(spindexer.getTargetPosition() - spindexer.getCurrentPosition()) < 40){
             aborting = false;
         }
-        if (spindexerStuck() && !aborting && !reseting){
-            jamExcuses -= 1;
-            if (jamExcuses < 0){
-                jamExcuses = 0;
-                abortTurn();
-                jamCount += 1;
-                aborting = true;
-            }
-        }
+//        if (spindexerStuck() && !aborting && !reseting){
+//            jamExcuses -= 1;
+//            if (jamExcuses < 0){
+//                jamExcuses = 0;
+//                abortTurn();
+//                jamCount += 1;
+//                aborting = true;
+//            }
+//        }
 
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;

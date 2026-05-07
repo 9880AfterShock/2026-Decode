@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Systems.CountdownAction;
 import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 public class Prongs {
@@ -25,9 +24,9 @@ public class Prongs {
     }
 
     public static void updateGrate(boolean shooting, boolean priming) {
-        CountdownAction shootingposAction = new CountdownAction(() -> prongs.setPosition(shootingPosition),"shootPosAction");
-        if (!shooting){
-            shootingposAction.resetCountdown(0.1);
+        if (shooting){
+            prongs.setPosition(shootingPosition);
+        } else {
             if (priming){
                 prongs.setPosition(primingPosition);
             } else {

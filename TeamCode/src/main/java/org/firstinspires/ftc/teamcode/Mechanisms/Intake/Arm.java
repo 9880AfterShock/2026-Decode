@@ -44,7 +44,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else
-                if (lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime() && intakeState == "revving") {
+                if (lastTransition != -9880.0 && lastTransition + transitionTime < opmode.getRuntime() && intakeState == "revving") {
                     arm.setPosition(revPosition);
                     lastTransition = -9880.0;
                 }
@@ -54,7 +54,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else {
-                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime()) {
+                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime < opmode.getRuntime()) {
                         arm.setPosition(neutralPosition);
                         lastTransition = -9880.0;
                     }
