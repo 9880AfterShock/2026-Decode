@@ -35,27 +35,29 @@ public class Distance { // Prefix for commands
 
     public static void updateSensor() {
         loopTracker++;
-        if (QuickSpindexer.aligned()){
-            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = ballInSpindexer();
-        }
 
-        opmode.telemetry.addData("Distance Sensor Intake", sensorSpindexerCache);
+        opmode.telemetry.addData("Distance Sensor Intake", sensorIntakeCache);
         opmode.telemetry.addData("Distance Sensor Spindexer", sensorSpindexerCache);
         if (loopTracker >= loopInterval) {
             loopTracker = 0;
             reRead();
         }
+
+        if (QuickSpindexer.aligned() && loopTracker == 0){
+            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = ballInSpindexer();
+        }
+
         opmode.telemetry.addData("Spindexer Aligned", QuickSpindexer.aligned());
         opmode.telemetry.addData("Ball In Intake", ballInIntake());
         opmode.telemetry.addData("Ball In Spindexer", ballInSpindexer());
     }
 
     public static boolean ballInSpindexer(){
-        return sensorSpindexerCache > 100;
+        return sensorSpindexerCache < 130;
     }
 
     public static boolean ballInIntake(){
-        return sensorIntakeCache > 100;
+        return sensorIntakeCache < 100;
     }
 
     public static Action waitForBallIn() {
