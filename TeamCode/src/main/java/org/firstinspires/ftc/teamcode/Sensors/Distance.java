@@ -4,21 +4,18 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.sun.tools.javac.code.Types;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.QuickSpindexer;
-import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Spindexer;
 
 public class Distance { // Prefix for commands
     private static OpMode opmode; // opmode var init
     private static DistanceSensor sensorDistanceIntake;
     private static DistanceSensor sensorDistanceSpindexer;
-    private static boolean inIntakeCache = false;
-    private static boolean inSpindexerCache = false;
+    private static double sensorIntakeCache = 0.0;
+    private static double sensorSpindexerCache = 0.0;
     private static int loopTracker = 0;
     private static final int loopInterval = 6;
     public static boolean missedIntake = false;
@@ -32,18 +29,18 @@ public class Distance { // Prefix for commands
     }
 
     private static void reRead() {
-        inIntakeCache = sensorDistanceIntake.getDistance(DistanceUnit.MM) <= 100;
-        inSpindexerCache = sensorDistanceSpindexer.getDistance(DistanceUnit.MM) <= 100;
+        sensorIntakeCache = sensorDistanceIntake.getDistance(DistanceUnit.MM);
+        sensorSpindexerCache = sensorDistanceSpindexer.getDistance(DistanceUnit.MM);
     }
 
     public static void updateSensor() {
         loopTracker++;
-//        if (QuickSpindexer.aligned()){
-//            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = ballInSpindexer();
-//        }
+        if (QuickSpindexer.aligned()){
+            QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = ballInSpindexer();
+        }
 
-//        opmode.telemetry.addData("Distance Sensor Intake", sensorDistanceIntake.getDistance(DistanceUnit.MM));
-//        opmode.telemetry.addData("Distance Sensor Spindexer", sensorDistanceSpindexer.getDistance(DistanceUnit.MM));
+        opmode.telemetry.addData("Distance Sensor Intake", sensorSpindexerCache);
+        opmode.telemetry.addData("Distance Sensor Spindexer", sensorSpindexerCache);
         if (loopTracker >= loopInterval) {
             loopTracker = 0;
             reRead();
@@ -54,11 +51,11 @@ public class Distance { // Prefix for commands
     }
 
     public static boolean ballInSpindexer(){
-        return inSpindexerCache;
+        return sensorSpindexerCache > 100;
     }
 
     public static boolean ballInIntake(){
-        return inIntakeCache;
+        return sensorIntakeCache > 100;
     }
 
     public static Action waitForBallIn() {
