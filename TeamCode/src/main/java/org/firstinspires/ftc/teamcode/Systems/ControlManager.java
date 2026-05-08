@@ -61,6 +61,7 @@ public class ControlManager {
     private static boolean armOverride = false;
     private static boolean cyclePrepped = false;
     private static boolean lastRev = false;
+    private static double intakeTimer = -9880.0;
     public static void setup(OpMode opMode) {
         color_sensor = opMode.hardwareMap.get(AdafruitI2cColorSensor.class,"sensorColor");
         color_sensor.initialize(AMSColorSensor.Parameters.createForTCS34725());
@@ -98,8 +99,14 @@ public class ControlManager {
                     if (QuickSpindexer.hasBall[nextSlot-1]) {
                         QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] = true;
                     }
+                    intakeTimer = opMode.getRuntime();
+                }
+                if (opMode.getRuntime() - intakeTimer > 0.1 && !(Distance.ballInIntake() || QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1])) {//ball got pushed down instead of in
+                    intakeTimer = -9880.0;
+                    armOverride = false;
                 }
                 if (!QuickSpindexer.hasBall[nextSlot-1] && QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] && !cyclePrepped) {
+                    intakeTimer = -9880.0;
                     cyclePrepped = true;
                     RunLater.addAction(new DelayedAction(() -> armOverride = false, 0.4));
                     RunLater.addAction(new DelayedAction(() -> cyclePrepped = false, 0.4));

@@ -32,6 +32,10 @@ public class RunCountdown {
         }
     }
 
+    public static void removeCountdown(String id){
+        countDowns.remove(id);
+    }
+
     public static void update() {
         for (CountdownAction countdownAction : countDowns.values()) {
             if (!countdownAction.hasRun && countdownAction.countdownTimestamp <= opMode.getRuntime()) {
