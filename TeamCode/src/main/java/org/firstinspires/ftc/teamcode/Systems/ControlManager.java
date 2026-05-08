@@ -91,6 +91,7 @@ public class ControlManager {
         if (operator.left_trigger > 0.5) {
             int nextSlot = QuickSpindexer.currentSlot-1;
             if (nextSlot < 1) nextSlot = 3;
+            opMode.telemetry.addData("ball in next slot", !QuickSpindexer.hasBall[nextSlot-1]);
             if (QuickSpindexer.aligned()){
                 if (!armOverride && (QuickSpindexer.hasBall[QuickSpindexer.currentSlot-1] || Distance.ballInIntake())){
                     armOverride = true;
@@ -244,7 +245,8 @@ public class ControlManager {
 //        opMode.telemetry.addData("Current Ball",spindexer.getCurrentBall());
 
         Hinge.updateBase(operator.yWasPressed());
-//        opMode.telemetry.addData("ARM OVERRIDE", armOverride);
+        opMode.telemetry.addData("ARM OVERRIDE", armOverride);
+        opMode.telemetry.addData("CYCLE PREPPED", cyclePrepped);
     }
 
     // private static boolean autoShootSpindex(double startTime, double currentTime){

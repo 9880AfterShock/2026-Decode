@@ -63,6 +63,7 @@ public class Arm { // Prefix for commands
         }
 
         opmode.telemetry.addData("Intake Arm State", intakeState);
+        opmode.telemetry.addData("TRANSITION TIMER", lastTransition);
         opmode.telemetry.addData("Intake Arm Pos", arm.getPosition());
     }
 
