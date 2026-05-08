@@ -24,7 +24,7 @@ public class Arm { // Prefix for commands
     public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
     public static double lastTransition = -9880.0;
-    public final static double transitionTime = 0.7;
+    public final static double transitionTime = 0.2;
 
     public static void initIntake(OpMode opmode) { // init motor
         armServo = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
