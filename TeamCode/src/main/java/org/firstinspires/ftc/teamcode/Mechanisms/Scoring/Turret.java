@@ -39,8 +39,8 @@ public class Turret {
     public static final double leftOffset =  0.0; //close enough
     public static final double rightOffset = 23.297380585516176;
 
-    public static double P = 0.008;
-    public static double D = 0.0;
+    public static double P = 0.005;
+    public static double D = 0.00155;
 
 
     public static PID mainPID;
