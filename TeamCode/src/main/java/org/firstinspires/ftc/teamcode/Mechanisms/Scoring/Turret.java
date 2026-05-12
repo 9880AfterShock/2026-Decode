@@ -91,7 +91,7 @@ public class Turret {
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
-        if (Math.abs(difference) > 0.5){
+        if (Math.abs(difference) > 2){
             if (difference > 0){
                 diffSign = 1;
             } else {
