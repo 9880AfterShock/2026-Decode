@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -9,13 +10,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
 import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
-
+@Config
 public class Hood {
     private static Servo hoodServo; // init motor var
     private static BulkWriteServo hood; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double farPosition = 0.98; //could be as "high" (low) as 0.97 //old 0.96
-    public static double nearPosition = 1.0; //old 0.98 ---- Note to Timo: 0.96 is far, 0.98 is near
+    public static double farPosition = 0.92; //could be as "high" (low) as 0.97 //old 0.96
+    public static double nearPosition = 0.94;
+    public static double flatPosition = 0.96; //lowest the hood can be
     public static String hoodState = "Near";
 
     public static void initAim(OpMode opmode) { // init motor
