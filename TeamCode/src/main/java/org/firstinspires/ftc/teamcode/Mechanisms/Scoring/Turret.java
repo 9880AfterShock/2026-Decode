@@ -36,7 +36,7 @@ public class Turret {
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  0.0; //close enough
+    public static final double leftOffset =  1.231321;
     public static final double rightOffset = 23.297380585516176;
 
     public static double P = 0.005;
@@ -91,7 +91,7 @@ public class Turret {
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
-        if (Math.abs(difference) > 2){
+        if (Math.abs(difference) > 0.5){
             if (difference > 0){
                 diffSign = 1;
             } else {
