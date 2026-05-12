@@ -36,8 +36,8 @@ public class Turret {
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  1.231321;
-    public static final double rightOffset = 23.297380585516176;
+    public static final double leftOffset =  77.65793528505394;
+    public static final double rightOffset = 54.5824345146379;
 
     public static double P = 0.005;
     public static double D = 0.00155;
@@ -189,11 +189,11 @@ public class Turret {
     }
 
     public static void updateTuner(TelemetryPacket packet) {
-        updatePosition();
-        leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
-        rightServo.setPosition(calcPower(0.0)); //actually read ctrl hub
+//        updatePosition();
+        leftServoReal.setPosition(calcPower(0.0)); //actually read ctrl hub
+        rightServoReal.setPosition(calcPower(0.0)); //actually read ctrl hub
         packet.addLine("Set the leftOffset and rightOffset to these");
-        packet.put("Left Raw", leftCurrentPosition);
-        packet.put("Right Raw", rightCurrentPosition);
+        packet.put("Left Raw", getPosition(leftEncoder.getVoltage()));
+        packet.put("Right Raw", getPosition(rightEncoder.getVoltage()));
     }
 }
