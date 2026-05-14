@@ -51,7 +51,9 @@ public class MeepMeepRR {
         Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
+        Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d slamPos1 = new Pose2d(50.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d preSlamPos2 = new Pose2d(50.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
@@ -155,53 +157,57 @@ public class MeepMeepRR {
         //Premier Auto Far
 //        /*
         myBot.runAction(myBot.getDrive().actionBuilder(startPosFar)
-                //toShoot1
+                        //toShoot1
 //                        .waitSeconds(3.0)
 //                        .setTangent(posMultiplier*Math.toRadians(0.0))
 //                        .splineToLinearHeading(shootPosFar1, posMultiplier*Math.toRadians(0.0), driveSpeed)
-                //toPickup1
+                        //toPickup1
                         .setTangent(posMultiplier*Math.toRadians(180.0))
                         .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                         .setTangent(posMultiplier*Math.toRadians(-90.0))
                         .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
-                //pickup1
+                        //pickup1
                         .setTangent(posMultiplier*Math.toRadians(-90))
                         .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed)
 
-                //toShoot2
+                        //toShoot2
                         .setTangent(posMultiplier*Math.toRadians(52.5))
                         .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(52.5), driveSpeed)
 
-                //toPickup2
+                        //toPickup2
                         .setTangent(posMultiplier*Math.toRadians(-100.0))
                         .splineToLinearHeading(prePickupCorner, posMultiplier*Math.toRadians(-100.0), driveSpeed)
                         .setTangent(posMultiplier*Math.toRadians(-90.0))
                         .splineToLinearHeading(startPickupCorner, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 //
-                //pickup2
+                        //pickup2
                         .setTangent(posMultiplier*Math.toRadians(0.0))
                         .splineToLinearHeading(midPickupCorner, posMultiplier*Math.toRadians(0.0), intakeSpeed)
                         .setTangent(posMultiplier*Math.toRadians(0.0))
                         .splineToLinearHeading(endPickupCorner, posMultiplier*Math.toRadians(0.0), intakeSpeed)
 
-                //toShoot3
+                        //toShoot3
                         .setTangent(posMultiplier*Math.toRadians(95.0))
                         .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(95.0), driveSpeed)
 
-                //Slam1
+                        //Slam1
+                        .setTangent(posMultiplier*Math.toRadians(-105.0))
+                        .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed)
                         .setTangent(posMultiplier*Math.toRadians(-105.0))
                         .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed)
-                //Back1
+                        //Back1
                         .setTangent(posMultiplier*Math.toRadians(75.0))
                         .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(75.0), driveSpeed)
-                //Slam2
+                        //Slam2
+                        .setTangent(posMultiplier*Math.toRadians(-120.0))
+                        .splineToLinearHeading(preSlamPos2, posMultiplier*Math.toRadians(-120.0), driveSpeed)
                         .setTangent(posMultiplier*Math.toRadians(-120.0))
                         .splineToLinearHeading(slamPos2, posMultiplier*Math.toRadians(-120.0), driveSpeed)
-                //Back2
+                        //Back2
                         .setTangent(posMultiplier*Math.toRadians(60.0))
                         .splineToLinearHeading(shootPosFar5, posMultiplier*Math.toRadians(60.0), driveSpeed)
-                //ToPark
+                        //ToPark
                         .setTangent(posMultiplier*Math.toRadians(190.0))
                         .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(190.0))
                         .setTangent(posMultiplier*Math.toRadians(205.0))
