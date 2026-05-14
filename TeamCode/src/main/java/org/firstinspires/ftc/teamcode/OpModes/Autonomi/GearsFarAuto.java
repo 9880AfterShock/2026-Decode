@@ -118,42 +118,44 @@ public class GearsFarAuto extends LinearOpMode {
                 new AngularVelConstraint(Math.PI/2)
         ));
 
-        Pose2d startPosNear = new Pose2d(-47.0, posMultiplier*-49.0, posMultiplier*Math.toRadians(0.0));
-        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosNear);
+        Pose2d startPosFar = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosNear1 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d shootPosNear2 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d shootPosNear3 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosFar1 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar4 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
 
-        Pose2d prePickupNear = new Pose2d(-10.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupNear = new Pose2d(-10.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupNear = new Pose2d(-10.0, posMultiplier*-50.5, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickupMiddle = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-60.0, posMultiplier*-Math.toRadians(10.0));
 
-        Pose2d prePickupFar = new Pose2d(38.0, posMultiplier*-29.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d slamPos1 = new Pose2d(50.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d preSlamPos2 = new Pose2d(50.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePosNear1 = new Pose2d(-3.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
+        Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
 
-        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
-                .setTangent(posMultiplier*Math.toRadians(50))
-                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
+//        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
+//                .setTangent(posMultiplier*Math.toRadians(50))
+//                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosNear1)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
-        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupNear)
+        TrajectoryActionBuilder pickup1 = drive.actionBuilder(shootPosFar1)
                 .setTangent(posMultiplier*Math.toRadians(-90))
                 .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), wallIntakeSpeed);
 
@@ -201,7 +203,7 @@ public class GearsFarAuto extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed);
 
-        TrajectoryActionBuilder pickup3 = drive.actionBuilder(startPickupFar)
+        TrajectoryActionBuilder pickup3 = drive.actionBuilder(startPickupNear)
                 .setTangent(posMultiplier*Math.toRadians(-90))
                 .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
 
