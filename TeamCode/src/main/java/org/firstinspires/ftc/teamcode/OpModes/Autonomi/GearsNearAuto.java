@@ -245,7 +245,7 @@ public class GearsNearAuto extends LinearOpMode {
                                 Distance.setMissed(false),
                                 Turret.setTurretTarget(posMultiplier*-45.0),
                                 actionManager.shotCue(0),
-//                                Hood.AutoHoodNear(),
+                                Hood.AutoHoodFlat(),
                                 actionManager.rev(rpm),
                                 new ParallelAction(
                                         new SequentialAction(

@@ -15,7 +15,7 @@ public class Hood {
     private static Servo hoodServo; // init motor var
     private static BulkWriteServo hood; // init motor var
     private static OpMode opmode; // opmode var init
-    public static double farPosition = 0.92; //could be as "high" (low) as 0.97 //old 0.96
+    public static double farPosition = 0.92;
     public static double nearPosition = 0.94;
     public static double flatPosition = 0.96; //lowest the hood can be
     public static String hoodState = "Near";
@@ -64,6 +64,14 @@ public class Hood {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 hoodServo.setPosition(farPosition);
+                return false;
+            }
+        };
+    }
+    public static Action AutoHoodFlat() {
+        return new Action() {
+            public boolean run(@NonNull TelemetryPacket packet) {
+                hoodServo.setPosition(flatPosition);
                 return false;
             }
         };
