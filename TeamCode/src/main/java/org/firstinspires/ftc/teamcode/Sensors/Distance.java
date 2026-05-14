@@ -70,6 +70,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
@@ -85,6 +86,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= time);
             }
         };
@@ -100,6 +102,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.0);
             }
         };
@@ -115,6 +118,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 1.9);
             }
         };
@@ -130,6 +134,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 missedIntake = (!ballInSpindexer()) && opmode.getRuntime() - scanTime >= 1.0;
                 return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 1.0);
             }
@@ -146,6 +151,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake() || opmode.getRuntime() - scanTime >= 2.0);
             }
         };
@@ -161,6 +167,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInIntake());
             }
         };
@@ -176,6 +183,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return !(ballInSpindexer() || opmode.getRuntime() - scanTime >= 2.5);
             }
         };
@@ -191,6 +199,7 @@ public class Distance { // Prefix for commands
                     scanTime = opmode.getRuntime();
                     first = false;
                 }
+                reRead();
                 return ballInIntake();
             }
         };
