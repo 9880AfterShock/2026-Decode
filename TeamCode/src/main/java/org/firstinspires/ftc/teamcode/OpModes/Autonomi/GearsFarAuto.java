@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "GEARS Far zone ???")
+@Autonomous(name = "GEARS Far zone 15???")
 public class GearsFarAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -57,13 +57,13 @@ public class GearsFarAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 2300;
+        double rpm = 3200;
         double dumpTime = 1.0;
 
         double posMultiplier = 1.0;
-        boolean firstDump = false;
-        boolean secondDump = false;
-        boolean thirdDump = false;
+//        boolean firstDump = false;
+//        boolean secondDump = false;
+//        boolean thirdDump = false;
 //        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Use x and b to select alliance");
@@ -74,15 +74,15 @@ public class GearsFarAuto extends LinearOpMode {
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
             }
-            if (gamepad1.dpadUpWasPressed()){
-                firstDump =!firstDump;
-            }
-            if (gamepad1.dpadLeftWasPressed()){
-                secondDump =!secondDump;
-            }
-            if (gamepad1.dpadRightWasPressed()){
-                thirdDump =!thirdDump;
-            }
+//            if (gamepad1.dpadUpWasPressed()){
+//                firstDump =!firstDump;
+//            }
+//            if (gamepad1.dpadLeftWasPressed()){
+//                secondDump =!secondDump;
+//            }
+//            if (gamepad1.dpadRightWasPressed()){
+//                thirdDump =!thirdDump;
+//            }
             if (posMultiplier == 1.0) {
                 telemetry.addData("Alliance", "Blue");
                 TeleOp.alliance = Alliance.BLUE;
@@ -91,9 +91,9 @@ public class GearsFarAuto extends LinearOpMode {
                 telemetry.addData("Alliance", "Red");
                 TeleOp.alliance = Alliance.RED;
             }
-            telemetry.addData("First Dump", firstDump);
-            telemetry.addData("Second Dump", secondDump);
-            telemetry.addData("Third Dump", thirdDump);
+//            telemetry.addData("First Dump", firstDump);
+//            telemetry.addData("Second Dump", secondDump);
+//            telemetry.addData("Third Dump", thirdDump);
             telemetry.update();
         }
 
@@ -129,8 +129,8 @@ public class GearsFarAuto extends LinearOpMode {
         Pose2d shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
 
         Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-36.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-50.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
         Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
@@ -208,13 +208,13 @@ public class GearsFarAuto extends LinearOpMode {
 
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupFar)
-                .waitSeconds(4.0);
+                .waitSeconds(5.0);
         TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickupCorner)
-                .waitSeconds(8.0);
+                .waitSeconds(9.0);
         TrajectoryActionBuilder waitSlam1 = drive.actionBuilder(slamPos1)
-                .waitSeconds(2.0);
+                .waitSeconds(3.0);
         TrajectoryActionBuilder waitSlam2 = drive.actionBuilder(slamPos2)
-                .waitSeconds(2.0);
+                .waitSeconds(3.0);
 
 
         Gyroscope.setRotation(Math.toDegrees(startPosFar.heading.toDouble()));
@@ -233,7 +233,7 @@ public class GearsFarAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-45.0),
+                                Turret.setTurretTarget(posMultiplier*-60.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFlat(),
                                 actionManager.rev(rpm),
@@ -244,8 +244,9 @@ public class GearsFarAuto extends LinearOpMode {
                                                 QuickSpindexer.addRevOffset(),
                                                 actionManager.waitFor(0.3),
                                                 Arm.AutoArmRev()
-                                        )//,
+                                        ),
 //                                        toShoot1.build()
+                                        Turret.waitForTurret()
                                 ),
 
                                 //First Volley
@@ -387,7 +388,7 @@ public class GearsFarAuto extends LinearOpMode {
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(5.0),
+                                                Distance.waitForBallInTimer(2.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -445,7 +446,7 @@ public class GearsFarAuto extends LinearOpMode {
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(5.0),
+                                                Distance.waitForBallInTimer(2.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),

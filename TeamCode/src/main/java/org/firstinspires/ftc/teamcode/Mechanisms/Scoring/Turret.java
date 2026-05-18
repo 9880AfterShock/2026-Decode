@@ -188,6 +188,15 @@ public class Turret {
         };
     }
 
+    public static Action waitForTurret() { //waits for turret to be algined
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return Math.abs(targetPosition-currentPosition) > 2.0;
+            }
+        };
+    }
+
     public static void updateTuner(TelemetryPacket packet) {
 //        updatePosition();
         leftServoReal.setPosition(calcPower(0.0)); //actually read ctrl hub
