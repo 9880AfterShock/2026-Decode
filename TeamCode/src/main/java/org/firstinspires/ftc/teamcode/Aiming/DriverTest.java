@@ -40,8 +40,8 @@ public class DriverTest {
     public static double kP = 0.0014; //PID P
     public static double kD = 0.000011; //PID D
 
-    public static double tripleShootMultiplier = 3.1; //scalar for the boost to RPM based off of distance
-    public static double getTripleShootNerf = 170; //flat decreasing value
+    public static double tripleShootMultiplier = 3.5; //scalar for the boost to RPM based off of distance
+    public static double getTripleShootNerf = 180; //flat decreasing value
 
     public static final double rapidFireDifference = 150; //artifact, just for auto now
     public static double rapidFireCooldown = -rapidFireDifference;
@@ -92,7 +92,7 @@ public class DriverTest {
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
-//            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
+            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
         }
         if (increase) {
             desSpeed += 25;
