@@ -105,6 +105,8 @@ private static DcMotorEx rightRear;
         TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay().setStroke("#00ffee");
         Drawing.drawRobot(packet.fieldOverlay(), localizer.getPose());
+        packet.fieldOverlay().setStroke("#ff0000");
+        Drawing.drawRobot(packet.fieldOverlay(), goalTarget);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         if (flipSide){
