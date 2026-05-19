@@ -57,8 +57,7 @@ public class GearsFarAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 3200;
-        double dumpTime = 1.0;
+        double rpm = 3550;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;
@@ -118,11 +117,11 @@ public class GearsFarAuto extends LinearOpMode {
                 new AngularVelConstraint(Math.PI/2)
         ));
 
-        Pose2d startPosFar = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d startPosFar = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPosFar);
 
         //Poses
-        Pose2d shootPosFar1 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
         Pose2d shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
         Pose2d shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
         Pose2d shootPosFar4 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
@@ -251,9 +250,9 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //First Volley
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(false),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(false),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
 //                                actionManager.derev(),
 
@@ -311,9 +310,9 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //2nd volley
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(false),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(false),
+                                actionManager.endTripleRPMBoost(true),
                                 Distance.setMissed(false),
                                 actionManager.hasBalls(false),
 
@@ -371,9 +370,9 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //Third Volley
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(false),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(false),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
 
                                 //1st Slam
@@ -429,9 +428,9 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //4th volley
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(false),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(false),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
 
                                 //2nd Slam
@@ -487,9 +486,9 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //5th volley
                                 actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(false),
+                                actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(false),
+                                actionManager.endTripleRPMBoost(true),
                                 actionManager.hasBalls(false),
 
                                 //Ending
