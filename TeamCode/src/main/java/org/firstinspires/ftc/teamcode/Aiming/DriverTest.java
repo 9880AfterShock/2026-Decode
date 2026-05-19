@@ -33,12 +33,12 @@ public class DriverTest {
     public static double avgSpeed = 0;
 
     private final static double idleSpeed = 1500;
-    private static PID shooterPID = new PID(0.00070,0.0,0.0);
-    public static double kS = 0.01; //3805 is 0.055
-    public static double kV = 0.000195; //3805 is 0.0005
+    private static PID shooterPID = new PID(0.0,0.0,0.0); //placeholder, gets set later
+    public static double kS = 0.005; //Kstatic, should not change
+    public static double kV = 0.000196; //feedforward scalar
 
-    public static double kP = 0.0007; //for dash
-    public static double kD = 0.0; //for dash
+    public static double kP = 0.0014; //PID P
+    public static double kD = 0.000011; //PID D
 
     public static double tripleShootMultiplier = 3.1; //scalar for the boost to RPM based off of distance
     public static double getTripleShootNerf = 170; //flat decreasing value
@@ -70,6 +70,9 @@ public class DriverTest {
         isFarAuto = false;
 
         rapidFireCooldown = -rapidFireDifference;
+
+        shooterPID.p = kP;
+        shooterPID.d = kD;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
