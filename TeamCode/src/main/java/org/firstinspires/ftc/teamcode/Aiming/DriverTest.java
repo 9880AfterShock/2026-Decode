@@ -84,22 +84,22 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-                desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
+//                desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.00396954*distanceFromGoal*distanceFromGoal)+(9.49254*distanceFromGoal)+2240.92264;
+//                desSpeed = (-0.00396954*distanceFromGoal*distanceFromGoal)+(9.49254*distanceFromGoal)+2240.92264;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
-            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
+//            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
         }
-//        if (increase) {
-//            desSpeed += 25;
-//        }
-//        if (decrease){
-//            desSpeed -= 25;
-//        }
+        if (increase) {
+            desSpeed += 25;
+        }
+        if (decrease){
+            desSpeed -= 25;
+        }
 
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
