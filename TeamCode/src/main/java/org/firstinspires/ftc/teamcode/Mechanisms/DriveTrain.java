@@ -52,7 +52,7 @@ private static DcMotorEx rightRear;
     public static double nearD = 0.015;
     public static double farP = -0.008;
     public static double farD = 0.015;
-    public static double turretDampening = 3.5;
+    public static double turretDampening = 2.0;
     private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
