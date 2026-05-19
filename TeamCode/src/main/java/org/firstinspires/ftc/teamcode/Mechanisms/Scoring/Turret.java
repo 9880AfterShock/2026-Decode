@@ -31,7 +31,7 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
-    public static double kStatic = 0.08;
+    public static double kStatic = 0.09;
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
