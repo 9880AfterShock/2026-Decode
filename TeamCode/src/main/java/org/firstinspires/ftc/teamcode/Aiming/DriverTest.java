@@ -40,6 +40,9 @@ public class DriverTest {
     public static double kP = 0.0007; //for dash
     public static double kD = 0.0; //for dash
 
+    public static double tripleShootMultiplier = 3.1; //scalar for the boost to RPM based off of distance
+    public static double getTripleShootNerf = 170; //flat decreasing value
+
     public static final double rapidFireDifference = 150; //artifact, just for auto now
     public static double rapidFireCooldown = -rapidFireDifference;
 
@@ -78,21 +81,22 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-//                desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
+                desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-//                desSpeed = (-0.00396954*distanceFromGoal*distanceFromGoal)+(9.49254*distanceFromGoal)+2240.92264;
+                desSpeed = (-0.00396954*distanceFromGoal*distanceFromGoal)+(9.49254*distanceFromGoal)+2240.92264;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
+            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
         }
-        if (increase) {
-            desSpeed += 25;
-        }
-        if (decrease){
-            desSpeed -= 25;
-        }
+//        if (increase) {
+//            desSpeed += 25;
+//        }
+//        if (decrease){
+//            desSpeed -= 25;
+//        }
 
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
