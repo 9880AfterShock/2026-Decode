@@ -182,7 +182,7 @@ public class GearsFarAuto extends LinearOpMode {
                 .setTangent(posMultiplier*Math.toRadians(-100.0))
                 .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-100.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(180.0), driveSpeed);
+                .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(180.0), intakeSpeed);
 
         TrajectoryActionBuilder back1 = drive.actionBuilder(slamPos1)
                 .setTangent(posMultiplier*Math.toRadians(60.0))
