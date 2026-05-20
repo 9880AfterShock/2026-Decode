@@ -136,13 +136,13 @@ public class GearsFarAuto extends LinearOpMode {
         Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
         Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-60.0, posMultiplier*-Math.toRadians(10.0));
 
-        Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d slamPos1 = new Pose2d(50.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d slamPos1 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
         Pose2d preSlamPos2 = new Pose2d(50.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
 
+        Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-26.0, posMultiplier*Math.toRadians(90));
         Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
-        Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
 
 //        TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
 //                .setTangent(posMultiplier*Math.toRadians(50))
@@ -179,14 +179,14 @@ public class GearsFarAuto extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(95.0), rushSpeed);
 
         TrajectoryActionBuilder slam1 = drive.actionBuilder(shootPosFar3)
-                .setTangent(posMultiplier*Math.toRadians(-105.0))
-                .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed)
-                .setTangent(posMultiplier*Math.toRadians(-105.0))
-                .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed);
+                .setTangent(posMultiplier*Math.toRadians(-100.0))
+                .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-100.0), driveSpeed)
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(180.0), driveSpeed);
 
         TrajectoryActionBuilder back1 = drive.actionBuilder(slamPos1)
-                .setTangent(posMultiplier*Math.toRadians(75.0))
-                .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(75.0), rushSpeed);
+                .setTangent(posMultiplier*Math.toRadians(60.0))
+                .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(60.0), rushSpeed);
 
         TrajectoryActionBuilder slam2 = drive.actionBuilder(shootPosFar4)
                 .setTangent(posMultiplier*Math.toRadians(-120.0))
@@ -199,10 +199,10 @@ public class GearsFarAuto extends LinearOpMode {
                 .splineToLinearHeading(shootPosFar5, posMultiplier*Math.toRadians(60.0), rushSpeed);
 
         TrajectoryActionBuilder toPark = drive.actionBuilder(shootPosFar5)
-                .setTangent(posMultiplier*Math.toRadians(190.0))
-                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(190.0))
-                .setTangent(posMultiplier*Math.toRadians(205.0))
-                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(205.0), rushSpeed);
+                .setTangent(posMultiplier*Math.toRadians(195.0))
+                .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(195.0), driveSpeed)
+                .setTangent(posMultiplier*Math.toRadians(200.0))
+                .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(200.0), rushSpeed);
 
 
 
@@ -493,6 +493,8 @@ public class GearsFarAuto extends LinearOpMode {
 
                                 //Ending
                                 actionManager.derev(),
+                                toPark.build(),
+
                                 actionManager.waitFor(30.0)
                         )
                 )

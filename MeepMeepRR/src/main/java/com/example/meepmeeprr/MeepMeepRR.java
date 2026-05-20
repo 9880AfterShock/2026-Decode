@@ -16,6 +16,7 @@ import java.util.Arrays;
 public class MeepMeepRR {
     public final static double posMultiplier = 1.0;
     public static void main(String[] args) {
+        /*
         Pose2d startPosFar = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
         Pose2d startPosNear = new Pose2d(-47.0, posMultiplier*-49.0, posMultiplier*Math.toRadians(0.0));
 
@@ -58,7 +59,31 @@ public class MeepMeepRR {
 
         Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
         Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-20.0, posMultiplier*Math.toRadians(90));
+//*/
+        Pose2d startPosFar = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
 
+        Pose2d shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar4 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+        Pose2d shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
+
+        Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
+
+        Pose2d prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-60.0, posMultiplier*-Math.toRadians(10.0));
+
+        Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d slamPos1 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d preSlamPos2 = new Pose2d(50.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-90.0));
+
+        Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-26.0, posMultiplier*Math.toRadians(90));
+        Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
 
         VelConstraint driveSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(120.0),
@@ -192,13 +217,13 @@ public class MeepMeepRR {
                         .splineToLinearHeading(shootPosFar3, posMultiplier*Math.toRadians(95.0), driveSpeed)
 
                         //Slam1
-                        .setTangent(posMultiplier*Math.toRadians(-105.0))
-                        .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed)
-                        .setTangent(posMultiplier*Math.toRadians(-105.0))
-                        .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(-105.0), driveSpeed)
+                        .setTangent(posMultiplier*Math.toRadians(-100.0))
+                        .splineToLinearHeading(preSlamPos1, posMultiplier*Math.toRadians(-100.0), driveSpeed)
+                        .setTangent(posMultiplier*Math.toRadians(180.0))
+                        .splineToLinearHeading(slamPos1, posMultiplier*Math.toRadians(180.0), driveSpeed)
                         //Back1
-                        .setTangent(posMultiplier*Math.toRadians(75.0))
-                        .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(75.0), driveSpeed)
+                        .setTangent(posMultiplier*Math.toRadians(60.0))
+                        .splineToLinearHeading(shootPosFar4, posMultiplier*Math.toRadians(60.0), driveSpeed)
                         //Slam2
                         .setTangent(posMultiplier*Math.toRadians(-120.0))
                         .splineToLinearHeading(preSlamPos2, posMultiplier*Math.toRadians(-120.0), driveSpeed)
@@ -208,10 +233,10 @@ public class MeepMeepRR {
                         .setTangent(posMultiplier*Math.toRadians(60.0))
                         .splineToLinearHeading(shootPosFar5, posMultiplier*Math.toRadians(60.0), driveSpeed)
                         //ToPark
-                        .setTangent(posMultiplier*Math.toRadians(190.0))
-                        .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(190.0))
-                        .setTangent(posMultiplier*Math.toRadians(205.0))
-                        .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(205.0), new TranslationalVelConstraint(100.0))
+                        .setTangent(posMultiplier*Math.toRadians(195.0))
+                        .splineToLinearHeading(parkRotationFar, posMultiplier*Math.toRadians(195.0))
+                        .setTangent(posMultiplier*Math.toRadians(200.0))
+                        .splineToLinearHeading(parkPosFar, posMultiplier*Math.toRadians(200.0), new TranslationalVelConstraint(100.0))
 
                         .build()
         );//*/
