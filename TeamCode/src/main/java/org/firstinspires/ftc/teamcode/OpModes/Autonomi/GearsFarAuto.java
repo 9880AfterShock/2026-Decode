@@ -234,7 +234,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 Distance.setMissed(false),
                                 Turret.setTurretTarget(posMultiplier*-60.0),
                                 actionManager.shotCue(0),
-                                Hood.AutoHoodFlat(),
+                                Hood.AutoHoodFar(),
                                 actionManager.rev(rpm),
                                 new ParallelAction(
                                         new SequentialAction(
