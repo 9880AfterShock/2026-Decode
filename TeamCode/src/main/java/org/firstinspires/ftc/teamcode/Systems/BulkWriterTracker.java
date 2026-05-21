@@ -20,7 +20,9 @@ public class BulkWriterTracker {
         for (BulkWriter bulkWriter : bulkWriters) {
             bulkWriter.bulkWrite();
         }
-        opMode.telemetry.addData("num of bulk writers",bulkWriters.size());
+        if (opMode != null && opMode.telemetry != null) {
+            opMode.telemetry.addData("num of bulk writers", bulkWriters.size());
+        }
     }
 
     public static void addWriter(BulkWriter writer) {
