@@ -137,8 +137,8 @@ public class GearsFarAuto extends LinearOpMode {
         } else {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-40.0));
-            shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-39.0));
-            shootPosFar4 = new Pose2d(60.0, posMultiplier*-21.0, posMultiplier*Math.toRadians(-38.0));
+            shootPosFar3 = new Pose2d(60.0, posMultiplier*-21.5, posMultiplier*Math.toRadians(-36.0));
+            shootPosFar4 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-38.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-34.0));
             turretAngle = 65;
         }
@@ -147,10 +147,21 @@ public class GearsFarAuto extends LinearOpMode {
         Pose2d startPickupFar = new Pose2d(36.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
+        Pose2d prePickupCorner;
+        Pose2d startPickupCorner;
+        Pose2d midPickupCorner;
+        Pose2d endPickupCorner;
+        if (posMultiplier == 1){
+            prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
+            startPickupCorner = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
+            midPickupCorner = new Pose2d(58.25, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
+            endPickupCorner = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
+        } else{
+            prePickupCorner = new Pose2d(55.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-60.0));
+            startPickupCorner = new Pose2d(55.0, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+            midPickupCorner = new Pose2d(58.25, posMultiplier*-62.0, posMultiplier*Math.toRadians(-60.0));
+            endPickupCorner = new Pose2d(62.5, posMultiplier*-63.0, posMultiplier*-Math.toRadians(10.0));
+        }
 
         Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
         Pose2d slamPos1 = new Pose2d(35.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
@@ -263,7 +274,7 @@ public class GearsFarAuto extends LinearOpMode {
 //                                        toShoot1.build()
                                         Turret.waitForTurret()
                                 ),
-
+                                actionManager.shotCue(1),
                                 //First Volley
                                 actionManager.waitForSpeedSafe(rpm),
                                 actionManager.startTripleRPMBoost(true),

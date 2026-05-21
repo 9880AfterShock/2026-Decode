@@ -192,8 +192,7 @@ public class Turret {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                telemetryPacket.put("turret locked", Math.abs(targetPosition-currentPosition) > 2.0);
-                return true;
+                return Math.abs(targetPosition-currentPosition) > 2.0;
             }
         };
     }
