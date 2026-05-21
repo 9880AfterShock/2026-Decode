@@ -57,7 +57,7 @@ public class GearsFarAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 3550;
+        double rpm = 3600;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;
@@ -132,9 +132,9 @@ public class GearsFarAuto extends LinearOpMode {
         Pose2d endPickupFar = new Pose2d(36.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupCorner = new Pose2d(55.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-60.0, posMultiplier*Math.toRadians(-60.0));
-        Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-60.0, posMultiplier*-Math.toRadians(10.0));
+        Pose2d startPickupCorner = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d midPickupCorner = new Pose2d(58.25, posMultiplier*-61.0, posMultiplier*Math.toRadians(-60.0));
+        Pose2d endPickupCorner = new Pose2d(62.5, posMultiplier*-62.0, posMultiplier*-Math.toRadians(10.0));
 
         Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
         Pose2d slamPos1 = new Pose2d(35.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
@@ -232,7 +232,7 @@ public class GearsFarAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-60.0),
+                                Turret.setTurretTarget(posMultiplier*-62.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFar(),
                                 actionManager.rev(rpm),

@@ -34,10 +34,11 @@ public class QuickSpindexer { // Prefix for commands
     final private static int offsetDivider = 10;
     private static int lastTarget = 0;
     private static int preLastTarget = 0;
+    private static double lastGoodTarget = 0;
     private static int lastPos = 0;
     private static boolean aborting = false;
     private static int jamCount = 0;
-    private static int jamExcuses = 0;
+    private static int jamExcuses = 8;
     private static double offset = 0.0;
 
     public static void initSpindexer(OpMode opmode) { // init motor
@@ -83,15 +84,13 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void updateSpindexerResetIncluded(boolean clockwise, boolean counterclockwise, boolean reseting, boolean reset) {
-        if (clockwise && !wasClockwise){
-            jamExcuses += 1;
+        if (clockwise && !wasClockwise && !spindexerStuck()){
             targetPosition += 1425.1/3;
             spindexer.setPower(1.0);
             currentSlot += 1;
             if (currentSlot > 3) currentSlot = 1;
         }
-        if (counterclockwise && !wasCounterclockwise) {
-            jamExcuses += 1;
+        if (counterclockwise && !wasCounterclockwise && !spindexerStuck()) {
             targetPosition -= 1425.1/3;
             spindexer.setPower(1.0);
             currentSlot -= 1;
@@ -119,15 +118,15 @@ public class QuickSpindexer { // Prefix for commands
         if (abs(spindexer.getTargetPosition() - spindexer.getCurrentPosition()) < 40){
             aborting = false;
         }
-//        if (spindexerStuck() && !aborting && !reseting){
-//            jamExcuses -= 1;
-//            if (jamExcuses < 0){
-//                jamExcuses = 0;
-//                abortTurn();
-//                jamCount += 1;
-//                aborting = true;
-//            }
-//        }
+        if (spindexerStuck() && !aborting && !reseting){
+            jamExcuses -= 1;
+            if (jamExcuses < 0){
+                jamExcuses = 8;
+                abortTurn();
+                jamCount += 1;
+                aborting = true;
+            }
+        }
 
         wasClockwise = clockwise;
         wasCounterclockwise = counterclockwise;
@@ -145,7 +144,9 @@ public class QuickSpindexer { // Prefix for commands
         opmode.telemetry.addData("Last Pos Difference", spindexer.getCurrentPosition() - lastPos);
 //        opmode.telemetry.addData("DEXER int target", (int) targetPosition);
         logTargets((int) targetPosition, spindexer.getCurrentPosition());
-
+        if (abs(spindexer.getCurrentPosition() - targetPosition) < 16) {
+            lastGoodTarget = targetPosition;
+        }
     }
 
     public static boolean has2Balls(){
@@ -153,12 +154,14 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void fullCycle(){
+        if (!spindexerStuck()) {
         jamExcuses += 1;
         spindexerOffset = false;
         targetPosition += 1425.1;
         spindexer.setTargetPosition((int) (targetPosition));
         spindexer.setPower(0.7);
         hasBall = new boolean[3];
+        }
     }
 
     public static void turnIntake(){
@@ -180,14 +183,14 @@ public class QuickSpindexer { // Prefix for commands
 
     public static boolean spindexerStuck(){
         return (
-                abs(spindexer.getCurrentPosition() - lastPos) < 10
+                abs(spindexer.getCurrentPosition() - lastPos) < 1
                 &&
                 abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 150
         ); //50 is more than the ticks per rotation, 150 is more than the offset turn
     }
 
     public static void abortTurn(){
-        targetPosition = preLastTarget;
+        targetPosition = lastGoodTarget;
     }
 
     public static Action goToMotif(){
