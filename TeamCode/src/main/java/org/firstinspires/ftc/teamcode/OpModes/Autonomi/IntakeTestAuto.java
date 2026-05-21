@@ -38,7 +38,6 @@ import java.util.Arrays;
 @Config
 @Disabled
 @Autonomous(name = "INTAKE test auto")
-@Disabled
 public class IntakeTestAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
