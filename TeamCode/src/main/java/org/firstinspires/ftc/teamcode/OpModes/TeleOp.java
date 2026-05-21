@@ -41,7 +41,6 @@ public class TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        BulkWriterTracker.init(this);
         SensOrange.initSensor(this);
 
         //Init Functions
