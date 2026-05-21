@@ -51,7 +51,8 @@ public class GearsFarAuto extends LinearOpMode {
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
         Distance.initSensor(this);
-        Turret.initTurret(this);
+        Turret.initTurret(this, false);
+        TeleOp.afterAuto = true;
 
         QuickSpindexer.initSpindexer(this);
         Prongs.initGrate(this);

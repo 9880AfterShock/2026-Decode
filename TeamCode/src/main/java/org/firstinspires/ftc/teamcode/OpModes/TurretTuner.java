@@ -18,7 +18,7 @@ public class TurretTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        Turret.initTurret(this);
+        Turret.initTurret(this, false);
         BulkWriterTracker.init(this);
 
         telemetry.addData("Status", "Initialized");

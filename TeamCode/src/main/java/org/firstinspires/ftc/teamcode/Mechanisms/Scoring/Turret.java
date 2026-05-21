@@ -47,7 +47,7 @@ public class Turret {
 
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
-    public static void initTurret(OpMode opmode) { // init motor
+    public static void initTurret(OpMode opmode, boolean afterAuto) { // init motor
         leftServoReal = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
         rightServoReal = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
         leftServo = new BulkWriteServo(leftServoReal);
@@ -57,8 +57,10 @@ public class Turret {
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
 
         targetPosition = 0.0;
-        leftCurrentPosition = getPosition(leftEncoder.getVoltage());
-        rightCurrentPosition = getPosition(rightEncoder.getVoltage());
+        if (!afterAuto){
+            leftCurrentPosition = getPosition(leftEncoder.getVoltage());
+            rightCurrentPosition = getPosition(rightEncoder.getVoltage());
+        }
         Turret.opmode = opmode;
 
         leftWorking = true;

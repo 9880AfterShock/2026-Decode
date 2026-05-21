@@ -33,6 +33,7 @@ import java.util.List;
 public class TeleOp extends LinearOpMode {
     public static Alliance alliance;
     public static Pose2d autoEndPosition;
+    public static boolean afterAuto;
     public static boolean autoHasBalls;
     public static List<LynxModule> allHubs;
 
@@ -71,7 +72,7 @@ public class TeleOp extends LinearOpMode {
 
         QuickSpindexer.initSpindexer(this);
 //        QuickBallRamp.initTransfer(this);
-        Turret.initTurret(this);
+        Turret.initTurret(this, afterAuto);
 
 //        RRTeleOp RRdrive = new RRTeleOp(hardwareMap);
 
@@ -110,6 +111,7 @@ public class TeleOp extends LinearOpMode {
         }
 
         while (opModeIsActive()) {
+            afterAuto = false;
             SensOrange.updateEncoder();
             Gyroscope.updateGyro(gamepad1.backWasPressed());
             for (LynxModule hub : allHubs) {
