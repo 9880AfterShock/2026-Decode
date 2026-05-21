@@ -137,7 +137,7 @@ public class GearsFarAuto extends LinearOpMode {
             turretAngle = 62;
         } else {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
-            shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-40.0));
+            shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-39.0));
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-21.5, posMultiplier*Math.toRadians(-36.0));
             shootPosFar4 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-38.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-34.0));
