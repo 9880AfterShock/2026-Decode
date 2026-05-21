@@ -36,6 +36,7 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.Arrays;
 
 @Config
+@Disabled
 @Autonomous(name = "INTAKE test auto")
 @Disabled
 public class IntakeTestAuto extends LinearOpMode {

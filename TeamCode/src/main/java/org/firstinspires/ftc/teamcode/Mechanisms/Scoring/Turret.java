@@ -12,12 +12,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Systems.PID;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 @Config
 public class Turret {
     private static OpMode opmode;
-    private static Servo leftServo; //Left servo
-    private static Servo rightServo; //Right servo
+    private static BulkWriteServo leftServo; //Left servo
+    private static BulkWriteServo rightServo; //Right servo
+    private static Servo leftServoReal; //Left servo
+    private static Servo rightServoReal; //Right servo
     private static AnalogInput leftEncoder; //Left servo feedback wire
     private static AnalogInput rightEncoder; //Right servo feedback wire
 //    private static AnalogInput encoder;
@@ -28,16 +31,16 @@ public class Turret {
     public static final double minTurret = -75.0;
     public static final  double maxTurret = 75.0;
     private static final double turretCenterOffset = 0.9446299213; //distance the robot is forward from the turret (-23.99360 mm)
-    public static double kStatic = 0.08;
+    public static double kStatic = 0.09;
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
 
-    public static final double leftOffset =  0.0; //close enough
-    public static final double rightOffset = 23.297380585516176;
+    public static final double leftOffset =  77.65793528505394;
+    public static final double rightOffset = 54.5824345146379;
 
-    public static double P = 0.008;
-    public static double D = 0.0;
+    public static double P = 0.005;
+    public static double D = 0.00155;
 
 
     public static PID mainPID;
@@ -45,8 +48,10 @@ public class Turret {
     //pid should be around (0.02, 0.0005, 0.0025); for one servo, what about turret?
 
     public static void initTurret(OpMode opmode) { // init motor
-        leftServo = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
-        rightServo = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
+        leftServoReal = opmode.hardwareMap.get(Servo.class, "leftTurret"); // plugged into Expansion Hub Port 4
+        rightServoReal = opmode.hardwareMap.get(Servo.class, "rightTurret"); // plugged into Control Hub Port 1
+        leftServo = new BulkWriteServo(leftServoReal);
+        rightServo = new BulkWriteServo(rightServoReal);
 //        encoder = opmode.hardwareMap.get(AnalogInput.class, "axonEncoder"); // plugged into ___
         leftEncoder = opmode.hardwareMap.get(AnalogInput.class, "leftEncoder"); // plugged into CH 0
         rightEncoder = opmode.hardwareMap.get(AnalogInput.class, "rightEncoder"); // plugged into CH 1
@@ -154,6 +159,8 @@ public class Turret {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 updateTurret(true, 0.0);
+                leftServo.bulkWrite();
+                rightServo.bulkWrite();
                 return false;
             }
         };
@@ -164,6 +171,8 @@ public class Turret {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 updateTurret(false, 0.0);
+                leftServo.bulkWrite();
+                rightServo.bulkWrite();
                 return true;
             }
         };
@@ -179,12 +188,21 @@ public class Turret {
         };
     }
 
+    public static Action waitForTurret() { //waits for turret to be algined
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                return Math.abs(targetPosition-currentPosition) > 2.0;
+            }
+        };
+    }
+
     public static void updateTuner(TelemetryPacket packet) {
-        updatePosition();
-        leftServo.setPosition(calcPower(0.0)); //actually read ctrl hub
-        rightServo.setPosition(calcPower(0.0)); //actually read ctrl hub
+//        updatePosition();
+        leftServoReal.setPosition(calcPower(0.0)); //actually read ctrl hub
+        rightServoReal.setPosition(calcPower(0.0)); //actually read ctrl hub
         packet.addLine("Set the leftOffset and rightOffset to these");
-        packet.put("Left Raw", leftCurrentPosition);
-        packet.put("Right Raw", rightCurrentPosition);
+        packet.put("Left Raw", getPosition(leftEncoder.getVoltage()));
+        packet.put("Right Raw", getPosition(rightEncoder.getVoltage()));
     }
 }

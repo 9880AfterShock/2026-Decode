@@ -6,11 +6,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.States.TransferState;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 import java.util.Objects;
 
 public class Transfer {
-    private static Servo transfer; // init motor var
+    private static Servo transferServo; // init motor var
+    private static BulkWriteServo transfer;
     private static OpMode opmode; // opmode var init
     public static double upPosition = 0.71;
     public static double downPosition = 1.0;
@@ -19,7 +21,8 @@ public class Transfer {
     public static boolean spindexerSafe = true;
 
     public static void initTransfer(OpMode opmode) { // init motor
-        transfer = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
+        transferServo = opmode.hardwareMap.get(Servo.class, "transfer"); // motor config name
+        transfer = new BulkWriteServo(transferServo);
         transferState = TransferState.UP;
         transferTime = -1.0;
         Transfer.opmode = opmode;

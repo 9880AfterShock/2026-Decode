@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Aiming.Alignment;
@@ -14,9 +13,7 @@ import org.firstinspires.ftc.teamcode.Mechanisms.DriveTrain;
 import org.firstinspires.ftc.teamcode.Mechanisms.Hinge;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Arm;
 import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Roller;
-import org.firstinspires.ftc.teamcode.Mechanisms.Intake.Shield;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Hood;
-import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Transfer;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.BallColorDetectinator;
 import org.firstinspires.ftc.teamcode.Mechanisms.Sorting.Prongs;
@@ -25,8 +22,10 @@ import org.firstinspires.ftc.teamcode.Sensors.Distance;
 import org.firstinspires.ftc.teamcode.Sensors.Gyroscope;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Sensors.SensOrange;
+import org.firstinspires.ftc.teamcode.Systems.BulkWriterTracker;
 import org.firstinspires.ftc.teamcode.Systems.ControlManager;
 import org.firstinspires.ftc.teamcode.Systems.RunCondition;
+import org.firstinspires.ftc.teamcode.Systems.RunCountdown;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.List;
 
@@ -41,12 +40,13 @@ public class TeleOp extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
 
     @Override
-public void runOpMode() {
+    public void runOpMode() {
         SensOrange.initSensor(this);
 
         //Init Functions
         DriveTrain.initDrive(this);
         RunLater.setup(this);
+        RunCountdown.setup(this);
         //FieldCentricDrive.initDrive(this);
         //Obelisk.initDetection(this);
         //SpindexerCamera.initDetection(this);
@@ -120,19 +120,23 @@ public void runOpMode() {
             ControlManager.update(alliance == Alliance.RED);
             RunLater.update();
             RunCondition.update();
+            RunCountdown.update();
 //            BallColorDetectinator.update();
 
-//            Turret.updateTurret(false, 0.0);
-//            /*
-            if (gamepad2.left_stick_y == 0 && gamepad2.left_stick_x == 0){
-                Turret.updateTurret(gamepad2.left_stick_button, 0.0);
-            } else {
-                if (gamepad2.left_stick_y < 0){
-                    Turret.updateTurret(gamepad2.left_stick_button, 90+Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x)));
-                } else{
-                    Turret.updateTurret(gamepad2.left_stick_button, 90+Math.toDegrees(Math.atan2(-gamepad2.left_stick_y, -gamepad2.left_stick_x)));
+
+            if (gamepad2.left_stick_button){
+                if (gamepad2.left_stick_y == 0 && gamepad2.left_stick_x == 0){
+                    Turret.updateTurret(true, 0.0);
+                } else {
+                    if (gamepad2.left_stick_y < 0){
+                        Turret.updateTurret(true, 90+Math.toDegrees(Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x)));
+                    } else{
+                        Turret.updateTurret(true, 90+Math.toDegrees(Math.atan2(-gamepad2.left_stick_y, -gamepad2.left_stick_x)));
+                    }
                 }
-            }//*/
+            } else {
+                Turret.updateTurret(false, 0.0);
+            }
 
 //            Distance.updateSensor();
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -143,6 +147,7 @@ public void runOpMode() {
 //            for (LynxModule hub : allHubs) {
 //                hub.clearBulkCache();
 //            }
+            BulkWriterTracker.update();
         }
         //SpindexerCamera.stopVision();
         //Obelisk.stopVision();

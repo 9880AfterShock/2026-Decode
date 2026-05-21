@@ -33,12 +33,15 @@ public class DriverTest {
     public static double avgSpeed = 0;
 
     private final static double idleSpeed = 1500;
-    private static PID shooterPID = new PID(0.00070,0.0,0.0);
-    public static double kS = 0.01; //3805 is 0.055
-    public static double kV = 0.000195; //3805 is 0.0005
+    private static PID shooterPID = new PID(0.0,0.0,0.0); //placeholder, gets set later
+    public static double kS = 0.005; //Kstatic, should not change
+    public static double kV = 0.000196; //feedforward scalar
 
-    public static double kP = 0.0007; //for dash
-    public static double kD = 0.0; //for dash
+    public static double kP = 0.0014; //PID P
+    public static double kD = 0.000011; //PID D
+
+    public static double tripleShootMultiplier = 3.7; //scalar for the boost to RPM based off of distance
+    public static double getTripleShootNerf = 185; //flat decreasing value
 
     public static final double rapidFireDifference = 150; //artifact, just for auto now
     public static double rapidFireCooldown = -rapidFireDifference;
@@ -67,6 +70,9 @@ public class DriverTest {
         isFarAuto = false;
 
         rapidFireCooldown = -rapidFireDifference;
+
+        shooterPID.p = kP;
+        shooterPID.d = kD;
     }
 
     public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
@@ -78,25 +84,22 @@ public class DriverTest {
         avgSpeed /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
-                desSpeed = (-0.445419*distanceFromGoal*distanceFromGoal)+(46.70715*distanceFromGoal)+1435.71111;
+                desSpeed = (-0.0741749*distanceFromGoal*distanceFromGoal)+(18.52099*distanceFromGoal)+1876.11169;
                 Hood.hoodState = "Near";
                 Hood.updateAim(false);
             } else {
-                desSpeed = (-0.00396954*distanceFromGoal*distanceFromGoal)+(9.49254*distanceFromGoal)+2240.92264;
+                desSpeed = (-0.0460518*distanceFromGoal*distanceFromGoal)+(20.69553*distanceFromGoal)+1683.42864;
                 Hood.hoodState = "Far";
                 Hood.updateAim(false);
             }
-            if (distanceFromGoal > 110){
-                desSpeed += 600;
-            }
-            desSpeed += (3.1*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-170;
+            desSpeed += (tripleShootMultiplier*distanceFromGoal*(rapidFireCooldown/rapidFireDifference))-getTripleShootNerf;
         }
-//        if (increase) {
-//            desSpeed += 50;
-//        }
-//        if (decrease){
-//            desSpeed -= 50;
-//        }
+        if (increase) {
+            desSpeed += 25;
+        }
+        if (decrease){
+            desSpeed -= 25;
+        }
 
         if (rev) {
             double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
@@ -142,8 +145,8 @@ public class DriverTest {
 //        opmode.telemetry.addData("Can fire? ", canFire);
 //        opmode.telemetry.addData("Fire?", fire);
         opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
-//        opmode.telemetry.addData("Speed RPM", rotationsPerMinute);
-//        opmode.telemetry.addData("Averaged RPM", avgSpeed);
+        opmode.telemetry.addData("Speed RPM RAW", rotationsPerMinute);
+        opmode.telemetry.addData("Averaged RPM", avgSpeed);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
 
         TelemetryPacket packet = new TelemetryPacket();

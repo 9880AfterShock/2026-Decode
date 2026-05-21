@@ -11,21 +11,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
 
 public class Arm { // Prefix for commands
 
-    private static Servo arm; // init motor var
+    private static Servo armServo; // init motor var
+    private static BulkWriteServo arm;
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
     public static double neutralPosition = 0.65;
     public static double revPosition = 0.62;
     public static String intakeState = "Intaking";
     public static double lastTransition = -9880.0;
-    public final static double transitionTime = 0.7;
+    public final static double transitionTime = 0.2;
 
     public static void initIntake(OpMode opmode) { // init motor
-        arm = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
+        armServo = opmode.hardwareMap.get(Servo.class, "arm"); //Port 0 on control hub
+        arm = new BulkWriteServo(armServo);
         Arm.opmode = opmode;
         lastTransition = -9880.0;
     }
@@ -41,7 +44,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else
-                if (lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime() && intakeState == "revving") {
+                if (lastTransition != -9880.0 && lastTransition + transitionTime < opmode.getRuntime() && intakeState == "revving") {
                     arm.setPosition(revPosition);
                     lastTransition = -9880.0;
                 }
@@ -51,7 +54,7 @@ public class Arm { // Prefix for commands
                     arm.setPosition(intakePosition);
                     lastTransition = opmode.getRuntime();
                 } else {
-                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime > opmode.getRuntime()) {
+                    if (intakeState == "Neutral" && lastTransition != -9880.0 && lastTransition + transitionTime < opmode.getRuntime()) {
                         arm.setPosition(neutralPosition);
                         lastTransition = -9880.0;
                     }
@@ -60,6 +63,7 @@ public class Arm { // Prefix for commands
         }
 
         opmode.telemetry.addData("Intake Arm State", intakeState);
+        opmode.telemetry.addData("TRANSITION TIMER", lastTransition);
         opmode.telemetry.addData("Intake Arm Pos", arm.getPosition());
     }
 
@@ -73,7 +77,7 @@ public class Arm { // Prefix for commands
                     RunLater.addAction(new DelayedAction(() -> {},0.2));
                     first = false;
                 }
-                arm.setPosition(neutralPosition);
+                armServo.setPosition(neutralPosition);
                 intakeState = "Neutral";
                 RunLater.update();
                 return !RunLater.isEmpty();
@@ -86,7 +90,7 @@ public class Arm { // Prefix for commands
             private boolean first = true;
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (first) {
-                    RunLater.addAction(new DelayedAction(() -> {arm.setPosition(revPosition);}, 0.2));
+                    RunLater.addAction(new DelayedAction(() -> {armServo.setPosition(revPosition);}, 0.2));
                     Roller.updateIntake(false, false, true, 1.0);
                     first = false;
                 }
@@ -100,7 +104,7 @@ public class Arm { // Prefix for commands
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
                 Roller.updateIntake(false, false, false, 1.0);
-                arm.setPosition(neutralPosition);
+                armServo.setPosition(neutralPosition);
                 return false;
             }
         };
@@ -109,7 +113,7 @@ public class Arm { // Prefix for commands
     public static Action AutoArmRev() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                arm.setPosition(revPosition);
+                armServo.setPosition(revPosition);
                 intakeState = "revving";
                 return false;
             }
@@ -119,7 +123,7 @@ public class Arm { // Prefix for commands
     public static Action AutoArmOut() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                arm.setPosition(intakePosition);
+                armServo.setPosition(intakePosition);
                 intakeState = "Intaking";
                 return false;
             }
@@ -129,7 +133,7 @@ public class Arm { // Prefix for commands
     public static Action AutoArmIn() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                arm.setPosition(revPosition);
+                armServo.setPosition(revPosition);
                 intakeState = "Neutral";
                 return false;
             }

@@ -283,7 +283,7 @@ public class ActionManager {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if (!Distance.missedIntake) {
                     if (farAuto){
-                        DriverTest.desSpeed += 250;
+                        DriverTest.desSpeed += 275;
                     } else {
                         DriverTest.desSpeed += DriverTest.rapidFireDifference;
                     }

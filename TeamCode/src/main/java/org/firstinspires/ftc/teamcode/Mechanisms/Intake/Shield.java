@@ -7,15 +7,19 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
+
 public class Shield {
-    private static Servo shield; // init sevo var
+    private static Servo shieldServo; // init sevo var
+    private static BulkWriteServo shield;
     private static OpMode opmode; // opmode var init
     public static double lockingPosition = 0.97;
     public static double shootingPosition = 0.902;
     public static String shieldState = "blocking";
 
     public static void initLocking(OpMode opmode) { // init motor
-        shield = opmode.hardwareMap.get(Servo.class, "shield"); //Port 2 on control hub
+        shieldServo = opmode.hardwareMap.get(Servo.class, "shield"); //Port 2 on control hub
+        shield = new BulkWriteServo(shieldServo);
         Shield.opmode = opmode;
         shieldState = "locking";
     }
@@ -34,7 +38,7 @@ public class Shield {
     public static Action AutoShieldLock() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                shield.setPosition(lockingPosition);
+                shieldServo.setPosition(lockingPosition);
                 return false;
             }
         };
@@ -43,7 +47,7 @@ public class Shield {
     public static Action AutoShieldShoot() {
         return new Action() {
             public boolean run(@NonNull TelemetryPacket packet) {
-                shield.setPosition(shootingPosition);
+                shieldServo.setPosition(shootingPosition);
                 return false;
             }
         };

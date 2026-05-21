@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.States.BallRampState;
 import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
+import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 import java.util.ArrayDeque;
@@ -13,7 +14,8 @@ import java.util.Queue;
 
 public class BallRamp {
     private final OpMode opMode;
-    private final Servo servo;
+    private final BulkWriteServo servo;
+    private final Servo servoReal;
     private final double downPos;
     private final double upPos;
     public BallRampState state;
@@ -22,7 +24,8 @@ public class BallRamp {
     public Queue<BallRampMessage> messageQueue = new ArrayDeque<>(100);
     public BallRamp(OpMode opMode, String servoName, double downPos, double upPos) {
         this.opMode = opMode;
-        this.servo = opMode.hardwareMap.get(Servo.class,servoName);
+        servoReal = opMode.hardwareMap.get(Servo.class,servoName);
+        this.servo = new BulkWriteServo(servoReal);
         this.downPos = downPos;
         this.upPos = upPos;
         //servo.setPosition(upPos);
@@ -31,7 +34,8 @@ public class BallRamp {
 
     public BallRamp(OpMode opMode, String servoName, double downPos, double upPos, BallRampState state) {
         this.opMode = opMode;
-        this.servo = opMode.hardwareMap.get(Servo.class,servoName);
+        servoReal = opMode.hardwareMap.get(Servo.class,servoName);
+        this.servo = new BulkWriteServo(servoReal);
         this.downPos = downPos;
         this.upPos = upPos;
         if (state == BallRampState.UP) {
