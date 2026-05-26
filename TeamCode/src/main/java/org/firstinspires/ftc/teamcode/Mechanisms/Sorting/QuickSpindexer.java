@@ -144,7 +144,7 @@ public class QuickSpindexer { // Prefix for commands
         opmode.telemetry.addData("Last Pos Difference", spindexer.getCurrentPosition() - lastPos);
 //        opmode.telemetry.addData("DEXER int target", (int) targetPosition);
         logTargets((int) targetPosition, spindexer.getCurrentPosition());
-        if (abs(spindexer.getCurrentPosition() - targetPosition) < 16) {
+        if (abs(spindexer.getCurrentPosition() - targetPosition) < 48) {
             lastGoodTarget = targetPosition;
         }
     }
