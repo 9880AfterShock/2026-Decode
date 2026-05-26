@@ -295,8 +295,8 @@ public class MeepMeepRR {
 
                 //toShoot2
                 //noGate
-//                .setTangent(posMultiplier*Math.toRadians(140.0))
-//                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), rushSpeed)
+//                .setTangent(posMultiplier*Math.toRadians(100.0))
+//                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(170.0), rushSpeed)
                 //yesGate
                 .setTangent(posMultiplier*Math.toRadians(-180.0))
                 .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)

@@ -140,9 +140,9 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePosNear1 = new Pose2d(-3.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePosNear2 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gatePosNear1 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gateIntakePos = new Pose2d(10.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0)); //probably not used
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
                 .setTangent(posMultiplier*Math.toRadians(50))
@@ -150,74 +150,58 @@ public class GearsGateAuto extends LinearOpMode {
 
         TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosNear1)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed);
-
-        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupNear)
-                .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), wallIntakeSpeed);
-
-        TrajectoryActionBuilder toShoot2;
-        if (firstDump) {
-            toShoot2 = drive.actionBuilder(endPickupNear)
-                    .setTangent(posMultiplier*Math.toRadians(90.0))
-                    .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-                    .waitSeconds(dumpTime)
-                    .setTangent(posMultiplier*Math.toRadians(125.0))
-                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(125.0), rushSpeed);
-        } else{
-            toShoot2 = drive.actionBuilder(endPickupNear)
-                    .setTangent(posMultiplier*Math.toRadians(110.0))
-                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(110.0), rushSpeed);
-        }
-
-        TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosNear2)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
                 .splineToLinearHeading(prePickupMiddle, posMultiplier*Math.toRadians(-30.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
                 .splineToLinearHeading(startPickupMiddle, posMultiplier*Math.toRadians(-90.0), driveSpeed);
 
-        TrajectoryActionBuilder pickup2 = drive.actionBuilder(startPickupMiddle)
+        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupMiddle)
                 .setTangent(posMultiplier*Math.toRadians(-90))
                 .splineToLinearHeading(endPickupMiddle, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
 
-        TrajectoryActionBuilder toShoot3;
-        if (secondDump) {
-            toShoot3 = drive.actionBuilder(endPickupMiddle)
+        TrajectoryActionBuilder toShoot2;
+        if (firstDump) {
+            toShoot2 = drive.actionBuilder(endPickupMiddle)
                     .setTangent(posMultiplier*Math.toRadians(-180.0))
-                    .splineToLinearHeading(gatePosNear2, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-                    .waitSeconds(1.0)
-                    .setTangent(posMultiplier*Math.toRadians(135.0))
-                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), rushSpeed);
+                    .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+//                .waitSeconds(1.0)
+                    .setTangent(posMultiplier*Math.toRadians(90.0))
+                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(180.0), rushSpeed);
         } else{
-            toShoot3 = drive.actionBuilder(endPickupMiddle)
-                    .setTangent(posMultiplier*Math.toRadians(140.0))
-                    .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(140.0), rushSpeed);
+            toShoot2 = drive.actionBuilder(endPickupMiddle)
+                    .setTangent(posMultiplier*Math.toRadians(100.0))
+                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(170.0), rushSpeed);
         }
+
+        TrajectoryActionBuilder toGatePickup = drive.actionBuilder(shootPosNear2) //gate intake
+                .setTangent(posMultiplier*Math.toRadians(-10.0))
+                .splineToLinearHeading(gateIntakePos, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+
+        TrajectoryActionBuilder toShoot3 = drive.actionBuilder(gateIntakePos)
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(180.0), rushSpeed);
 
         TrajectoryActionBuilder toPickup3 = drive.actionBuilder(shootPosNear3)
                 .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-15.0), driveSpeed)
+                .splineToLinearHeading(prePickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed)
                 .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+                .splineToLinearHeading(startPickupNear, posMultiplier*Math.toRadians(-90.0), driveSpeed);
 
-        TrajectoryActionBuilder pickup3 = drive.actionBuilder(startPickupFar)
+        TrajectoryActionBuilder pickup3 = drive.actionBuilder(startPickupNear)
                 .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
+                .splineToLinearHeading(endPickupNear, posMultiplier*Math.toRadians(-90.0), wallIntakeSpeed);
 
         TrajectoryActionBuilder toShoot4;
         if (thirdDump) {
-            toShoot4 = drive.actionBuilder(endPickupFar)
-                    .setTangent(posMultiplier*Math.toRadians(180.0))
-                    .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-                    .waitSeconds(1.0)
-                    .setTangent(posMultiplier*Math.toRadians(145.0))
-                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), rushSpeed);
+            toShoot4 = drive.actionBuilder(endPickupNear)
+                .setTangent(posMultiplier*Math.toRadians(180.0))
+                .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+//                .waitSeconds(1.0)
+                .setTangent(posMultiplier*Math.toRadians(145.0))
+                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(145.0), rushSpeed);
         } else{
-            toShoot4 = drive.actionBuilder(endPickupFar)
-                    .setTangent(posMultiplier*Math.toRadians(160.0))
-                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), rushSpeed);
+            toShoot4 = drive.actionBuilder(endPickupNear)
+                    .setTangent(posMultiplier*Math.toRadians(135.0))
+                    .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(135.0), rushSpeed);
         }
 
         TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupNear)
@@ -280,7 +264,7 @@ public class GearsGateAuto extends LinearOpMode {
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(5.0),
+                                                Distance.waitForBallInTimer(6.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -327,20 +311,19 @@ public class GearsGateAuto extends LinearOpMode {
                                 Distance.setMissed(false),
                                 actionManager.hasBalls(false),
 
-                                //2nd Pickup
+                                //2nd Pickup (Gate)
                                 Arm.AutoArmOut(),
                                 Prongs.AutoProngsIntake(),
                                 Roller.AutoIntakeOn(),
                                 new RaceAction(
                                         new SequentialAction(
-                                                toPickup2.build(),
-                                                pickup2.build(),
+                                                toGatePickup.build(),
                                                 waitPickup2.build(),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(6.0),
+                                                Distance.waitForBallInTimer(5.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
@@ -400,7 +383,7 @@ public class GearsGateAuto extends LinearOpMode {
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(7.0),
+                                                Distance.waitForBallInTimer(5.0),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
