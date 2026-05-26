@@ -116,7 +116,8 @@ public class DriveTrain { // Prefix for commands
         } else {
             goalTarget = new Pose2d(-57.0, -57.0, Math.toRadians(0.0));
         }
-        Pose2d SOTMgoal = new Pose2d(goalTarget.position.x + (SOTMscalar * localizer.getPose().position.x), goalTarget.position.y + (SOTMscalar * localizer.getPose().position.y), 0.0);
+//        Pose2d SOTMgoal = new Pose2d(goalTarget.position.x + (SOTMscalar * localizer.getPose().position.x), goalTarget.position.y + (SOTMscalar * localizer.getPose().position.y), 0.0);
+        Pose2d SOTMgoal = goalTarget; //temp for now
 
         Pose2d robotPosition = Limelight.getPosition();
         if (robotPosition != null) { //check if invalid obelisk reading
