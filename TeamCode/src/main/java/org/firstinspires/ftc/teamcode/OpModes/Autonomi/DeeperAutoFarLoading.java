@@ -45,7 +45,7 @@ public class DeeperAutoFarLoading extends LinearOpMode {
         Hood.initAim(this);
         ActionManager actionManager = new ActionManager( this, 28);
         Distance.initSensor(this);
-        Turret.initTurret(this);
+        Turret.initTurret(this, false);
 
         QuickSpindexer.initSpindexer(this);
 //        Shield.initLocking(this);

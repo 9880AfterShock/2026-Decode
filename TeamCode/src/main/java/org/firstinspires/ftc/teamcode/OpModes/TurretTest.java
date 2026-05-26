@@ -15,7 +15,7 @@ public class TurretTest extends LinearOpMode {
     public void runOpMode() {
 
         //Init Functions
-        Turret.initTurret(this);
+        Turret.initTurret(this, false);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
