@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
@@ -36,7 +37,7 @@ import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 public class DriveTrain { // Prefix for commands
     private static DcMotorEx leftRear; // init motor vars
     private static DcMotorEx leftFront;
-private static DcMotorEx rightRear;
+    private static DcMotorEx rightRear;
     private static DcMotorEx rightFront;
     private static OpMode opmode; // opmode var init
     private static final double speedDivider = 2.0; // divider for slow mode
@@ -53,6 +54,7 @@ private static DcMotorEx rightRear;
     public static double farP = -0.008;
     public static double farD = 0.015;
     public static double turretDampening = 2.0;
+    public static double SOTMscalar = 1.0;
     private static Pose2d goalTarget = new Pose2d(-58.0, -57.0, Math.toRadians(0.0));
 
     public static void initDrive(OpMode opmode) { // init motors
@@ -114,13 +116,14 @@ private static DcMotorEx rightRear;
         } else {
             goalTarget = new Pose2d(-57.0, -57.0, Math.toRadians(0.0));
         }
+        Pose2d SOTMgoal = new Pose2d(goalTarget.position.x + (SOTMscalar * localizer.getPose().position.x), goalTarget.position.y + (SOTMscalar * localizer.getPose().position.y), 0.0);
 
         Pose2d robotPosition = Limelight.getPosition();
         if (robotPosition != null) { //check if invalid obelisk reading
             localizer.setPose(robotPosition);
         }
-        DriverTest.distanceFromGoal = Math.hypot(goalTarget.position.x-DriveTrain.localizer.getPose().position.x, goalTarget.position.y-DriveTrain.localizer.getPose().position.y);
-        rotation = Math.toDegrees(Math.atan2((goalTarget.position.y-localizer.getPose().position.y),(goalTarget.position.x-localizer.getPose().position.x)));
+        DriverTest.distanceFromGoal = Math.hypot(SOTMgoal.position.x-DriveTrain.localizer.getPose().position.x, SOTMgoal.position.y-DriveTrain.localizer.getPose().position.y);
+        rotation = Math.toDegrees(Math.atan2((SOTMgoal.position.y-localizer.getPose().position.y),(SOTMgoal.position.x-localizer.getPose().position.x)));
         rotation = ((rotation) % 360); //Mod to deal with atan range, no additionals bc camera on back
 
         double offsetFromGoal = AngleUnit.normalizeDegrees(rotation - Math.toDegrees(localizer.getPose().heading.toDouble()) - 180);
