@@ -345,6 +345,7 @@ public class GearsGateAuto extends LinearOpMode {
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         new SequentialAction(
+                                                Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
 //                                                actionManager.waitFor(1.0),
                                                 new SequentialAction(
@@ -352,7 +353,8 @@ public class GearsGateAuto extends LinearOpMode {
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
                                                         actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev()
+                                                        Arm.AutoArmRev(),
+                                                        Roller.AutoIntakeOff()
                                                 )
                                         ),
                                         toShoot3.build()
