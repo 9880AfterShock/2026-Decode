@@ -58,7 +58,7 @@ public class GearsFarAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 3600;
+        double rpm = 3550;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;
