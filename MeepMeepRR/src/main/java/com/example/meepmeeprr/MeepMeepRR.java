@@ -301,20 +301,19 @@ public class MeepMeepRR {
                 .setTangent(posMultiplier*Math.toRadians(-180.0))
                 .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 //                .waitSeconds(1.0)
-                .setTangent(posMultiplier*Math.toRadians(135.0))
-                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(135.0), rushSpeed)
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(180.0), rushSpeed)
 
                 //toPickup2 (gate Intake)
-                .setTangent(posMultiplier*Math.toRadians(0.0))
-                .splineToLinearHeading(prePickupMiddle, posMultiplier*Math.toRadians(-30.0), driveSpeed)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupMiddle, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+                .setTangent(posMultiplier*Math.toRadians(-10.0))
+                .splineToLinearHeading(gateIntakePos, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 
                 //pickup2
+                .waitSeconds(3.0)
 
                 //toShoot3
-                //noGate
-                //yesGate
+                .setTangent(posMultiplier*Math.toRadians(90.0))
+                .splineToLinearHeading(shootPosNear3, posMultiplier*Math.toRadians(180.0), rushSpeed)
 
 
                 //toPickup3
@@ -330,8 +329,8 @@ public class MeepMeepRR {
 
                 //toShoot4
                 //noGate
-                .setTangent(posMultiplier*Math.toRadians(160.0))
-                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(160.0), rushSpeed)
+                .setTangent(posMultiplier*Math.toRadians(135.0))
+                .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(135.0), rushSpeed)
                 //yesGate
 //                .setTangent(posMultiplier*Math.toRadians(180.0))
 //                .splineToLinearHeading(gatePosNear3, posMultiplier*Math.toRadians(-90.0), driveSpeed)
