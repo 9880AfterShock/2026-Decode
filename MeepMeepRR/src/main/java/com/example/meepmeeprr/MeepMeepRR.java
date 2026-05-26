@@ -108,7 +108,7 @@ public class MeepMeepRR {
         Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d gatePosNear1 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gateIntakePos = new Pose2d(10.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d gateIntakePos = new Pose2d(14.0, posMultiplier*-63.0, posMultiplier*Math.toRadians(-125.0));
         Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0)); //probably not used
 
         VelConstraint driveSpeed = new MinVelConstraint(Arrays.asList(
@@ -298,7 +298,7 @@ public class MeepMeepRR {
 //                .setTangent(posMultiplier*Math.toRadians(100.0))
 //                .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(170.0), rushSpeed)
                 //yesGate
-                .setTangent(posMultiplier*Math.toRadians(-180.0))
+                .setTangent(posMultiplier*Math.toRadians(90.0))
                 .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
 //                .waitSeconds(1.0)
                 .setTangent(posMultiplier*Math.toRadians(90.0))

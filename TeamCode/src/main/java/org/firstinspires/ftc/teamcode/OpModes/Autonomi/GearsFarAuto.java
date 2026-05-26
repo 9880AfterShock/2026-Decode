@@ -132,14 +132,14 @@ public class GearsFarAuto extends LinearOpMode {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-45.0));
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-43.0));
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-41.0));
-            shootPosFar4 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-41.0));
+            shootPosFar4 = new Pose2d(60.0, posMultiplier*-21.0, posMultiplier*Math.toRadians(-41.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-37.0)); //not making here atm lol
             turretAngle = 62;
         } else {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-21.5, posMultiplier*Math.toRadians(-42.0));
-            shootPosFar4 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-42.0));
+            shootPosFar4 = new Pose2d(60.0, posMultiplier*-19.5, posMultiplier*Math.toRadians(-42.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-42.0));
             turretAngle = 65;
         }
@@ -323,6 +323,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         new SequentialAction(
+                                                Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
 //                                                actionManager.waitFor(1.0),
                                                 new SequentialAction(
@@ -330,7 +331,8 @@ public class GearsFarAuto extends LinearOpMode {
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
                                                         actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev()
+                                                        Arm.AutoArmRev(),
+                                                        Roller.AutoIntakeOff()
                                                 )
                                         ),
                                         toShoot2.build()
@@ -379,10 +381,11 @@ public class GearsFarAuto extends LinearOpMode {
                                         )
                                 ),
 
-                                //2nd Sort
+                                //3rd Sort
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         new SequentialAction(
+                                                Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
 //                                                actionManager.waitFor(1.0),
                                                 new SequentialAction(
@@ -390,7 +393,8 @@ public class GearsFarAuto extends LinearOpMode {
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
                                                         actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev()
+                                                        Arm.AutoArmRev(),
+                                                        Roller.AutoIntakeOff()
                                                 )
                                         ),
                                         toShoot3.build()
@@ -441,6 +445,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         new SequentialAction(
+                                                Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
 //                                                actionManager.waitFor(1.0),
                                                 new SequentialAction(
@@ -448,7 +453,8 @@ public class GearsFarAuto extends LinearOpMode {
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
                                                         actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev()
+                                                        Arm.AutoArmRev(),
+                                                        Roller.AutoIntakeOff()
                                                 )
                                         ),
                                         back1.build()
@@ -499,6 +505,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 new ParallelAction(
                                         actionManager.rev(rpm),
                                         new SequentialAction(
+                                                Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
 //                                                actionManager.waitFor(1.0),
                                                 new SequentialAction(
@@ -506,7 +513,8 @@ public class GearsFarAuto extends LinearOpMode {
                                                         Prongs.AutoProngsShooting(),
                                                         QuickSpindexer.addRevOffset(),
                                                         actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev()
+                                                        Arm.AutoArmRev(),
+                                                        Roller.AutoIntakeOff()
                                                 )
                                         ),
                                         back2.build()

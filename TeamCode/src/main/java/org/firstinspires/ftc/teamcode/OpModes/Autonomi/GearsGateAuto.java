@@ -62,8 +62,7 @@ public class GearsGateAuto extends LinearOpMode {
         double dumpTime = 1.0;
 
         double posMultiplier = 1.0;
-        boolean firstDump = false;
-        boolean secondDump = false;
+        boolean firstDump = true;
         boolean thirdDump = false;
 //        double waitTime = 0.0;
         while (!isStopRequested() && !opModeIsActive()) {
@@ -78,9 +77,6 @@ public class GearsGateAuto extends LinearOpMode {
             if (gamepad1.dpadUpWasPressed()){
                 firstDump =!firstDump;
             }
-            if (gamepad1.dpadLeftWasPressed()){
-                secondDump =!secondDump;
-            }
             if (gamepad1.dpadRightWasPressed()){
                 thirdDump =!thirdDump;
             }
@@ -93,7 +89,7 @@ public class GearsGateAuto extends LinearOpMode {
                 TeleOp.alliance = Alliance.RED;
             }
             telemetry.addData("First Dump", firstDump);
-            telemetry.addData("Second Dump", secondDump);
+            telemetry.addData("Second Dump", "Gateintaking");
             telemetry.addData("Third Dump", thirdDump);
             telemetry.update();
         }
@@ -141,7 +137,7 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d gatePosNear1 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gateIntakePos = new Pose2d(10.0, posMultiplier*-60.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d gateIntakePos = new Pose2d(14.0, posMultiplier*-63.0, posMultiplier*Math.toRadians(-125.0));
         Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0)); //probably not used
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
@@ -161,9 +157,9 @@ public class GearsGateAuto extends LinearOpMode {
         TrajectoryActionBuilder toShoot2;
         if (firstDump) {
             toShoot2 = drive.actionBuilder(endPickupMiddle)
-                    .setTangent(posMultiplier*Math.toRadians(-180.0))
+                    .setTangent(posMultiplier*Math.toRadians(90.0))
                     .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-//                .waitSeconds(1.0)
+                .waitSeconds(0.2)
                     .setTangent(posMultiplier*Math.toRadians(90.0))
                     .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(180.0), rushSpeed);
         } else{
@@ -204,11 +200,11 @@ public class GearsGateAuto extends LinearOpMode {
                     .splineToLinearHeading(shootPosNear4, posMultiplier*Math.toRadians(135.0), rushSpeed);
         }
 
-        TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupNear)
+        TrajectoryActionBuilder waitPickup1 = drive.actionBuilder(endPickupMiddle)
                 .waitSeconds(4.0);
-        TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(endPickupMiddle)
+        TrajectoryActionBuilder waitPickup2 = drive.actionBuilder(gateIntakePos)
                 .waitSeconds(4.0);
-        TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickupFar)
+        TrajectoryActionBuilder waitPickup3 = drive.actionBuilder(endPickupNear)
                 .waitSeconds(4.0);
 
 
