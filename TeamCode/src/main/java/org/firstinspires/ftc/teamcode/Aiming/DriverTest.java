@@ -47,6 +47,8 @@ public class DriverTest {
     public static double rapidFireCooldown = -rapidFireDifference;
 
     public static boolean isFarAuto = false;
+    public static double fudgeAmount = 0;
+
 
     public static void initControls(OpMode opmode) {
         DriverTest.opmode = opmode;
@@ -58,6 +60,7 @@ public class DriverTest {
         shooterDown.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         shooter = new FlywheelMotor(List.of(shooterUp,shooterDown),numTicks);
         distanceFromGoal = 60;
+        fudgeAmount = 0;
         canFire = false;
 
 
@@ -75,7 +78,17 @@ public class DriverTest {
         shooterPID.d = kD;
     }
 
-    public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto){
+    public static void update(boolean increase, boolean decrease, boolean fire, boolean rev, boolean intake, boolean auto, boolean fudgeup, boolean fudgedown, boolean defudge){
+        if (fudgeup) {
+            fudgeAmount += 50;
+        }
+        if (fudgedown) {
+            fudgeAmount -= 50;
+        }
+        if (defudge) {
+            fudgeAmount = 0;
+        }
+        opmode.telemetry.addData("Fudge Amount",fudgeAmount);
         shooterPID.p = kP;
         shooterPID.d = kD;
         double rotationsPerMinute = Math.abs(shooter.getSpeed());
@@ -102,12 +115,12 @@ public class DriverTest {
         }
 
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed, rotationsPerMinute);
+            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed+fudgeAmount, rotationsPerMinute);
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
-            if (Math.abs(avgSpeed-desSpeed) < 200 && fire) {
+            if (Math.abs(avgSpeed-(desSpeed+fudgeAmount)) < 200 && fire) {
                 if (ControlManager.shot) {
                     rapidFireCooldown = rapidFireDifference;
                     QuickSpindexer.fullCycle();

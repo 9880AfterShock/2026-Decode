@@ -236,7 +236,7 @@ public class ActionManager {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                DriverTest.update(false,false, autoFire, autoRev, false, true);
+                DriverTest.update(false,false, autoFire, autoRev, false, true, false, false, false);
 
 //                avgSpeed = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);
                 double rotationsPerMinute = Math.abs((shooterUp.getVelocity()/shooterTicks)*60);

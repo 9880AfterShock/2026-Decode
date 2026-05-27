@@ -218,7 +218,7 @@ public class ControlManager {
 //            spindexer.queueMessage(SpindexerMessage.LEFT);
 //        }
 
-        DriverTest.update(increase, decrease, fire, rev, /*intaking*/ true, false);
+        DriverTest.update(increase, decrease, fire, rev, /*intaking*/ true, false, operator.leftBumperWasPressed(), operator.rightBumperWasPressed(), operator.left_bumper&operator.right_bumper);
 //        DriverTest.update(increase, decrease, fire||(auto_shoot&&spindexer.isLinedUp()&&(spindexer.getCurrentBall() != BallType.NONE)), rev, intake_shooter, false);
 //        Shield.updateLocking(rev);
         Prongs.updateGrate(rev && !(operator.left_trigger > 0.5), operator.right_trigger > 0.5 || (operator.left_trigger > 0.5 && QuickSpindexer.has2Balls()) || (QuickSpindexer.hasBall[0] && QuickSpindexer.hasBall[1] && QuickSpindexer.hasBall[2]));
