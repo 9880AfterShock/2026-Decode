@@ -124,9 +124,9 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d shootPosNear3 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
-        Pose2d prePickupNear = new Pose2d(-10.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d startPickupNear = new Pose2d(-10.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupNear = new Pose2d(-10.0, posMultiplier*-50.5, posMultiplier*Math.toRadians(-90.0));
+        Pose2d prePickupNear = new Pose2d(-8.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d startPickupNear = new Pose2d(-8.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupNear = new Pose2d(-8.0, posMultiplier*-50.5, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupMiddle = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
@@ -136,9 +136,9 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d endPickupFar = new Pose2d(38.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
 
-        Pose2d gatePosNear1 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d gateIntakePos = new Pose2d(14.0, posMultiplier*-63.0, posMultiplier*Math.toRadians(-125.0));
-        Pose2d gatePosNear3 = new Pose2d(7.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0)); //probably not used
+        Pose2d gatePosNear1 = new Pose2d(8.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d gateIntakePos = new Pose2d(15.3, posMultiplier*-63.0, posMultiplier*Math.toRadians(-125.0));
+        Pose2d gatePosNear3 = new Pose2d(8.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0)); //probably not used
 
         TrajectoryActionBuilder toShoot1 = drive.actionBuilder(startPosNear)
                 .setTangent(posMultiplier*Math.toRadians(50))
