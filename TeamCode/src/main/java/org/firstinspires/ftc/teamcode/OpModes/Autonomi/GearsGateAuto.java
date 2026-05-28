@@ -62,6 +62,7 @@ public class GearsGateAuto extends LinearOpMode {
         double dumpTime = 1.0;
 
         double posMultiplier = 1.0;
+        double posToggler = 0.0;
         boolean firstDump = true;
         boolean thirdDump = false;
 //        double waitTime = 0.0;
@@ -70,9 +71,11 @@ public class GearsGateAuto extends LinearOpMode {
             telemetry.addLine("Use DPAD (up left and right) to toggle dumps");
             if (gamepad1.xWasPressed()){
                 posMultiplier = 1.0;
+                posToggler = 0.0;
             }
             if (gamepad1.bWasPressed()){
                 posMultiplier = -1.0;
+                posToggler = 1.0;
             }
             if (gamepad1.dpadUpWasPressed()){
                 firstDump =!firstDump;
@@ -130,7 +133,8 @@ public class GearsGateAuto extends LinearOpMode {
 
         Pose2d prePickupMiddle = new Pose2d(14.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupMiddle = new Pose2d(14.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-55.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d endPickupMiddle = new Pose2d(14.0, posMultiplier*-56.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d timoPickupMiddle = new Pose2d(15.0, posMultiplier*-53.0, posMultiplier*Math.toRadians(-90.0));
 
         Pose2d prePickupFar = new Pose2d(38.0, posMultiplier*-29.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupFar = new Pose2d(38.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
@@ -156,12 +160,12 @@ public class GearsGateAuto extends LinearOpMode {
 
         TrajectoryActionBuilder toShoot2;
         if (firstDump) {
-            toShoot2 = drive.actionBuilder(endPickupMiddle)
+            toShoot2 = drive.actionBuilder(timoPickupMiddle)
                     .setTangent(posMultiplier*Math.toRadians(90.0))
-                    .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+                    .splineToLinearHeading(gatePosNear1, posMultiplier*Math.toRadians(-90.0), intakeSpeed)
                 .waitSeconds(0.2)
                     .setTangent(posMultiplier*Math.toRadians(90.0))
-                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(180.0), rushSpeed);
+                    .splineToLinearHeading(shootPosNear2, posMultiplier*Math.toRadians(180.0), driveSpeed);
         } else{
             toShoot2 = drive.actionBuilder(endPickupMiddle)
                     .setTangent(posMultiplier*Math.toRadians(100.0))

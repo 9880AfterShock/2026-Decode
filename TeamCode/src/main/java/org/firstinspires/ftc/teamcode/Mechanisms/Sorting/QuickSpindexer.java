@@ -6,11 +6,14 @@ import static java.lang.Math.abs;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Enums.Motif;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
 import org.firstinspires.ftc.teamcode.Sensors.Obelisk;
@@ -21,8 +24,8 @@ import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteMotorEx;
 import java.util.Arrays;
 
 public class QuickSpindexer { // Prefix for commands
-    public static DcMotor spindexerMotor; // init motor var
-    public static BulkWriteMotor spindexer;
+    public static DcMotorEx spindexerMotor; // init motor var
+    public static BulkWriteMotorEx spindexer;
     private static OpMode opmode; // opmode var init
     private static double targetPosition;
     private static boolean wasClockwise;
@@ -31,25 +34,25 @@ public class QuickSpindexer { // Prefix for commands
     public static boolean[] hasBall = new boolean[3];
     public static int currentSlot = 1; //1 2 3 going clockwise
     public static boolean spindexerOffset = false;
-    final private static int offsetDivider = 10;
+    final private static int offsetDivider = 8;
     private static int lastTarget = 0;
     private static int preLastTarget = 0;
     private static double lastGoodTarget = 0;
     private static int lastPos = 0;
     private static boolean aborting = false;
     private static int jamCount = 0;
-    private static int jamExcuses = 8;
+    private static int jamExcuses = 3;
     private static double offset = 0.0;
 
     public static void initSpindexer(OpMode opmode) { // init motor
-        spindexerMotor = opmode.hardwareMap.get(DcMotor.class, "spindexer"); //Port 1 on expansion hub
+        spindexerMotor = opmode.hardwareMap.get(DcMotorEx.class, "spindexer"); //Port 1 on expansion hub
         spindexerMotor.setZeroPowerBehavior(BRAKE);
         spindexerMotor.setTargetPosition(0);
         spindexerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         spindexerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         targetPosition = 0;
         spindexerMotor.setPower(1.0);
-        spindexer = new BulkWriteMotor(spindexerMotor);
+        spindexer = new BulkWriteMotorEx(spindexerMotor);
 
         QuickSpindexer.opmode = opmode;
         hasBall = new boolean[3];
@@ -62,7 +65,7 @@ public class QuickSpindexer { // Prefix for commands
 
         aborting = false;
         jamCount = 0;
-        jamExcuses = 0;
+        jamExcuses = 3;
 
         offset = ((SensOrange.getCurrentAngle()%120)/360.0)*1425.1;
     }
@@ -123,7 +126,7 @@ public class QuickSpindexer { // Prefix for commands
             if (jamExcuses < 0){
                 jamExcuses = 8;
                 abortTurn();
-                jamCount += 1;
+                jamCount = 3;
                 aborting = true;
             }
         }
@@ -139,12 +142,16 @@ public class QuickSpindexer { // Prefix for commands
         opmode.telemetry.addData("Attempt Offset", spindexerOffset);
 
         opmode.telemetry.addData("SPINDEXER JAM:", spindexerStuck());
+        opmode.telemetry.addData("Spindexer Current", spindexer.getCurrent(CurrentUnit.AMPS));
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.put("Spindexer Current", spindexer.getCurrent(CurrentUnit.AMPS));
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
         opmode.telemetry.addData("Last JAM pos:", lastPos);
         opmode.telemetry.addData("JAM count", jamCount);
         opmode.telemetry.addData("Last Pos Difference", spindexer.getCurrentPosition() - lastPos);
 //        opmode.telemetry.addData("DEXER int target", (int) targetPosition);
         logTargets((int) targetPosition, spindexer.getCurrentPosition());
-        if (abs(spindexer.getCurrentPosition() - targetPosition) < 48) {
+        if (abs(spindexer.getCurrentPosition() - targetPosition) < 70 && !spindexerStuck()) {
             lastGoodTarget = targetPosition;
         }
     }
@@ -155,8 +162,9 @@ public class QuickSpindexer { // Prefix for commands
 
     public static void fullCycle(){
         if (!spindexerStuck()) {
-        jamExcuses += 1;
+        jamExcuses = 3;
         spindexerOffset = false;
+        lastGoodTarget = targetPosition;
         targetPosition += 1425.1;
         spindexer.setTargetPosition((int) (targetPosition));
         spindexer.setPower(0.7);
@@ -165,7 +173,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static void turnIntake(){
-        jamExcuses += 1;
+        jamExcuses = 3;
         targetPosition -= 1425.1/3;
         currentSlot -= 1;
         if (currentSlot < 1) currentSlot = 3;
@@ -182,11 +190,7 @@ public class QuickSpindexer { // Prefix for commands
     }
 
     public static boolean spindexerStuck(){
-        return (
-                abs(spindexer.getCurrentPosition() - lastPos) < 1
-                &&
-                abs(spindexer.getCurrentPosition() - spindexer.getTargetPosition()) > 150
-        ); //50 is more than the ticks per rotation, 150 is more than the offset turn
+        return spindexer.getCurrent(CurrentUnit.AMPS) > 7;
     }
 
     public static void abortTurn(){
