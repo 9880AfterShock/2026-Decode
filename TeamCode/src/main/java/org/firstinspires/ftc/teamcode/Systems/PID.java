@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Systems;
 
-public class PID extends PIDAbstract {
+public class PID extends ControllerAbstract {
     public double maxi;
     public double p;
     public double i;

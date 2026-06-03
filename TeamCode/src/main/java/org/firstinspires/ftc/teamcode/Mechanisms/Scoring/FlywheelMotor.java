@@ -4,15 +4,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Systems.PID;
-import org.firstinspires.ftc.teamcode.Systems.PIDAbstract;
+import org.firstinspires.ftc.teamcode.Systems.ControllerAbstract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class FlywheelMotor {
     private double speed;
-    private final PIDAbstract pid;
+    private final ControllerAbstract pid;
     private final List<DcMotorEx> motors;
     private final double ticks;
     public double lastPidOutput;

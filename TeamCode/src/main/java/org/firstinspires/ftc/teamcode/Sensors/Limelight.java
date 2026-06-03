@@ -110,18 +110,20 @@ public class Limelight {
     public static Pose2d getPosition() { //MetaTag2
         limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.currentPosition);
         LLResult result = limelight.getLatestResult();
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.put("is fulfilled",Math.abs(Turret.currentPosition - Turret.targetPosition) < 3);
 
-        if (result != null && result.isValid() && Math.abs(Turret.currentPosition - Turret.targetPosition) < 1) { //2nd clause is temp, TODO remove when fixed
+        if (result != null && result.isValid()) { //2nd clause is temp, TODO remove when fixed
             Pose2d currentPose = new Pose2d(result.getBotpose_MT2().getPosition().x*METER_TO_INCH, result.getBotpose_MT2().getPosition().y*METER_TO_INCH, Math.toRadians(result.getBotpose_MT2().getOrientation().getYaw()));
-//            TelemetryPacket packet = new TelemetryPacket();
-//            packet.fieldOverlay().setStroke("#00FF00");
-//            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
-//            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+            packet.fieldOverlay().setStroke("#00FF00");
+            Drawing.drawRobot(packet.fieldOverlay(),currentPose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
             Pose2d obeliskErrorPos = new Pose2d(0.0, 0.0, 0.0);
             if (!currentPose.equals(obeliskErrorPos)) {
                 return Turret.turretTransform(currentPose, Math.toRadians(Gyroscope.getRotationDegrees() - Turret.currentPosition));
             }
         }
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
         return null;
     }
 
