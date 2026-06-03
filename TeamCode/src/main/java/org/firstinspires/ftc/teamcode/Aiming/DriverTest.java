@@ -34,11 +34,11 @@ public class DriverTest {
 
     private final static double idleSpeed = 1500;
     private static PID shooterPID = new PID(0.0,0.0,0.0); //placeholder, gets set later
-    public static double kS = 0.005; //Kstatic, should not change
-    public static double kV = 0.000196; //feedforward scalar
+    public static double kS = 0.0035; //Kstatic, should not change
+    public static double kV = 0.00012; //feedforward scalar
 
-    public static double kP = 0.0014; //PID P
-    public static double kD = 0.000011; //PID D
+    public static double kP = 0.00125; //PID P
+    public static double kD = 0.00005; //PID D
 
     public static double tripleShootMultiplier = 3.7; //scalar for the boost to RPM based off of distance
     public static double getTripleShootNerf = 185; //flat decreasing value
@@ -115,7 +115,7 @@ public class DriverTest {
         }
 
         if (rev) {
-            double shooterPower = (kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed+fudgeAmount, rotationsPerMinute);
+            double shooterPower = Math.max(0.0,(kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed+fudgeAmount, rotationsPerMinute));
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
