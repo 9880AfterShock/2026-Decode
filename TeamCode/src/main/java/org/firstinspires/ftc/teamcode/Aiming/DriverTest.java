@@ -31,6 +31,7 @@ public class DriverTest {
     private static FlywheelMotor shooter;
     public static boolean canFire;
     public static double avgSpeed = 0;
+    public static double avgSpeed2 = 0;
 
     private final static double idleSpeed = 1500;
     private static PID shooterPID = new PID(0.0,0.0,0.0); //placeholder, gets set later
@@ -95,6 +96,9 @@ public class DriverTest {
         avgSpeed *= 1.5;
         avgSpeed += rotationsPerMinute*0.5;
         avgSpeed /= 2;
+        avgSpeed2 *= 1.7;
+        avgSpeed2 += rotationsPerMinute*0.3;
+        avgSpeed2 /= 2;
         if (!auto) {
             if (distanceFromGoal < 50) {
                 desSpeed = (-0.0741749*distanceFromGoal*distanceFromGoal)+(18.52099*distanceFromGoal)+1876.11169;
@@ -115,12 +119,12 @@ public class DriverTest {
         }
 
         if (rev) {
-            double shooterPower = Math.max(0.0,(kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed+fudgeAmount, rotationsPerMinute));
+            double shooterPower = Math.max(0.0,(kS * Math.signum(desSpeed)) + (kV * desSpeed) + shooterPID.step(desSpeed+fudgeAmount+ (auto ? 100 : 0), rotationsPerMinute));
             shooterUp.setPower(shooterPower);
             shooterDown.setPower(shooterPower);
 //             shooterUp.setVelocity((desSpeed*numTicks)/60);
 //             shooterDown.setVelocity((desSpeed*numTicks)/60);
-            if (Math.abs(avgSpeed-(desSpeed+fudgeAmount)) < 200 && fire) {
+            if (Math.abs(avgSpeed-(desSpeed+fudgeAmount)) < 200 && Math.abs(avgSpeed2-(desSpeed+fudgeAmount)) < 200 && fire) {
                 if (ControlManager.shot) {
                     rapidFireCooldown = rapidFireDifference;
                     QuickSpindexer.fullCycle();
@@ -160,11 +164,13 @@ public class DriverTest {
         opmode.telemetry.addData("Distance From Goal in inches", distanceFromGoal);
         opmode.telemetry.addData("Speed RPM RAW", rotationsPerMinute);
         opmode.telemetry.addData("Averaged RPM", avgSpeed);
+        opmode.telemetry.addData("Averaged RPM 2", avgSpeed2);
         opmode.telemetry.addData("Desired Speed RPM", desSpeed);
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.put("Current RPM", rotationsPerMinute);
         packet.put("Avg RPM", avgSpeed);
+        packet.put("Avg RPM 2", avgSpeed2);
         packet.put("Desired RPM", desSpeed);
         packet.put("Goal Distance", distanceFromGoal);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
