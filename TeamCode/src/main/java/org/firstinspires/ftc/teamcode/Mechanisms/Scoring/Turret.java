@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Mechanisms.Scoring;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
@@ -42,6 +41,8 @@ public class Turret {
     public static double P = 0.0087;
     public static double D = 0.0012;
 
+    public static boolean resetting = false;
+    public static boolean prevResetting = false;
 
     public static PID mainPID;
 
@@ -66,17 +67,20 @@ public class Turret {
         leftWorking = true;
         rightWorking = true;
         mainPID = new PID(P,0.0,D);
+
+        resetting = false;
+        prevResetting = false;
     }
 
     public static void updateTurret(boolean overRide, double overRideDegrees) {
-        if (overRide){
+        if (overRide && !resetting){
             targetPosition = overRideDegrees;
         }
 
         updatePosition();
 
         leftWorking = leftEncoder.getVoltage() != 0;
-        rightWorking = leftEncoder.getVoltage() != 0;
+        rightWorking = rightEncoder.getVoltage() != 0;
         if (leftWorking && rightWorking){
             currentPosition = (((leftCurrentPosition - leftOffset) + (rightCurrentPosition - rightOffset)) / 2) * (24.0/78);
         } else {
@@ -89,16 +93,18 @@ public class Turret {
             }
         }
 
-        targetPosition = Range.clip(targetPosition, minTurret, maxTurret); //cap range for safety
+        if (!resetting){
+            targetPosition = Range.clip(targetPosition, minTurret, maxTurret); //cap range for safety
+        }
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.put("Turret Target", targetPosition);
-        packet.put("Turret min", minTurret);
-        packet.put("Turret max", maxTurret);
-        packet.put("Turret Error", difference);
-        packet.put("Turret Position", currentPosition);
+//        TelemetryPacket packet = new TelemetryPacket();
+//        packet.put("Turret Target", targetPosition);
+//        packet.put("Turret min", minTurret);
+//        packet.put("Turret max", maxTurret);
+//        packet.put("Turret Error", difference);
+//        packet.put("Turret Position", currentPosition);
         if (Math.abs(difference) > 0.5){
             if (difference > 0){
                 diffSign = 1;
@@ -108,7 +114,7 @@ public class Turret {
         } else {
             diffSign = 0.0; //freeze static boost if we are close enough to target
         }
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+//        FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
@@ -161,6 +167,23 @@ public class Turret {
         double x = (turretCenterOffset *Math.cos(rotation)) + beforeTransform.position.x;
         double y = (turretCenterOffset *Math.sin(rotation)) + beforeTransform.position.y;
         return new Pose2d(x, y, beforeTransform.heading.toDouble() + Math.toRadians(currentPosition));
+    }
+
+    public static void checkTurretReset(boolean active, double control){
+        resetting = active;
+
+        if (resetting){
+            targetPosition += control;
+        }
+
+        if (prevResetting && !resetting){
+            targetPosition = 0.0;
+            leftWorking = true;
+            rightWorking = true;
+            leftCurrentPosition = getPosition(leftEncoder.getVoltage());
+            rightCurrentPosition = getPosition(rightEncoder.getVoltage());
+        }
+        prevResetting = resetting;
     }
 
     public static Action lock() {

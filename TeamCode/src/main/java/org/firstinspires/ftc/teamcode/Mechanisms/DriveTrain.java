@@ -130,7 +130,7 @@ public class DriveTrain { // Prefix for commands
         if (align) { //PID \|/
             if (Math.abs(offsetFromGoal) < 70) {
                 turn = 0;
-                if (Math.abs(Turret.currentPosition + offsetFromGoal) > turretDampening) {
+                if (!Turret.resetting && Math.abs(Turret.currentPosition + offsetFromGoal) > turretDampening) {
                     Turret.targetPosition = -offsetFromGoal;
                 }
             } else {
