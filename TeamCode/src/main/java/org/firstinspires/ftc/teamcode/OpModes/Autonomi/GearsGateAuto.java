@@ -125,7 +125,7 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d shootPosNear1 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosNear2 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosNear3 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosNear4 = new Pose2d(-47.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d prePickupNear = new Pose2d(-9.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupNear = new Pose2d(-9.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
@@ -228,7 +228,7 @@ public class GearsGateAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-45.0),
+                                Turret.setTurretTarget(posMultiplier*-42.0),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFlat(),
                                 actionManager.rev(rpm),
