@@ -36,8 +36,8 @@ import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import java.util.Arrays;
 
 @Config
-@Autonomous(name = "GEARS Far zone 12")
-public class GearsFarAuto extends LinearOpMode {
+@Autonomous(name = "GEARS Far zone 12 no spikes")
+public class GearsCycleAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         SensOrange.initSensor(this);
