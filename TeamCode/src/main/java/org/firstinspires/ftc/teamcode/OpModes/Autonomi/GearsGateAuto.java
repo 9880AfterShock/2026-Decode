@@ -113,7 +113,7 @@ public class GearsGateAuto extends LinearOpMode {
         if (posMultiplier == 1){
             turretAngle = 42;
         } else {
-            turretAngle = 45;
+            turretAngle = 50;
         }
 
         VelConstraint wallIntakeSpeed = new MinVelConstraint(Arrays.asList(
