@@ -109,6 +109,13 @@ public class GearsGateAuto extends LinearOpMode {
 //        double driveSpeed = 40.0;
 //        double intakeSpeed = 15.0;
 
+        double turretAngle;
+        if (posMultiplier == 1){
+            turretAngle = 42;
+        } else {
+            turretAngle = 45;
+        }
+
         VelConstraint wallIntakeSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(20.0),
                 new AngularVelConstraint(Math.PI/2)
@@ -228,7 +235,7 @@ public class GearsGateAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-42.0),
+                                Turret.setTurretTarget(posMultiplier*-turretAngle),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFlat(),
                                 actionManager.rev(rpm),
