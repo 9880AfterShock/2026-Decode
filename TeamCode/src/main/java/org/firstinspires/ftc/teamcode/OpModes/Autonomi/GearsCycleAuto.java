@@ -59,7 +59,7 @@ public class GearsCycleAuto extends LinearOpMode {
         TeleOp.autoHasBalls = true;
 
         double rpm = 3250;
-        double rpmWaitOffset = -50;
+        double rpmWaitOffset = -200;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;
@@ -264,7 +264,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                 Turret.setTurretTarget(posMultiplier*-turretAngle),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFar(),
-                                actionManager.rev(rpm + rpmWaitOffset),
+                                actionManager.rev(rpm),
                                 new ParallelAction(
                                         new SequentialAction(
                                                 Arm.AutoArmOut(),
@@ -278,7 +278,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                 ),
                                 actionManager.shotCue(1),
                                 //First Volley
-                                actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
+                                //actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -322,7 +322,7 @@ public class GearsCycleAuto extends LinearOpMode {
 //
 //                                //2nd Sort
 //                                new ParallelAction(
-//                                        actionManager.rev(rpm + rpmWaitOffset),
+//                                        actionManager.rev(rpm),
 //                                        new SequentialAction(
 //                                                Roller.AutoIntakeEject(),
 //                                                Distance.waitForBallInSpindexer(),
@@ -340,7 +340,7 @@ public class GearsCycleAuto extends LinearOpMode {
 //                                ),
 //
 //                                //2nd volley
-//                                actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
+//                                //actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
 //                                actionManager.startTripleRPMBoost(true),
 //                                QuickSpindexer.autoFullCycle(true),
 //                                actionManager.endTripleRPMBoost(true),
@@ -384,7 +384,7 @@ public class GearsCycleAuto extends LinearOpMode {
 
                                 //3rd Sort
                                 new ParallelAction(
-                                        actionManager.rev(rpm + rpmWaitOffset),
+                                        actionManager.rev(rpm),
                                         new SequentialAction(
                                                 Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
@@ -402,7 +402,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                 ),
 
                                 //Third Volley
-                                actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
+                                //actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -444,7 +444,7 @@ public class GearsCycleAuto extends LinearOpMode {
 
                                 //1st back
                                 new ParallelAction(
-                                        actionManager.rev(rpm + rpmWaitOffset),
+                                        actionManager.rev(rpm),
                                         new SequentialAction(
                                                 Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
@@ -462,7 +462,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                 ),
 
                                 //4th volley
-                                actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
+                                //actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -504,7 +504,7 @@ public class GearsCycleAuto extends LinearOpMode {
 
                                 //2nd back
                                 new ParallelAction(
-                                        actionManager.rev(rpm + rpmWaitOffset),
+                                        actionManager.rev(rpm),
                                         new SequentialAction(
                                                 Roller.AutoIntakeEject(),
                                                 Distance.waitForBallInSpindexer(),
@@ -522,7 +522,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                 ),
 
                                 //5th volley
-                                actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
+                                //actionManager.waitForSpeedSafe(rpm + rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),

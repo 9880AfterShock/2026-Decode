@@ -59,7 +59,7 @@ public class GearsFarAuto extends LinearOpMode {
         TeleOp.autoHasBalls = true;
 
         double rpm = 3250;
-        double rpmWaitOffset = -50;
+        double rpmWaitOffset = -200;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;

@@ -180,6 +180,8 @@ public class ActionManager {
 //                telemetryPacket.put("===SAFE RPM===", rotationsPerMinute);
 //                return Math.abs(rotationsPerMinute-rpm) > 50;
 //                DriverTest.update(false, false, false, true, false, true);
+                telemetryPacket.put("===SAFE RPM===", avgSpeed);
+                telemetryPacket.put("===SAFE DESIRED RPM===", rpm);
                 autoRev = true;
                 return Math.abs(avgSpeed-rpm) > 50;
             }
