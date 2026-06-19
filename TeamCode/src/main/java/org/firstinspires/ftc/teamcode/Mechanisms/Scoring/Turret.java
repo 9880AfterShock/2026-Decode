@@ -93,12 +93,12 @@ public class Turret {
 
         double difference = (targetPosition - currentPosition);
         double diffSign;
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.put("Turret Target", targetPosition);
-        packet.put("Turret min", minTurret);
-        packet.put("Turret max", maxTurret);
-        packet.put("Turret Error", difference);
-        packet.put("Turret Position", currentPosition);
+//        TelemetryPacket packet = new TelemetryPacket();
+//        packet.put("Turret Target", targetPosition);
+//        packet.put("Turret min", minTurret);
+//        packet.put("Turret max", maxTurret);
+//        packet.put("Turret Error", difference);
+//        packet.put("Turret Position", currentPosition);
         if (Math.abs(difference) > 0.5){
             if (difference > 0){
                 diffSign = 1;
@@ -108,7 +108,7 @@ public class Turret {
         } else {
             diffSign = 0.0; //freeze static boost if we are close enough to target
         }
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+//        FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
 //        leftServo.setPosition(calcPower(kStatic));
 //        rightServo.setPosition(calcPower(kStatic));
