@@ -59,6 +59,7 @@ public class GearsFarAuto extends LinearOpMode {
         TeleOp.autoHasBalls = true;
 
         double rpm = 3250;
+        double rpmWaitOffset = -50;
 
         double posMultiplier = 1.0;
 //        boolean firstDump = false;
@@ -277,7 +278,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 ),
                                 actionManager.shotCue(1),
                                 //First Volley
-                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.waitForSpeedSafe(rpm+rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -339,7 +340,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 ),
 
                                 //2nd volley
-                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.waitForSpeedSafe(rpm+rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -401,7 +402,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 ),
 
                                 //Third Volley
-                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.waitForSpeedSafe(rpm+rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -461,7 +462,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 ),
 
                                 //4th volley
-                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.waitForSpeedSafe(rpm+rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
@@ -521,7 +522,7 @@ public class GearsFarAuto extends LinearOpMode {
                                 ),
 
                                 //5th volley
-                                actionManager.waitForSpeedSafe(rpm),
+                                actionManager.waitForSpeedSafe(rpm+rpmWaitOffset),
                                 actionManager.startTripleRPMBoost(true),
                                 QuickSpindexer.autoFullCycle(true),
                                 actionManager.endTripleRPMBoost(true),
