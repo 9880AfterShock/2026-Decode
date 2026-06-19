@@ -36,9 +36,8 @@ public class Turret {
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
-
-    public static final double leftOffset =  77.65793528505394;
-    public static final double rightOffset = 54.5824345146379;
+    public static final double leftOffset =  137.34360554699538;
+    public static final double rightOffset = 149.65793528505392;
 
     public static double P = 0.0087;
     public static double D = 0.0012;
@@ -95,7 +94,11 @@ public class Turret {
         double difference = (targetPosition - currentPosition);
         double diffSign;
         TelemetryPacket packet = new TelemetryPacket();
+        packet.put("Turret Target", targetPosition);
+        packet.put("Turret min", minTurret);
+        packet.put("Turret max", maxTurret);
         packet.put("Turret Error", difference);
+        packet.put("Turret Position", currentPosition);
         if (Math.abs(difference) > 0.5){
             if (difference > 0){
                 diffSign = 1;
