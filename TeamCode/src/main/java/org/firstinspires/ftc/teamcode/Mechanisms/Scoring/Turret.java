@@ -76,7 +76,7 @@ public class Turret {
         updatePosition();
 
         leftWorking = leftEncoder.getVoltage() != 0;
-        rightWorking = leftEncoder.getVoltage() != 0;
+        rightWorking = rightEncoder.getVoltage() != 0;
         if (leftWorking && rightWorking){
             currentPosition = (((leftCurrentPosition - leftOffset) + (rightCurrentPosition - rightOffset)) / 2) * (24.0/78);
         } else {
