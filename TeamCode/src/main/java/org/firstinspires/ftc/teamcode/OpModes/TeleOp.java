@@ -126,7 +126,7 @@ public class TeleOp extends LinearOpMode {
 //            BallColorDetectinator.update();
 
 
-            if (gamepad2.left_stick_button && !gamepad2.back){
+            if (gamepad2.left_stick_button && !(gamepad2.right_trigger > 0.5)){
                 if (gamepad2.left_stick_y == 0 && gamepad2.left_stick_x == 0){
                     Turret.updateTurret(true, 0.0);
                 } else {
@@ -137,7 +137,7 @@ public class TeleOp extends LinearOpMode {
                     }
                 }
             } else {
-                Turret.checkTurretReset(gamepad2.back, gamepad2.right_stick_x*5);
+                Turret.checkTurretReset(gamepad2.right_trigger > 0.5, gamepad2.right_stick_x*5);
                 Turret.updateTurret(false, 0.0);
             }
 

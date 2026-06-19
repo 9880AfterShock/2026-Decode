@@ -166,8 +166,8 @@ public class GearsCycleAuto extends LinearOpMode {
 
         Pose2d preSlamPos1 = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
         Pose2d slamPos1 = new Pose2d(35.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
-        Pose2d preSlamPos2 = new Pose2d(50.0, posMultiplier*-40.0, posMultiplier*Math.toRadians(-90.0));
-        Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-90.0));
+        Pose2d preSlamPos2 = new Pose2d(55.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
+        Pose2d slamPos2 = new Pose2d(35.0, posMultiplier*-61.0, posMultiplier*Math.toRadians(-135.0));
 
         Pose2d parkRotationFar = new Pose2d(38.5, posMultiplier*-26.0, posMultiplier*Math.toRadians(90));
         Pose2d parkPosFar = new Pose2d(13.5, posMultiplier*-34.0, posMultiplier*Math.toRadians(90.0));
@@ -176,19 +176,19 @@ public class GearsCycleAuto extends LinearOpMode {
 //                .setTangent(posMultiplier*Math.toRadians(50))
 //                .splineToLinearHeading(shootPosNear1, posMultiplier*Math.toRadians(50), driveSpeed);
 
-        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
-                .setTangent(posMultiplier*Math.toRadians(180.0))
-                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
-                .setTangent(posMultiplier*Math.toRadians(-90.0))
-                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+//        TrajectoryActionBuilder toPickup1 = drive.actionBuilder(shootPosFar1)
+//                .setTangent(posMultiplier*Math.toRadians(180.0))
+//                .splineToLinearHeading(prePickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed)
+//                .setTangent(posMultiplier*Math.toRadians(-90.0))
+//                .splineToLinearHeading(startPickupFar, posMultiplier*Math.toRadians(-90.0), driveSpeed);
+//
+//        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupFar)
+//                .setTangent(posMultiplier*Math.toRadians(-90))
+//                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
 
-        TrajectoryActionBuilder pickup1 = drive.actionBuilder(startPickupFar)
-                .setTangent(posMultiplier*Math.toRadians(-90))
-                .splineToLinearHeading(endPickupFar, posMultiplier*Math.toRadians(-90.0), intakeSpeed);
-
-        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickupFar)
-                .setTangent(posMultiplier*Math.toRadians(52.5))
-                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(52.5), rushSpeed);
+//        TrajectoryActionBuilder toShoot2 = drive.actionBuilder(endPickupFar)
+//                .setTangent(posMultiplier*Math.toRadians(52.5))
+//                .splineToLinearHeading(shootPosFar2, posMultiplier*Math.toRadians(52.5), rushSpeed);
 
         TrajectoryActionBuilder toPickup2 = drive.actionBuilder(shootPosFar2)
                 .setTangent(posMultiplier*Math.toRadians(-100.0))
@@ -284,67 +284,67 @@ public class GearsCycleAuto extends LinearOpMode {
                                 actionManager.hasBalls(false),
 //                                actionManager.derev(),
 
-                                //First Pickup
-                                Arm.AutoArmOut(),
-                                Prongs.AutoProngsIntake(),
-                                Roller.AutoIntakeOn(),
-                                new RaceAction(
-                                        new SequentialAction(
-                                                toPickup1.build(),
-                                                pickup1.build(),
-                                                waitPickup1.build(),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn()
-                                        ),
-                                        new SequentialAction(
-                                                Distance.waitForBallInTimer(5.0),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeftHalfTime(),
-                                                Roller.AutoIntakeOn(),
-                                                Arm.AutoArmOut(),
-                                                Distance.waitForBallIn(),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn(),
-                                                Distance.waitForBallInSpindexer(),
-                                                actionManager.waitFor(ballInSpindexerTimer),
-                                                QuickSpindexer.turnLeftHalfTime(),
-                                                Roller.AutoIntakeOn(),
-                                                Arm.AutoArmOut(),
-                                                Distance.waitForBallIn(),
-                                                Roller.AutoIntakeOff(),
-                                                Arm.AutoArmIn()
-                                        )
-                                ),
-
-                                //2nd Sort
-                                new ParallelAction(
-                                        actionManager.rev(rpm),
-                                        new SequentialAction(
-                                                Roller.AutoIntakeEject(),
-                                                Distance.waitForBallInSpindexer(),
-//                                                actionManager.waitFor(1.0),
-                                                new SequentialAction(
-                                                        Arm.AutoArmOut(),
-                                                        Prongs.AutoProngsShooting(),
-                                                        QuickSpindexer.addRevOffset(),
-                                                        actionManager.waitFor(0.3),
-                                                        Arm.AutoArmRev(),
-                                                        Roller.AutoIntakeOff()
-                                                )
-                                        ),
-                                        toShoot2.build()
-                                ),
-
-                                //2nd volley
-                                actionManager.waitForSpeedSafe(rpm),
-                                actionManager.startTripleRPMBoost(true),
-                                QuickSpindexer.autoFullCycle(true),
-                                actionManager.endTripleRPMBoost(true),
-                                Distance.setMissed(false),
-                                actionManager.hasBalls(false),
+//                                //First Pickup
+//                                Arm.AutoArmOut(),
+//                                Prongs.AutoProngsIntake(),
+//                                Roller.AutoIntakeOn(),
+//                                new RaceAction(
+//                                        new SequentialAction(
+//                                                toPickup1.build(),
+//                                                pickup1.build(),
+//                                                waitPickup1.build(),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn()
+//                                        ),
+//                                        new SequentialAction(
+//                                                Distance.waitForBallInTimer(5.0),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn(),
+//                                                Distance.waitForBallInSpindexer(),
+//                                                actionManager.waitFor(ballInSpindexerTimer),
+//                                                QuickSpindexer.turnLeftHalfTime(),
+//                                                Roller.AutoIntakeOn(),
+//                                                Arm.AutoArmOut(),
+//                                                Distance.waitForBallIn(),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn(),
+//                                                Distance.waitForBallInSpindexer(),
+//                                                actionManager.waitFor(ballInSpindexerTimer),
+//                                                QuickSpindexer.turnLeftHalfTime(),
+//                                                Roller.AutoIntakeOn(),
+//                                                Arm.AutoArmOut(),
+//                                                Distance.waitForBallIn(),
+//                                                Roller.AutoIntakeOff(),
+//                                                Arm.AutoArmIn()
+//                                        )
+//                                ),
+//
+//                                //2nd Sort
+//                                new ParallelAction(
+//                                        actionManager.rev(rpm),
+//                                        new SequentialAction(
+//                                                Roller.AutoIntakeEject(),
+//                                                Distance.waitForBallInSpindexer(),
+////                                                actionManager.waitFor(1.0),
+//                                                new SequentialAction(
+//                                                        Arm.AutoArmOut(),
+//                                                        Prongs.AutoProngsShooting(),
+//                                                        QuickSpindexer.addRevOffset(),
+//                                                        actionManager.waitFor(0.3),
+//                                                        Arm.AutoArmRev(),
+//                                                        Roller.AutoIntakeOff()
+//                                                )
+//                                        ),
+//                                        toShoot2.build()
+//                                ),
+//
+//                                //2nd volley
+//                                actionManager.waitForSpeedSafe(rpm),
+//                                actionManager.startTripleRPMBoost(true),
+//                                QuickSpindexer.autoFullCycle(true),
+//                                actionManager.endTripleRPMBoost(true),
+//                                Distance.setMissed(false),
+//                                actionManager.hasBalls(false),
 
                                 //2nd Pickup
                                 Arm.AutoArmOut(),
@@ -479,7 +479,7 @@ public class GearsCycleAuto extends LinearOpMode {
                                                 Arm.AutoArmIn()
                                         ),
                                         new SequentialAction(
-                                                Distance.waitForBallInTimer(2.0),
+                                                Distance.waitForBallInTimer(3.5),
                                                 Roller.AutoIntakeOff(),
                                                 Arm.AutoArmIn(),
                                                 Distance.waitForBallInSpindexer(),
