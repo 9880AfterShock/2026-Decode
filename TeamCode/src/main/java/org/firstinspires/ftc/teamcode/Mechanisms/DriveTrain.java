@@ -21,17 +21,14 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Aiming.DriverTest;
-import org.firstinspires.ftc.teamcode.Aiming.GoalVision;
 import org.firstinspires.ftc.teamcode.Drawing;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.Sensors.Limelight;
-import org.firstinspires.ftc.teamcode.Systems.MultiPID;
+import org.firstinspires.ftc.teamcode.Systems.MultiController;
 import org.firstinspires.ftc.teamcode.Systems.PID;
-import org.firstinspires.ftc.teamcode.Systems.PIDAbstract;
+import org.firstinspires.ftc.teamcode.Systems.ControllerAbstract;
 import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
-import org.firstinspires.ftc.teamcode.messages.BallRampMessage;
 
 @Config
 public class DriveTrain { // Prefix for commands
@@ -46,7 +43,7 @@ public class DriveTrain { // Prefix for commands
     private static boolean slowModeButtonPreviouslyPressed = false;
     private static double rotation;
     private static IMU imu;
-    private static PIDAbstract aimingPID;
+    private static ControllerAbstract aimingPID;
     private static Pose2d pos;
     public static TwoDeadWheelLocalizer localizer;
     public static double nearP = -0.01;
@@ -95,7 +92,7 @@ public class DriveTrain { // Prefix for commands
 
         goalTarget = new Pose2d(-60.0, -53.0, Math.toRadians(0.0));
 
-        aimingPID = new MultiPID(new PID(farP,0.0, farD,1)) //Normal PID
+        aimingPID = new MultiController(new PID(farP,0.0, farD,1)) //Normal PID
                 .addPID(new PID(nearP,0.0,nearD,1),10); //Close Range PID
 
 
@@ -109,19 +106,21 @@ public class DriveTrain { // Prefix for commands
         Drawing.drawRobot(packet.fieldOverlay(), localizer.getPose());
         packet.fieldOverlay().setStroke("#ff0000");
         Drawing.drawRobot(packet.fieldOverlay(), goalTarget);
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         if (flipSide){
-            goalTarget = new Pose2d(-57.0, 57.0, Math.toRadians(0.0));
+            goalTarget = new Pose2d(-59.0, 57.0, Math.toRadians(0.0));
         } else {
-            goalTarget = new Pose2d(-57.0, -57.0, Math.toRadians(0.0));
+            goalTarget = new Pose2d(-59.0, -57.0, Math.toRadians(0.0));
         }
 //        Pose2d SOTMgoal = new Pose2d(goalTarget.position.x + (SOTMscalar * localizer.getPose().position.x), goalTarget.position.y + (SOTMscalar * localizer.getPose().position.y), 0.0);
         Pose2d SOTMgoal = goalTarget; //temp for now
 
         Pose2d robotPosition = Limelight.getPosition();
         if (robotPosition != null) { //check if invalid obelisk reading
+            packet.put("position difference",robotPosition.position.minus(localizer.getPose().position).sqrNorm());
             localizer.setPose(robotPosition);
+        } else {
+            packet.put("position difference",0);
         }
         DriverTest.distanceFromGoal = Math.hypot(SOTMgoal.position.x-DriveTrain.localizer.getPose().position.x, SOTMgoal.position.y-DriveTrain.localizer.getPose().position.y);
         rotation = Math.toDegrees(Math.atan2((SOTMgoal.position.y-localizer.getPose().position.y),(SOTMgoal.position.x-localizer.getPose().position.x)));
@@ -175,6 +174,7 @@ public class DriveTrain { // Prefix for commands
 //        opmode.telemetry.addData("Front Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
 //        opmode.telemetry.addData("Back Motors", "left (%.2f), right (%.2f)", leftBackPower, rightBackPower);
         opmode.telemetry.addData("Slow mode?", slowMode);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
 //        opmode.telemetry.addData("HEY TIMO", "HERE IS THE MOTOR AMPS STUFFFF FOR DRIVE MOTORS");
 //        opmode.telemetry.addData("Front left", leftFront.getCurrent(CurrentUnit.AMPS));
 //        opmode.telemetry.addData("Front right", rightFront.getCurrent(CurrentUnit.AMPS));
