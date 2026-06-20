@@ -109,6 +109,13 @@ public class GearsGateAuto extends LinearOpMode {
 //        double driveSpeed = 40.0;
 //        double intakeSpeed = 15.0;
 
+        double turretAngle;
+        if (posMultiplier == 1){
+            turretAngle = 42;
+        } else {
+            turretAngle = 50;
+        }
+
         VelConstraint wallIntakeSpeed = new MinVelConstraint(Arrays.asList(
                 new TranslationalVelConstraint(20.0),
                 new AngularVelConstraint(Math.PI/2)
@@ -125,7 +132,7 @@ public class GearsGateAuto extends LinearOpMode {
         Pose2d shootPosNear1 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosNear2 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
         Pose2d shootPosNear3 = new Pose2d(-24.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
-        Pose2d shootPosNear4 = new Pose2d(-44.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
+        Pose2d shootPosNear4 = new Pose2d(-47.0, posMultiplier*-24.0, posMultiplier*Math.toRadians(0.0));
 
         Pose2d prePickupNear = new Pose2d(-9.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
         Pose2d startPickupNear = new Pose2d(-9.0, posMultiplier*-37.0, posMultiplier*Math.toRadians(-90.0));
@@ -228,7 +235,7 @@ public class GearsGateAuto extends LinearOpMode {
                         Turret.turretLoop(),
                         new SequentialAction(
                                 Distance.setMissed(false),
-                                Turret.setTurretTarget(posMultiplier*-45.0),
+                                Turret.setTurretTarget(posMultiplier*-turretAngle),
                                 actionManager.shotCue(0),
                                 Hood.AutoHoodFlat(),
                                 actionManager.rev(rpm),

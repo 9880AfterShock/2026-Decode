@@ -44,7 +44,7 @@ public class DriverTest {
     public static double tripleShootMultiplier = 3.7; //scalar for the boost to RPM based off of distance
     public static double getTripleShootNerf = 185; //flat decreasing value
 
-    public static final double rapidFireDifference = 150; //artifact, just for auto now
+    public static final double rapidFireDifference = 200; //artifact, just for auto now
     public static double rapidFireCooldown = -rapidFireDifference;
 
     public static boolean isFarAuto = false;
