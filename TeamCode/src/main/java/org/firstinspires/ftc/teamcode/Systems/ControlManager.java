@@ -44,8 +44,8 @@ public class ControlManager {
     private static OpMode opMode;
     //    public static Spindexer spindexer;
 //    public static BallRamp ballRamp;
-    private static Gamepad driver;
-    private static Gamepad operator;
+    public static Gamepad driver;
+    public static Gamepad operator;
 
     private static boolean prevInstake;
 
