@@ -135,14 +135,14 @@ public class GearsCycleAuto extends LinearOpMode {
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-43.0));
             shootPosFar4 = new Pose2d(60.0, posMultiplier*-21.0, posMultiplier*Math.toRadians(-41.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-37.0)); //not making here atm lol
-            turretAngle = 59;
+            turretAngle = 61;
         } else {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-21.5, posMultiplier*Math.toRadians(-42.0));
             shootPosFar4 = new Pose2d(60.0, posMultiplier*-19.5, posMultiplier*Math.toRadians(-42.0));
             shootPosFar5 = new Pose2d(60.0, posMultiplier*-20.5, posMultiplier*Math.toRadians(-42.0));
-            turretAngle = 62;
+            turretAngle = 64;
         }
 
         Pose2d prePickupFar = new Pose2d(36.0, posMultiplier*-30.0, posMultiplier*Math.toRadians(-90.0));
@@ -270,8 +270,9 @@ public class GearsCycleAuto extends LinearOpMode {
                                                 Arm.AutoArmOut(),
                                                 Prongs.AutoProngsShooting(),
                                                 QuickSpindexer.addRevOffset(),
-                                                actionManager.waitFor(0.3),
-                                                Arm.AutoArmRev()
+                                                actionManager.waitFor(0.15),
+                                                Arm.AutoArmRev(),
+                                                actionManager.waitFor(0.3)
                                         ),
 //                                        toShoot1.build()
                                         Turret.waitForTurret()

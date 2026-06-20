@@ -4,6 +4,7 @@ import static java.lang.Math.abs;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -13,15 +14,15 @@ import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
 import org.firstinspires.ftc.teamcode.Systems.RunLater;
 import org.firstinspires.ftc.teamcode.WrapperClasses.BulkWriteServo;
 
-
+@Config
 public class Arm { // Prefix for commands
 
     private static Servo armServo; // init motor var
     private static BulkWriteServo arm;
     private static OpMode opmode; // opmode var init
     public static double intakePosition = 0.36;
-    public static double neutralPosition = 0.65;
-    public static double revPosition = 0.62;
+    public static double neutralPosition = 0.83;
+    public static double revPosition = 0.83;
     public static String intakeState = "Intaking";
     public static double lastTransition = -9880.0;
     public final static double transitionTime = 0.2;
