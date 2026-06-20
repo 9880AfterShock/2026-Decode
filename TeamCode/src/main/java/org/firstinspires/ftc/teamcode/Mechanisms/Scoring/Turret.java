@@ -35,8 +35,8 @@ public class Turret {
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
-    public static final double leftOffset = 47.3713405238829;
-    public static final double rightOffset = 6.989214175654853; //DCed
+    public static final double leftOffset = 130.68721109399075;
+    public static final double rightOffset = 5.990755007704159; //fixed??
 
     public static double P = 0.0087;
     public static double D = 0.0012;
@@ -79,8 +79,8 @@ public class Turret {
 
         updatePosition();
 
-        leftWorking = leftEncoder.getVoltage() != 0;
-        rightWorking = false; //rightEncoder.getVoltage() != 0;
+        leftWorking = false; //leftEncoder.getVoltage() != 0;
+        rightWorking = rightEncoder.getVoltage() != 0;
         if (leftWorking && rightWorking){
             currentPosition = (((leftCurrentPosition - leftOffset) + (rightCurrentPosition - rightOffset)) / 2) * (24.0/78);
         } else {
