@@ -24,6 +24,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Mechanisms.Scoring.Turret;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+import org.firstinspires.ftc.teamcode.Systems.ControlManager;
+import org.firstinspires.ftc.teamcode.Systems.DelayedAction;
+import org.firstinspires.ftc.teamcode.Systems.RunLater;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -36,7 +39,7 @@ public class Limelight {
     public static Motif motif;
     private static Limelight3A limelight;
     private static final double METER_TO_INCH = 39.3701;
-
+    private static boolean blind = false;
     public static Pose2d currentPosShoot1;
     public static Pose2d currentPosShoot2;
     public static TrajectoryActionBuilder alignShoot1;
@@ -108,6 +111,13 @@ public class Limelight {
     }
 
     public static Pose2d getPosition() { //MetaTag2
+        if (ControlManager.operator.aWasPressed()) {
+            blind = true;
+            RunLater.addAction(new DelayedAction(() -> {blind = false;}, 3.0));
+        }
+        if (blind) {
+            return null;
+        }
         limelight.updateRobotOrientation(Gyroscope.getRotationDegrees() - Turret.currentPosition);
         LLResult result = limelight.getLatestResult();
         TelemetryPacket packet = new TelemetryPacket();

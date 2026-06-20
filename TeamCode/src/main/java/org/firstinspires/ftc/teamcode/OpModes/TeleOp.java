@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -145,6 +147,9 @@ public class TeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Alliance", alliance);
             telemetry.addData("Looptime (MS per Loop)", runtime.milliseconds()/loops);
+            TelemetryPacket telem = new TelemetryPacket();
+            telem.put("Looptime (MS per Loop)", runtime.milliseconds()/loops);
+            FtcDashboard.getInstance().sendTelemetryPacket(telem);
             loops += 1;
             telemetry.update();
 //            for (LynxModule hub : allHubs) {
