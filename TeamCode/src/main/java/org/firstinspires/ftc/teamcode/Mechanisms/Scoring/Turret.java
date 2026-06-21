@@ -35,8 +35,8 @@ public class Turret {
 
     public static boolean leftWorking = true; //backup checks on analog input wires
     public static boolean rightWorking = true;
-    public static final double leftOffset =  25.627118644067796;
-    public static final double rightOffset = 58.576271186440685; //fixed??
+    public static final double leftOffset =  26.84745762711864;
+    public static final double rightOffset = 45.707241910631744; //fixed??
 
     public static double P = 0.0087;
     public static double D = 0.0012;

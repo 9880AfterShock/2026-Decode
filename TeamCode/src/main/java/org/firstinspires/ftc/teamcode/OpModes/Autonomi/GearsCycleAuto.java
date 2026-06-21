@@ -58,7 +58,7 @@ public class GearsCycleAuto extends LinearOpMode {
         Prongs.initGrate(this);
         TeleOp.autoHasBalls = true;
 
-        double rpm = 3250;
+        double rpm = 3350;
         double rpmWaitOffset = -200;
 
         double posMultiplier = 1.0;
@@ -134,8 +134,8 @@ public class GearsCycleAuto extends LinearOpMode {
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-43.0));
             shootPosFar3 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-43.0));
             shootPosFar4 = new Pose2d(60.0, posMultiplier*-21.0, posMultiplier*Math.toRadians(-41.0));
-            shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-37.0)); //not making here atm lol
-            turretAngle = 61;
+            shootPosFar5 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-34.0)); //not making here atm lol
+            turretAngle = 63;
         } else {
             shootPosFar1 = new Pose2d(61.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
             shootPosFar2 = new Pose2d(60.0, posMultiplier*-22.0, posMultiplier*Math.toRadians(-42.0));
