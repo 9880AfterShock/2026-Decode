@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Sensors.SpindexerCamera;
 
-@TeleOp(name = "vison testing")
+@TeleOp(name = "vision testing")
 //Toggle Disabled to make appear in list or not.
 //@Disabled
 public class VisionTest extends LinearOpMode {
